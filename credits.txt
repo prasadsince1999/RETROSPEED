@@ -1,0 +1,34 @@
+========================================================================
+RETROSPEED — Race Your Fingers
+Credits & Open Source Acknowledgements
+========================================================================
+
+1. ARCHITECTURE & DIRECTION
+- Developed by PrasaD at KSM × Tech, India.
+- Visual Identity: The Paper-Arcade Desk (Solid Neo-Brutalist 7-Color Palette).
+- Engine: Local-First Deterministic Telemetry & 100% Offline Desktop Shell.
+
+2. OPEN SOURCE LIBRARIES & FOUNDATIONS
+- React & Vite (MIT License)
+- Electron & electron-builder (MIT License)
+- Lucide Icons (ISC License) — Used for desktop window chrome & UI navigation
+- Canvas Confetti (ISC License) — Procedural victory celebrations
+
+3. AUDIO DESIGN
+- 100% Procedural Web Audio API sound synthesizer engine (`src/utils/audio.js`).
+- Zero external MP3 or audio asset network dependencies.
+- Inspired by the timeless 8-bit sound parameters of jsfxr (Tomas Pettersson) and Kenney.nl Interface Sounds.
+
+4. INSPIRATIONS & GAMEPLAY FEEL
+- Velocity GP — Word racing mechanics inspired by classic typing racers.
+- Meteor Words — Space word defense inspired by fast typing arcade shooters.
+- Balloon Ninja — Single-key reflex slicing inspired by arcade slash games.
+- Monster Attack — Space invaders turret defense.
+- Temple Bash — Ancient impact rhythm breaker.
+- Floating Bubbles — Calming hydrodynamic capitalization practice.
+- Apple Thieves — Precision orchard harvesting.
+- Shortcut Kitchen — Real OS modifier chord mastery (Ctrl, Alt, Shift, Win).
+
+========================================================================
+100% Offline · No Analytics · No Telemetry · No Third-Party Trackers
+========================================================================
