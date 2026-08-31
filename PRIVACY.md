@@ -33,4 +33,4 @@ If this privacy policy is updated, the revised version will be included in subse
 
 ## 5. Contact Information
 For questions or inquiries regarding RETROSPEED or this Privacy Policy, please open an issue on our GitHub repository:
-- Repository: [https://github.com/prasadsince1999/KeyCraft](https://github.com/prasadsince1999/KeyCraft)
+- Repository: [https://github.com/prasadsince1999/RETROSPEED](https://github.com/prasadsince1999/RETROSPEED)

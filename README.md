@@ -72,8 +72,8 @@
 
 ### Installation
 ```bash
-git clone https://github.com/prasadsince1999/KeyCraft.git
-cd KeyCraft
+git clone https://github.com/prasadsince1999/RETROSPEED.git
+cd RETROSPEED
 npm install
 ```
 

@@ -45,8 +45,8 @@ microsoft_store:
       - "arcade typing"
     category: "Education"
     subcategory: "Books & Reference"
-    privacy_policy_url: "https://github.com/prasadsince1999/KeyCraft/blob/main/PRIVACY.md"
-    support_url: "https://github.com/prasadsince1999/KeyCraft/issues"
+    privacy_policy_url: "https://github.com/prasadsince1999/RETROSPEED/blob/main/PRIVACY.md"
+    support_url: "https://github.com/prasadsince1999/RETROSPEED/issues"
 
   release:
     pricing_model: "Free"
