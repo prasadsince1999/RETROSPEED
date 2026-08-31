@@ -332,7 +332,9 @@ export default function App() {
                   ? 'play'
                   : currentView === 'drill' || currentView === 'daily' || currentView === 'practice'
                   ? 'home'
-                  : currentView === 'map' || currentView === 'catalog' || currentView === 'lesson' || currentView === 'video' || currentView === 'shortcuts'
+                  : currentView === 'tracks' || currentView === 'catalog'
+                  ? 'tracks'
+                  : currentView === 'map' || currentView === 'lesson' || currentView === 'video' || currentView === 'shortcuts'
                   ? 'learn'
                   : currentView === 'stats' || currentView === 'badges' || currentView === 'shop'
                   ? currentView
@@ -348,6 +350,8 @@ export default function App() {
                   setCurrentView('play');
                 } else if (view === 'practice') {
                   setCurrentView('home');
+                } else if (view === 'tracks') {
+                  setCurrentView('catalog');
                 } else {
                   setCurrentView(view);
                 }
@@ -401,8 +405,8 @@ export default function App() {
                 />
               )}
 
-              {/* Course Catalog inside Desktop Window */}
-              {currentView === 'catalog' && (
+              {/* Course Catalog & Specialty Tracks */}
+              {(currentView === 'catalog' || currentView === 'tracks') && (
                 <CourseCatalog
                   onBack={() => setCurrentView('learn')}
                   enrolledCourses={userProgress.enrolledCourses || []}

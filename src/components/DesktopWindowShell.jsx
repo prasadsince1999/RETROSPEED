@@ -19,6 +19,7 @@ import {
   User, 
   Shield, 
   BookOpen, 
+  Layers,
   RotateCcw,
   Check
 } from 'lucide-react';
@@ -55,11 +56,15 @@ export default function DesktopWindowShell({
   const license = getLicenseStatus(userProgress);
   const activeCourse = COURSES_CATALOG.find(c => c.id === activeCourseId) || COURSES_CATALOG[0];
 
-  const handleNav = (view) => {
+  const handleNav = (viewId) => {
     sound.playKeyClick();
     setActiveMenuDropdown(null);
     if (onNavigate) {
-      onNavigate(view);
+      if (viewId === 'tracks') {
+        onNavigate('catalog');
+      } else {
+        onNavigate(viewId);
+      }
     }
   };
 
@@ -78,10 +83,11 @@ export default function DesktopWindowShell({
     }
   };
 
-  // 5 Distinct Desktop Rooms
+  // 6 Distinct Desktop Rooms in Left Sidebar
   const NAV_ITEMS = [
     { id: 'home', label: 'Home', icon: Home, highlight: 'bg-[#C7E8CA]' },
     { id: 'learn', label: 'Learn', icon: BookOpen, highlight: 'bg-[#C7E8CA]' },
+    { id: 'tracks', label: 'Tracks', icon: Layers, highlight: 'bg-[#C7E8CA]' },
     { id: 'play', label: 'Play', icon: Trophy, highlight: 'bg-[#C7E8CA]' },
     { id: 'stats', label: 'Stats', icon: BarChart2, highlight: 'bg-[#C7E8CA]' },
     { id: 'shop', label: 'Shop', icon: ShoppingBag, highlight: 'bg-[#C7E8CA]' }
@@ -89,7 +95,8 @@ export default function DesktopWindowShell({
 
   const isNavActive = (itemId) => {
     if (itemId === 'home') return currentView === 'home' || currentView === 'drill' || currentView === 'daily' || currentView === 'practice';
-    if (itemId === 'learn') return currentView === 'learn' || currentView === 'map' || currentView === 'catalog' || currentView === 'lesson' || currentView === 'video' || currentView === 'shortcuts';
+    if (itemId === 'learn') return currentView === 'learn' || currentView === 'map' || currentView === 'lesson' || currentView === 'video' || currentView === 'shortcuts';
+    if (itemId === 'tracks') return currentView === 'tracks' || currentView === 'catalog';
     if (itemId === 'play') return currentView === 'play' || currentView === 'challenge' || ['press-room', 'paper-planes', 'local-line', 'night-market', 'drop-chits', 'pit-lane', 'fuse-desk', 'patch-terminal'].includes(currentView);
     if (itemId === 'stats') return currentView === 'stats' || currentView === 'progress' || currentView === 'badges';
     if (itemId === 'shop') return currentView === 'shop';
@@ -200,104 +207,13 @@ export default function DesktopWindowShell({
           </div>
 
           {/* ========================================================
-              TOP MENU BAR (Game, Tracks, Stats, Settings, Help + Score & Audio)
+              TOP MENU BAR (Settings, About, Help + Score & Audio)
               ======================================================== */}
           <div className="bg-[#FAF3E0] px-4 py-1.5 border-b-2 border-[#2D2319] flex flex-wrap items-center justify-between gap-3 text-xs font-mono font-bold text-[#2D2319] shrink-0 relative">
             
             {/* Left: Dropdown Menus */}
             <div className="flex items-center space-x-3 sm:space-x-5">
               
-              {/* Game ▾ Dropdown */}
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setActiveMenuDropdown(activeMenuDropdown === 'game' ? null : 'game')}
-                  className="hover:underline flex items-center space-x-1 focus:outline-none"
-                >
-                  <span>Game</span>
-                  <span className="text-[10px]">▾</span>
-                </button>
-
-                {activeMenuDropdown === 'game' && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setActiveMenuDropdown(null)} />
-                    <div className="absolute left-0 top-full mt-1 w-48 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs">
-                      <button
-                        type="button"
-                        onClick={() => handleNav('home')}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
-                      >
-                        <span>Quick Drill</span>
-                        <span className="text-[10px] font-mono text-[#2D2319]/60">⚡</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleNav('daily')}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
-                      >
-                        <span>Daily Challenge</span>
-                        <span className="text-[10px] font-mono text-[#2D2319]/60">📅</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleNav('learn')}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
-                      >
-                        <span>Zero-to-Hero Path</span>
-                        <span className="text-[10px] font-mono text-[#2D2319]/60">🗺️</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleNav('play')}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
-                      >
-                        <span>Arcade Games</span>
-                        <span className="text-[10px] font-mono text-[#2D2319]/60">🏆</span>
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-
-              {/* Tracks ▾ Dropdown */}
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setActiveMenuDropdown(activeMenuDropdown === 'tracks' ? null : 'tracks')}
-                  className="hover:underline flex items-center space-x-1 focus:outline-none"
-                >
-                  <span>Tracks</span>
-                  <span className="text-[10px]">▾</span>
-                </button>
-
-                {activeMenuDropdown === 'tracks' && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setActiveMenuDropdown(null)} />
-                    <div className="absolute left-0 top-full mt-1 w-64 max-h-72 overflow-y-auto bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 py-1 text-xs">
-                      <div className="px-3 py-1 text-[10px] uppercase font-bold text-[#2D2319]/60 border-b border-[#2D2319]/20">
-                        Select Active Track
-                      </div>
-                      {COURSES_CATALOG.map(c => {
-                        const isCurrent = c.id === activeCourseId;
-                        return (
-                          <button
-                            key={c.id}
-                            type="button"
-                            onClick={() => handleSelectCourse(c.id)}
-                            className={`w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-medium ${
-                              isCurrent ? 'bg-[#FAF3E0] font-black' : ''
-                            }`}
-                          >
-                            <span className="truncate">{c.title}</span>
-                            {isCurrent && <Check className="w-3.5 h-3.5 text-[#48B89F] shrink-0" />}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </>
-                )}
-              </div>
-
               {/* Settings ▾ Dropdown */}
               <div className="relative">
                 <button
@@ -341,24 +257,6 @@ export default function DesktopWindowShell({
               >
                 <span>About</span>
                 <span className="text-[10px] text-[#F6C445]">✦</span>
-              </button>
-
-              {/* License / Unlock Trigger */}
-              <button
-                type="button"
-                onClick={() => {
-                  sound.playKeyClick();
-                  setActiveMenuDropdown(null);
-                  setUnlockModalOpen(true);
-                }}
-                className={`px-2 py-0.5 rounded border border-[#2D2319] text-[10px] font-mono font-bold flex items-center space-x-1 cursor-pointer transition-all active:translate-x-0.5 active:translate-y-0.5 ${
-                  license.isUnlocked 
-                    ? 'bg-[#48B89F] text-[#2D2319]' 
-                    : 'bg-[#F6C445] hover:bg-[#F28B82] text-[#2D2319]'
-                }`}
-                title={license.isUnlocked ? 'Lifetime License Active' : 'Click to Unlock full edition'}
-              >
-                <span>{license.isUnlocked ? '✦ UNLOCKED' : '✦ UNLOCK'}</span>
               </button>
 
               {/* Help ▾ Dropdown */}
@@ -527,20 +425,21 @@ export default function DesktopWindowShell({
                   sound.playKeyClick();
                   setUnlockModalOpen(true);
                 }}
-                className={`w-full mt-2.5 p-2 rounded-xl border-2 border-[#2D2319] flex items-center justify-between text-xs font-mono font-bold shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer ${
+                className={`w-full mt-2.5 p-2 rounded-xl border-2 border-[#2D2319] flex items-center justify-between text-xs font-mono font-bold shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer transition-all ${
                   license.isUnlocked
                     ? 'bg-[#C7E8CA] text-[#2D2319]'
-                    : 'bg-[#FAF3E0] hover:bg-[#F6C445] text-[#2D2319]'
+                    : 'bg-[#F6C445] hover:bg-[#F28B82] text-[#2D2319]'
                 }`}
-                title="Click to view license status or unlock full workshop"
+                title={license.isUnlocked ? 'Lifetime License Active' : 'Click to Unlock full edition'}
               >
                 <div className="flex items-center space-x-1.5 min-w-0">
-                  <Shield className="w-3.5 h-3.5 shrink-0" />
-                  <span className="truncate text-[10px]">{license.badgeText}</span>
+                  <Shield className="w-3.5 h-3.5 shrink-0 text-[#2D2319]" />
+                  <span className="truncate text-[10px] font-black">{license.badgeText}</span>
                 </div>
-                <span className="text-[10px] uppercase font-black shrink-0 underline ml-1">
-                  {license.isUnlocked ? 'View' : 'Unlock'}
-                </span>
+                <div className="flex items-center space-x-1 shrink-0 px-2 py-0.5 bg-[#FDF8EE] rounded border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] text-[10px] font-black uppercase text-[#2D2319]">
+                  {!license.isUnlocked && <span className="text-[#2D2319] text-[11px] leading-none">✦</span>}
+                  <span>{license.isUnlocked ? 'ACTIVE' : 'UNLOCK'}</span>
+                </div>
               </button>
 
             </div>
