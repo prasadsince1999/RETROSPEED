@@ -180,17 +180,17 @@ export default function HomeView({
                       key={preset.id}
                       type="button"
                       onClick={() => handleSelectMode(preset.id)}
-                      className={`p-2.5 rounded-xl border-2 border-[#2D2319] text-left transition-all cursor-pointer ${
+                      className={`p-2 sm:p-2.5 rounded-xl border-2 border-[#2D2319] text-left transition-all cursor-pointer min-h-[64px] flex flex-col justify-between ${
                         isSelected
                           ? 'bg-[#C7E8CA] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] -translate-y-0.5 font-black'
                           : 'bg-[#FDF8EE] hover:bg-[#FBF6EA] text-[#2D2319] shadow-[1px_1px_0px_#2D2319]'
                       }`}
                     >
-                      <div className="flex items-center space-x-1.5 text-xs font-bold font-display truncate">
-                        <Icon className="w-3.5 h-3.5 shrink-0" />
-                        <span className="truncate">{preset.label}</span>
+                      <div className="flex items-start space-x-1.5 text-[11px] sm:text-xs font-bold font-display leading-tight">
+                        <Icon className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                        <span className="break-words whitespace-normal leading-tight">{preset.label}</span>
                       </div>
-                      <div className="text-[10px] font-mono text-[#2D2319]/70 mt-0.5 truncate">
+                      <div className="text-[10px] font-mono text-[#2D2319]/70 mt-1 leading-tight break-words whitespace-normal">
                         {preset.desc}
                       </div>
                     </button>

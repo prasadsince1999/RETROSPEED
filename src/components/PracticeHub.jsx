@@ -115,7 +115,7 @@ export default function PracticeHub({
         <div key={`spine-${selectedPartNumber}`} className="space-y-6 tab-content-animate">
           
           {/* HORIZONTAL STEPPER OF 8 PARTS */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
             {SPINE_PARTS.map((part) => {
               const isSelected = selectedPartNumber === part.partNumber;
               const partLessons = part.lessons;
@@ -129,22 +129,22 @@ export default function PracticeHub({
                     sound.playKeyClick();
                     setSelectedPartNumber(part.partNumber);
                   }}
-                  className={`p-3 rounded-xl border-2 border-[#2D2319] text-left flex flex-col justify-between transition-all cursor-pointer ${
+                  className={`p-2.5 rounded-xl border-2 border-[#2D2319] text-left flex flex-col justify-between transition-all cursor-pointer min-h-[82px] ${
                     isSelected
-                      ? 'bg-[#F6C445] shadow-[3px_3px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
+                      ? 'bg-[#F6C445] shadow-[3px_3px_0px_#2D2319] translate-x-0.5 translate-y-0.5 font-bold'
                       : 'bg-[#FAF3E0] hover:bg-[#FDF8EE] shadow-[2px_2px_0px_#2D2319]'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] font-black text-[#2D2319]">
+                    <span className="font-mono text-[9px] font-black text-[#2D2319] uppercase">
                       PART {part.partNumber}
                     </span>
-                    {isPartComplete && <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />}
+                    {isPartComplete && <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />}
                   </div>
-                  <div className="font-bold text-xs text-[#2D2319] font-display truncate mt-1">
+                  <div className="font-bold text-[11px] text-[#2D2319] font-display leading-tight my-1 break-words whitespace-normal">
                     {part.subtitle}
                   </div>
-                  <div className="text-[10px] font-mono text-[#2D2319]/70 mt-1">
+                  <div className="text-[9px] font-mono text-[#2D2319]/70 leading-tight">
                     {completedInPart}/{partLessons.length} done
                   </div>
                 </button>
