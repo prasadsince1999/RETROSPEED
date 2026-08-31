@@ -112,7 +112,7 @@ export default function PracticeHub({
 
       {/* TAB 1: 8-PART ZERO-TO-HERO PATH */}
       {activeTab === 'spine' && (
-        <div className="space-y-6">
+        <div key={`spine-${selectedPartNumber}`} className="space-y-6 tab-content-animate">
           
           {/* HORIZONTAL STEPPER OF 8 PARTS */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
@@ -297,7 +297,7 @@ export default function PracticeHub({
 
       {/* TAB 2: SPECIALTY TRACKS (CODE, STORIES, LAYOUTS) */}
       {activeTab === 'specialty' && (
-        <div className="space-y-4">
+        <div key="specialty" className="space-y-4 tab-content-animate">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {COURSES_CATALOG.map((course) => (
               <div

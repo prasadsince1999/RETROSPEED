@@ -57,8 +57,8 @@ export default function AboutModal({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-6 bg-[#2D2319]/75 backdrop-blur-xs select-none animate-in fade-in duration-150">
-      <div className="w-full max-w-4xl h-[92vh] max-h-[740px] min-h-[580px] bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl shadow-[8px_8px_0px_#2D2319] overflow-hidden flex flex-col animate-in zoom-in-95 duration-150 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-6 bg-[#2D2319]/75 backdrop-blur-xs select-none modal-backdrop-animate">
+      <div className="w-full max-w-4xl h-[92vh] max-h-[740px] min-h-[580px] bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl shadow-[8px_8px_0px_#2D2319] overflow-hidden flex flex-col modal-window-animate relative">
         
         {/* DECORATIVE CORNER SPARKLES */}
         <span className="absolute top-1 left-2 text-xs text-[#2D2319] font-black opacity-30 pointer-events-none select-none">✦</span>
@@ -123,14 +123,14 @@ export default function AboutModal({
           })}
         </div>
 
-        {/* SCROLLABLE RICH CONTENT BODY */}
-        <div className="p-5 sm:p-6 overflow-y-auto space-y-6 text-[#2D2319] flex-1 bg-[#FDF8EE]">
+        {/* SCROLLABLE RICH CONTENT BODY WITH SMOOTH TAB TRANSITION */}
+        <div key={activeTab} className="p-5 sm:p-6 overflow-y-auto space-y-6 text-[#2D2319] flex-1 bg-[#FDF8EE] tab-content-animate">
           
           {/* ========================================================================= */}
           {/* TAB 1: STUDIO & APPS */}
           {/* ========================================================================= */}
           {activeTab === 'studio' && (
-            <div className="space-y-6 animate-in fade-in">
+            <div className="space-y-6">
               
               {/* Studio Hero Banner Card */}
               <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-5 sm:p-6 shadow-[4px_4px_0px_#2D2319] space-y-4 relative overflow-hidden">

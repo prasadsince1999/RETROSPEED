@@ -190,17 +190,18 @@ export default function StatsDashboard({
         </div>
       </div>
 
-      {activeTab === 'trophies' ? (
-        <BadgesDashboard
-          userProgress={userProgress}
-          onNavigate={onNavigate}
-          onSelectCourse={onSelectCourse}
-          onBack={() => setActiveTab('telemetry')}
-        />
-      ) : (
-        <div className="space-y-5">
-          {/* SUB-HEADER & FILTER CONTROLS BAR */}
-          <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div key={activeTab} className="tab-content-animate flex-1 flex flex-col justify-between">
+        {activeTab === 'trophies' ? (
+          <BadgesDashboard
+            userProgress={userProgress}
+            onNavigate={onNavigate}
+            onSelectCourse={onSelectCourse}
+            onBack={() => setActiveTab('telemetry')}
+          />
+        ) : (
+          <div className="space-y-5">
+            {/* SUB-HEADER & FILTER CONTROLS BAR */}
+            <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col md:flex-row md:items-center justify-between gap-4">
             
             {/* Left: Title & Subtitle */}
             <div>
@@ -1476,8 +1477,9 @@ export default function StatsDashboard({
             </div>
           </section>
         </div>
-        </div>
+      </div>
       )}
+      </div>
     </div>
   );
 }

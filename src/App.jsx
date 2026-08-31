@@ -351,7 +351,7 @@ export default function App() {
                 } else if (view === 'practice') {
                   setCurrentView('home');
                 } else if (view === 'tracks') {
-                  setCurrentView('catalog');
+                  setCurrentView('tracks');
                 } else {
                   setCurrentView(view);
                 }

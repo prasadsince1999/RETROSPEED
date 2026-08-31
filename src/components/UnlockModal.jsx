@@ -39,8 +39,8 @@ export default function UnlockModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2D2319]/70 backdrop-blur-xs select-none">
-      <div className="w-full max-w-xl bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl shadow-[6px_6px_0px_#2D2319] overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2D2319]/70 backdrop-blur-xs select-none modal-backdrop-animate">
+      <div className="w-full max-w-xl bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl shadow-[6px_6px_0px_#2D2319] overflow-hidden flex flex-col max-h-[90vh] modal-window-animate">
         
         {/* RETRO TITLEBAR */}
         <div className="px-4 py-3 bg-[#F6C445] border-b-2 border-[#2D2319] flex items-center justify-between">

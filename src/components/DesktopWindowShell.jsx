@@ -60,11 +60,7 @@ export default function DesktopWindowShell({
     sound.playKeyClick();
     setActiveMenuDropdown(null);
     if (onNavigate) {
-      if (viewId === 'tracks') {
-        onNavigate('catalog');
-      } else {
-        onNavigate(viewId);
-      }
+      onNavigate(viewId);
     }
   };
 
@@ -228,7 +224,7 @@ export default function DesktopWindowShell({
                 {activeMenuDropdown === 'settings' && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setActiveMenuDropdown(null)} />
-                    <div className="absolute left-0 top-full mt-1 w-56 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs">
+                    <div className="absolute left-0 top-full mt-1 w-56 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs dropdown-menu-animate">
                       <button
                         type="button"
                         onClick={() => {
@@ -273,7 +269,7 @@ export default function DesktopWindowShell({
                 {activeMenuDropdown === 'help' && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setActiveMenuDropdown(null)} />
-                    <div className="absolute left-0 top-full mt-1 w-60 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs divide-y divide-[#2D2319]/15">
+                    <div className="absolute left-0 top-full mt-1 w-60 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs divide-y divide-[#2D2319]/15 dropdown-menu-animate">
                       <div className="p-3 space-y-1 bg-[#FAF3E0]">
                         <div className="font-display font-black text-[#2D2319]">RETROSPEED</div>
                         <div className="text-[10px] font-mono font-bold text-[#F28B82] uppercase">Race Your Fingers</div>
@@ -444,8 +440,8 @@ export default function DesktopWindowShell({
 
             </div>
 
-            {/* Right Client Area */}
-            <div className="flex-1 flex flex-col overflow-y-auto bg-[#FDF8EE]">
+            {/* Right Client Area with Smooth View Transition */}
+            <div key={currentView} className="flex-1 flex flex-col overflow-y-auto bg-[#FDF8EE] view-transition-fade">
               {children}
             </div>
 

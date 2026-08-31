@@ -477,8 +477,8 @@ export default function BadgesDashboard({
 
       {/* Achievement Detail Modal */}
       {selectedBadge && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2D2319]/60 backdrop-blur-[1px] animate-in fade-in duration-150">
-          <div className="w-full max-w-md bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl shadow-[6px_6px_0px_#2D2319] overflow-hidden animate-in zoom-in-95 duration-150 font-sans">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2D2319]/60 backdrop-blur-[1px] select-none modal-backdrop-animate">
+          <div className="w-full max-w-md bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl shadow-[6px_6px_0px_#2D2319] overflow-hidden modal-window-animate font-sans">
             
             <div className="bg-[#C3A6E8] text-[#2D2319] px-4 py-2 border-b-2 border-[#2D2319] flex items-center justify-between font-mono font-bold text-xs">
               <span className="font-display font-black uppercase">BADGE_INSPECTOR.EXE</span>

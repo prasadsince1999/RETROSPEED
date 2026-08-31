@@ -18,10 +18,10 @@ export default function ResetDataModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#2D2319]/60 backdrop-blur-[1px] animate-in fade-in duration-150 font-sans select-none">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#2D2319]/60 backdrop-blur-[1px] font-sans select-none modal-backdrop-animate">
       
       {/* Modal Dialog Box */}
-      <div className="w-full max-w-md bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl shadow-[6px_6px_0px_#2D2319] overflow-hidden flex flex-col animate-in zoom-in-95 duration-150">
+      <div className="w-full max-w-md bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl shadow-[6px_6px_0px_#2D2319] overflow-hidden flex flex-col modal-window-animate">
         
         {/* Titlebar: Solid Coral (#F28B82) */}
         <div className="bg-[#F28B82] text-[#2D2319] px-4 py-2 border-b-2 border-[#2D2319] flex items-center justify-between font-mono font-bold text-xs sm:text-sm select-none">

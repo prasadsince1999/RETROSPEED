@@ -211,8 +211,8 @@ export default function ShopView({
 
       </div>
 
-      {/* Main Tab Content */}
-      <div className="my-5 flex-1">
+      {/* Main Tab Content with Smooth Tab Transition */}
+      <div key={activeTab} className="my-5 flex-1 tab-content-animate">
         
         {/* 1. Themes Tab */}
         {activeTab === 'themes' && (

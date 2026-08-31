@@ -80,7 +80,7 @@ export function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#2D2319]/60 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-150 select-none"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#2D2319]/60 backdrop-blur-xs overflow-y-auto modal-backdrop-animate select-none"
       onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
@@ -89,7 +89,7 @@ export function Modal({
         ref={modalRef}
         className={cn(
           'relative w-full bg-[#FDF8EE] rounded-xl shadow-[6px_6px_0px_#2D2319] border-2 border-[#2D2319] text-[#2D2319]',
-          'flex flex-col max-h-[90vh] my-auto overflow-hidden animate-in zoom-in-95 duration-150',
+          'flex flex-col max-h-[90vh] my-auto overflow-hidden modal-window-animate',
           currentSizeClass,
           className
         )}
