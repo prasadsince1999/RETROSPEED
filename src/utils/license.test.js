@@ -69,7 +69,7 @@ describe('Licensing Engine & Honest Monetization Rules', () => {
     expect(status.status).toBe('full');
     expect(status.isUnlocked).toBe(true);
     expect(status.isTrial).toBe(false);
-    expect(status.badgeText).toBe('Full Workshop Unlocked');
+    expect(status.badgeText).toBe('Full Edition Unlocked');
 
     expect(isGameUnlocked('pit-lane', unlockedProgress)).toBe(true);
     expect(isLessonUnlocked({ lessonNumber: 150, stageIndex: 7 }, unlockedProgress)).toBe(true);

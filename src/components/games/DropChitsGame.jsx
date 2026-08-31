@@ -199,7 +199,7 @@ export default function DropChitsGame({
   return (
     <div className={`w-full h-full ${screenNudge ? 'translate-x-1' : ''} transition-transform`}>
       <GameShell
-        title="DROP CHITS"
+        title="DROP SLIPS"
         subtitle="SORTING RAIL"
         score={score}
         streak={streak}
@@ -227,7 +227,7 @@ export default function DropChitsGame({
             className="w-full max-w-3xl aspect-[800/420] border-3 border-[#2D2319] rounded-2xl shadow-[4px_4px_0px_#2D2319] bg-[#FDF8EE]"
           />
           <div className="text-xs font-mono text-[#2D2319]/70 font-bold mt-2">
-            Chits Cleared: {chitsCleared} / {totalGoal}
+            Slips Cleared: {chitsCleared} / {totalGoal}
           </div>
         </div>
       </GameShell>

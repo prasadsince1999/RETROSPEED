@@ -47,7 +47,7 @@ export default function UnlockModal({
           <div className="flex items-center space-x-2">
             <span className="w-3 h-3 rounded-full bg-[#FAF3E0] border border-[#2D2319]" />
             <span className="font-mono text-xs font-black tracking-wider text-[#2D2319] uppercase">
-              RETROSPEED Workshop License // One-Time Unlock
+              RETROSPEED License // One-Time Unlock
             </span>
           </div>
           <button
@@ -72,7 +72,7 @@ export default function UnlockModal({
               <span>Durable Desktop License</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-black font-display tracking-tight text-[#2D2319]">
-              Unlock the Entire Workshop
+              Unlock Full Edition
             </h2>
             <p className="text-xs sm:text-sm text-[#2D2319]/80 font-mono">
               ₹899 in India ($9.99 International) • One single purchase for life.
@@ -108,7 +108,7 @@ export default function UnlockModal({
               </div>
               <div className="flex items-start space-x-2 bg-white border border-[#2D2319] rounded-lg p-2.5">
                 <Check className="w-4 h-4 text-[#48B89F] shrink-0 mt-0.5" />
-                <span><strong>All 8 Workshop Games</strong> (Local Line, Pit Lane, etc.)</span>
+                <span><strong>All 8 Arcade Games</strong> (Local Line, Pit Lane, etc.)</span>
               </div>
               <div className="flex items-start space-x-2 bg-white border border-[#2D2319] rounded-lg p-2.5">
                 <Check className="w-4 h-4 text-[#48B89F] shrink-0 mt-0.5" />
@@ -136,10 +136,10 @@ export default function UnlockModal({
           {license.status === 'full' || unlockedSuccess ? (
             <div className="p-4 bg-[#48B89F]/20 border-2 border-[#48B89F] rounded-xl text-center space-y-1">
               <div className="font-display font-black text-sm text-[#2D2319]">
-                ✓ Workshop Fully Unlocked!
+                ✓ Fully Unlocked!
               </div>
               <p className="text-xs font-mono text-[#2D2319]/80">
-                You have permanent lifetime access to all current and future v1.x tracks and workshop games.
+                You have permanent lifetime access to all current and future tracks and games.
               </p>
             </div>
           ) : (
@@ -150,7 +150,7 @@ export default function UnlockModal({
                 className="w-full py-3 bg-[#48B89F] hover:bg-[#3ea089] text-[#2D2319] font-display font-black text-sm uppercase rounded-xl border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-2 cursor-pointer"
               >
                 <Key className="w-4 h-4" />
-                <span>Unlock Workshop Once — ₹899 / $9.99</span>
+                <span>Unlock Full Edition — ₹899 / $9.99</span>
               </button>
 
               {!userProgress.license?.trialStartedAt && (

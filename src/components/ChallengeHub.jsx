@@ -101,19 +101,19 @@ const WORKSHOP_GAMES = [
   },
   {
     id: 'drop-chits',
-    title: 'Drop Chits',
+    title: 'Drop Slips',
     badge: 'Falling Words',
     badgeColor: 'bg-[#C3A6E8]',
-    description: 'Sorting rail defense: Type words on falling paper chits before they hit the desk.',
+    description: 'Sorting rail defense: Type words on falling paper slips before they reach the bottom.',
     icon: FileText,
     focus: 'Part 6 Speed'
   },
   {
     id: 'fuse-desk',
-    title: 'Fuse Desk',
+    title: 'Fuse Box',
     badge: 'Root Words',
     badgeColor: 'bg-[#F6C445]',
-    description: 'Manila envelope pressure: Submit words containing the target root before the fuse burns.',
+    description: 'Envelope pressure: Submit words containing the target root before the fuse burns.',
     icon: FlameKindling,
     focus: 'Part 5 Symbols & Roots'
   },
@@ -287,7 +287,7 @@ export default function ChallengeHub({
 
                 <div className="mt-4 pt-3 border-t border-[#2D2319]/15 flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold text-[#2D2319]/70">
-                    {isGameUnlocked(game.id, userProgress) ? 'Workshop Edition' : 'Requires Unlock'}
+                    {isGameUnlocked(game.id, userProgress) ? 'Full Edition' : 'Requires Unlock'}
                   </span>
                   <button
                     onClick={() => handleLaunch(game.id)}

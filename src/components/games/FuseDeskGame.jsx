@@ -120,7 +120,7 @@ export default function FuseDeskGame({
   return (
     <div className="w-full h-full">
       <GameShell
-        title="FUSE DESK"
+        title="FUSE BOX"
         subtitle="ROOT VOCABULARY"
         score={score}
         streak={streak}

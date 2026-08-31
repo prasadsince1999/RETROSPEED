@@ -285,7 +285,7 @@ export default function PlayerProfileModal({
                 className="px-3 py-1.5 bg-[#FAF3E0] hover:bg-[#F28B82] border-2 border-[#2D2319] rounded-xl text-xs font-mono font-bold text-[#F28B82] hover:text-[#2D2319] shadow-[1px_1px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer transition-colors"
                 title="Wipe all local scores and progress"
               >
-                Reset All Data...
+                Reset all progress...
               </button>
             )}
             <div className="text-xs font-mono font-bold text-[#48B89F]">

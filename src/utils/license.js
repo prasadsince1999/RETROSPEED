@@ -50,7 +50,7 @@ export function getLicenseStatus(userProgress = {}, currentTimeMs = Date.now()) 
       isTrial: false,
       isFree: false,
       trialDaysRemaining: 0,
-      badgeText: 'Full Workshop Unlocked',
+      badgeText: 'Full Edition Unlocked',
       tierLabel: 'Lifetime Edition'
     };
   }
@@ -70,7 +70,7 @@ export function getLicenseStatus(userProgress = {}, currentTimeMs = Date.now()) 
         isFree: false,
         trialDaysRemaining: daysRemaining,
         badgeText: `Full Preview — ${daysRemaining} day${daysRemaining === 1 ? '' : 's'} left`,
-        tierLabel: '30-Day Workshop Trial'
+        tierLabel: '30-Day Full Preview'
       };
     }
   }
@@ -82,7 +82,7 @@ export function getLicenseStatus(userProgress = {}, currentTimeMs = Date.now()) 
     isTrial: false,
     isFree: true,
     trialDaysRemaining: 0,
-    badgeText: 'Free Workshop Tier',
+    badgeText: 'Free Edition',
     tierLabel: 'Free Edition'
   };
 }

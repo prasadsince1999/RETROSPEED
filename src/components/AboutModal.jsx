@@ -71,7 +71,7 @@ export default function AboutModal({
             <span className="font-mono text-xs sm:text-sm font-black tracking-wider text-[#2D2319] uppercase flex items-center gap-1.5">
               <span>ABOUT RETROSPEED</span>
               <span className="text-[#2D2319]/40">//</span>
-              <span className="hidden sm:inline">KSM × TECH STUDIO WORKSHOP</span>
+              <span className="hidden sm:inline">KSM × Tech</span>
             </span>
           </div>
 
@@ -180,7 +180,7 @@ export default function AboutModal({
                   <div className="bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl p-3.5 shadow-[2px_2px_0px_#2D2319] space-y-1.5">
                     <div className="font-display font-black text-xs text-[#2D2319] flex items-center space-x-1.5">
                       <ShieldCheck className="w-4 h-4 text-[#48B89F]" />
-                      <span>The Offline Workshop Pledge</span>
+                      <span>Offline. Progress stays on this PC.</span>
                     </div>
                     <p className="text-[11px] text-[#2D2319]/80">
                       No cloud locks, no mandatory accounts, no telemetric trackers, and zero intrusive ads. Your typing drills, keystroke latency, and progress remain 100% private on your machine.
@@ -190,10 +190,10 @@ export default function AboutModal({
                   <div className="bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl p-3.5 shadow-[2px_2px_0px_#2D2319] space-y-1.5">
                     <div className="font-display font-black text-xs text-[#2D2319] flex items-center space-x-1.5">
                       <Zap className="w-4 h-4 text-[#F6C445]" />
-                      <span>Driving School Philosophy</span>
+                      <span>Step-by-Step Curriculum</span>
                     </div>
                     <p className="text-[11px] text-[#2D2319]/80">
-                      First learn the clutch (Home Row), then the open road (Full Alphabets & Numbers), then highway shortcuts (Developer Syntax & OS Chords). Practice feels like one cohesive arcade desk.
+                      From Home Row foundations to numbers, symbols, and developer shortcuts. Practice feels like one cohesive arcade.
                     </p>
                   </div>
                 </div>
@@ -359,7 +359,7 @@ export default function AboutModal({
                         <span className="px-1.5 py-0.2 rounded bg-[#48B89F] text-[9px] font-mono border border-[#2D2319]">SHIPPED</span>
                       </div>
                       <p className="text-[11px] text-[#2D2319]/80">
-                        Press Room, Paper Planes, Local Line, Night Market, Drop Chits, Fuse Desk, Pit Lane, and Patch Terminal unified under Neo-Brutalist paper desk.
+                        Press Room, Paper Planes, Local Line, Night Market, Drop Slips, Fuse Box, Pit Lane, and Patch Terminal unified under Neo-Brutalist paper arcade.
                       </p>
                     </div>
 
@@ -405,7 +405,7 @@ export default function AboutModal({
                   <div className="space-y-2.5 text-xs font-mono">
                     <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-xl p-3 shadow-[2px_2px_0px_#2D2319] space-y-1">
                       <div className="flex items-center justify-between font-bold">
-                        <span className="font-display font-black text-[#2D2319]">Shortcut Lab & Chords Kitchen</span>
+                        <span className="font-display font-black text-[#2D2319]">Shortcut Lab</span>
                         <span className="px-1.5 py-0.2 rounded bg-[#F6C445] text-[9px] font-mono border border-[#2D2319]">IN BETA</span>
                       </div>
                       <p className="text-[11px] text-[#2D2319]/80">
@@ -471,13 +471,13 @@ export default function AboutModal({
               {/* License Status Hero Card */}
               <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <div className="text-[10px] font-mono font-bold text-[#2D2319]/70 uppercase">Current Workshop License Status</div>
+                  <div className="text-[10px] font-mono font-bold text-[#2D2319]/70 uppercase">License Status</div>
                   <div className="text-base sm:text-lg font-black font-display text-[#2D2319] flex items-center space-x-2">
                     <span>{license.badgeText}</span>
                     <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold border border-[#2D2319] ${
                       license.isUnlocked ? 'bg-[#48B89F] text-[#2D2319]' : 'bg-[#F6C445] text-[#2D2319]'
                     }`}>
-                      {license.isUnlocked ? 'LIFETIME ACTIVE' : 'FREE TIER'}
+                      {license.isUnlocked ? 'LIFETIME ACTIVE' : 'FREE EDITION'}
                     </span>
                   </div>
                   <p className="text-xs font-mono text-[#2D2319]/75">
@@ -495,7 +495,7 @@ export default function AboutModal({
                   }}
                   className="px-4 py-2.5 bg-[#48B89F] hover:bg-[#3ea089] border-2 border-[#2D2319] rounded-xl font-display font-black text-xs sm:text-sm shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer shrink-0 text-[#2D2319]"
                 >
-                  {license.isUnlocked ? 'View License Details' : '✦ Unlock Full Workshop'}
+                  {license.isUnlocked ? 'View License Details' : '✦ Unlock full edition'}
                 </button>
               </div>
 
@@ -503,10 +503,10 @@ export default function AboutModal({
               <div className="bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl p-5 shadow-[3px_3px_0px_#2D2319] space-y-3">
                 <div className="flex items-center space-x-2">
                   <Heart className="w-4 h-4 text-[#F28B82] fill-[#F28B82]" />
-                  <span className="font-display font-black text-xs sm:text-sm text-[#2D2319]">Support Independent Workshop Development</span>
+                  <span className="font-display font-black text-xs sm:text-sm text-[#2D2319]">Support development</span>
                 </div>
                 <p className="text-xs font-mono text-[#2D2319]/80 leading-relaxed">
-                  RETROSPEED is completely ad-free and privacy-respecting. If you enjoy practicing here and want to sponsor the maker, you can support on GitHub or contribute a desk tip.
+                  RETROSPEED is completely ad-free and privacy-respecting. If you enjoy practicing here and want to sponsor the maker, you can support on GitHub.
                 </p>
                 <div>
                   <button
@@ -521,13 +521,13 @@ export default function AboutModal({
                 </div>
               </div>
 
-              {/* Factory Reset Workshop Data Section */}
+              {/* Factory Reset Data Section */}
               {onOpenResetModal && (
                 <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-5 shadow-[3px_3px_0px_#2D2319] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-0.5">
                     <div className="text-xs sm:text-sm font-black font-display text-[#2D2319] flex items-center space-x-1.5">
                       <RotateCcw className="w-4 h-4 text-[#F28B82]" />
-                      <span>Factory Reset All Workshop Data</span>
+                      <span>Reset all progress</span>
                     </div>
                     <div className="text-[11px] font-mono text-[#2D2319]/70">
                       Wipe all lesson completion records, stars, XP, streaks, and restore brand-new state.

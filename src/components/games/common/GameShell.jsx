@@ -183,17 +183,17 @@ export default function GameShell({
           <div className="absolute inset-0 bg-[#2D2319]/70 backdrop-blur-xs flex items-center justify-center z-40">
             <div className="bg-[#FAF3E0] border-3 border-[#2D2319] rounded-2xl p-6 shadow-[6px_6px_0px_#2D2319] text-center space-y-4 max-w-xs w-full animate-in zoom-in-95 duration-100">
               <div className="font-display font-black text-xl text-[#2D2319]">
-                WORKSHOP PAUSED
+                PAUSED
               </div>
               <p className="text-xs font-mono text-[#2D2319]/80">
-                Hands rested. The press is on hold.
+                Hands rested. Game is on hold.
               </p>
               <div className="flex flex-col gap-2 pt-2">
                 <button
                   onClick={onTogglePause}
                   className="w-full py-2 rounded-xl bg-[#48B89F] hover:bg-[#F6C445] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-black uppercase text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all"
                 >
-                  ▶ Resume Workshop
+                  ▶ Resume
                 </button>
                 <button
                   onClick={onExit}

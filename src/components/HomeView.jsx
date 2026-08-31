@@ -89,10 +89,10 @@ export default function HomeView({
 
         <div className="flex items-center justify-center sm:justify-start space-x-2 pl-1 pt-0.5">
           <span className="px-2 py-0.5 rounded bg-[#F6C445] border border-[#2D2319] text-[10px] font-mono font-black uppercase tracking-wider text-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-            Driving School Spine
+            Core Spine
           </span>
-          <p className="text-xs sm:text-sm font-medium text-[#2D2319]/80 font-serif italic">
-            First you learn the clutch. Then the road. Then highway shortcuts.
+          <p className="text-xs sm:text-sm font-medium text-[#2D2319]/80 font-mono">
+            Learn the keys. Build your rhythm. Speed follows naturally.
           </p>
         </div>
       </div>

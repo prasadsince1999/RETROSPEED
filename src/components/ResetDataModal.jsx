@@ -53,7 +53,7 @@ export default function ResetDataModal({
             </div>
             <div>
               <div className="font-display font-black text-sm text-[#2D2319]">
-                Reset All Workshop Data?
+                Reset All Progress?
               </div>
               <p className="text-xs text-[#2D2319]/80 font-mono mt-1 leading-relaxed">
                 This will erase all progress, completed drills, high scores, accuracy heatmaps, and custom player profile settings.

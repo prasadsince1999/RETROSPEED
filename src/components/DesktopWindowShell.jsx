@@ -323,7 +323,7 @@ export default function DesktopWindowShell({
                         }}
                         className="w-full text-left px-3 py-2 hover:bg-[#F28B82] text-[#F28B82] hover:text-[#2D2319] flex items-center justify-between font-bold cursor-pointer transition-colors"
                       >
-                        <span>Reset All Workshop Data...</span>
+                        <span>Reset all progress...</span>
                         <RotateCcw className="w-3.5 h-3.5" />
                       </button>
                     </div>
@@ -358,7 +358,7 @@ export default function DesktopWindowShell({
                     ? 'bg-[#48B89F] text-[#2D2319]' 
                     : 'bg-[#F6C445] hover:bg-[#F28B82] text-[#2D2319]'
                 }`}
-                title={license.isUnlocked ? 'Lifetime Workshop License Active' : 'Click to Unlock Full Workshop'}
+                title={license.isUnlocked ? 'Lifetime License Active' : 'Click to Unlock full edition'}
               >
                 <span>{license.isUnlocked ? '✦ UNLOCKED' : '✦ UNLOCK'}</span>
               </button>
@@ -382,7 +382,7 @@ export default function DesktopWindowShell({
                         <div className="font-display font-black text-[#2D2319]">RETROSPEED</div>
                         <div className="text-[10px] font-mono font-bold text-[#F28B82] uppercase">Race Your Fingers</div>
                         <p className="text-[10px] text-[#2D2319]/75 leading-relaxed font-mono">
-                          Offline touch typing workshop. Maintain home row posture for maximum speed.
+                          Offline touch typing. Maintain home row posture for maximum speed.
                         </p>
                       </div>
 
