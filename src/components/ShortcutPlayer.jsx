@@ -12,9 +12,11 @@ import {
   Layers,
   Sparkles,
   Command,
-  ArrowRight
+  ArrowRight,
+  Lock
 } from 'lucide-react';
 import { sound } from '../utils/audio';
+import { getLicenseStatus } from '../utils/license';
 
 const SHORTCUT_DRILLS = [
   {
@@ -64,7 +66,7 @@ const SHORTCUT_DRILLS = [
   }
 ];
 
-export default function ShortcutPlayer({ onExit, onComplete }) {
+export default function ShortcutPlayer({ onExit, onComplete, userProgress = {}, onOpenUnlockModal }) {
   const [drillIndex, setDrillIndex] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
   const [pressedKeys, setPressedKeys] = useState(new Set());
@@ -75,6 +77,7 @@ export default function ShortcutPlayer({ onExit, onComplete }) {
   const [isFinished, setIsFinished] = useState(false);
   const containerRef = useRef(null);
 
+  const license = getLicenseStatus(userProgress);
   const currentDrill = SHORTCUT_DRILLS[drillIndex] || SHORTCUT_DRILLS[0];
   const currentStep = currentDrill.steps[stepIndex] || currentDrill.steps[0];
 
@@ -128,7 +131,13 @@ export default function ShortcutPlayer({ onExit, onComplete }) {
         if (stepIndex + 1 < currentDrill.steps.length) {
           setStepIndex(prev => prev + 1);
         } else if (drillIndex + 1 < SHORTCUT_DRILLS.length) {
-          setDrillIndex(prev => prev + 1);
+          const nextIndex = drillIndex + 1;
+          if (nextIndex >= 2 && !license.isUnlocked) {
+            // Reached boundary of free shortcut drills
+            if (onOpenUnlockModal) onOpenUnlockModal();
+            return;
+          }
+          setDrillIndex(nextIndex);
           setStepIndex(0);
         } else {
           setIsFinished(true);

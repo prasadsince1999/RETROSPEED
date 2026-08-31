@@ -20,9 +20,10 @@ import {
   Clock,
   Command
 } from 'lucide-react';
+import { sound } from '../utils/audio';
 import { COURSES_CATALOG } from '../data/courseCatalog';
 import { SPINE_PARTS } from '../data/spineCurriculum';
-import { sound } from '../utils/audio';
+import { isLessonUnlocked } from '../utils/license';
 
 export default function PracticeHub({
   userProgress = {},
@@ -30,7 +31,8 @@ export default function PracticeHub({
   onSelectCourse,
   onStartLesson,
   onStartSpineLesson,
-  onNavigate
+  onNavigate,
+  onOpenUnlockModal
 }) {
   const [activeTab, setActiveTab] = useState('spine'); // 'spine' | 'specialty'
   const [selectedPartNumber, setSelectedPartNumber] = useState(1);
@@ -41,6 +43,10 @@ export default function PracticeHub({
 
   const handleLaunchSpineLesson = (part, lesson) => {
     sound.playKeyClick();
+    if (!isLessonUnlocked(lesson, userProgress)) {
+      if (onOpenUnlockModal) onOpenUnlockModal();
+      return;
+    }
     if (onStartSpineLesson) {
       onStartSpineLesson(part, lesson);
     }
@@ -225,10 +231,23 @@ export default function PracticeHub({
                         </span>
                         <button
                           onClick={() => handleLaunchSpineLesson(selectedPart, lesson)}
-                          className="px-3 py-1 rounded-lg bg-[#F6C445] hover:bg-[#F28B82] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] font-mono text-xs font-bold text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1 cursor-pointer"
+                          className={`px-3 py-1 rounded-lg border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] font-mono text-xs font-bold active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1 cursor-pointer ${
+                            isLessonUnlocked(lesson, userProgress)
+                              ? 'bg-[#F6C445] hover:bg-[#F28B82] text-[#2D2319]'
+                              : 'bg-[#FAF3E0] hover:bg-[#F28B82] text-[#2D2319]/80'
+                          }`}
                         >
-                          <Play className="w-3 h-3 fill-[#2D2319]" />
-                          <span>{isDone ? 'Practice Again' : 'Start Lesson'}</span>
+                          {isLessonUnlocked(lesson, userProgress) ? (
+                            <>
+                              <Play className="w-3 h-3 fill-[#2D2319]" />
+                              <span>{isDone ? 'Practice Again' : 'Start Lesson'}</span>
+                            </>
+                          ) : (
+                            <>
+                              <Lock className="w-3 h-3" />
+                              <span>Unlock</span>
+                            </>
+                          )}
                         </button>
                       </div>
                     </div>

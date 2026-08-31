@@ -8,9 +8,11 @@ import ScoreModal from './components/ScoreModal';
 import JumpWarningModal from './components/JumpWarningModal';
 import QuickDrillPlayer from './components/QuickDrillPlayer';
 import ShopView from './components/ShopView';
+import UnlockModal from './components/UnlockModal';
 import { getCurriculumForCourse } from './data/curriculum';
 import { loadProgress, saveLessonResult, saveProgress } from './utils/storage';
 import { sound } from './utils/audio';
+import { isGameUnlocked, isLessonUnlocked } from './utils/license';
 
 // Lazy load hub views and arcade engines on demand
 const PracticeHub = lazy(() => import('./components/PracticeHub'));
@@ -65,6 +67,7 @@ export default function App() {
   // Modals state
   const [scoreModalStats, setScoreModalStats] = useState(null);
   const [jumpWarningLesson, setJumpWarningLesson] = useState(null);
+  const [unlockModalOpen, setUnlockModalOpen] = useState(false);
 
   // Settings
   const [soundEnabled, setSoundEnabled] = useState(userProgress.settings?.sound ?? true);
@@ -119,6 +122,11 @@ export default function App() {
 
   // Launch a specific lesson
   const launchLesson = (lesson, origin = 'learn') => {
+    if (!isLessonUnlocked(lesson, userProgress)) {
+      setUnlockModalOpen(true);
+      return;
+    }
+
     setActiveLesson(lesson);
     setScoreModalStats(null);
     setJumpWarningLesson(null);
@@ -155,6 +163,10 @@ export default function App() {
 
   // Launch direct arcade game from Play Hub
   const launchPlayArcadeGame = (gameViewId) => {
+    if (!isGameUnlocked(gameViewId, userProgress)) {
+      setUnlockModalOpen(true);
+      return;
+    }
     setGameLaunchOrigin('play');
     setCurrentView(gameViewId);
   };
@@ -355,12 +367,15 @@ export default function App() {
                     handleSelectCourse(courseId, targetLevelId);
                   }}
                   onNavigate={view => setCurrentView(view)}
+                  onOpenUnlockModal={() => setUnlockModalOpen(true)}
                 />
               )}
 
               {/* Computer Skills & Shortcut Chords Lab */}
               {currentView === 'shortcuts' && (
                 <ShortcutPlayer
+                  userProgress={userProgress}
+                  onOpenUnlockModal={() => setUnlockModalOpen(true)}
                   onExit={() => setCurrentView('learn')}
                   onComplete={stats => {
                     handleArcadeComplete('shortcuts-lab', stats);
@@ -404,6 +419,7 @@ export default function App() {
                   onLaunchGame={launchPlayArcadeGame}
                   onStartSkillTrial={handleStartSkillTrial}
                   onNavigate={view => setCurrentView(view)}
+                  onOpenUnlockModal={() => setUnlockModalOpen(true)}
                 />
               )}
 
@@ -596,6 +612,17 @@ export default function App() {
           onCancel={() => setJumpWarningLesson(null)}
         />
       )}
+
+      {/* Global Unlock Workshop Modal */}
+      <UnlockModal
+        isOpen={unlockModalOpen}
+        onClose={() => setUnlockModalOpen(false)}
+        userProgress={userProgress}
+        onLicenseUpdated={updated => {
+          setUserProgress(updated);
+          saveProgress(updated);
+        }}
+      />
 
     </div>
   );

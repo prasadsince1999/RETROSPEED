@@ -24,9 +24,11 @@ import {
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { getPlayerProfile } from '../utils/storage';
+import { getLicenseStatus } from '../utils/license';
 import { COURSES_CATALOG } from '../data/courseCatalog';
 import PlayerProfileModal from './PlayerProfileModal';
-import StudioModal from './StudioModal';
+import AboutModal from './AboutModal';
+import UnlockModal from './UnlockModal';
 
 export default function DesktopWindowShell({
   children,
@@ -43,9 +45,11 @@ export default function DesktopWindowShell({
   const [windowState, setWindowState] = useState('normal'); // 'normal' | 'maximized' | 'minimized'
   const [activeMenuDropdown, setActiveMenuDropdown] = useState(null); // 'game' | 'tracks' | 'stats' | 'settings' | 'help' | null
   const [profileModalOpen, setProfileModalOpen] = useState(false);
-  const [studioModalOpen, setStudioModalOpen] = useState(false);
+  const [aboutModalOpen, setAboutModalOpen] = useState(false);
+  const [unlockModalOpen, setUnlockModalOpen] = useState(false);
 
   const profile = getPlayerProfile(userProgress);
+  const license = getLicenseStatus(userProgress);
   const activeCourse = COURSES_CATALOG.find(c => c.id === activeCourseId) || COURSES_CATALOG[0];
 
   const handleNav = (view) => {
@@ -377,18 +381,36 @@ export default function DesktopWindowShell({
                 )}
               </div>
 
-              {/* Studio Button */}
+              {/* About Button */}
               <button
                 type="button"
                 onClick={() => {
                   sound.playKeyClick();
                   setActiveMenuDropdown(null);
-                  setStudioModalOpen(true);
+                  setAboutModalOpen(true);
                 }}
-                className="hover:underline flex items-center space-x-1 focus:outline-none text-[#2D2319]"
+                className="hover:underline flex items-center space-x-1 focus:outline-none text-[#2D2319] cursor-pointer"
               >
-                <span>Studio</span>
+                <span>About</span>
                 <span className="text-[10px] text-[#F6C445]">✦</span>
+              </button>
+
+              {/* License / Unlock Trigger */}
+              <button
+                type="button"
+                onClick={() => {
+                  sound.playKeyClick();
+                  setActiveMenuDropdown(null);
+                  setUnlockModalOpen(true);
+                }}
+                className={`px-2 py-0.5 rounded border border-[#2D2319] text-[10px] font-mono font-bold flex items-center space-x-1 cursor-pointer transition-all active:translate-x-0.5 active:translate-y-0.5 ${
+                  license.isUnlocked 
+                    ? 'bg-[#48B89F] text-[#2D2319]' 
+                    : 'bg-[#F6C445] hover:bg-[#F28B82] text-[#2D2319]'
+                }`}
+                title={license.isUnlocked ? 'Lifetime Workshop License Active' : 'Click to Unlock Full Workshop'}
+              >
+                <span>{license.isUnlocked ? '✦ UNLOCKED' : '✦ UNLOCK'}</span>
               </button>
 
               {/* Help ▾ Dropdown */}
@@ -396,7 +418,7 @@ export default function DesktopWindowShell({
                 <button
                   type="button"
                   onClick={() => setActiveMenuDropdown(activeMenuDropdown === 'help' ? null : 'help')}
-                  className="hover:underline flex items-center space-x-1 focus:outline-none"
+                  className="hover:underline flex items-center space-x-1 focus:outline-none cursor-pointer"
                 >
                   <span>Help</span>
                   <span className="text-[10px]">▾</span>
@@ -405,14 +427,40 @@ export default function DesktopWindowShell({
                 {activeMenuDropdown === 'help' && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setActiveMenuDropdown(null)} />
-                    <div className="absolute left-0 top-full mt-1 w-56 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-2 text-xs p-3 space-y-2">
-                      <div className="font-display font-black text-[#2D2319]">RETROSPEED</div>
-                      <div className="text-[10px] font-mono font-bold text-[#F28B82] uppercase">Race Your Fingers</div>
-                      <p className="text-[10px] text-[#2D2319]/70 leading-relaxed font-sans">
-                        Press Space to submit keywords. Maintain home row finger posture for optimal velocity.
-                      </p>
-                      <div className="text-[10px] text-[#2D2319]/90 border-t border-[#2D2319]/20 pt-1">
-                        Version 2.0 • Retro Neo-Brutalist Edition
+                    <div className="absolute left-0 top-full mt-1 w-60 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs divide-y divide-[#2D2319]/15">
+                      <div className="p-3 space-y-1 bg-[#FAF3E0]">
+                        <div className="font-display font-black text-[#2D2319]">RETROSPEED</div>
+                        <div className="text-[10px] font-mono font-bold text-[#F28B82] uppercase">Race Your Fingers</div>
+                        <p className="text-[10px] text-[#2D2319]/75 leading-relaxed font-mono">
+                          Offline touch typing workshop. Maintain home row posture for maximum speed.
+                        </p>
+                      </div>
+
+                      <div className="py-1">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveMenuDropdown(null);
+                            setAboutModalOpen(true);
+                          }}
+                          className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] font-mono font-bold text-[11px] cursor-pointer"
+                        >
+                          Studio & About RETROSPEED
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveMenuDropdown(null);
+                            setUnlockModalOpen(true);
+                          }}
+                          className="w-full text-left px-3 py-1.5 hover:bg-[#48B89F] text-[#2D2319] font-mono font-bold text-[11px] cursor-pointer"
+                        >
+                          License Status & Pricing
+                        </button>
+                      </div>
+
+                      <div className="px-3 py-1.5 text-[9px] font-mono text-[#2D2319]/60">
+                        Version 2.0 • Microsoft Store Edition
                       </div>
                     </div>
                   </>
@@ -524,6 +572,29 @@ export default function DesktopWindowShell({
                 </div>
               </div>
 
+              {/* License Status Badge */}
+              <button
+                type="button"
+                onClick={() => {
+                  sound.playKeyClick();
+                  setUnlockModalOpen(true);
+                }}
+                className={`w-full mt-2.5 p-2 rounded-xl border-2 border-[#2D2319] flex items-center justify-between text-xs font-mono font-bold shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer ${
+                  license.isUnlocked
+                    ? 'bg-[#C7E8CA] text-[#2D2319]'
+                    : 'bg-[#FAF3E0] hover:bg-[#F6C445] text-[#2D2319]'
+                }`}
+                title="Click to view license status or unlock full workshop"
+              >
+                <div className="flex items-center space-x-1.5 min-w-0">
+                  <Shield className="w-3.5 h-3.5 shrink-0" />
+                  <span className="truncate text-[10px]">{license.badgeText}</span>
+                </div>
+                <span className="text-[10px] uppercase font-black shrink-0 underline ml-1">
+                  {license.isUnlocked ? 'View' : 'Unlock'}
+                </span>
+              </button>
+
             </div>
 
             {/* Right Client Area */}
@@ -544,10 +615,25 @@ export default function DesktopWindowShell({
         onProfileUpdated={onProfileUpdated}
       />
 
-      {/* KSM × Tech Studio Shelf Modal */}
-      <StudioModal
-        isOpen={studioModalOpen}
-        onClose={() => setStudioModalOpen(false)}
+      {/* About Modal */}
+      <AboutModal
+        isOpen={aboutModalOpen}
+        onClose={() => setAboutModalOpen(false)}
+        userProgress={userProgress}
+        onOpenUnlockModal={() => {
+          setAboutModalOpen(false);
+          setUnlockModalOpen(true);
+        }}
+      />
+
+      {/* Unlock Workshop Modal */}
+      <UnlockModal
+        isOpen={unlockModalOpen}
+        onClose={() => setUnlockModalOpen(false)}
+        userProgress={userProgress}
+        onLicenseUpdated={updated => {
+          if (onProfileUpdated) onProfileUpdated(updated);
+        }}
       />
 
     </div>

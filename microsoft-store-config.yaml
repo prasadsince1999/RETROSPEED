@@ -1,11 +1,12 @@
-# RETROSPEED — Microsoft Store Publishing Configuration
+# RETROSPEED — Microsoft Store Publishing & Commerce Configuration
 # Reference: MICROSOFT_STORE_PUBLISHING_AGENT_CONTEXT.md
 
 microsoft_store:
   account:
     type: "Individual"
     country_region: "India"
-    publisher_display_name: "RETROSPEED Studio"
+    publisher_display_name: "KSM x Tech Studio"
+    publisher_legal_name: "KSM x Tech Studio"
     onboarding_status: "active"
 
   product:
@@ -13,6 +14,46 @@ microsoft_store:
     subtitle: "Race Your Fingers"
     product_id: "RETROSPEED"
     store_id: ""
+
+  monetization:
+    model: "FreeToInstall_With_Durable_Unlock"
+    base_app_price: "Free"
+    trial_type: "StoreManaged_30Day"
+    trial_duration_days: 30
+    trial_description: "Full 30-day trial preview of the complete workshop, all 8 games, and full shortcut lab."
+    
+    # Durable In-App Purchases (Microsoft Store Commerce Only)
+    add_ons:
+      - id: "retrospeed_unlock"
+        title: "RETROSPEED — Full Workshop Lifetime Unlock"
+        type: "Durable"
+        pricing:
+          india_anchor_inr: 899
+          india_sale_inr: 499
+          india_floor_inr: 399
+          international_usd: 9.99
+          international_sale_usd: 4.99
+          international_floor_usd: 3.99
+        sale_schedule_events:
+          - "Republic Day"
+          - "Studio Anniversary"
+          - "Back to School (June/July)"
+          - "Diwali"
+        description: "Unlocks Parts 3–8 of the zero-to-hero touch typing journey, all 8 workshop games, and full computer shortcut lab with lifetime updates on this major version."
+      
+      - id: "support_the_desk"
+        title: "Support the Desk — Voluntary Tip"
+        type: "Durable"
+        pricing:
+          india_anchor_inr: 99
+          international_usd: 1.99
+        description: "Voluntary desk contribution to support independent offline desktop tools development."
+
+    advertising:
+      has_ads: false
+      banner_ads: false
+      rewarded_video_ads: false
+      third_party_analytics: false
 
   packaging:
     preferred: "MSIX"
@@ -24,17 +65,22 @@ microsoft_store:
   listing:
     default_language: "en-US"
     title: "RETROSPEED — Race Your Fingers"
-    short_description: "Arcade-powered retro desktop touch typing trainer with 13 curriculum tracks, 9 live arcade games, and real-time keystroke telemetry."
+    short_description: "Tactile retro touch typing and velocity workshop with 13 curriculum tracks, 8 paper-arcade games, and real-time keystroke telemetry."
     description: |
-      RETROSPEED — Race Your Fingers is an authentic arcade-powered desktop touch typing velocity studio.
+      RETROSPEED — Race Your Fingers is an authentic paper-arcade desktop touch typing velocity workshop.
 
-      KEY FEATURES:
-      - 13 Comprehensive Curriculum Tracks: From core Home Row foundations to real-world developer syntax (JS, TS, Python, Rust, Go, CSS, SQL).
-      - 9 Live Arcade Defense Engines: Balloon Ninja, Monster Space Defense, Temple Bash, Ocean Bubbles, Apple Thieves, Meteor Defense, Velocity GP Racing, Word Bomb, and Syntax Matrix.
-      - Mathematical Telemetry Engine: Real-time calculation of Inter-Keystroke Intervals (IKI), Hold Time (HT), Fluster Index (FI), and Dynamic Difficulty Adjustment (DDA).
-      - Retro Neo-Brutalist Aesthetic: Solid pastel color palette, hard drop shadows, and authentic 90s OS window shell.
-      - 24 Unlockable Achievements, streaks, performance heatmaps, and customizable player profiles.
-      - 100% Offline & Local-First: Zero data tracking, private and secure.
+      FREE FOREVER TIER:
+      - Parts 1 & 2 of the Driving School touch typing spine.
+      - 2 Full Workshop Games: Press Room (Single-Key Factory Drill) and Paper Planes (Short Words Origami Flight).
+      - Core Computer Shortcut Drills: Copy, Cut, Paste, Undo, Redo.
+      - 100% Offline Local Performance Reports, Heatmaps, and Diagnostics.
+
+      30-DAY STORE FULL PREVIEW & ONE-TIME LIFETIME UNLOCK:
+      - Parts 3 through 8 of the Zero-to-Hero curriculum spine.
+      - All 8 Workshop Games (Local Line, Night Market, Drop Chits, Pit Lane, Fuse Desk, Patch Terminal).
+      - Full Computer Shortcut Lab & Developer Chords.
+      - All 13 comprehensive tracks comprising 700+ exercises.
+      - Zero subscriptions. Zero ads. No account or login required.
     keywords:
       - "typing"
       - "touch typing"
@@ -65,7 +111,9 @@ microsoft_store:
 
   certification_notes: |
     RETROSPEED is a standalone, offline touch typing and keyboard velocity learning application built with Electron.
-    - All typing practice, games, and telemetry run 100% locally.
+    - Base app is Free with a 30-day Store-managed full trial preview.
+    - All typing practice, games, and telemetry run 100% locally on the user's computer.
     - No user sign-in or account registration required.
-    - No background drivers or elevated administrative privileges needed.
+    - No ads, no third-party tracking, and no external web payment SDKs embedded.
+    - In-app purchases are fulfilled exclusively through Microsoft Store commerce.
     - Full keyboard navigation supported across all modules.
