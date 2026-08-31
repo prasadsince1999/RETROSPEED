@@ -38,16 +38,19 @@ import { COURSES_CATALOG } from '../data/courseCatalog';
 import { calculateStatsSummary, KEY_FINGER_MAPPING, formatTimeDigital, formatTimeHuman } from '../utils/storage';
 import { getKeysForLayout } from '../data/keyboardLayout';
 import { sound } from '../utils/audio';
+import BadgesDashboard from './BadgesDashboard';
 
 export default function StatsDashboard({ 
   userProgress = {}, 
   activeCourseId = 'keystroke-foundations', 
+  defaultTab = 'telemetry',
   onSelectCourse, 
   onNavigate,
   onStartLesson,
   onPracticeKey,
   onBack
 }) {
+  const [activeTab, setActiveTab] = useState(defaultTab); // 'telemetry' | 'trophies'
   const [selectedCourseFilter, setSelectedCourseFilter] = useState(activeCourseId || 'all');
   const [timeRange, setTimeRange] = useState('7days'); // '7days' | '30days' | 'all'
   const [selectedKey, setSelectedKey] = useState('f');
@@ -146,30 +149,80 @@ export default function StatsDashboard({
   return (
     <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[#FDF8EE] p-4 sm:p-6 overflow-y-auto space-y-5">
       
-      {/* SUB-HEADER & FILTER CONTROLS BAR */}
-      <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col md:flex-row md:items-center justify-between gap-4">
-        
-        {/* Left: Title & Subtitle */}
-        <div>
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-[#4BA3E3] text-[#2D2319] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center font-bold shrink-0">
-              <BarChart2 className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2 flex-wrap gap-y-1">
-                <h1 className="text-xl sm:text-2xl font-black text-[#2D2319] tracking-tight font-display">
-                  Performance Diagnostics & Reports
-                </h1>
-                <span className="px-2 py-0.5 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-                  LIVE LOGS
-                </span>
-              </div>
-              <p className="text-xs text-[#2D2319]/80 font-medium font-mono mt-0.5">
-                Speed diagnostics, accuracy heatmaps, benchmark metrics, and historical attempts.
-              </p>
-            </div>
-          </div>
+      {/* ROOM LEVEL TAB SELECTOR */}
+      <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-2.5 sm:p-3 shadow-[4px_4px_0px_#2D2319] flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center space-x-2">
+          <button
+            type="button"
+            onClick={() => {
+              sound.playKeyClick();
+              setActiveTab('telemetry');
+            }}
+            className={`px-3.5 py-1.5 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black transition-all flex items-center space-x-2 cursor-pointer ${
+              activeTab === 'telemetry'
+                ? 'bg-[#F6C445] shadow-[3px_3px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
+                : 'bg-[#FDF8EE] hover:bg-white shadow-[2px_2px_0px_#2D2319]'
+            }`}
+          >
+            <BarChart2 className="w-4 h-4" />
+            <span>Performance Diagnostics</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              sound.playKeyClick();
+              setActiveTab('trophies');
+            }}
+            className={`px-3.5 py-1.5 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black transition-all flex items-center space-x-2 cursor-pointer ${
+              activeTab === 'trophies'
+                ? 'bg-[#F6C445] shadow-[3px_3px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
+                : 'bg-[#FDF8EE] hover:bg-white shadow-[2px_2px_0px_#2D2319]'
+            }`}
+          >
+            <Award className="w-4 h-4 text-[#2D2319]" />
+            <span>Trophy Cabinet (24 Badges)</span>
+          </button>
         </div>
+
+        <div className="text-[11px] font-mono font-bold text-[#2D2319]/70 pr-2 hidden sm:block">
+          {activeTab === 'telemetry' ? 'Real-time Keystroke Telemetry' : 'Milestones & Achievement Trophies'}
+        </div>
+      </div>
+
+      {activeTab === 'trophies' ? (
+        <BadgesDashboard
+          userProgress={userProgress}
+          onNavigate={onNavigate}
+          onSelectCourse={onSelectCourse}
+          onBack={() => setActiveTab('telemetry')}
+        />
+      ) : (
+        <div className="space-y-5">
+          {/* SUB-HEADER & FILTER CONTROLS BAR */}
+          <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col md:flex-row md:items-center justify-between gap-4">
+            
+            {/* Left: Title & Subtitle */}
+            <div>
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-xl bg-[#4BA3E3] text-[#2D2319] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center font-bold shrink-0">
+                  <BarChart2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2 flex-wrap gap-y-1">
+                    <h1 className="text-xl sm:text-2xl font-black text-[#2D2319] tracking-tight font-display">
+                      Performance Diagnostics & Reports
+                    </h1>
+                    <span className="px-2 py-0.5 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
+                      LIVE LOGS
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#2D2319]/80 font-medium font-mono mt-0.5">
+                    Speed diagnostics, accuracy heatmaps, benchmark metrics, and historical attempts.
+                  </p>
+                </div>
+              </div>
+            </div>
 
           {/* Right Controls: Course Filter, Time Range & Navigation */}
           <div className="flex flex-wrap items-center gap-2.5">
@@ -1423,6 +1476,8 @@ export default function StatsDashboard({
             </div>
           </section>
         </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -19,7 +19,6 @@ const PracticeHub = lazy(() => import('./components/PracticeHub'));
 const ChallengeHub = lazy(() => import('./components/ChallengeHub'));
 const CourseCatalog = lazy(() => import('./components/CourseCatalog'));
 const StatsDashboard = lazy(() => import('./components/StatsDashboard'));
-const BadgesDashboard = lazy(() => import('./components/BadgesDashboard'));
 
 // 8 Paper-Arcade Workshop Games
 const PressRoomGame = lazy(() => import('./components/games/PressRoomGame'));
@@ -432,11 +431,12 @@ export default function App() {
                 />
               )}
 
-              {/* Room 5: Progress (Diagnostics, Trophies & Theme Settings) */}
-              {(currentView === 'progress' || currentView === 'stats') && (
+              {/* Room 5: Stats (Diagnostics & Trophy Cabinet) */}
+              {(currentView === 'progress' || currentView === 'stats' || currentView === 'badges') && (
                 <StatsDashboard
                   userProgress={userProgress}
                   activeCourseId={activeCourseId}
+                  defaultTab={currentView === 'badges' ? 'trophies' : 'telemetry'}
                   onSelectCourse={courseId => handleSelectCourse(courseId)}
                   onNavigate={view => setCurrentView(view)}
                   onStartLesson={(courseId, lessonId) => {
@@ -446,17 +446,6 @@ export default function App() {
                     const cur = getCurriculumForCourse(activeCourseId);
                     const found = cur.lessons.find(l => (l.targetKeys || []).includes(keyChar)) || cur.lessons[0];
                     launchLesson(found, 'learn');
-                  }}
-                />
-              )}
-
-              {currentView === 'badges' && (
-                <BadgesDashboard
-                  userProgress={userProgress}
-                  onBack={() => setCurrentView('progress')}
-                  onNavigate={view => setCurrentView(view)}
-                  onSelectCourse={(courseId, targetLevelId) => {
-                    handleSelectCourse(courseId, targetLevelId);
                   }}
                 />
               )}

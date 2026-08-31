@@ -78,21 +78,23 @@ export default function DesktopWindowShell({
     }
   };
 
-  // 5 Distinct Desktop Rooms
+  // 6 Distinct Desktop Rooms
   const NAV_ITEMS = [
     { id: 'home', label: 'Home', icon: Home, highlight: 'bg-[#C7E8CA]' },
     { id: 'learn', label: 'Learn', icon: BookOpen, highlight: 'bg-[#C7E8CA]' },
     { id: 'practice', label: 'Practice', icon: Target, highlight: 'bg-[#C7E8CA]' },
     { id: 'play', label: 'Play', icon: Trophy, highlight: 'bg-[#C7E8CA]' },
-    { id: 'progress', label: 'Progress', icon: BarChart2, highlight: 'bg-[#C7E8CA]' }
+    { id: 'stats', label: 'Stats', icon: BarChart2, highlight: 'bg-[#C7E8CA]' },
+    { id: 'shop', label: 'Shop', icon: ShoppingBag, highlight: 'bg-[#C7E8CA]' }
   ];
 
   const isNavActive = (itemId) => {
     if (itemId === 'home') return currentView === 'home';
     if (itemId === 'learn') return currentView === 'learn' || currentView === 'map' || currentView === 'catalog';
-    if (itemId === 'practice') return currentView === 'practice' || currentView === 'drill' || currentView === 'daily';
-    if (itemId === 'play') return currentView === 'play' || currentView === 'challenge' || ['meteor-words', 'velocity-gp', 'word-bomb', 'syntax-matrix', 'balloon', 'monster', 'temple', 'bubble', 'apple'].includes(currentView);
-    if (itemId === 'progress') return currentView === 'progress' || currentView === 'stats' || currentView === 'badges' || currentView === 'shop';
+    if (itemId === 'practice') return currentView === 'practice' || currentView === 'drill' || currentView === 'daily' || currentView === 'shortcuts';
+    if (itemId === 'play') return currentView === 'play' || currentView === 'challenge' || ['press-room', 'paper-planes', 'local-line', 'night-market', 'drop-chits', 'pit-lane', 'fuse-desk', 'patch-terminal', 'meteor-words', 'velocity-gp', 'word-bomb', 'syntax-matrix'].includes(currentView);
+    if (itemId === 'stats') return currentView === 'stats' || currentView === 'progress' || currentView === 'badges';
+    if (itemId === 'shop') return currentView === 'shop';
     return currentView === itemId;
   };
 
@@ -298,59 +300,12 @@ export default function DesktopWindowShell({
                 )}
               </div>
 
-              {/* Stats ▾ Dropdown */}
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setActiveMenuDropdown(activeMenuDropdown === 'stats' ? null : 'stats')}
-                  className="hover:underline flex items-center space-x-1 focus:outline-none"
-                >
-                  <span>Stats</span>
-                  <span className="text-[10px]">▾</span>
-                </button>
-
-                {activeMenuDropdown === 'stats' && (
-                  <>
-                    <div className="fixed inset-0 z-40" onClick={() => setActiveMenuDropdown(null)} />
-                    <div className="absolute left-0 top-full mt-1 w-52 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs">
-                      <button
-                        type="button"
-                        onClick={() => handleNav('stats')}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
-                      >
-                        <span>Diagnostics Viewer</span>
-                        <BarChart2 className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleNav('badges')}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
-                      >
-                        <span>Trophy Cabinet</span>
-                        <Award className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setActiveMenuDropdown(null);
-                          setProfileModalOpen(true);
-                        }}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
-                      >
-                        <span>Player Profile & XP</span>
-                        <User className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-
               {/* Settings ▾ Dropdown */}
               <div className="relative">
                 <button
                   type="button"
                   onClick={() => setActiveMenuDropdown(activeMenuDropdown === 'settings' ? null : 'settings')}
-                  className="hover:underline flex items-center space-x-1 focus:outline-none"
+                  className="hover:underline flex items-center space-x-1 focus:outline-none cursor-pointer"
                 >
                   <span>Settings</span>
                   <span className="text-[10px]">▾</span>
@@ -359,50 +314,18 @@ export default function DesktopWindowShell({
                 {activeMenuDropdown === 'settings' && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setActiveMenuDropdown(null)} />
-                    <div className="absolute left-0 top-full mt-1 w-52 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs">
+                    <div className="absolute left-0 top-full mt-1 w-56 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs">
                       <button
                         type="button"
                         onClick={() => {
                           setActiveMenuDropdown(null);
-                          setProfileModalOpen(true);
+                          setResetModalOpen(true);
                         }}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
+                        className="w-full text-left px-3 py-2 hover:bg-[#F28B82] text-[#F28B82] hover:text-[#2D2319] flex items-center justify-between font-bold cursor-pointer transition-colors"
                       >
-                        <span>Player Profile & Avatar</span>
-                        <User className="w-3.5 h-3.5" />
+                        <span>Reset All Workshop Data...</span>
+                        <RotateCcw className="w-3.5 h-3.5" />
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          toggleSound();
-                          setActiveMenuDropdown(null);
-                        }}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
-                      >
-                        <span>Sound FX Audio</span>
-                        <span>{soundEnabled ? 'ON [✓]' : 'OFF'}</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleNav('shop')}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold cursor-pointer"
-                      >
-                        <span>Themes & Keycaps</span>
-                        <ShoppingBag className="w-3.5 h-3.5" />
-                      </button>
-                      <div className="border-t border-[#2D2319]/15 mt-1 pt-1">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setActiveMenuDropdown(null);
-                            setResetModalOpen(true);
-                          }}
-                          className="w-full text-left px-3 py-1.5 hover:bg-[#F28B82] text-[#F28B82] hover:text-[#2D2319] flex items-center justify-between font-bold cursor-pointer transition-colors"
-                        >
-                          <span>Reset All Workshop Data...</span>
-                          <RotateCcw className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
                     </div>
                   </>
                 )}
