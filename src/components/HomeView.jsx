@@ -63,21 +63,26 @@ export default function HomeView({
         <div className="flex items-center justify-center sm:justify-start space-x-2.5">
           <span className="text-[#2D2319] font-mono font-bold text-sm tracking-tighter select-none">══</span>
           
-          {/* Keycap [ A ] Icon */}
+          {/* Keycap [ ⚡ ] Icon */}
           <div className="w-8 h-8 rounded-lg bg-[#FAF3E0] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center font-mono font-black text-sm text-[#2D2319] shrink-0">
-            A
+            ⚡
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-black text-[#2D2319] font-display uppercase tracking-tight">
-            Keyword Typer
+            RETROSPEED
           </h1>
 
           <span className="text-[#2D2319] font-mono font-bold text-sm tracking-tighter select-none">════</span>
         </div>
 
-        <p className="text-xs sm:text-sm font-medium text-[#2D2319]/80 pl-1 font-serif italic">
-          Type keywords. Beat the clock. Improve every day.
-        </p>
+        <div className="flex items-center justify-center sm:justify-start space-x-2 pl-1 pt-0.5">
+          <span className="px-2 py-0.5 rounded bg-[#F6C445] border border-[#2D2319] text-[10px] font-mono font-black uppercase tracking-wider text-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
+            Race Your Fingers
+          </span>
+          <p className="text-xs sm:text-sm font-medium text-[#2D2319]/80 font-serif italic">
+            Type keywords. Beat the clock. Improve every day.
+          </p>
+        </div>
       </div>
 
       {/* Quick Play Window Card */}

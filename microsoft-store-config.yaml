@@ -1,31 +1,32 @@
-# KeyCraft — Microsoft Store Publishing Configuration
+# RETROSPEED — Microsoft Store Publishing Configuration
 # Reference: MICROSOFT_STORE_PUBLISHING_AGENT_CONTEXT.md
 
 microsoft_store:
   account:
     type: "Individual"
     country_region: "India"
-    publisher_display_name: "KeyCraft Studio"
+    publisher_display_name: "RETROSPEED Studio"
     onboarding_status: "active"
 
   product:
-    product_name: "KeyCraft"
-    product_id: "KeyCraft"
+    product_name: "RETROSPEED"
+    subtitle: "Race Your Fingers"
+    product_id: "RETROSPEED"
     store_id: ""
 
   packaging:
     preferred: "MSIX"
     architectures: ["x64"]
-    submission_file: "KeyCraft-1.0.0.appx"
+    submission_file: "RETROSPEED-1.0.0.appx"
     entry_point: "electron/main.cjs"
-    app_id: "com.keycraft.desktop"
+    app_id: "com.retrospeed.desktop"
 
   listing:
     default_language: "en-US"
-    title: "KeyCraft - Master Touch Typing & Code Velocity"
-    short_description: "Arcade-powered desktop touch typing trainer with 13 curriculum tracks, 9 retro arcade games, and real-time keystroke telemetry."
+    title: "RETROSPEED — Race Your Fingers"
+    short_description: "Arcade-powered retro desktop touch typing trainer with 13 curriculum tracks, 9 live arcade games, and real-time keystroke telemetry."
     description: |
-      KeyCraft is a next-generation desktop touch typing trainer and developer keyboard velocity studio.
+      RETROSPEED — Race Your Fingers is an authentic arcade-powered desktop touch typing velocity studio.
 
       KEY FEATURES:
       - 13 Comprehensive Curriculum Tracks: From core Home Row foundations to real-world developer syntax (JS, TS, Python, Rust, Go, CSS, SQL).
@@ -37,10 +38,10 @@ microsoft_store:
     keywords:
       - "typing"
       - "touch typing"
-      - "keyboard"
-      - "speed test"
+      - "retrospeed"
+      - "keyboard racer"
+      - "speed typing"
       - "code typing"
-      - "wpm trainer"
       - "arcade typing"
     category: "Education"
     subcategory: "Books & Reference"
@@ -63,7 +64,7 @@ microsoft_store:
     non_microsoft_driver_dependencies: []
 
   certification_notes: |
-    KeyCraft is a standalone, offline touch typing learning application built with Electron.
+    RETROSPEED is a standalone, offline touch typing and keyboard velocity learning application built with Electron.
     - All typing practice, games, and telemetry run 100% locally.
     - No user sign-in or account registration required.
     - No background drivers or elevated administrative privileges needed.

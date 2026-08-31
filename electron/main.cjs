@@ -97,14 +97,14 @@ function createApplicationMenu() {
           }
         },
         {
-          label: 'About KeyCraft',
+          label: 'About RETROSPEED',
           click: () => {
             const { dialog } = require('electron');
             dialog.showMessageBox(mainWindow, {
               type: 'info',
-              title: 'About KeyCraft',
-              message: 'KeyCraft Desktop',
-              detail: `Version: ${app.getVersion()}\nMaster Touch Typing & Code Velocity.\nEngine: Electron ${process.versions.electron}`
+              title: 'About RETROSPEED',
+              message: 'RETROSPEED — Race Your Fingers',
+              detail: `Version: ${app.getVersion()}\nRace Your Fingers • Retro Arcade Touch Typing Velocity Studio.\nEngine: Electron ${process.versions.electron}`
             });
           }
         }
@@ -125,7 +125,7 @@ function createWindow() {
     height: 820,
     minWidth: 1024,
     minHeight: 700,
-    title: 'KeyCraft',
+    title: 'RETROSPEED — Race Your Fingers',
     titleBarStyle: 'default',
     icon: hasIcon ? iconPath : undefined,
     backgroundColor: '#f0f9ff',

@@ -1,7 +1,8 @@
 {
-  "name": "keycraft",
+  "name": "retrospeed",
   "private": true,
   "version": "1.0.0",
+  "description": "RETROSPEED — Race Your Fingers | Retro Arcade Touch Typing & Velocity Studio",
   "type": "module",
   "main": "electron/main.cjs",
   "scripts": {
@@ -34,8 +35,8 @@
     "wait-on": "^9.1.0"
   },
   "build": {
-    "appId": "com.keycraft.desktop",
-    "productName": "KeyCraft",
+    "appId": "com.retrospeed.desktop",
+    "productName": "RETROSPEED",
     "directories": {
       "output": "dist-electron"
     },
@@ -56,11 +57,11 @@
       "allowToChangeInstallationDirectory": true
     },
     "appx": {
-      "identityName": "KeyCraft",
-      "publisher": "CN=KeyCraft",
-      "publisherDisplayName": "KeyCraft Studio",
-      "applicationId": "KeyCraft.App",
-      "displayName": "KeyCraft - Master Touch Typing",
+      "identityName": "RETROSPEED",
+      "publisher": "CN=RETROSPEED",
+      "publisherDisplayName": "RETROSPEED Studio",
+      "applicationId": "RETROSPEED.App",
+      "displayName": "RETROSPEED - Race Your Fingers",
       "backgroundColor": "#B9D2E8",
       "languages": [
         "en-US"

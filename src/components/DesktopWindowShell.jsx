@@ -37,7 +37,7 @@ export default function DesktopWindowShell({
   onSelectCourse,
   onToggleSound,
   onProfileUpdated,
-  title = 'Keyword Typer'
+  title = 'RETROSPEED'
 }) {
   const [windowState, setWindowState] = useState('normal'); // 'normal' | 'maximized' | 'minimized'
   const [activeMenuDropdown, setActiveMenuDropdown] = useState(null); // 'game' | 'tracks' | 'stats' | 'settings' | 'help' | null
@@ -131,6 +131,9 @@ export default function DesktopWindowShell({
               <span className="text-[#2D2319] text-base leading-none">✦</span>
               <span className="tracking-wide text-xs sm:text-sm font-black uppercase font-display">
                 {title}
+              </span>
+              <span className="hidden sm:inline text-[10px] font-mono font-bold text-[#2D2319]/75 tracking-wider uppercase">
+                // Race Your Fingers
               </span>
             </div>
 
@@ -380,7 +383,8 @@ export default function DesktopWindowShell({
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setActiveMenuDropdown(null)} />
                     <div className="absolute left-0 top-full mt-1 w-56 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-2 text-xs p-3 space-y-2">
-                      <div className="font-display font-black text-[#2D2319]">Keyword Typer Desktop</div>
+                      <div className="font-display font-black text-[#2D2319]">RETROSPEED</div>
+                      <div className="text-[10px] font-mono font-bold text-[#F28B82] uppercase">Race Your Fingers</div>
                       <p className="text-[10px] text-[#2D2319]/70 leading-relaxed font-sans">
                         Press Space to submit keywords. Maintain home row finger posture for optimal velocity.
                       </p>

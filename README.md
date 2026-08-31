@@ -1,8 +1,8 @@
-# ✦ KeyCraft — Master Touch Typing & Code Velocity
+# ✦ RETROSPEED — Race Your Fingers
 
 > **"Type keywords. Beat the clock. Improve every day."**
 
-KeyCraft is an arcade-powered, mathematically grounded desktop touch typing trainer and coding velocity studio built with React, Vite, Tailwind CSS, and Electron. Featuring a **100% Solid Retro Neo-Brutalist design system**, real-time keystroke telemetry (IKI, HT, FT, KPL, KRL), Dynamic Difficulty Adjustment (DDA), and 9 responsive arcade game engines.
+**RETROSPEED** is an arcade-powered, mathematically grounded desktop touch typing trainer and coding velocity studio built with React, Vite, Tailwind CSS, and Electron. Featuring a **100% Solid Retro Neo-Brutalist design system**, real-time keystroke telemetry (IKI, HT, FT, KPL, KRL), Dynamic Difficulty Adjustment (DDA), and 9 responsive arcade game engines.
 
 ---
 
@@ -14,8 +14,8 @@ KeyCraft is an arcade-powered, mathematically grounded desktop touch typing trai
 - **Zero Gradients**: High-contrast, accessibility-friendly solid pastel color palette.
 
 ### 📚 Comprehensive 13-Track Curriculum
-1. **KeyCraft Odyssey**: Comprehensive 700+ milestone adventure across all keyboard zones.
-2. **Keystroke Foundations**: Pure muscle memory drills for home row, top row, bottom row, and punctuation.
+1. **Keystroke Foundations**: Pure muscle memory drills for home row, top row, bottom row, and punctuation.
+2. **KeyCraft Odyssey**: Comprehensive 700+ milestone adventure across all keyboard zones.
 3. **Syntax Forge (Developer Track)**: Real-world syntax practice for JavaScript, TypeScript, Python, Rust, Go, CSS, SQL, and HTML.
 4. **Global Lexicon & Etymology**: Loanwords, Greco-Roman roots, linguistics, and multicultural terminology.
 5. **Chronicles of Mystery**: Detective case dossiers, noir investigation logs, and cipher solving.
@@ -104,4 +104,4 @@ npm run package:store
 ---
 
 ## 📄 License
-MIT License. Created by Prasad (KeyCraft Studio).
+MIT License. Created by Prasad (RETROSPEED Studio).

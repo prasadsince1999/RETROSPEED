@@ -1,13 +1,13 @@
-# Privacy Policy for KeyCraft
+# Privacy Policy for RETROSPEED
 
 **Last Updated: August 31, 2026**
 
-KeyCraft ("we", "our", or "us") is dedicated to protecting your privacy. This Privacy Policy explains how KeyCraft collects, stores, and handles your information when you use the KeyCraft desktop and web application.
+**RETROSPEED — Race Your Fingers** ("we", "our", or "us") is dedicated to protecting your privacy. This Privacy Policy explains how RETROSPEED collects, stores, and handles your information when you use the RETROSPEED desktop and web application.
 
 ---
 
 ## 1. Local-First Data Storage
-KeyCraft is built with a **100% offline, local-first architecture**. 
+RETROSPEED is built with a **100% offline, local-first architecture**. 
 
 - **Progress & Scores**: All typing progress, lessons completed, stars earned, typing accuracy, WPM records, streaks, and achievements are stored strictly on your local machine using standard `localStorage` (or local file storage in the desktop application).
 - **Telemetry & Diagnostics**: All keystroke metrics, Inter-Keystroke Intervals ($IKI$), Hold Times ($HT$), and Cognitive Fluster Index calculations are evaluated entirely in real-time in local memory and are never transmitted to external servers.
@@ -32,5 +32,5 @@ If this privacy policy is updated, the revised version will be included in subse
 ---
 
 ## 5. Contact Information
-For questions or inquiries regarding KeyCraft or this Privacy Policy, please open an issue on our GitHub repository:
+For questions or inquiries regarding RETROSPEED or this Privacy Policy, please open an issue on our GitHub repository:
 - Repository: [https://github.com/prasadsince1999/KeyCraft](https://github.com/prasadsince1999/KeyCraft)
