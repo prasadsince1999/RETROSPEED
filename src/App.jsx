@@ -31,6 +31,7 @@ const FallingWordsDefenseGame = lazy(() => import('./components/games/FallingWor
 const TypingRacerGame = lazy(() => import('./components/games/TypingRacerGame'));
 const WordBombGame = lazy(() => import('./components/games/WordBombGame'));
 const SyntaxHackerGame = lazy(() => import('./components/games/SyntaxHackerGame'));
+const ShortcutPlayer = lazy(() => import('./components/ShortcutPlayer'));
 
 function ViewLoadingFallback() {
   return (
@@ -197,6 +198,31 @@ export default function App() {
     setCurrentView('drill');
   };
 
+  // Start Driving School Spine Lesson
+  const handleStartSpineLesson = (part, spineLesson) => {
+    setScoreModalStats(null);
+    setJumpWarningLesson(null);
+    setGameLaunchOrigin('learn');
+
+    if (spineLesson.isShortcut) {
+      setCurrentView('shortcuts');
+    } else {
+      const adapted = {
+        id: spineLesson.id,
+        number: spineLesson.lessonNumber,
+        title: spineLesson.title,
+        description: spineLesson.description,
+        type: 'drill',
+        text: spineLesson.text,
+        goalWpm: spineLesson.goalWpm || 20,
+        minAccuracy: spineLesson.minAccuracy || 90,
+        targetKeys: spineLesson.targetKeys || []
+      };
+      setActiveLesson(adapted);
+      setCurrentView('lesson');
+    }
+  };
+
   // Handle lesson / game completion
   const handleComplete = (stats) => {
     const updatedProgress = saveLessonResult(activeCourseId, activeLesson.id, stats);
@@ -315,20 +341,33 @@ export default function App() {
                   activeCourseId={activeCourseId}
                   onStartQuickDrill={handleStartQuickDrill}
                   onStartDailyChallenge={handleStartDailyChallenge}
+                  onStartSpineLesson={handleStartSpineLesson}
                   onNavigate={view => setCurrentView(view)}
                 />
               )}
 
-              {/* Room 2: Learn (Curriculum Tracks Directory) */}
+              {/* Room 2: Learn (Curriculum Tracks Directory & 8-Part Spine) */}
               {currentView === 'learn' && (
                 <PracticeHub
                   userProgress={userProgress}
                   activeCourseId={activeCourseId}
                   onSelectCourse={handleSelectCourse}
+                  onStartSpineLesson={handleStartSpineLesson}
                   onStartLesson={(courseId, targetLevelId) => {
                     handleSelectCourse(courseId, targetLevelId);
                   }}
                   onNavigate={view => setCurrentView(view)}
+                />
+              )}
+
+              {/* Computer Skills & Shortcut Chords Lab */}
+              {currentView === 'shortcuts' && (
+                <ShortcutPlayer
+                  onExit={() => setCurrentView('learn')}
+                  onComplete={stats => {
+                    handleArcadeComplete('shortcuts-lab', stats);
+                    setCurrentView('learn');
+                  }}
                 />
               )}
 

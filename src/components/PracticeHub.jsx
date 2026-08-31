@@ -1,12 +1,6 @@
+// Learn Room: The 8-Part Zero-to-Hero Driving School Spine + Specialty Tracks
 import React, { useState } from 'react';
 import { 
-  Home, 
-  Target, 
-  Trophy, 
-  Calendar, 
-  BarChart2, 
-  ShoppingBag, 
-  ArrowLeft, 
   Play, 
   Layers, 
   Star, 
@@ -15,296 +9,314 @@ import {
   Compass, 
   CheckCircle2, 
   Sparkles, 
-  Map, 
   Search,
-  Filter
+  Filter,
+  Gamepad2,
+  Lock,
+  ArrowRight,
+  ShieldCheck,
+  Zap,
+  Terminal,
+  Clock,
+  Command
 } from 'lucide-react';
 import { COURSES_CATALOG } from '../data/courseCatalog';
+import { SPINE_PARTS } from '../data/spineCurriculum';
 import { sound } from '../utils/audio';
-
-const CATEGORY_MAP = {
-  'core': {
-    id: 'core',
-    label: 'Core Foundations',
-    courseIds: ['keycraft-odyssey', 'keystroke-foundations'],
-    badge: 'Foundations',
-    color: 'bg-[#C7E8CA]'
-  },
-  'dev': {
-    id: 'dev',
-    label: 'Developer & Syntax',
-    courseIds: ['syntax-forge'],
-    badge: 'Code & Terminal',
-    color: 'bg-[#C3A6E8]'
-  },
-  'vocab': {
-    id: 'vocab',
-    label: 'Vocabulary & Lexicon',
-    courseIds: ['global-lexicon', 'literary-heritage'],
-    badge: 'Lexicon',
-    color: 'bg-[#F28B82]'
-  },
-  'stories': {
-    id: 'stories',
-    label: 'Stories & Knowledge',
-    courseIds: [
-      'chronicles-of-mystery',
-      'symphony-keys',
-      'atlas-chronicles',
-      'curiosity-vault',
-      'pioneers-innovators',
-      'wild-kingdom'
-    ],
-    badge: 'Trivia & Lore',
-    color: 'bg-[#F6C445]'
-  },
-  'ergo': {
-    id: 'ergo',
-    label: 'Ergonomic Layouts',
-    courseIds: ['ergo-dvorak', 'speed-colemak'],
-    badge: 'Dvorak & Colemak',
-    color: 'bg-[#48B89F]'
-  }
-};
 
 export default function PracticeHub({
   userProgress = {},
-  activeCourseId = 'keycraft-odyssey',
+  activeCourseId = 'keystroke-foundations',
   onSelectCourse,
   onStartLesson,
+  onStartSpineLesson,
   onNavigate
 }) {
-  const [selectedCategory, setSelectedCategory] = useState('all'); // 'all' | 'core' | 'dev' | 'vocab' | 'stories' | 'ergo'
-  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('spine'); // 'spine' | 'specialty'
+  const [selectedPartNumber, setSelectedPartNumber] = useState(1);
+  const [specialtyCategory, setSpecialtyCategory] = useState('all');
 
-  const handleLaunchCourse = (courseId, targetLevelId = null) => {
+  const selectedPart = SPINE_PARTS.find(p => p.partNumber === selectedPartNumber) || SPINE_PARTS[0];
+  const completedMap = userProgress.completedLessons || {};
+
+  const handleLaunchSpineLesson = (part, lesson) => {
     sound.playKeyClick();
-    if (onSelectCourse) {
-      onSelectCourse(courseId, targetLevelId);
+    if (onStartSpineLesson) {
+      onStartSpineLesson(part, lesson);
     }
   };
 
-  const handleOpenMap = (courseId) => {
+  const handleLaunchCourse = (courseId) => {
     sound.playKeyClick();
     if (onSelectCourse) {
       onSelectCourse(courseId);
     }
-    if (onNavigate) {
-      onNavigate('map');
-    }
   };
-
-  const handleNav = (view) => {
-    sound.playKeyClick();
-    if (onNavigate) {
-      onNavigate(view);
-    }
-  };
-
-  // Filter courses
-  const filteredCourses = COURSES_CATALOG.filter(course => {
-    if (selectedCategory !== 'all') {
-      const catConfig = CATEGORY_MAP[selectedCategory];
-      if (!catConfig || !catConfig.courseIds.includes(course.id)) {
-        return false;
-      }
-    }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      const matchTitle = course.title.toLowerCase().includes(q);
-      const matchDesc = (course.description || '').toLowerCase().includes(q);
-      const matchCat = (course.category || '').toLowerCase().includes(q);
-      if (!matchTitle && !matchDesc && !matchCat) {
-        return false;
-      }
-    }
-
-    return true;
-  });
 
   return (
-    <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[#FDF8EE] p-4 sm:p-6 overflow-y-auto space-y-5">
+    <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[#FDF8EE] p-4 sm:p-6 overflow-y-auto space-y-6">
       
-      {/* Header Controls Banner */}
-      <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] space-y-3">
-        
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-[#48B89F] text-white flex items-center justify-center border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
-              <Target className="w-5 h-5 text-[#2D2319]" />
-            </div>
-            <div>
-              <h1 className="text-lg sm:text-xl font-black text-[#2D2319] font-display">
-                Practice Curricula Directory
-              </h1>
-              <p className="text-xs text-[#2D2319]/70 font-mono">
-                13 Official KeyCraft Touch Typing tracks across 5 learning disciplines.
-              </p>
-            </div>
+      {/* HEADER BANNER */}
+      <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center space-x-2">
+            <span className="px-2 py-0.5 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
+              DRIVING SCHOOL CURRICULUM
+            </span>
+            <span className="text-xs font-mono text-[#2D2319]/70 font-bold">
+              100% Offline · Local-First
+            </span>
           </div>
-
-          {/* Search Box */}
-          <div className="w-full sm:w-64">
-            <div className="relative">
-              <Search className="w-4 h-4 text-[#2D2319]/50 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Filter courses..."
-                className="w-full pl-9 pr-3 py-1.5 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl text-xs font-mono font-bold text-[#2D2319] placeholder:text-[#2D2319]/50 shadow-[2px_2px_0px_#2D2319] focus:outline-none focus:bg-white"
-              />
-            </div>
-          </div>
+          <h1 className="text-xl sm:text-2xl font-black text-[#2D2319] font-display mt-0.5">
+            Learn to Race Your Fingers
+          </h1>
         </div>
 
-        {/* Category Filter Tabs */}
-        <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 pt-1 font-mono text-xs">
-          <span className="text-[#2D2319]/70 font-bold uppercase tracking-wider text-[10px] mr-1 flex items-center space-x-1 shrink-0">
-            <Filter className="w-3 h-3" />
-            <span>Category:</span>
-          </span>
-
+        {/* TAB SELECTOR PILLS */}
+        <div className="flex items-center gap-2">
           <button
-            type="button"
             onClick={() => {
               sound.playKeyClick();
-              setSelectedCategory('all');
+              setActiveTab('spine');
             }}
-            className={`px-3 py-1 rounded-xl border-2 border-[#2D2319] font-bold transition-all shrink-0 ${
-              selectedCategory === 'all'
-                ? 'bg-[#F6C445] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-black'
-                : 'bg-[#FDF8EE] hover:bg-white text-[#2D2319] shadow-[1px_1px_0px_#2D2319]'
+            className={`px-4 py-2 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-bold transition-all ${
+              activeTab === 'spine'
+                ? 'bg-[#C7E8CA] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
+                : 'bg-[#FDF8EE] hover:bg-[#FBF6EA] text-[#2D2319] shadow-[2px_2px_0px_#2D2319]'
             }`}
           >
-            All Tracks ({COURSES_CATALOG.length})
+            🛣️ Zero-to-Hero Spine (8 Parts)
           </button>
 
-          {Object.values(CATEGORY_MAP).map(cat => {
-            const isSel = selectedCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => {
-                  sound.playKeyClick();
-                  setSelectedCategory(cat.id);
-                }}
-                className={`px-3 py-1 rounded-xl border-2 border-[#2D2319] font-bold transition-all shrink-0 ${
-                  isSel
-                    ? `${cat.color} text-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-black`
-                    : 'bg-[#FDF8EE] hover:bg-white text-[#2D2319] shadow-[1px_1px_0px_#2D2319]'
-                }`}
-              >
-                {cat.label} ({cat.courseIds.length})
-              </button>
-            );
-          })}
+          <button
+            onClick={() => {
+              sound.playKeyClick();
+              setActiveTab('specialty');
+            }}
+            className={`px-4 py-2 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-bold transition-all ${
+              activeTab === 'specialty'
+                ? 'bg-[#C3A6E8] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
+                : 'bg-[#FDF8EE] hover:bg-[#FBF6EA] text-[#2D2319] shadow-[2px_2px_0px_#2D2319]'
+            }`}
+          >
+            📚 Specialty Tracks
+          </button>
         </div>
-
       </div>
 
-      {/* Courses Cards Grid */}
-      {filteredCourses.length === 0 ? (
-        <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-8 text-center shadow-[4px_4px_0px_#2D2319]">
-          <h3 className="font-display font-black text-sm text-[#2D2319]">No curricula found</h3>
-          <p className="text-xs font-mono text-[#2D2319]/70 mt-1">Try clearing your search query or selecting a different category.</p>
-          <button
-            type="button"
-            onClick={() => {
-              setSearchQuery('');
-              setSelectedCategory('all');
-            }}
-            className="mt-3 px-4 py-1.5 bg-[#F6C445] border-2 border-[#2D2319] rounded-xl font-bold text-xs"
-          >
-            Reset Filters
-          </button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredCourses.map(course => {
-            const courseData = userProgress.courses?.[course.id] || {};
-            const scores = courseData.scores || {};
-            const completedInCourse = Object.keys(scores).length;
-            const currentLevel = courseData.unlockedLevel || 1;
-            const pct = Math.min(100, Math.round((completedInCourse / (course.lessonsCount || 100)) * 100));
-            const isEnrolled = (userProgress.enrolledCourses || []).includes(course.id);
-            const totalStarsInCourse = courseData.totalStars || 0;
+      {/* TAB 1: 8-PART ZERO-TO-HERO DRIVING SCHOOL SPINE */}
+      {activeTab === 'spine' && (
+        <div className="space-y-6">
+          
+          {/* HORIZONTAL STEPPER OF 8 PARTS */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+            {SPINE_PARTS.map((part) => {
+              const isSelected = selectedPartNumber === part.partNumber;
+              const partLessons = part.lessons;
+              const completedInPart = partLessons.filter(l => completedMap[l.id]).length;
+              const isPartComplete = completedInPart === partLessons.length && partLessons.length > 0;
 
-            return (
-              <div 
+              return (
+                <button
+                  key={part.id}
+                  onClick={() => {
+                    sound.playKeyClick();
+                    setSelectedPartNumber(part.partNumber);
+                  }}
+                  className={`p-3 rounded-xl border-2 border-[#2D2319] text-left flex flex-col justify-between transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-[#F6C445] shadow-[3px_3px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
+                      : 'bg-[#FAF3E0] hover:bg-[#FDF8EE] shadow-[2px_2px_0px_#2D2319]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] font-black text-[#2D2319]">
+                      PART {part.partNumber}
+                    </span>
+                    {isPartComplete && <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />}
+                  </div>
+                  <div className="font-bold text-xs text-[#2D2319] font-display truncate mt-1">
+                    {part.subtitle}
+                  </div>
+                  <div className="text-[10px] font-mono text-[#2D2319]/70 mt-1">
+                    {completedInPart}/{partLessons.length} done
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* ACTIVE PART DETAIL CARD */}
+          <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-5 sm:p-6 shadow-[4px_4px_0px_#2D2319] space-y-5">
+            
+            {/* PART HEADER */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-[#2D2319]/15 pb-4">
+              <div>
+                <div className="flex items-center space-x-2">
+                  <span className="px-2 py-0.5 rounded bg-[#4BA3E3] text-[#2D2319] font-mono text-xs font-black border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
+                    PART {selectedPart.partNumber} OF 8
+                  </span>
+                  <span className="text-sm font-mono font-bold text-[#2D2319]">
+                    {selectedPart.subtitle}
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-[#2D2319] font-display mt-1">
+                  {selectedPart.title}
+                </h2>
+                <p className="text-xs sm:text-sm text-[#2D2319]/80 font-mono mt-0.5">
+                  {selectedPart.focus}
+                </p>
+              </div>
+
+              {/* TARGET SPEED & ACCURACY BADGE */}
+              <div className="flex items-center gap-2">
+                <div className="px-3 py-2 rounded-xl bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] text-center">
+                  <span className="text-[10px] font-mono font-bold text-[#2D2319]/70 block">PASS TARGET</span>
+                  <span className="font-mono text-xs font-black text-[#2D2319]">{selectedPart.targetSpeed}</span>
+                </div>
+                <div className="px-3 py-2 rounded-xl bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] text-center">
+                  <span className="text-[10px] font-mono font-bold text-[#2D2319]/70 block">PRECISION</span>
+                  <span className="font-mono text-xs font-black text-[#10B981]">{selectedPart.passAccuracy}% Acc</span>
+                </div>
+              </div>
+            </div>
+
+            {/* LESSONS LIST */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-mono font-black uppercase tracking-wider text-[#2D2319]">
+                ✦ Structured Lessons in this Part:
+              </h3>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {selectedPart.lessons.map((lesson) => {
+                  const isDone = completedMap[lesson.id];
+
+                  return (
+                    <div 
+                      key={lesson.id}
+                      className="bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl p-3.5 shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="px-1.5 py-0.2 rounded bg-[#FAF3E0] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319]">
+                            Lesson {lesson.lessonNumber}
+                          </span>
+                          {isDone ? (
+                            <span className="text-[10px] font-mono font-bold text-[#10B981] flex items-center space-x-1">
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              <span>Passed</span>
+                            </span>
+                          ) : (
+                            <span className="text-[10px] font-mono font-bold text-[#2D2319]/60">Ready</span>
+                          )}
+                        </div>
+
+                        <h4 className="font-bold text-sm text-[#2D2319] font-display">
+                          {lesson.title}
+                        </h4>
+                        <p className="text-xs text-[#2D2319]/80 font-mono mt-1">
+                          {lesson.description}
+                        </p>
+                      </div>
+
+                      <div className="mt-3 pt-2 border-t border-[#2D2319]/10 flex items-center justify-between">
+                        <span className="text-[10px] font-mono font-bold text-[#2D2319]/70">
+                          Target: {lesson.goalWpm} WPM · {lesson.minAccuracy}%
+                        </span>
+                        <button
+                          onClick={() => handleLaunchSpineLesson(selectedPart, lesson)}
+                          className="px-3 py-1 rounded-lg bg-[#F6C445] hover:bg-[#F28B82] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] font-mono text-xs font-bold text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1 cursor-pointer"
+                        >
+                          <Play className="w-3 h-3 fill-[#2D2319]" />
+                          <span>{isDone ? 'Practice Again' : 'Start Lesson'}</span>
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* PART GAME BREAK PROMPT */}
+            {selectedPart.gameBreak && (
+              <div className="bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl p-4 shadow-[3px_3px_0px_#2D2319] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#C3A6E8] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-[#2D2319] shrink-0">
+                    <Gamepad2 className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <span className="font-bold text-sm text-[#2D2319] font-display">
+                        Game Break: {selectedPart.gameBreak.name}
+                      </span>
+                      <span className="px-1.5 py-0.2 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[9px] font-bold border border-[#2D2319]">
+                        FUN STRETCH
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#2D2319]/80 font-mono mt-0.5">
+                      {selectedPart.gameBreak.description}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => {
+                    sound.playKeyClick();
+                    if (onNavigate) onNavigate('play');
+                  }}
+                  className="px-4 py-2 rounded-xl bg-[#C3A6E8] hover:bg-[#F28B82] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-bold text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all shrink-0 cursor-pointer"
+                >
+                  Play Game Break ➔
+                </button>
+              </div>
+            )}
+
+          </div>
+
+        </div>
+      )}
+
+      {/* TAB 2: SPECIALTY TRACKS (CODE, STORIES, LAYOUTS) */}
+      {activeTab === 'specialty' && (
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {COURSES_CATALOG.map((course) => (
+              <div
                 key={course.id}
-                className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col justify-between space-y-4 hover:-translate-y-0.5 transition-all"
+                className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[4px_4px_0px_#2D2319] flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="px-2 py-0.2 rounded bg-[#C7E8CA] border border-[#2D2319] text-[9px] font-mono font-bold text-[#2D2319]">
+                    <span className="px-2 py-0.5 rounded bg-[#FDF8EE] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319]">
                       {course.category}
                     </span>
-                    <span className="px-2 py-0.2 rounded bg-[#FDF8EE] border border-[#2D2319] text-[9px] font-mono font-bold text-[#2D2319] uppercase">
-                      {course.keyboardType || 'QWERTY'}
+                    <span className="text-xs font-mono font-bold text-[#2D2319]/70">
+                      {course.lessonsCount} Lessons
                     </span>
                   </div>
 
-                  <h3 className="text-base font-black text-[#2D2319] font-display">
+                  <h3 className="font-bold text-base text-[#2D2319] font-display">
                     {course.title}
                   </h3>
-
-                  <p className="text-xs text-[#2D2319]/80 font-medium line-clamp-2 mt-1">
+                  <p className="text-xs text-[#2D2319]/80 font-mono mt-1 leading-relaxed">
                     {course.description}
                   </p>
-
-                  <div className="flex items-center justify-between text-xs font-mono font-bold text-[#2D2319] mt-3 pt-2 border-t border-[#2D2319]/10">
-                    <span className="flex items-center space-x-1">
-                      <Layers className="w-3.5 h-3.5 text-[#2D2319]/70" />
-                      <span>{course.lessonsCount} Lessons</span>
-                    </span>
-                    <span className="flex items-center space-x-1 text-amber-700">
-                      <Star className="w-3.5 h-3.5 fill-[#F6C445] text-[#F6C445]" />
-                      <span>{totalStarsInCourse}★</span>
-                    </span>
-                  </div>
-
-                  {/* Course Progress */}
-                  <div className="space-y-1 mt-2">
-                    <div className="w-full h-2.5 bg-[#FDF8EE] rounded-full border-2 border-[#2D2319] overflow-hidden p-0.5 flex">
-                      <div 
-                        className="h-full bg-[#48B89F] rounded-full transition-all duration-300"
-                        style={{ width: `${pct}%` }}
-                      />
-                    </div>
-                    <div className="flex justify-between text-[10px] font-mono text-[#2D2319]/70 font-bold">
-                      <span>{completedInCourse} Completed</span>
-                      <span>{pct}%</span>
-                    </div>
-                  </div>
                 </div>
 
-                {/* Actions */}
-                <div className="flex items-center space-x-2 pt-2 border-t border-[#2D2319]/20">
+                <div className="mt-4 pt-3 border-t border-[#2D2319]/15 flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold text-[#2D2319]/70">
+                    {course.grade}
+                  </span>
                   <button
-                    type="button"
-                    onClick={() => handleLaunchCourse(course.id, currentLevel)}
-                    className="flex-1 px-4 py-2 rounded-xl bg-[#F6C445] hover:bg-[#ffd95e] text-[#2D2319] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 font-display font-black text-xs uppercase tracking-wide flex items-center justify-center space-x-1.5 transition-all cursor-pointer"
+                    onClick={() => handleLaunchCourse(course.id)}
+                    className="px-3.5 py-1.5 rounded-lg bg-[#F6C445] hover:bg-[#F28B82] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-bold text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
                   >
-                    <Play className="w-3.5 h-3.5 fill-[#2D2319]" />
-                    <span>{completedInCourse > 0 ? `Resume (L${currentLevel})` : 'Start Course'}</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleOpenMap(course.id)}
-                    className="p-2 rounded-xl bg-[#FDF8EE] hover:bg-white text-[#2D2319] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center cursor-pointer"
-                    title="View Lesson Map"
-                  >
-                    <Map className="w-4 h-4 text-[#2D2319]" />
+                    Open Course
                   </button>
                 </div>
-
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       )}
 

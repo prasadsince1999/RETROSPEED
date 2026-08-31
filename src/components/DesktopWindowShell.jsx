@@ -26,6 +26,7 @@ import { sound } from '../utils/audio';
 import { getPlayerProfile } from '../utils/storage';
 import { COURSES_CATALOG } from '../data/courseCatalog';
 import PlayerProfileModal from './PlayerProfileModal';
+import StudioModal from './StudioModal';
 
 export default function DesktopWindowShell({
   children,
@@ -42,6 +43,7 @@ export default function DesktopWindowShell({
   const [windowState, setWindowState] = useState('normal'); // 'normal' | 'maximized' | 'minimized'
   const [activeMenuDropdown, setActiveMenuDropdown] = useState(null); // 'game' | 'tracks' | 'stats' | 'settings' | 'help' | null
   const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [studioModalOpen, setStudioModalOpen] = useState(false);
 
   const profile = getPlayerProfile(userProgress);
   const activeCourse = COURSES_CATALOG.find(c => c.id === activeCourseId) || COURSES_CATALOG[0];
@@ -375,6 +377,20 @@ export default function DesktopWindowShell({
                 )}
               </div>
 
+              {/* Studio Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  sound.playKeyClick();
+                  setActiveMenuDropdown(null);
+                  setStudioModalOpen(true);
+                }}
+                className="hover:underline flex items-center space-x-1 focus:outline-none text-[#2D2319]"
+              >
+                <span>Studio</span>
+                <span className="text-[10px] text-[#F6C445]">✦</span>
+              </button>
+
               {/* Help ▾ Dropdown */}
               <div className="relative">
                 <button
@@ -526,6 +542,12 @@ export default function DesktopWindowShell({
         onClose={() => setProfileModalOpen(false)}
         userProgress={userProgress}
         onProfileUpdated={onProfileUpdated}
+      />
+
+      {/* KSM × Tech Studio Shelf Modal */}
+      <StudioModal
+        isOpen={studioModalOpen}
+        onClose={() => setStudioModalOpen(false)}
       />
 
     </div>
