@@ -42,20 +42,6 @@ export const COURSES_CATALOG = [
     data: basicsLessons.lessons
   },
   {
-    id: 'keystroke-foundations',
-    programId: 1,
-    title: 'Keystroke Foundations',
-    category: 'Core Touch Typing',
-    grade: 'Fast-Paced Foundation',
-    lessonsCount: 100,
-    description: 'A fast-paced, direct touch typing curriculum covering home row to full punctuation and high accuracy muscle memory.',
-    badge: 'Classic',
-    color: 'from-blue-500 to-cyan-700',
-    titleVariant: 'sky',
-    keyboardType: 'qwerty',
-    data: basicsLessons.lessons
-  },
-  {
     id: 'syntax-forge',
     programId: 306,
     title: 'Syntax Forge | Developer Track',
