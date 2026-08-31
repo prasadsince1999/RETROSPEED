@@ -80,16 +80,27 @@ export function getDefaultProgress() {
     attemptLogs: [],
     streakDays: 0,
     lastActiveDate: null,
+    profile: {
+      displayName: 'Player',
+      name: 'Player',
+      title: 'Novice Typist',
+      avatarId: 'ninja',
+      avatar: '🥷',
+      avatarBg: '#F28B82'
+    },
+    license: {
+      status: 'free',
+      isUnlocked: false
+    },
     arcadeStats: {
-      balloonGames: 0,
-      monsterWaves: 0,
-      templeRunes: 0,
-      bubblesPopped: 0,
-      applesHarvested: 0,
-      meteorWords: 0,
-      racerLaps: 0,
-      bombsDefused: 0,
-      syntaxShields: 0
+      pressRoom: 0,
+      paperPlanes: 0,
+      localLine: 0,
+      nightMarket: 0,
+      dropChits: 0,
+      pitLane: 0,
+      fuseDesk: 0,
+      patchTerminal: 0
     },
     masteryStats: {
       homeRowLessons: 0,
@@ -108,22 +119,47 @@ export function getDefaultProgress() {
   };
 }
 
+/**
+ * Factory Reset: Erases all local user progress, session telemetry, attempt logs,
+ * key analytics, and custom profile data back to a brand-new pristine state.
+ */
+export function resetAllProgress() {
+  try {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem('keycraft_desktop_app_v2');
+      localStorage.removeItem('edclub_typing_platform_multi_v1');
+    }
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.clear();
+    }
+  } catch (e) {
+    console.error('Error clearing local storage:', e);
+  }
+
+  const fresh = getDefaultProgress();
+  saveProgress(fresh);
+  return fresh;
+}
+
 export function loadProgress() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      return {
-        ...getDefaultProgress(),
-        ...parsed,
-        courses: parsed.courses || {},
-        attemptLogs: parsed.attemptLogs || [],
-        keyStats: parsed.keyStats || {},
-        settings: {
-          ...getDefaultProgress().settings,
-          ...(parsed.settings || {})
-        }
-      };
+    if (typeof localStorage !== 'undefined') {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          ...getDefaultProgress(),
+          ...parsed,
+          courses: parsed.courses || {},
+          attemptLogs: parsed.attemptLogs || [],
+          keyStats: parsed.keyStats || {},
+          settings: {
+            ...getDefaultProgress().settings,
+            ...(parsed.settings || {})
+          }
+        };
+      }
     }
   } catch (e) {
     console.error('Failed to load saved progress:', e);
@@ -134,7 +170,9 @@ export function loadProgress() {
 
 export function saveProgress(data) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
   } catch (e) {
     console.error('Failed to save progress:', e);
   }

@@ -18,7 +18,8 @@ import {
   Flame,
   Info,
   Clock,
-  Code
+  Code,
+  RotateCcw
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { getLicenseStatus, PRICING } from '../utils/license';
@@ -27,7 +28,8 @@ export default function AboutModal({
   isOpen,
   onClose,
   userProgress = {},
-  onOpenUnlockModal
+  onOpenUnlockModal,
+  onOpenResetModal
 }) {
   const [activeTab, setActiveTab] = useState('studio'); // 'studio' | 'apps' | 'whatsnew' | 'beta' | 'feedback' | 'license'
   const license = getLicenseStatus(userProgress);
@@ -423,6 +425,27 @@ export default function AboutModal({
                   </button>
                 </div>
               </div>
+
+              {/* Factory Reset Data Section */}
+              {onOpenResetModal && (
+                <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-xl p-4 shadow-[3px_3px_0px_#2D2319] flex items-center justify-between">
+                  <div>
+                    <div className="text-xs font-black font-display text-[#2D2319]">Factory Reset All Workshop Data</div>
+                    <div className="text-[10px] font-mono text-[#2D2319]/70">Wipe all lesson scores, streaks, and return to fresh state</div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      sound.playKeyClick();
+                      onOpenResetModal();
+                    }}
+                    className="px-3 py-1.5 bg-[#FAF3E0] hover:bg-[#F28B82] border-2 border-[#2D2319] rounded-lg text-xs font-mono font-bold text-[#F28B82] hover:text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1.5 cursor-pointer"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Reset Data...</span>
+                  </button>
+                </div>
+              )}
 
             </div>
           )}

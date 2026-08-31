@@ -29,6 +29,7 @@ import { COURSES_CATALOG } from '../data/courseCatalog';
 import PlayerProfileModal from './PlayerProfileModal';
 import AboutModal from './AboutModal';
 import UnlockModal from './UnlockModal';
+import ResetDataModal from './ResetDataModal';
 
 export default function DesktopWindowShell({
   children,
@@ -40,6 +41,7 @@ export default function DesktopWindowShell({
   onSelectCourse,
   onToggleSound,
   onProfileUpdated,
+  onResetAllData,
   title = 'RETROSPEED'
 }) {
   const [windowState, setWindowState] = useState('normal'); // 'normal' | 'maximized' | 'minimized'
@@ -47,6 +49,7 @@ export default function DesktopWindowShell({
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const [unlockModalOpen, setUnlockModalOpen] = useState(false);
+  const [resetModalOpen, setResetModalOpen] = useState(false);
 
   const profile = getPlayerProfile(userProgress);
   const license = getLicenseStatus(userProgress);
@@ -382,11 +385,24 @@ export default function DesktopWindowShell({
                       <button
                         type="button"
                         onClick={() => handleNav('shop')}
-                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
+                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold cursor-pointer"
                       >
                         <span>Themes & Keycaps</span>
                         <ShoppingBag className="w-3.5 h-3.5" />
                       </button>
+                      <div className="border-t border-[#2D2319]/15 mt-1 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveMenuDropdown(null);
+                            setResetModalOpen(true);
+                          }}
+                          className="w-full text-left px-3 py-1.5 hover:bg-[#F28B82] text-[#F28B82] hover:text-[#2D2319] flex items-center justify-between font-bold cursor-pointer transition-colors"
+                        >
+                          <span>Reset All Workshop Data...</span>
+                          <RotateCcw className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   </>
                 )}
@@ -624,6 +640,10 @@ export default function DesktopWindowShell({
         onClose={() => setProfileModalOpen(false)}
         userProgress={userProgress}
         onProfileUpdated={onProfileUpdated}
+        onOpenResetModal={() => {
+          setProfileModalOpen(false);
+          setResetModalOpen(true);
+        }}
       />
 
       {/* About Modal */}
@@ -635,6 +655,10 @@ export default function DesktopWindowShell({
           setAboutModalOpen(false);
           setUnlockModalOpen(true);
         }}
+        onOpenResetModal={() => {
+          setAboutModalOpen(false);
+          setResetModalOpen(true);
+        }}
       />
 
       {/* Unlock Workshop Modal */}
@@ -644,6 +668,15 @@ export default function DesktopWindowShell({
         userProgress={userProgress}
         onLicenseUpdated={updated => {
           if (onProfileUpdated) onProfileUpdated(updated);
+        }}
+      />
+
+      {/* Reset Workshop Data Modal */}
+      <ResetDataModal
+        isOpen={resetModalOpen}
+        onClose={() => setResetModalOpen(false)}
+        onConfirmReset={() => {
+          if (onResetAllData) onResetAllData();
         }}
       />
 

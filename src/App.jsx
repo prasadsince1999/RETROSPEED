@@ -10,7 +10,7 @@ import QuickDrillPlayer from './components/QuickDrillPlayer';
 import ShopView from './components/ShopView';
 import UnlockModal from './components/UnlockModal';
 import { getCurriculumForCourse } from './data/curriculum';
-import { loadProgress, saveLessonResult, saveProgress } from './utils/storage';
+import { loadProgress, saveLessonResult, saveProgress, resetAllProgress } from './utils/storage';
 import { sound } from './utils/audio';
 import { isGameUnlocked, isLessonUnlocked } from './utils/license';
 
@@ -230,6 +230,14 @@ export default function App() {
     }
   };
 
+  // Factory Reset All Workshop Data
+  const handleResetAllData = () => {
+    const fresh = resetAllProgress();
+    setUserProgress(fresh);
+    setActiveCourseId('keystroke-foundations');
+    setCurrentView('home');
+  };
+
   // Handle lesson / game completion
   const handleComplete = (stats) => {
     const updatedProgress = saveLessonResult(activeCourseId, activeLesson.id, stats);
@@ -343,6 +351,7 @@ export default function App() {
                 updateSettings({ sound: next });
               }}
               onProfileUpdated={updated => setUserProgress(updated)}
+              onResetAllData={handleResetAllData}
             >
               {/* Room 1: Home */}
               {currentView === 'home' && (
