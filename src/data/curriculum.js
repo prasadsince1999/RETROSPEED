@@ -143,19 +143,25 @@ export function getCurriculumForCourse(courseId = 'keystroke-foundations') {
         }
       }
 
-      // Detect authentic game engine
+      // Detect authentic paper-arcade workshop game engine
       const combinedGameHints = `${item.renderEngine || ''} ${item.activityApp || ''} ${name || ''} ${item.icon || ''} ${item.lessonType || ''}`.toLowerCase();
       let gameEngine = null;
-      if (combinedGameHints.includes('apple') || combinedGameHints.includes('thief') || combinedGameHints.includes('thieves') || combinedGameHints.includes('orchard') || combinedGameHints.includes('raccoon')) {
-        gameEngine = 'apple-thieves';
-      } else if (combinedGameHints.includes('monster') || combinedGameHints.includes('alien') || combinedGameHints.includes('space-defense')) {
-        gameEngine = 'monster-attack';
-      } else if (combinedGameHints.includes('temple') || combinedGameHints.includes('bash') || combinedGameHints.includes('desert') || combinedGameHints.includes('tomb') || combinedGameHints.includes('relic')) {
-        gameEngine = 'temple-bash';
-      } else if (combinedGameHints.includes('bubble') || combinedGameHints.includes('bubbles') || combinedGameHints.includes('ocean') || combinedGameHints.includes('float')) {
-        gameEngine = 'floating-bubbles';
-      } else if (combinedGameHints.includes('balloon') || combinedGameHints.includes('ninja') || combinedGameHints.includes('valley')) {
-        gameEngine = 'balloon-ninja';
+      if (combinedGameHints.includes('plane') || combinedGameHints.includes('bubble') || combinedGameHints.includes('paper')) {
+        gameEngine = 'paper-planes';
+      } else if (combinedGameHints.includes('local') || combinedGameHints.includes('train') || combinedGameHints.includes('monster') || combinedGameHints.includes('line')) {
+        gameEngine = 'local-line';
+      } else if (combinedGameHints.includes('market') || combinedGameHints.includes('night') || combinedGameHints.includes('apple') || combinedGameHints.includes('chit')) {
+        gameEngine = 'night-market';
+      } else if (combinedGameHints.includes('drop') || combinedGameHints.includes('meteor') || combinedGameHints.includes('temple')) {
+        gameEngine = 'drop-chits';
+      } else if (combinedGameHints.includes('pit') || combinedGameHints.includes('lane') || combinedGameHints.includes('racer') || combinedGameHints.includes('velocity')) {
+        gameEngine = 'pit-lane';
+      } else if (combinedGameHints.includes('fuse') || combinedGameHints.includes('desk') || combinedGameHints.includes('bomb')) {
+        gameEngine = 'fuse-desk';
+      } else if (combinedGameHints.includes('patch') || combinedGameHints.includes('terminal') || combinedGameHints.includes('syntax') || combinedGameHints.includes('matrix') || combinedGameHints.includes('hacker')) {
+        gameEngine = 'patch-terminal';
+      } else if (combinedGameHints.includes('press') || combinedGameHints.includes('stamp') || combinedGameHints.includes('balloon') || combinedGameHints.includes('ninja')) {
+        gameEngine = 'press-room';
       }
 
       // Determine robust lesson type
@@ -167,7 +173,7 @@ export function getCurriculumForCourse(courseId = 'keystroke-foundations') {
       } else if (item.isGame || item.lessonType === 'game' || name.startsWith('Play:') || item.activityApp?.includes('game') || gameEngine !== null) {
         type = 'game';
         if (!gameEngine) {
-          gameEngine = 'balloon-ninja';
+          gameEngine = 'press-room';
         }
       } else if (item.lessonType === 'intro' || isIntroName) {
         type = 'intro';

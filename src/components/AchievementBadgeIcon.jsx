@@ -396,6 +396,7 @@ export default function AchievementBadgeIcon({
       // ----------------------------------------
       // ARCADE CHAMPIONS (5)
       // ----------------------------------------
+      case 'press-room-master':
       case 'balloon-ninja-slicer':
         return (
           <g>
@@ -429,6 +430,7 @@ export default function AchievementBadgeIcon({
           </g>
         );
 
+      case 'local-line-conductor':
       case 'planetary-defender':
         return (
           <g>
@@ -456,6 +458,7 @@ export default function AchievementBadgeIcon({
           </g>
         );
 
+      case 'drop-chits-sorter':
       case 'pharaohs-scribe':
         return (
           <g>
@@ -488,6 +491,7 @@ export default function AchievementBadgeIcon({
           </g>
         );
 
+      case 'paper-planes-pilot':
       case 'deep-sea-diver':
         return (
           <g>
@@ -512,6 +516,7 @@ export default function AchievementBadgeIcon({
           </g>
         );
 
+      case 'night-market-trader':
       case 'orchard-master':
         return (
           <g>
