@@ -1,0 +1,71 @@
+{
+  "name": "keycraft",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron:dev": "concurrently \"vite\" \"wait-on tcp:3000 && electron .\"",
+    "electron:build": "vite build && electron-builder --win --x64",
+    "package:win": "vite build && electron-builder --win portable --x64",
+    "package:store": "vite build && electron-builder --win appx --x64"
+  },
+  "dependencies": {
+    "@rive-app/react-canvas": "^4.19.0",
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^3.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^10.0.5",
+    "electron": "^44.0.0",
+    "electron-builder": "^26.15.3",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.7",
+    "wait-on": "^9.1.0"
+  },
+  "build": {
+    "appId": "com.keycraft.desktop",
+    "productName": "KeyCraft",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable",
+        "appx"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "appx": {
+      "identityName": "KeyCraft",
+      "publisher": "CN=KeyCraft",
+      "publisherDisplayName": "KeyCraft Studio",
+      "applicationId": "KeyCraft.App",
+      "displayName": "KeyCraft - Master Touch Typing",
+      "backgroundColor": "#B9D2E8",
+      "languages": [
+        "en-US"
+      ],
+      "showNameOnTiles": true
+    }
+  }
+}

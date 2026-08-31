@@ -1,0 +1,70 @@
+# KeyCraft — Microsoft Store Publishing Configuration
+# Reference: MICROSOFT_STORE_PUBLISHING_AGENT_CONTEXT.md
+
+microsoft_store:
+  account:
+    type: "Individual"
+    country_region: "India"
+    publisher_display_name: "KeyCraft Studio"
+    onboarding_status: "active"
+
+  product:
+    product_name: "KeyCraft"
+    product_id: "KeyCraft"
+    store_id: ""
+
+  packaging:
+    preferred: "MSIX"
+    architectures: ["x64"]
+    submission_file: "KeyCraft-1.0.0.appx"
+    entry_point: "electron/main.cjs"
+    app_id: "com.keycraft.desktop"
+
+  listing:
+    default_language: "en-US"
+    title: "KeyCraft - Master Touch Typing & Code Velocity"
+    short_description: "Arcade-powered desktop touch typing trainer with 13 curriculum tracks, 9 retro arcade games, and real-time keystroke telemetry."
+    description: |
+      KeyCraft is a next-generation desktop touch typing trainer and developer keyboard velocity studio.
+
+      KEY FEATURES:
+      - 13 Comprehensive Curriculum Tracks: From core Home Row foundations to real-world developer syntax (JS, TS, Python, Rust, Go, CSS, SQL).
+      - 9 Live Arcade Defense Engines: Balloon Ninja, Monster Space Defense, Temple Bash, Ocean Bubbles, Apple Thieves, Meteor Defense, Velocity GP Racing, Word Bomb, and Syntax Matrix.
+      - Mathematical Telemetry Engine: Real-time calculation of Inter-Keystroke Intervals (IKI), Hold Time (HT), Fluster Index (FI), and Dynamic Difficulty Adjustment (DDA).
+      - Retro Neo-Brutalist Aesthetic: Solid pastel color palette, hard drop shadows, and authentic 90s OS window shell.
+      - 24 Unlockable Achievements, streaks, performance heatmaps, and customizable player profiles.
+      - 100% Offline & Local-First: Zero data tracking, private and secure.
+    keywords:
+      - "typing"
+      - "touch typing"
+      - "keyboard"
+      - "speed test"
+      - "code typing"
+      - "wpm trainer"
+      - "arcade typing"
+    category: "Education"
+    subcategory: "Books & Reference"
+    privacy_policy_url: "https://github.com/prasadsince1999/KeyCraft/blob/main/PRIVACY.md"
+    support_url: "https://github.com/prasadsince1999/KeyCraft/issues"
+
+  release:
+    pricing_model: "Free"
+    markets: ["All"]
+    visibility: "Public"
+    release_mode: "immediate"
+    gradual_rollout: false
+
+  compliance:
+    age_rating_complete: true
+    privacy_policy_verified: true
+    certification_notes_ready: true
+    accessibility_declared: true
+    restricted_capabilities: []
+    non_microsoft_driver_dependencies: []
+
+  certification_notes: |
+    KeyCraft is a standalone, offline touch typing learning application built with Electron.
+    - All typing practice, games, and telemetry run 100% locally.
+    - No user sign-in or account registration required.
+    - No background drivers or elevated administrative privileges needed.
+    - Full keyboard navigation supported across all modules.
