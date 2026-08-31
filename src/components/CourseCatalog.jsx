@@ -33,7 +33,6 @@ export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
-  // Handle Escape key to return to portal
   React.useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && onBack) {
@@ -77,13 +76,11 @@ export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses 
     return matchesSearch && matchesCat;
   });
 
-  // Calculate tab counts
   const tabsWithCounts = CATEGORY_TABS.map(tab => ({
     ...tab,
     count: COURSES_CATALOG.filter(c => matchesCategoryGroup(c, tab.id)).length
   }));
 
-  // Solid header background colors per category / course
   const getCourseColor = (course) => {
     const map = {
       'typing-jungle': 'bg-[#48bb78]',
@@ -102,8 +99,6 @@ export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses 
 
   return (
     <div className="max-w-6xl mx-auto px-3 sm:px-4 py-6 select-none font-sans space-y-6">
-      
-      {/* Top Header & Search Bar Window */}
       <div className="bg-white border-2 border-slate-900 rounded-2xl p-5 sm:p-6 shadow-[6px_6px_0_#0f172a]">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-5">
           <div>
@@ -136,7 +131,6 @@ export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses 
             </p>
           </div>
 
-          {/* Retro Search Box */}
           <div className="w-full md:w-80 shrink-0">
             <div className="flex items-center bg-slate-50 border-2 border-slate-900 rounded-xl px-3 py-2 shadow-[3px_3px_0_#0f172a] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#1888ff]">
               <Search className="w-4 h-4 text-slate-600 mr-2 shrink-0" />
@@ -161,7 +155,6 @@ export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses 
         </div>
       </div>
 
-      {/* Category Filter Pills (Neo-Brutalist Tabs) */}
       <div className="flex flex-wrap items-center gap-2 pt-1">
         {tabsWithCounts.map(tab => {
           const isActive = selectedCategory === tab.id;
@@ -189,7 +182,6 @@ export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses 
         })}
       </div>
 
-      {/* Course Cards Grid */}
       {filtered.length === 0 ? (
         <div className="bg-white border-2 border-dashed border-slate-300 rounded-2xl p-12 text-center shadow-[4px_4px_0_#0f172a]">
           <div className="w-12 h-12 rounded-xl bg-slate-100 border-2 border-slate-900 text-slate-600 flex items-center justify-center mx-auto mb-3 shadow-[2px_2px_0_#0f172a]">
@@ -225,18 +217,17 @@ export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses 
                 }}
                 className="bg-white border-2 border-slate-900 rounded-2xl shadow-[5px_5px_0_#0f172a] hover:shadow-[7px_7px_0_#0f172a] hover:-translate-y-0.5 transition-all cursor-pointer overflow-hidden flex flex-col justify-between group"
               >
-                {/* Solid Graphic Banner */}
-                <div className={`h-36 ${headerColor} p-5 flex flex-col justify-between text-white border-b-2 border-slate-900 relative overflow-hidden shrink-0`}>
-                  <div className="flex items-center justify-between z-10">
-                    <span className="px-2 py-0.5 rounded bg-black/30 text-white font-mono text-[10px] font-bold uppercase border border-white/20">
+                <div className={`min-h-[9.5rem] ${headerColor} p-5 flex flex-col justify-between gap-3 text-white border-b-2 border-slate-900 relative shrink-0`}>
+                  <div className="flex items-start justify-between gap-2 z-10">
+                    <span className="px-2 py-0.5 rounded bg-black/30 text-white font-mono text-[10px] font-bold uppercase border border-white/20 shrink-0">
                       {course.badge}
                     </span>
-                    <span className="px-2 py-0.5 rounded bg-white text-slate-900 text-[10px] font-mono font-bold border border-slate-900">
+                    <span className="px-2 py-0.5 rounded bg-white text-slate-900 text-[10px] font-mono font-bold border border-slate-900 text-right leading-tight">
                       {course.grade}
                     </span>
                   </div>
 
-                  <div className="text-xl sm:text-2xl font-black font-display text-white z-10 line-clamp-1 tracking-tight">
+                  <div className="text-lg sm:text-xl font-black font-display text-white z-10 leading-snug tracking-tight break-words whitespace-normal">
                     {course.title.replace('Typing | ', '')}
                   </div>
 
@@ -245,7 +236,6 @@ export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses 
                   </div>
                 </div>
 
-                {/* Course Body */}
                 <div className="p-5 flex-1 flex flex-col justify-between bg-white space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
@@ -261,7 +251,7 @@ export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses 
                       {course.title}
                     </h3>
 
-                    <p className="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed font-medium">
+                    <p className="text-xs text-slate-600 mt-2 leading-relaxed font-medium break-words whitespace-normal">
                       {course.description}
                     </p>
                   </div>
@@ -295,8 +285,6 @@ export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses 
           })}
         </div>
       )}
-
     </div>
   );
 }
-
