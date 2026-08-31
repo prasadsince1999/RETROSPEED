@@ -62,9 +62,26 @@ export default function ScoreModal({
   lesson, 
   stats, 
   onNextLesson, 
+  onNext,
   onRetry, 
-  onGoToMap 
+  onGoToMap,
+  onExit
 }) {
+  const handleNext = () => {
+    if (typeof onNextLesson === 'function') onNextLesson();
+    else if (typeof onNext === 'function') onNext();
+    else if (typeof onExit === 'function') onExit();
+  };
+
+  const handleExit = () => {
+    if (typeof onGoToMap === 'function') onGoToMap();
+    else if (typeof onExit === 'function') onExit();
+  };
+
+  const handleRetry = () => {
+    if (typeof onRetry === 'function') onRetry();
+  };
+
   const [poppedStars, setPoppedStars] = useState(0);
   const [shineStars, setShineStars] = useState({});
   const [starParticles, setStarParticles] = useState({});
@@ -218,18 +235,18 @@ export default function ScoreModal({
     const handleKeyDown = (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        onNextLesson();
+        handleNext();
       } else if (e.key === 'Tab') {
         e.preventDefault();
-        onRetry();
-      } else if (e.key === 'm' || e.key === 'M') {
+        handleRetry();
+      } else if (e.key === 'm' || e.key === 'M' || e.key === 'Escape') {
         e.preventDefault();
-        onGoToMap();
+        handleExit();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onNextLesson, onRetry, onGoToMap]);
+  }, [handleNext, handleRetry, handleExit]);
 
   if (!lesson || !stats) return null;
 
@@ -259,7 +276,7 @@ export default function ScoreModal({
         <div className="flex items-center space-x-1">
           <button className="w-4 h-4 bg-slate-700 border border-slate-900 rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-slate-300">_</button>
           <button className="w-4 h-4 bg-slate-700 border border-slate-900 rounded-xs flex items-center justify-center text-[8px] font-mono font-bold leading-none text-slate-300">□</button>
-          <button onClick={onGoToMap} className="w-4 h-4 bg-[#f87171] border border-slate-900 rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-slate-900">✕</button>
+          <button onClick={handleExit} className="w-4 h-4 bg-[#f87171] border border-slate-900 rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-slate-900">✕</button>
         </div>
       </div>
 
@@ -395,9 +412,9 @@ export default function ScoreModal({
             type="button"
             onClick={() => {
               sound.playKeyClick();
-              onNextLesson();
+              handleNext();
             }}
-            className="w-full py-3 rounded-xl bg-[#1888ff] hover:bg-[#38bdf8] text-white font-black text-sm border-2 border-slate-900 shadow-[4px_4px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-2 uppercase font-display"
+            className="w-full py-3 rounded-xl bg-[#1888ff] hover:bg-[#38bdf8] text-white font-black text-sm border-2 border-slate-900 shadow-[4px_4px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-2 uppercase font-display cursor-pointer"
           >
             <span>Continue to Next Level</span>
             <ArrowRight className="w-4 h-4" />
@@ -408,9 +425,9 @@ export default function ScoreModal({
               type="button"
               onClick={() => {
                 sound.playKeyClick();
-                onRetry();
+                handleRetry();
               }}
-              className="py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs border-2 border-slate-900 shadow-[2px_2px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-1.5"
+              className="py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs border-2 border-slate-900 shadow-[2px_2px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Try Again</span>
@@ -420,9 +437,9 @@ export default function ScoreModal({
               type="button"
               onClick={() => {
                 sound.playKeyClick();
-                onGoToMap();
+                handleExit();
               }}
-              className="py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs border-2 border-slate-900 shadow-[2px_2px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-1.5"
+              className="py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs border-2 border-slate-900 shadow-[2px_2px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
             >
               <Map className="w-3.5 h-3.5" />
               <span>Lesson Map</span>

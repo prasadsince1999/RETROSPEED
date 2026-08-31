@@ -262,18 +262,21 @@ export default function App() {
   };
 
   // Handle standalone arcade game completion
-  const handleArcadeComplete = (gameId, stats) => {
-    const updatedProgress = saveLessonResult('arcade', gameId, {
-      title: gameId.replace('-', ' ').toUpperCase(),
-      wpm: stats.wpm || 0,
-      accuracy: stats.accuracy || 100,
+  const handleArcadeComplete = (gameId, stats = {}) => {
+    const formattedStats = {
+      title: (stats.title || gameId.replace('-', ' ')).toUpperCase(),
+      wpm: Math.round(stats.wpm || 0),
+      accuracy: Math.round(stats.accuracy ?? 100),
       score: stats.score || 500,
-      points: stats.score || 500,
-      stars: stats.accuracy >= 95 ? 5 : stats.accuracy >= 85 ? 4 : 3,
+      points: stats.points || stats.score || 500,
+      stars: stats.stars || (stats.accuracy >= 95 ? 5 : stats.accuracy >= 85 ? 4 : 3),
+      time: stats.durationSeconds || Math.round((stats.durationMs || 30000) / 1000),
       durationSeconds: stats.durationSeconds || Math.round((stats.durationMs || 30000) / 1000),
       errors: stats.errors || 0
-    });
+    };
+    const updatedProgress = saveLessonResult('arcade', gameId, formattedStats);
     setUserProgress(updatedProgress);
+    setScoreModalStats(formattedStats);
   };
 
   // Move to next lesson
@@ -546,7 +549,10 @@ export default function App() {
               {currentView === 'press-room' && (
                 <PressRoomGame
                   lesson={activeLesson}
-                  onComplete={handleComplete}
+                  onComplete={stats => {
+                    if (gameLaunchOrigin === 'learn') handleComplete(stats);
+                    else handleArcadeComplete('press-room', stats);
+                  }}
                   onExit={handleGameExit}
                 />
               )}
@@ -554,7 +560,10 @@ export default function App() {
               {currentView === 'paper-planes' && (
                 <PaperPlanesGame
                   lesson={activeLesson}
-                  onComplete={handleComplete}
+                  onComplete={stats => {
+                    if (gameLaunchOrigin === 'learn') handleComplete(stats);
+                    else handleArcadeComplete('paper-planes', stats);
+                  }}
                   onExit={handleGameExit}
                 />
               )}
@@ -562,7 +571,10 @@ export default function App() {
               {currentView === 'local-line' && (
                 <LocalLineGame
                   lesson={activeLesson}
-                  onComplete={handleComplete}
+                  onComplete={stats => {
+                    if (gameLaunchOrigin === 'learn') handleComplete(stats);
+                    else handleArcadeComplete('local-line', stats);
+                  }}
                   onExit={handleGameExit}
                 />
               )}
@@ -570,7 +582,10 @@ export default function App() {
               {currentView === 'night-market' && (
                 <NightMarketGame
                   lesson={activeLesson}
-                  onComplete={handleComplete}
+                  onComplete={stats => {
+                    if (gameLaunchOrigin === 'learn') handleComplete(stats);
+                    else handleArcadeComplete('night-market', stats);
+                  }}
                   onExit={handleGameExit}
                 />
               )}

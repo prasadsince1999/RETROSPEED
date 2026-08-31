@@ -167,6 +167,10 @@ class SoundEngine {
     osc.stop(t + 0.12);
   }
 
+  playError() {
+    this.playErrorBuzz();
+  }
+
   // Success chime on completing a word or step
   playSuccessChime() {
     if (this.muted) return;
@@ -191,6 +195,14 @@ class SoundEngine {
       osc.start(t + i * 0.06);
       osc.stop(t + i * 0.06 + 0.25);
     });
+  }
+
+  playSuccess() {
+    this.playSuccessChime();
+  }
+
+  playWordSuccess() {
+    this.playSuccessChime();
   }
 
   // Star pop sound effect (1 to 5 stars)
@@ -773,6 +785,14 @@ class SoundEngine {
         osc.stop(t + 0.4);
       });
     });
+  }
+
+  playTada() {
+    this.playVictoryFanfare();
+  }
+
+  playLevelComplete() {
+    this.playVictoryFanfare();
   }
 }
 

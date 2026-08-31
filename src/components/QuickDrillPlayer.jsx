@@ -102,6 +102,19 @@ export default function QuickDrillPlayer({
     }
   }, [hasStarted, isFinished]);
 
+  // Escape key handler to exit drill
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        sound.playKeyClick();
+        if (onExit) onExit();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onExit]);
+
   // Countdown timer loop
   useEffect(() => {
     if (hasStarted && !isFinished && timeLeft > 0) {
