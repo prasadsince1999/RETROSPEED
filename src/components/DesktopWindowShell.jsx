@@ -78,21 +78,19 @@ export default function DesktopWindowShell({
     }
   };
 
-  // 6 Distinct Desktop Rooms
+  // 5 Distinct Desktop Rooms
   const NAV_ITEMS = [
     { id: 'home', label: 'Home', icon: Home, highlight: 'bg-[#C7E8CA]' },
     { id: 'learn', label: 'Learn', icon: BookOpen, highlight: 'bg-[#C7E8CA]' },
-    { id: 'practice', label: 'Practice', icon: Target, highlight: 'bg-[#C7E8CA]' },
     { id: 'play', label: 'Play', icon: Trophy, highlight: 'bg-[#C7E8CA]' },
     { id: 'stats', label: 'Stats', icon: BarChart2, highlight: 'bg-[#C7E8CA]' },
     { id: 'shop', label: 'Shop', icon: ShoppingBag, highlight: 'bg-[#C7E8CA]' }
   ];
 
   const isNavActive = (itemId) => {
-    if (itemId === 'home') return currentView === 'home';
-    if (itemId === 'learn') return currentView === 'learn' || currentView === 'map' || currentView === 'catalog';
-    if (itemId === 'practice') return currentView === 'practice' || currentView === 'drill' || currentView === 'daily' || currentView === 'shortcuts';
-    if (itemId === 'play') return currentView === 'play' || currentView === 'challenge' || ['press-room', 'paper-planes', 'local-line', 'night-market', 'drop-chits', 'pit-lane', 'fuse-desk', 'patch-terminal', 'meteor-words', 'velocity-gp', 'word-bomb', 'syntax-matrix'].includes(currentView);
+    if (itemId === 'home') return currentView === 'home' || currentView === 'drill' || currentView === 'daily' || currentView === 'practice';
+    if (itemId === 'learn') return currentView === 'learn' || currentView === 'map' || currentView === 'catalog' || currentView === 'lesson' || currentView === 'video' || currentView === 'shortcuts';
+    if (itemId === 'play') return currentView === 'play' || currentView === 'challenge' || ['press-room', 'paper-planes', 'local-line', 'night-market', 'drop-chits', 'pit-lane', 'fuse-desk', 'patch-terminal'].includes(currentView);
     if (itemId === 'stats') return currentView === 'stats' || currentView === 'progress' || currentView === 'badges';
     if (itemId === 'shop') return currentView === 'shop';
     return currentView === itemId;
@@ -229,7 +227,7 @@ export default function DesktopWindowShell({
                         onClick={() => handleNav('home')}
                         className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
                       >
-                        <span>New Quick Drill</span>
+                        <span>Quick Drill</span>
                         <span className="text-[10px] font-mono text-[#2D2319]/60">⚡</span>
                       </button>
                       <button
@@ -237,23 +235,23 @@ export default function DesktopWindowShell({
                         onClick={() => handleNav('daily')}
                         className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
                       >
-                        <span>Daily Sprint</span>
+                        <span>Daily Challenge</span>
                         <span className="text-[10px] font-mono text-[#2D2319]/60">📅</span>
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleNav('practice')}
+                        onClick={() => handleNav('learn')}
                         className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
                       >
-                        <span>Practice Hub</span>
-                        <span className="text-[10px] font-mono text-[#2D2319]/60">🎯</span>
+                        <span>Zero-to-Hero Path</span>
+                        <span className="text-[10px] font-mono text-[#2D2319]/60">🗺️</span>
                       </button>
                       <button
                         type="button"
-                        onClick={() => handleNav('challenge')}
+                        onClick={() => handleNav('play')}
                         className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
                       >
-                        <span>Challenge Hub</span>
+                        <span>Arcade Games</span>
                         <span className="text-[10px] font-mono text-[#2D2319]/60">🏆</span>
                       </button>
                     </div>

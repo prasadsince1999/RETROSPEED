@@ -330,8 +330,8 @@ export default function App() {
                   ? 'play'
                   : currentView === 'challenge'
                   ? 'play'
-                  : currentView === 'drill' 
-                  ? 'practice'
+                  : currentView === 'drill' || currentView === 'daily' || currentView === 'practice'
+                  ? 'home'
                   : currentView === 'map' || currentView === 'catalog' || currentView === 'lesson' || currentView === 'video' || currentView === 'shortcuts'
                   ? 'learn'
                   : currentView === 'stats' || currentView === 'badges' || currentView === 'shop'
@@ -346,6 +346,8 @@ export default function App() {
                   handleStartDailyChallenge();
                 } else if (view === 'challenge') {
                   setCurrentView('play');
+                } else if (view === 'practice') {
+                  setCurrentView('home');
                 } else {
                   setCurrentView(view);
                 }
@@ -455,20 +457,7 @@ export default function App() {
                 />
               )}
 
-              {/* Room 3: Practice (Practice Lobby & Drills) */}
-              {currentView === 'practice' && (
-                <PracticeLobby
-                  onStartDrill={(drill) => {
-                    setDrillConfig({
-                      mode: drill.id,
-                      difficulty: drill.difficulty,
-                      timeLimit: drill.timeLimit
-                    });
-                    setCurrentView('drill');
-                  }}
-                />
-              )}
-
+              {/* Quick Practice & Drills (Launched from Home Quick Play or Daily Challenge) */}
               {currentView === 'drill' && (
                 <QuickDrillPlayer
                   mode={drillConfig.mode}
@@ -476,7 +465,20 @@ export default function App() {
                   timeLimit={drillConfig.timeLimit}
                   userProgress={userProgress}
                   onComplete={updated => setUserProgress(updated)}
-                  onExit={() => setCurrentView('practice')}
+                  onExit={() => setCurrentView('home')}
+                />
+              )}
+
+              {/* Legacy practice view fallback */}
+              {currentView === 'practice' && (
+                <HomeView
+                  userProgress={userProgress}
+                  activeCourseId={activeCourseId}
+                  onStartQuickDrill={handleStartQuickDrill}
+                  onStartDailyChallenge={handleStartDailyChallenge}
+                  onStartSpineLesson={handleStartSpineLesson}
+                  onOpenStudio={() => setLicenseModalOpen(true)}
+                  onNavigate={view => setCurrentView(view)}
                 />
               )}
 

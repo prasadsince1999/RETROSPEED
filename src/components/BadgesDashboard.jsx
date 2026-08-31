@@ -93,7 +93,7 @@ export default function BadgesDashboard({
     if (onSelectCourse) {
       onSelectCourse(courseId, targetLevel);
     } else if (onNavigate) {
-      onNavigate('practice');
+      onNavigate('learn');
     }
   };
 
