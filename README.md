@@ -6,7 +6,7 @@
 
 Built with **React 18, Vite 6, Tailwind CSS, and Electron**, RETROSPEED operates on a **100% offline, local-first architecture** with sub-millisecond keystroke telemetry, Dynamic Difficulty Adjustment (DDA), and an authentic **Neo-Brutalist 90s OS window shell** with zero gradients.
 
-Built by [KSM × Tech](https://ksmxtech.com), a product studio in Bhubaneswar, India.
+Built by [KSM × Tech](https://ksmxtech.com), a product studio.
 
 ---
 
@@ -222,4 +222,4 @@ npm run package:store
 ---
 
 ## 📄 License
-MIT License. Created with ❤️ by Prasad at **KSM × Tech Studio** (Bhubaneswar, India).
+MIT License. Created with ❤️ by Prasad at **KSM × Tech Studio**.
