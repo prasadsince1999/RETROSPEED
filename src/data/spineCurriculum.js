@@ -13,10 +13,10 @@ export const SPINE_PARTS = [
     badge: 'Foundation',
     color: '#4BA3E3',
     gameBreak: {
-      gameId: 'balloon',
-      name: 'Balloon Ninja',
+      gameId: 'press-room',
+      name: 'Press Room',
       keys: ['f', 'j', 'd', 'k', 's', 'l', 'a', ';'],
-      description: 'Test your home row reflexes with floating target balloons.'
+      description: 'Test your home row reflexes stamping moving paper slips.'
     },
     lessons: [
       {
@@ -87,10 +87,10 @@ export const SPINE_PARTS = [
     badge: 'Words',
     color: '#48B89F',
     gameBreak: {
-      gameId: 'apple',
-      name: 'Apple Thieves',
+      gameId: 'paper-planes',
+      name: 'Paper Planes',
       keys: ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-      description: 'Catch falling orchard apples using home-row word combinations.'
+      description: 'Fold and launch origami paper planes using home-row words.'
     },
     lessons: [
       {
@@ -150,10 +150,10 @@ export const SPINE_PARTS = [
     badge: 'QWERTY Full',
     color: '#F6C445',
     gameBreak: {
-      gameId: 'monster',
-      name: 'Monster Attack',
+      gameId: 'local-line',
+      name: 'Local Line',
       keys: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'z', 'x', 'c', 'v', 'b', 'n', 'm'],
-      description: 'Defend your base against alien invaders across the full alphabet.'
+      description: 'Accelerate your commuter train coach across the full alphabet.'
     },
     lessons: [
       {
@@ -224,10 +224,10 @@ export const SPINE_PARTS = [
     badge: 'Cadence',
     color: '#C3A6E8',
     gameBreak: {
-      gameId: 'bubbles',
-      name: 'Floating Bubbles',
+      gameId: 'night-market',
+      name: 'Night Market',
       keys: ['Shift', '.', ',', ' '],
-      description: 'Pop floating sea bubbles with calm, rhythmic capitalization cadence.'
+      description: 'Pack and dispatch kitchen orders with calm capitalization cadence.'
     },
     lessons: [
       {
@@ -276,10 +276,10 @@ export const SPINE_PARTS = [
     badge: 'Symbols',
     color: '#F28B82',
     gameBreak: {
-      gameId: 'temple',
-      name: 'Temple Bash',
+      gameId: 'fuse-desk',
+      name: 'Fuse Desk',
       keys: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '@', '#', '$'],
-      description: 'Smash ancient sandstone rune blocks engraved with numbers and symbols.'
+      description: 'Submit root words containing symbols before the fuse burns.'
     },
     lessons: [
       {
@@ -328,10 +328,10 @@ export const SPINE_PARTS = [
     badge: 'Velocity',
     color: '#F6C445',
     gameBreak: {
-      gameId: 'meteor',
-      name: 'Meteor Words',
+      gameId: 'drop-chits',
+      name: 'Drop Chits',
       keys: ['all'],
-      description: 'High-pressure word defense against falling meteor showers.'
+      description: 'High-speed sorting rail defense against falling paper chits.'
     },
     lessons: [
       {
@@ -380,10 +380,10 @@ export const SPINE_PARTS = [
     badge: 'Operator',
     color: '#48B89F',
     gameBreak: {
-      gameId: 'kitchen',
-      name: 'Shortcut Kitchen',
+      gameId: 'shortcuts',
+      name: 'Shortcut Lab',
       keys: ['Ctrl', 'Shift', 'Alt', 'Win'],
-      description: 'Serve incoming shortcut orders before the ticket timer runs out.'
+      description: 'Execute OS modifier chords cleanly before the clock expires.'
     },
     lessons: [
       {
@@ -438,10 +438,10 @@ export const SPINE_PARTS = [
     badge: 'Grandmaster',
     color: '#2D2319',
     gameBreak: {
-      gameId: 'racer',
-      name: 'Velocity GP',
+      gameId: 'pit-lane',
+      name: 'Pit Lane',
       keys: ['all'],
-      description: 'Competitive track race pushing past 60+ WPM with pro precision.'
+      description: 'Competitive typewriter sprint pushing past 60+ WPM with pro precision.'
     },
     lessons: [
       {

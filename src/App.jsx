@@ -19,18 +19,15 @@ const CourseCatalog = lazy(() => import('./components/CourseCatalog'));
 const StatsDashboard = lazy(() => import('./components/StatsDashboard'));
 const BadgesDashboard = lazy(() => import('./components/BadgesDashboard'));
 
-// 5 Classic Arcade Games (Redesigned in Retro Solid Theme)
-const BalloonNinjaGame = lazy(() => import('./components/games/BalloonNinjaGame'));
-const MonsterAttackGame = lazy(() => import('./components/games/MonsterAttackGame'));
-const TempleBashGame = lazy(() => import('./components/games/TempleBashGame'));
-const FloatingBubblesGame = lazy(() => import('./components/games/FloatingBubblesGame'));
-const AppleThievesGame = lazy(() => import('./components/games/AppleThievesGame'));
-
-// 4 Next-Gen Canvas Arcade Engines
-const FallingWordsDefenseGame = lazy(() => import('./components/games/FallingWordsDefenseGame'));
-const TypingRacerGame = lazy(() => import('./components/games/TypingRacerGame'));
-const WordBombGame = lazy(() => import('./components/games/WordBombGame'));
-const SyntaxHackerGame = lazy(() => import('./components/games/SyntaxHackerGame'));
+// 8 Paper-Arcade Workshop Games
+const PressRoomGame = lazy(() => import('./components/games/PressRoomGame'));
+const LocalLineGame = lazy(() => import('./components/games/LocalLineGame'));
+const PaperPlanesGame = lazy(() => import('./components/games/PaperPlanesGame'));
+const NightMarketGame = lazy(() => import('./components/games/NightMarketGame'));
+const DropChitsGame = lazy(() => import('./components/games/DropChitsGame'));
+const PitLaneGame = lazy(() => import('./components/games/PitLaneGame'));
+const FuseDeskGame = lazy(() => import('./components/games/FuseDeskGame'));
+const PatchTerminalGame = lazy(() => import('./components/games/PatchTerminalGame'));
 const ShortcutPlayer = lazy(() => import('./components/ShortcutPlayer'));
 
 function ViewLoadingFallback() {
@@ -134,24 +131,22 @@ export default function App() {
       const title = (lesson.title || '').toLowerCase();
       const combined = `${gId} ${title}`;
 
-      if (combined.includes('apple')) {
-        setCurrentView('apple');
-      } else if (combined.includes('monster')) {
-        setCurrentView('monster');
-      } else if (combined.includes('temple')) {
-        setCurrentView('temple');
-      } else if (combined.includes('bubble')) {
-        setCurrentView('bubble');
-      } else if (combined.includes('meteor')) {
-        setCurrentView('meteor-words');
-      } else if (combined.includes('racer') || combined.includes('velocity')) {
-        setCurrentView('velocity-gp');
-      } else if (combined.includes('bomb')) {
-        setCurrentView('word-bomb');
-      } else if (combined.includes('syntax') || combined.includes('hacker')) {
-        setCurrentView('syntax-matrix');
+      if (combined.includes('plane') || combined.includes('bubble') || combined.includes('paper')) {
+        setCurrentView('paper-planes');
+      } else if (combined.includes('local') || combined.includes('train') || combined.includes('monster') || combined.includes('line')) {
+        setCurrentView('local-line');
+      } else if (combined.includes('market') || combined.includes('night') || combined.includes('apple') || combined.includes('chit')) {
+        setCurrentView('night-market');
+      } else if (combined.includes('drop') || combined.includes('meteor')) {
+        setCurrentView('drop-chits');
+      } else if (combined.includes('pit') || combined.includes('lane') || combined.includes('racer') || combined.includes('velocity')) {
+        setCurrentView('pit-lane');
+      } else if (combined.includes('fuse') || combined.includes('desk') || combined.includes('bomb')) {
+        setCurrentView('fuse-desk');
+      } else if (combined.includes('patch') || combined.includes('terminal') || combined.includes('syntax') || combined.includes('hacker')) {
+        setCurrentView('patch-terminal');
       } else {
-        setCurrentView('balloon');
+        setCurrentView('press-room');
       }
     } else {
       setCurrentView('lesson');
@@ -271,6 +266,26 @@ export default function App() {
   };
 
   // Determine if current view should be wrapped inside DesktopWindowShell
+  const WORKSHOP_GAME_IDS = [
+    'press-room',
+    'paper-planes',
+    'local-line',
+    'night-market',
+    'drop-chits',
+    'pit-lane',
+    'fuse-desk',
+    'patch-terminal',
+    'meteor-words',
+    'velocity-gp',
+    'word-bomb',
+    'syntax-matrix',
+    'balloon',
+    'monster',
+    'temple',
+    'bubble',
+    'apple'
+  ];
+
   const isDesktopWindowView = [
     'home', 
     'learn', 
@@ -282,15 +297,7 @@ export default function App() {
     'badges', 
     'shop', 
     'drill',
-    'meteor-words',
-    'velocity-gp',
-    'word-bomb',
-    'syntax-matrix',
-    'balloon',
-    'monster',
-    'temple',
-    'bubble',
-    'apple'
+    ...WORKSHOP_GAME_IDS
   ].includes(currentView);
 
   return (
@@ -304,7 +311,7 @@ export default function App() {
           {isDesktopWindowView && (
             <DesktopWindowShell
               currentView={
-                ['meteor-words', 'velocity-gp', 'word-bomb', 'syntax-matrix', 'balloon', 'monster', 'temple', 'bubble', 'apple'].includes(currentView)
+                WORKSHOP_GAME_IDS.includes(currentView)
                   ? 'play'
                   : currentView === 'challenge'
                   ? 'play'
@@ -451,71 +458,63 @@ export default function App() {
                 />
               )}
 
-              {/* All 9 Live Arcade Game Engines (Inside Unified Window Shell) */}
-              {currentView === 'meteor-words' && (
-                <FallingWordsDefenseGame
-                  onComplete={stats => handleArcadeComplete('meteor-words', stats)}
-                  onExit={handleGameExit}
-                />
-              )}
-
-              {currentView === 'velocity-gp' && (
-                <TypingRacerGame
-                  onComplete={stats => handleArcadeComplete('velocity-gp', stats)}
-                  onExit={handleGameExit}
-                />
-              )}
-
-              {currentView === 'word-bomb' && (
-                <WordBombGame
-                  onComplete={stats => handleArcadeComplete('word-bomb', stats)}
-                  onExit={handleGameExit}
-                />
-              )}
-
-              {currentView === 'syntax-matrix' && (
-                <SyntaxHackerGame
-                  onComplete={stats => handleArcadeComplete('syntax-matrix', stats)}
-                  onExit={handleGameExit}
-                />
-              )}
-
-              {currentView === 'balloon' && (
-                <BalloonNinjaGame
+              {/* The 8 Workshop Games */}
+              {(currentView === 'press-room' || currentView === 'balloon' || currentView === 'temple') && (
+                <PressRoomGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
                   onExit={handleGameExit}
                 />
               )}
 
-              {currentView === 'monster' && (
-                <MonsterAttackGame
+              {(currentView === 'paper-planes' || currentView === 'bubble') && (
+                <PaperPlanesGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
                   onExit={handleGameExit}
                 />
               )}
 
-              {currentView === 'temple' && (
-                <TempleBashGame
+              {(currentView === 'local-line' || currentView === 'monster') && (
+                <LocalLineGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
                   onExit={handleGameExit}
                 />
               )}
 
-              {currentView === 'bubble' && (
-                <FloatingBubblesGame
+              {(currentView === 'night-market' || currentView === 'apple') && (
+                <NightMarketGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
                   onExit={handleGameExit}
                 />
               )}
 
-              {currentView === 'apple' && (
-                <AppleThievesGame
-                  lesson={activeLesson}
-                  onComplete={handleComplete}
+              {(currentView === 'drop-chits' || currentView === 'meteor-words') && (
+                <DropChitsGame
+                  onComplete={stats => handleArcadeComplete('drop-chits', stats)}
+                  onExit={handleGameExit}
+                />
+              )}
+
+              {(currentView === 'pit-lane' || currentView === 'velocity-gp') && (
+                <PitLaneGame
+                  onComplete={stats => handleArcadeComplete('pit-lane', stats)}
+                  onExit={handleGameExit}
+                />
+              )}
+
+              {(currentView === 'fuse-desk' || currentView === 'word-bomb') && (
+                <FuseDeskGame
+                  onComplete={stats => handleArcadeComplete('fuse-desk', stats)}
+                  onExit={handleGameExit}
+                />
+              )}
+
+              {(currentView === 'patch-terminal' || currentView === 'syntax-matrix') && (
+                <PatchTerminalGame
+                  onComplete={stats => handleArcadeComplete('patch-terminal', stats)}
                   onExit={handleGameExit}
                 />
               )}
