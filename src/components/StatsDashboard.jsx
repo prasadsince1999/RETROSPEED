@@ -41,7 +41,7 @@ import { sound } from '../utils/audio';
 
 export default function StatsDashboard({ 
   userProgress = {}, 
-  activeCourseId = 'keycraft-odyssey', 
+  activeCourseId = 'keystroke-foundations', 
   onSelectCourse, 
   onNavigate,
   onStartLesson,
@@ -77,7 +77,7 @@ export default function StatsDashboard({
   } = summary;
 
   // Enrolled & all courses for filter dropdown
-  const enrolledIds = userProgress.enrolledCourses || ['keycraft-odyssey', 'syntax-forge', 'global-lexicon', 'curiosity-vault'];
+  const enrolledIds = userProgress.enrolledCourses || ['keystroke-foundations', 'retrospeed-odyssey', 'syntax-forge', 'global-lexicon', 'curiosity-vault'];
   const enrolledCourses = COURSES_CATALOG.filter(c => enrolledIds.includes(c.id));
   const activeCourseObj = COURSES_CATALOG.find(c => c.id === selectedCourseFilter);
 

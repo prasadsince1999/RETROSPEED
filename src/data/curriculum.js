@@ -14,7 +14,7 @@ function cleanString(str) {
     .replace(/\r/g, '\n');
 }
 
-export function getCurriculumForCourse(courseId = 'typing-jungle') {
+export function getCurriculumForCourse(courseId = 'keystroke-foundations') {
   const course = getCourseById(courseId);
   const rawData = course.data || [];
   const rawItems = Array.isArray(rawData) ? rawData : (rawData.lessons || rawData.data || []);
@@ -223,11 +223,11 @@ export function getCurriculumForCourse(courseId = 'typing-jungle') {
 }
 
 // Backward compatibility default exports
-const defaultCurriculum = getCurriculumForCourse('keycraft-odyssey');
+const defaultCurriculum = getCurriculumForCourse('keystroke-foundations');
 export const STAGES = defaultCurriculum.stages;
 export const ALL_LESSONS = defaultCurriculum.lessons;
 
-export function getLessonById(id, courseId = 'keycraft-odyssey') {
+export function getLessonById(id, courseId = 'keystroke-foundations') {
   const { lessons } = getCurriculumForCourse(courseId);
   return lessons.find(l => l.id === id) || lessons[0];
 }

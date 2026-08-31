@@ -1,4 +1,4 @@
-// Authentic EdClub Achievements & Badges Registry
+// RETROSPEED Achievements & Badges Registry
 // 24 Authentic Achievements across 5 Categories
 
 export const ACHIEVEMENT_CATEGORIES = [
@@ -27,7 +27,7 @@ export const ACHIEVEMENTS = [
     xp: 100,
     requirement: 'Achieve a typing speed of 15 WPM on any completed lesson.',
     lore: 'The journey of ten thousand words begins with a single swift keystroke. Your fingers are learning the foundational rhythm of the keyboard.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 1,
     metricKey: 'maxWpm'
   },
@@ -44,7 +44,7 @@ export const ACHIEVEMENTS = [
     xp: 250,
     requirement: 'Achieve a typing speed of 30 WPM on any completed lesson.',
     lore: 'Breaking through everyday casual typing into conversational fluency. You can now type at the same pace as ordinary speaking conversation.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 5,
     metricKey: 'maxWpm'
   },
@@ -61,7 +61,7 @@ export const ACHIEVEMENTS = [
     xp: 500,
     requirement: 'Reach a blazing speed of 50 WPM on any completed lesson.',
     lore: 'Pure muscle memory in action. Your fingers fly effortlessly across the keys without looking down at the keyboard.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 15,
     metricKey: 'maxWpm'
   },
@@ -78,7 +78,7 @@ export const ACHIEVEMENTS = [
     xp: 1000,
     requirement: 'Surpass 70 WPM on any rigorous touch typing test.',
     lore: 'Breaking the sound barrier of touch typing. Words materialize on the screen as fast as thoughts form in your conscious mind.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 25,
     metricKey: 'maxWpm'
   },
@@ -95,7 +95,7 @@ export const ACHIEVEMENTS = [
     xp: 2500,
     requirement: 'Reach the elite world-class threshold of 100+ Words Per Minute.',
     lore: 'A true typing virtuoso. You belong to the top tier of typists globally, moving with blinding speed and supreme confidence.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 50,
     metricKey: 'maxWpm'
   },
@@ -116,7 +116,7 @@ export const ACHIEVEMENTS = [
     xp: 150,
     requirement: 'Complete any lesson with at least 95% typing accuracy.',
     lore: 'Precision over haste. Every keypress hits its mark with steady, measured discipline and minimal backspaces.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 1,
     metricKey: 'maxAccuracy'
   },
@@ -133,7 +133,7 @@ export const ACHIEVEMENTS = [
     xp: 400,
     requirement: 'Complete any lesson with pinpoint 98% or higher accuracy.',
     lore: 'Near-flawless execution. Your typing cadence is crisp, your error rate is nearly non-existent.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 3,
     metricKey: 'maxAccuracy'
   },
@@ -150,7 +150,7 @@ export const ACHIEVEMENTS = [
     xp: 1200,
     requirement: 'Achieve 100% spotless accuracy across 5 or more distinct lessons.',
     lore: 'Total mastery of touch typing discipline. Not a single errant keystroke across multiple rigorous exercises.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 5,
     metricKey: 'perfectLessons'
   },
@@ -171,7 +171,7 @@ export const ACHIEVEMENTS = [
     xp: 200,
     requirement: 'Practice typing for 3 consecutive days.',
     lore: 'Great habits are formed through steady daily commitment. You have established the cadence of regular practice.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 1,
     metricKey: 'streakDays'
   },
@@ -188,7 +188,7 @@ export const ACHIEVEMENTS = [
     xp: 600,
     requirement: 'Maintain an unbroken 7-day typing streak.',
     lore: 'A full week of dedicated practice! Rain or shine, your dedication to muscle memory never wavers.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 2,
     metricKey: 'streakDays'
   },
@@ -205,7 +205,7 @@ export const ACHIEVEMENTS = [
     xp: 2000,
     requirement: 'Maintain an unstoppable 30-day streak of daily practice.',
     lore: 'A full month of continuous dedication. Touch typing is no longer just a skill—it is second nature ingrained in your mind.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 10,
     metricKey: 'streakDays'
   },
@@ -222,7 +222,7 @@ export const ACHIEVEMENTS = [
     xp: 800,
     requirement: 'Accumulate 60 or more minutes of total focused keyboard practice.',
     lore: 'Endurance that rivals marathon runners. You have spent over an hour refining every finger on the home row.',
-    courseShortcut: 'typing-jungle',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 5,
     metricKey: 'practiceMinutes'
   },
@@ -231,87 +231,87 @@ export const ACHIEVEMENTS = [
   // 4. ARCADE CHAMPIONS (5)
   // ==========================================
   {
-    id: 'balloon-ninja-slicer',
-    title: 'Balloon Ninja Slicer',
-    subtitle: 'Complete 5 Balloon Games',
+    id: 'press-room-master',
+    title: 'Press Room Master',
+    subtitle: 'Complete 5 Stamp Drills',
     category: 'arcade',
     categoryLabel: 'Arcade Champions',
     targetValue: 5,
-    unit: 'Games',
+    unit: 'Drills',
     rarity: 'Uncommon',
     rarityColor: 'sky',
     xp: 350,
-    requirement: 'Complete 5 Balloon Ninja arcade challenges without letting words float away.',
-    lore: 'Slice like the wind! Your rapid finger strikes pop airborne balloons before they reach the stratosphere.',
-    courseShortcut: 'typing-jungle',
+    requirement: 'Complete 5 Press Room factory stamping sessions without jams.',
+    lore: 'Strike like lightning! The rubber stamp slams true on every moving paper slip.',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 4,
     metricKey: 'balloonGames'
   },
   {
-    id: 'planetary-defender',
-    title: 'Planetary Defender',
-    subtitle: 'Defeat 10 Alien Waves',
+    id: 'local-line-conductor',
+    title: 'Local Line Conductor',
+    subtitle: 'Reach 10 Terminus Stops',
     category: 'arcade',
     categoryLabel: 'Arcade Champions',
     targetValue: 10,
-    unit: 'Waves',
+    unit: 'Stops',
     rarity: 'Rare',
     rarityColor: 'indigo',
     xp: 500,
-    requirement: 'Defeat 10 alien attack waves in Monster Attack space defense.',
-    lore: "Earth's frontline guardian. Your rapid laser keystrokes vaporize invading alien armadas before they breach orbit.",
-    courseShortcut: 'typing-jungle',
+    requirement: 'Reach the terminus 10 times in Local Line commuter rail duel.',
+    lore: 'Full speed ahead! Clean keystrokes accelerate your coach to the station ahead of your rival.',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 8,
     metricKey: 'monsterWaves'
   },
   {
-    id: 'pharaohs-scribe',
-    title: "Pharaoh's Scribe",
-    subtitle: 'Break 20 Temple Runes',
+    id: 'drop-chits-sorter',
+    title: 'Drop Chits Sorter',
+    subtitle: 'Sort 20 Falling Chits',
     category: 'arcade',
     categoryLabel: 'Arcade Champions',
     targetValue: 20,
-    unit: 'Runes',
+    unit: 'Chits',
     rarity: 'Epic',
     rarityColor: 'amber',
     xp: 750,
-    requirement: 'Bash and solve 20 ancient stone hieroglyphs in Temple Bash.',
-    lore: 'Deciphering the lost hieroglyphs of antiquity. Your hammer strikes true on every sacred monument.',
-    courseShortcut: 'typing-jungle',
+    requirement: 'Sort 20 falling paper chits before they hit the desk.',
+    lore: 'Paper sorting at terminal velocity. No slip drops past your lightning reflexes.',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 12,
     metricKey: 'templeRunes'
   },
   {
-    id: 'deep-sea-diver',
-    title: 'Deep Sea Diver',
-    subtitle: 'Pop 25 Bubbles',
+    id: 'paper-planes-pilot',
+    title: 'Paper Planes Pilot',
+    subtitle: 'Launch 25 Origami Notes',
     category: 'arcade',
     categoryLabel: 'Arcade Champions',
     targetValue: 25,
-    unit: 'Bubbles',
+    unit: 'Planes',
     rarity: 'Rare',
     rarityColor: 'cyan',
     xp: 450,
-    requirement: 'Pop 25 submerged word bubbles in Floating Bubbles deep oceanic trench.',
-    lore: 'Navigating the ocean depths with submarine precision. Underwater currents are no match for your calm fingers.',
-    courseShortcut: 'typing-jungle',
+    requirement: 'Fold and launch 25 origami notes in Paper Planes.',
+    lore: 'Soaring on gentle drafts of wind. Every typed word sends an origami plane gliding high.',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 16,
     metricKey: 'bubblesPopped'
   },
   {
-    id: 'orchard-master',
-    title: 'Orchard Master',
-    subtitle: 'Harvest 50 Apples',
+    id: 'night-market-chef',
+    title: 'Night Market Chef',
+    subtitle: 'Pack 50 Order Chits',
     category: 'arcade',
     categoryLabel: 'Arcade Champions',
     targetValue: 50,
-    unit: 'Apples',
+    unit: 'Orders',
     rarity: 'Epic',
     rarityColor: 'rose',
     xp: 700,
-    requirement: 'Harvest and protect 50 ripe apples in Apple Thieves orchard defense.',
-    lore: 'The bountiful harvest is secured! Raccoons and thieves scramble away empty-handed from your lightning reflexes.',
-    courseShortcut: 'typing-jungle',
+    requirement: 'Pack and stamp 50 kitchen order chits in Night Market.',
+    lore: 'Service with style! Orders fly across the counter stamped PAID with flawless accuracy.',
+    courseShortcut: 'keystroke-foundations',
     targetLevel: 20,
     metricKey: 'applesHarvested'
   },
@@ -349,7 +349,7 @@ export const ACHIEVEMENTS = [
     xp: 800,
     requirement: 'Successfully unlock and master lessons covering all 26 letters from A to Z.',
     lore: 'The complete English alphabet is at your command. No character escapes your mental keyboard map.',
-    courseShortcut: 'keycraft-odyssey',
+    courseShortcut: 'retrospeed-odyssey',
     targetLevel: 50,
     metricKey: 'alphabetKeys'
   },
@@ -417,13 +417,13 @@ export const ACHIEVEMENTS = [
     xp: 850,
     requirement: 'Master 10 top row lessons featuring numbers 0-9 and Shift symbols (!@#$%^&*).',
     lore: 'Reaching the summit of the keyboard without hesitation. Numbers and special characters are second nature.',
-    courseShortcut: 'keycraft-odyssey',
+    courseShortcut: 'retrospeed-odyssey',
     targetLevel: 60,
     metricKey: 'numberLessons'
   },
   {
-    id: 'typing-jungle-grandmaster',
-    title: 'KeyCraft Grandmaster',
+    id: 'retrospeed-grandmaster',
+    title: 'RETROSPEED Grandmaster',
     subtitle: 'The Ultimate Summit',
     category: 'mastery',
     categoryLabel: 'Curriculum Mastery',
@@ -432,9 +432,9 @@ export const ACHIEVEMENTS = [
     rarity: 'Mythic',
     rarityColor: 'gold',
     xp: 5000,
-    requirement: 'Advance deep into the KeyCraft Odyssey journey and collect 100+ total stars.',
-    lore: 'The supreme rank of the typing realm. You stand atop the summit of KeyCraft as an undisputed grandmaster.',
-    courseShortcut: 'keycraft-odyssey',
+    requirement: 'Advance deep into the RETROSPEED Odyssey journey and collect 100+ total stars.',
+    lore: 'The supreme rank of the typing realm. You stand atop the summit of RETROSPEED as an undisputed grandmaster.',
+    courseShortcut: 'retrospeed-odyssey',
     targetLevel: 100,
     metricKey: 'totalStars'
   }
@@ -497,7 +497,7 @@ export function evaluateAchievements(userProgress = {}) {
   const bubblesPopped = Math.max(0, Number(arcade.bubblesPopped ?? userProgress.bubblesPopped ?? 0));
   const applesHarvested = Math.max(0, Number(arcade.applesHarvested ?? userProgress.applesHarvested ?? 0));
 
-  const odysseyCourse = courses['keycraft-odyssey'] || courses['typing-jungle'] || {};
+  const odysseyCourse = courses['retrospeed-odyssey'] || courses['keystroke-foundations'] || {};
   const syntaxCourse = courses['syntax-forge'] || courses['code-typing'] || {};
   const mysteryCourse = courses['chronicles-of-mystery'] || courses['mystery-detective'] || {};
   const musicCourse = courses['symphony-keys'] || courses['music-theory'] || {};

@@ -1,4 +1,4 @@
-// Fuse Desk Workshop Game (Replaces Word Bomb)
+// Fuse Desk Workshop Game
 // Manila envelope on cream desk with ticking red fuse bar: Type words containing the target root.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';

@@ -22,7 +22,7 @@ import { getNextSpineLesson, SPINE_PARTS } from '../data/spineCurriculum';
 
 export default function HomeView({
   userProgress = {},
-  activeCourseId = 'keycraft-odyssey',
+  activeCourseId = 'keystroke-foundations',
   onStartQuickDrill,
   onStartDailyChallenge,
   onStartSpineLesson,

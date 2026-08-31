@@ -271,7 +271,7 @@ export default function BadgesDashboard({
               <div className="text-center py-6">
                 <CheckCircle2 className="w-8 h-8 text-[#48B89F] mx-auto mb-2" />
                 <h4 className="font-bold text-[#2D2319] text-xs">All Badges Conquered!</h4>
-                <p className="text-[10px] text-[#2D2319]/70 mt-1 font-mono">You have completed all 24 KeyCraft achievements.</p>
+                <p className="text-[10px] text-[#2D2319]/70 mt-1 font-mono">You have completed all 24 RETROSPEED achievements.</p>
               </div>
             )}
           </div>

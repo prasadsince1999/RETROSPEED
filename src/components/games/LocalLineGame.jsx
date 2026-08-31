@@ -1,4 +1,4 @@
-// Local Line Workshop Game (Replaces Monster Attack & Chase Clones)
+// Local Line Workshop Game
 // Two commuter train coaches on a railway track: Clean words accelerate, typos slam the brakes.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';

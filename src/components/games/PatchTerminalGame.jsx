@@ -1,4 +1,4 @@
-// Patch Terminal Workshop Game (Replaces Syntax Matrix / Syntax Hacker)
+// Patch Terminal Workshop Game
 // Clean cream code editor terminal: Type code tokens before the line falls off the screen.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';

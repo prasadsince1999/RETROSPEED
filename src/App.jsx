@@ -274,16 +274,7 @@ export default function App() {
     'drop-chits',
     'pit-lane',
     'fuse-desk',
-    'patch-terminal',
-    'meteor-words',
-    'velocity-gp',
-    'word-bomb',
-    'syntax-matrix',
-    'balloon',
-    'monster',
-    'temple',
-    'bubble',
-    'apple'
+    'patch-terminal'
   ];
 
   const isDesktopWindowView = [
@@ -458,8 +449,8 @@ export default function App() {
                 />
               )}
 
-              {/* The 8 Workshop Games */}
-              {(currentView === 'press-room' || currentView === 'balloon' || currentView === 'temple') && (
+              {/* The 8 RETROSPEED Workshop Games */}
+              {currentView === 'press-room' && (
                 <PressRoomGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
@@ -467,7 +458,7 @@ export default function App() {
                 />
               )}
 
-              {(currentView === 'paper-planes' || currentView === 'bubble') && (
+              {currentView === 'paper-planes' && (
                 <PaperPlanesGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
@@ -475,7 +466,7 @@ export default function App() {
                 />
               )}
 
-              {(currentView === 'local-line' || currentView === 'monster') && (
+              {currentView === 'local-line' && (
                 <LocalLineGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
@@ -483,7 +474,7 @@ export default function App() {
                 />
               )}
 
-              {(currentView === 'night-market' || currentView === 'apple') && (
+              {currentView === 'night-market' && (
                 <NightMarketGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
@@ -491,28 +482,28 @@ export default function App() {
                 />
               )}
 
-              {(currentView === 'drop-chits' || currentView === 'meteor-words') && (
+              {currentView === 'drop-chits' && (
                 <DropChitsGame
                   onComplete={stats => handleArcadeComplete('drop-chits', stats)}
                   onExit={handleGameExit}
                 />
               )}
 
-              {(currentView === 'pit-lane' || currentView === 'velocity-gp') && (
+              {currentView === 'pit-lane' && (
                 <PitLaneGame
                   onComplete={stats => handleArcadeComplete('pit-lane', stats)}
                   onExit={handleGameExit}
                 />
               )}
 
-              {(currentView === 'fuse-desk' || currentView === 'word-bomb') && (
+              {currentView === 'fuse-desk' && (
                 <FuseDeskGame
                   onComplete={stats => handleArcadeComplete('fuse-desk', stats)}
                   onExit={handleGameExit}
                 />
               )}
 
-              {(currentView === 'patch-terminal' || currentView === 'syntax-matrix') && (
+              {currentView === 'patch-terminal' && (
                 <PatchTerminalGame
                   onComplete={stats => handleArcadeComplete('patch-terminal', stats)}
                   onExit={handleGameExit}

@@ -66,7 +66,7 @@ export const KEY_FINGER_MAPPING = {
 export function getDefaultProgress() {
   return {
     activeCourseId: 'keystroke-foundations',
-    enrolledCourses: ['keystroke-foundations', 'keycraft-odyssey', 'syntax-forge'],
+    enrolledCourses: ['keystroke-foundations', 'retrospeed-odyssey', 'syntax-forge'],
     courses: {
       'keystroke-foundations': {
         unlockedLevel: 1,

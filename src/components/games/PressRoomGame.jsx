@@ -1,4 +1,4 @@
-// Press Room Workshop Game (Replaces Balloon Valley)
+// Press Room Workshop Game
 // Single-key reflex drill: Rubber stamp slams down onto moving paper slips.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';

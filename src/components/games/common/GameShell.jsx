@@ -33,7 +33,8 @@ export default function GameShell({
   onExit,
   children
 }) {
-  // ESC to exit, SPACE / P to pause, R to restart
+  // ESC to exit, Ctrl+P to pause, R to restart
+  // Also pause automatically on window blur and visibility change (e.g. switching apps or tabs)
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -43,9 +44,29 @@ export default function GameShell({
         if (onTogglePause) onTogglePause();
       }
     };
+
+    const handleBlur = () => {
+      if (!isPaused && onTogglePause) {
+        onTogglePause(true);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden && !isPaused && onTogglePause) {
+        onTogglePause(true);
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onExit, onTogglePause]);
+    window.addEventListener('blur', handleBlur);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('blur', handleBlur);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [onExit, onTogglePause, isPaused]);
 
   return (
     <div className="relative w-full h-full flex flex-col justify-between font-sans select-none bg-[#FDF8EE] overflow-hidden">

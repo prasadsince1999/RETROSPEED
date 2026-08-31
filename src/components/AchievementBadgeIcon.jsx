@@ -2,7 +2,7 @@ import React from 'react';
 import { Lock } from 'lucide-react';
 
 /**
- * High quality vector SVG Medal & Trophy Icon for all 24 EdClub achievements.
+ * High quality vector SVG Medal & Trophy Icon for all 24 RETROSPEED achievements.
  * Features glowing gradients for unlocked, subdued monochrome for locked.
  */
 export default function AchievementBadgeIcon({
@@ -727,9 +727,7 @@ export default function AchievementBadgeIcon({
           </g>
         );
 
-      case 'keycraft-odyssey-grandmaster':
-      case 'keycraft-grandmaster':
-      case 'typing-jungle-grandmaster':
+      case 'retrospeed-grandmaster':
         return (
           <g>
             {/* Grandmaster Lion Head Silhouette */}

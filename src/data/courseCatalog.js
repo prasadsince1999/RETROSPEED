@@ -28,7 +28,7 @@ export const COURSES_CATALOG = [
     data: basicsLessons.lessons
   },
   {
-    id: 'keycraft-odyssey',
+    id: 'retrospeed-odyssey',
     programId: 1,
     title: 'RETROSPEED Odyssey',
     category: 'Core Touch Typing',
@@ -211,9 +211,10 @@ export const COURSES_CATALOG = [
   }
 ];
 
-// Backwards compatibility map for legacy IDs
+// Backwards compatibility map for shorthand aliases
 const LEGACY_COURSE_ID_MAP = {
-  'typing-jungle': 'keycraft-odyssey',
+  'basics': 'keystroke-foundations',
+  'odyssey': 'retrospeed-odyssey',
   'typing-basics': 'keystroke-foundations',
   'code-typing': 'syntax-forge',
   'loanwords': 'global-lexicon',
@@ -229,7 +230,7 @@ const LEGACY_COURSE_ID_MAP = {
 };
 
 export function resolveCourseId(courseId) {
-  if (!courseId) return 'keycraft-odyssey';
+  if (!courseId) return 'keystroke-foundations';
   return LEGACY_COURSE_ID_MAP[courseId] || courseId;
 }
 

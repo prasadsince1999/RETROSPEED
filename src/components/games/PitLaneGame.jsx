@@ -1,4 +1,4 @@
-// Pit Lane Workshop Game (Replaces Velocity GP / Typing Racer)
+// Pit Lane Workshop Game
 // Two typewriter racers on a paper road: Live WPM dictates engine speed.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';

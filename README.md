@@ -48,30 +48,29 @@ Keystroke Event (keydown / keyup)
 
 ---
 
-## 🕹️ 9 Live Arcade & Defense Engines
+## 🕹️ The 8 Paper-Arcade Workshop Games
 
-RETROSPEED features nine distinct canvas-rendered arcade game engines built with custom 2D physics:
+RETROSPEED features eight distinct canvas-rendered workshop games unified under the Neo-Brutalist paper desk theme:
 
-| Arcade Engine | Genre / Mechanics | Visual Theme |
+| Workshop Game | Mechanics & Skill Focus | Visual Theme |
 |---|---|---|
-| **🎈 Balloon Ninja** | **Garden Slicer**: Sine-wave floating teardrop balloons on trapeze bars, active target sunburst halo `< K >`, parabolic ninja leap, and glowing katana slash beam. | Daylight denim sky, karst mountain peaks, cliff rim, and lilypad lake. |
-| **👾 Monster Attack** | **Space Defender**: Advancing 8-bit alien saucers, drones, and octopi descending along orbital attack vectors with dual rotating plasma turrets. | Dark starfield cosmos, planetary rings, and mint laser bolts. |
-| **🏺 Temple Bash** | **Physics Crumble**: Falling hieroglyphic rune monoliths, golden bronze warhammer windup, ground screen-shake, and stone rubble physics. | Ancient Egyptian sandstone desert sanctuary with massive pillars. |
-| **🫧 Floating Bubbles** | **Hydrodynamic Diver**: Translucent matte bubble spheres floating up from the deep; popping releases water droplet splash particles and ripple rings. | Deep ocean coral trench seabed with surface barrier line. |
-| **🍎 Apple Thieves** | **Harvest Defense**: Dangling apples with leaf stems; bandit raccoon aiming wooden slingshot with parabolic acorn projectile physics. | Autumn orchard canopy with warm cream paper backdrop. |
-| **☄️ Meteor Words** | **Atmospheric Missile Defense**: Multisyllabic falling keywords with spatial threat ranking $P(w) = \frac{v_w}{y_{max} - y_w} \cdot (1 + \text{len})$, Bézier intercept missiles, and screen shake. | Orbital neon defense grid with radar scan lines. |
-| **🏎️ Velocity GP** | **Multi-lane Grand Prix**: 15-keystroke sliding-window instantaneous speed $IWPM$, ARIMA AI ghost racers, oil slicks, and turbo boosts. | High-contrast retro asphalt speedway with chequered flags. |
-| **💣 Word Bomb** | **Ticking Keyword Match**: Prefix Trie matching over a 5,000+ word dictionary, exponential fuse decay $T_{fuse}(k) = T_0 \cdot e^{-\lambda k}$, and Zipf rarity scoring. | Steampunk explosive chamber with ticking detonators. |
-| **⚡ Syntax Matrix** | **AST Token Defense**: Syntactic code parsing (keywords, identifiers, literals, operators), auto-indentation, and pinky-finger fatigue mitigation. | Cyberpunk IDE terminal with cascading matrix code streams. |
+| **📄 Press Room** | **Single-Key Factory Drill**: Moving paper slips on conveyor belt with mechanical rubber stamp slam. | Warm cream paper desk with steel conveyor guide. |
+| **✈️ Paper Planes** | **Short Word Origami**: Ascending paper notes folded and launched into flight by typing. | Paper workshop desk with soaring origami gliders. |
+| **🚆 Local Line** | **Paced Commuter Duel**: Dual commuter coaches on railway tracks; clean words accelerate, typos brake. | Twin paper rail lines with dual passenger coaches. |
+| **🍜 Night Market** | **Kitchen Ticket Dispatch**: Counter order tickets sliding from right; item names stamped PAID. | Wooden market counter with order ticket rails. |
+| **📥 Drop Chits** | **Falling Word Sorter**: Paper slips dropping from top sorting rail; clear before hitting desk. | Sorting rail workspace with cream drop slips. |
+| **💣 Fuse Desk** | **Root Word Pressure**: Manila envelope with ticking red fuse bar matching English root prompts. | Manila envelope desk with glowing red fuse timer. |
+| **🏎️ Pit Lane** | **60-Second WPM Sprint**: Dual typewriter racers powered by live WPM telemetry. | Dual-lane paper asphalt strip with racing ribbons. |
+| **💻 Patch Terminal** | **Code Token Defense**: Falling lines of real JS, Python, Rust, and SQL code syntax to patch. | Clean cream code workbench with monospace font. |
 
 ---
 
-## 📚 13-Track Comprehensive Curriculum
+## 📚 Driving School Spine & Comprehensive Curriculum
 
-RETROSPEED ships with 13 structured tracks comprising over 700+ individual progressive lessons and challenges:
+RETROSPEED ships with an 8-Part Zero-to-Hero Spine and 12 structured specialty tracks:
 
 1. **Keystroke Foundations**: Pure tactile muscle memory drills for home row, top row, bottom row, and numbers.
-2. **KeyCraft Odyssey**: The master journey from single letters to advanced full-keyboard mastery.
+2. **RETROSPEED Odyssey**: The master journey from single letters to advanced full-keyboard mastery.
 3. **Syntax Forge (Developer Track)**: Real-world syntax drills across **JavaScript, TypeScript, Python, Rust, Go, CSS, SQL, and HTML**.
 4. **Global Lexicon & Etymology**: Loanwords, Latin and Greek roots, scientific taxonomy, and multicultural vocabulary.
 5. **Chronicles of Mystery**: Detective case dossiers, noir investigation logs, and forensic cipher solving.

@@ -1,4 +1,4 @@
-// Night Market Workshop Game (Replaces Apple Thieves)
+// Night Market Workshop Game
 // Order chits slide across the counter from the right: Type the item name to stamp PAID and pack the order.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';

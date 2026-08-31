@@ -36,7 +36,7 @@ function JourneyAvatar({ isHopping, onClick }) {
       className={`absolute -top-16 left-1/2 -translate-x-1/2 z-30 cursor-pointer select-none transition-transform group ${
         isHopping ? 'animate-avatar-hop' : 'animate-avatar-bob'
       }`}
-      title="KeyCraft Adventurer • Click to cheer & hop!"
+      title="RETROSPEED Explorer • Click to cheer & hop!"
     >
       {/* Floating 'YOU ARE HERE' Pointer Pill (Retro Stamp) */}
       <div className="flex flex-col items-center mb-1">

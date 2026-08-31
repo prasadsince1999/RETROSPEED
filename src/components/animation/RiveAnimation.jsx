@@ -1,89 +1,31 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
+import React, { useRef, useEffect } from 'react';
 
 /**
- * Universal Rive Animation Component with High-Performance Canvas Fallback.
- * 
- * Supports:
- * 1. .riv files with State Machines & inputs (number, boolean, trigger).
- * 2. Standalone procedural 60fps Canvas Fallback State Machines when .riv is loading,
- *    not supplied, or operating in offline/lightweight mode.
+ * Universal Canvas State-Machine Animation Component.
+ * High-performance 60fps procedural canvas renderer for mascots, gauges, and meters.
  */
 export default function RiveAnimation({
-  src,
-  artboard,
-  stateMachines,
   inputs = {},
   fallbackRender,
-  fallbackType = 'default',
   className = '',
   style = {},
   width,
   height,
-  autoplay = true,
   onLoad
 }) {
   const canvasRef = useRef(null);
   const animFrameRef = useRef(null);
   const startTimeRef = useRef(performance.now());
   const prevTimeRef = useRef(performance.now());
-  const [loadFailed, setLoadFailed] = useState(!src);
 
-  // Rive hook setup
-  const riveOptions = useMemo(() => {
-    if (!src) return null;
-    return {
-      src,
-      artboard,
-      stateMachines: stateMachines || ['State Machine 1'],
-      autoplay,
-      onLoad: (riveInstance) => {
-        setLoadFailed(false);
-        if (onLoad) onLoad(riveInstance);
-      },
-      onLoadError: () => {
-        setLoadFailed(true);
-      }
-    };
-  }, [src, artboard, stateMachines, autoplay, onLoad]);
-
-  const riveHook = useRive(riveOptions || {});
-  const { rive, RiveComponent } = riveHook || {};
-
-  // Update Rive State Machine Inputs when inputs prop changes
   useEffect(() => {
-    if (!rive || loadFailed) return;
-    try {
-      const smNames = Array.isArray(stateMachines)
-        ? stateMachines
-        : [stateMachines || 'State Machine 1'];
-
-      smNames.forEach((smName) => {
-        const smInputs = rive.stateMachineInputs(smName);
-        if (!smInputs) return;
-
-        smInputs.forEach((input) => {
-          if (inputs[input.name] !== undefined) {
-            if (typeof inputs[input.name] === 'boolean') {
-              input.value = inputs[input.name];
-            } else if (typeof inputs[input.name] === 'number') {
-              input.value = inputs[input.name];
-            } else if (inputs[input.name] === 'trigger' || inputs[input.name] === true) {
-              if (typeof input.fire === 'function') input.fire();
-            }
-          }
-        });
-      });
-    } catch {
-      // Gracefully handle any Rive input binding issues
+    if (onLoad) {
+      onLoad({ isCanvas: true });
     }
-  }, [rive, inputs, stateMachines, loadFailed]);
+  }, [onLoad]);
 
   // Fallback Canvas State Machine Loop
   useEffect(() => {
-    // Only run procedural canvas loop if Rive is not active or load failed or no src
-    if (!loadFailed && src && rive) return;
-
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -141,15 +83,7 @@ export default function RiveAnimation({
         cancelAnimationFrame(animFrameRef.current);
       }
     };
-  }, [src, loadFailed, rive, fallbackRender, fallbackType, inputs, width, height]);
-
-  if (!loadFailed && src && RiveComponent) {
-    return (
-      <div className={`relative overflow-hidden ${className}`} style={style}>
-        <RiveComponent className="w-full h-full" />
-      </div>
-    );
-  }
+  }, [fallbackRender, inputs, width, height]);
 
   return (
     <div className={`relative overflow-hidden inline-flex items-center justify-center ${className}`} style={style}>
@@ -163,7 +97,7 @@ export default function RiveAnimation({
 }
 
 /**
- * Built-in default state-machine fallback visualizer (Energy Core)
+ * Built-in default state-machine visualizer (Energy Core)
  */
 function drawDefaultPulse(ctx, w, h, time, inputs = {}) {
   const cx = w / 2;

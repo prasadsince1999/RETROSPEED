@@ -1,4 +1,4 @@
-// Paper Planes Workshop Game (Replaces Bubble Burster / Floating Bubbles)
+// Paper Planes Workshop Game
 // Folded paper notes rise from desk: Typing the word launches the plane off the top rail.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Reusable Key Component for KeyCraft Virtual Keyboard & UI keycaps
+ * Reusable Key Component for RETROSPEED Virtual Keyboard & UI keycaps
  */
 export default function Key({ 
   keyDef, 

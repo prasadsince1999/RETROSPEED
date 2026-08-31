@@ -32,7 +32,7 @@ export default function DesktopWindowShell({
   children,
   currentView = 'home',
   userProgress = {},
-  activeCourseId = 'keycraft-odyssey',
+  activeCourseId = 'keystroke-foundations',
   soundEnabled = true,
   onNavigate,
   onSelectCourse,

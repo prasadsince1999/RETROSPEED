@@ -106,7 +106,7 @@ export function Modal({
           >
             <div className="flex items-center space-x-2 truncate font-bold text-xs sm:text-sm">
               {icon && <span className="shrink-0">{icon}</span>}
-              <span className="truncate">{title || 'KeyCraft Window'}</span>
+              <span className="truncate">{title || 'RETROSPEED Window'}</span>
             </div>
 
             {showCloseButton && onClose && (

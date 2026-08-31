@@ -32,7 +32,7 @@ const KEYWORD_BANKS = {
     'function()', 'const data = []', 'async/await', 'return result;', 'import { sound }',
     'console.log()', 'Promise.all()', 'display: flex;', 'border-radius', 'calc(100vh - 2rem)',
     'export default', 'useEffect(() => {})', 'useState(true)', 'transform: rotate(45deg)',
-    'keycraft_v2', 'throw new Error()', 'margin: 0 auto;'
+    'retrospeed_v1', 'throw new Error()', 'margin: 0 auto;'
   ],
   daily: [
     'quantum', 'velocity', 'keyboard', 'retro', 'precision', 'galaxy', 'matrix', 'compass',
