@@ -22,7 +22,7 @@ const ChallengeHub = lazy(() => import('./components/ChallengeHub'));
 const CourseCatalog = lazy(() => import('./components/CourseCatalog'));
 const StatsDashboard = lazy(() => import('./components/StatsDashboard'));
 
-// 8 Paper-Arcade Workshop Games
+// 8 Paper-Arcade Games
 const PressRoomGame = lazy(() => import('./components/games/PressRoomGame'));
 const LocalLineGame = lazy(() => import('./components/games/LocalLineGame'));
 const PaperPlanesGame = lazy(() => import('./components/games/PaperPlanesGame'));
@@ -221,7 +221,7 @@ export default function App() {
     setCurrentView('drill');
   };
 
-  // Start Driving School Spine Lesson
+  // Start Zero-to-Hero Spine Lesson
   const handleStartSpineLesson = (part, spineLesson) => {
     setScoreModalStats(null);
     setJumpWarningLesson(null);
@@ -536,7 +536,7 @@ export default function App() {
                 />
               )}
 
-              {/* The 8 RETROSPEED Workshop Games */}
+              {/* The 8 RETROSPEED Games */}
               {currentView === 'press-room' && (
                 <PressRoomGame
                   lesson={activeLesson}

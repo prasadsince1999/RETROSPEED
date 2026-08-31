@@ -1,4 +1,4 @@
-// Learn Room: The 8-Part Zero-to-Hero Driving School Spine + Specialty Tracks
+// Learn Room: The 8-Part Zero-to-Hero Path + Specialty Tracks
 import React, { useState } from 'react';
 import { 
   Play, 
@@ -67,7 +67,7 @@ export default function PracticeHub({
         <div>
           <div className="flex items-center space-x-2">
             <span className="px-2 py-0.5 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-              DRIVING SCHOOL CURRICULUM
+              ZERO TO HERO PATH
             </span>
             <span className="text-xs font-mono text-[#2D2319]/70 font-bold">
               100% Offline · Local-First
@@ -91,7 +91,7 @@ export default function PracticeHub({
                 : 'bg-[#FDF8EE] hover:bg-[#FBF6EA] text-[#2D2319] shadow-[2px_2px_0px_#2D2319]'
             }`}
           >
-            🛣️ Zero-to-Hero Spine (8 Parts)
+            🗺️ Zero-to-Hero Spine (8 Parts)
           </button>
 
           <button
@@ -110,7 +110,7 @@ export default function PracticeHub({
         </div>
       </div>
 
-      {/* TAB 1: 8-PART ZERO-TO-HERO DRIVING SCHOOL SPINE */}
+      {/* TAB 1: 8-PART ZERO-TO-HERO PATH */}
       {activeTab === 'spine' && (
         <div className="space-y-6">
           

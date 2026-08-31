@@ -1,12 +1,12 @@
-// RETROSPEED Zero-to-Hero Driving School Spine
-// "First you learn the clutch. Then the road. Then highway shortcuts."
+// RETROSPEED Zero-to-Hero Spine Curriculum
+// "Home row, First words, Full keyboard, Sentences, Speed, Shortcut Lab, Pro work"
 
 export const SPINE_PARTS = [
   {
     partNumber: 1,
     id: 'part-1-sit-and-home',
     title: 'Part 1: Sit and Home',
-    subtitle: 'The Clutch',
+    subtitle: 'Home Row',
     focus: 'Eyes on screen. F & J bumps. Left hand ASDF, right hand JKL;.',
     targetSpeed: 'Any WPM',
     passAccuracy: 90,
@@ -80,7 +80,7 @@ export const SPINE_PARTS = [
     partNumber: 2,
     id: 'part-2-home-row-words',
     title: 'Part 2: Home Row Words',
-    subtitle: 'First Gear',
+    subtitle: 'First Words',
     focus: 'Real English words built purely from the home row without wandering fingers.',
     targetSpeed: '15 WPM',
     passAccuracy: 90,
@@ -143,7 +143,7 @@ export const SPINE_PARTS = [
     partNumber: 3,
     id: 'part-3-top-bottom-rows',
     title: 'Part 3: Top + Bottom Rows',
-    subtitle: 'The Road',
+    subtitle: 'Full Keyboard',
     focus: 'Full QWERTY letters. Reaching up and down without moving your wrists.',
     targetSpeed: '25 WPM',
     passAccuracy: 92,
@@ -217,7 +217,7 @@ export const SPINE_PARTS = [
     partNumber: 4,
     id: 'part-4-words-that-breathe',
     title: 'Part 4: Words That Breathe',
-    subtitle: 'Cruising',
+    subtitle: 'Sentences',
     focus: 'Spaces, shift capitalization, commas, periods, and sentence rhythm.',
     targetSpeed: '35 WPM',
     passAccuracy: 94,
@@ -227,7 +227,7 @@ export const SPINE_PARTS = [
       gameId: 'night-market',
       name: 'Night Market',
       keys: ['Shift', '.', ',', ' '],
-      description: 'Pack and dispatch kitchen orders with calm capitalization cadence.'
+      description: 'Pack and dispatch market orders with calm capitalization cadence.'
     },
     lessons: [
       {
@@ -269,7 +269,7 @@ export const SPINE_PARTS = [
     partNumber: 5,
     id: 'part-5-numbers-and-symbols',
     title: 'Part 5: Numbers & Symbols',
-    subtitle: 'Dashboard & Gauges',
+    subtitle: 'Numbers & Symbols',
     focus: 'Number row 1-0 and essential everyday symbols (@ # $ % & * ( ) - =).',
     targetSpeed: '40 WPM',
     passAccuracy: 92,
@@ -277,7 +277,7 @@ export const SPINE_PARTS = [
     color: '#F28B82',
     gameBreak: {
       gameId: 'fuse-desk',
-      name: 'Fuse Desk',
+      name: 'Fuse Box',
       keys: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '@', '#', '$'],
       description: 'Submit root words containing symbols before the fuse burns.'
     },
@@ -321,7 +321,7 @@ export const SPINE_PARTS = [
     partNumber: 6,
     id: 'part-6-speed-without-panic',
     title: 'Part 6: Speed Without Panic',
-    subtitle: 'The Highway',
+    subtitle: 'Speed',
     focus: 'Timed 60-second endurance, burst recovery, and weak-key repair.',
     targetSpeed: '50 WPM',
     passAccuracy: 95,
@@ -329,9 +329,9 @@ export const SPINE_PARTS = [
     color: '#F6C445',
     gameBreak: {
       gameId: 'drop-chits',
-      name: 'Drop Chits',
+      name: 'Drop Slips',
       keys: ['all'],
-      description: 'High-speed sorting rail defense against falling paper chits.'
+      description: 'High-speed sorting rail defense against falling paper slips.'
     },
     lessons: [
       {
@@ -360,7 +360,7 @@ export const SPINE_PARTS = [
         id: 'spine-6-3',
         partNumber: 6,
         lessonNumber: 23,
-        title: 'The 60s Highway Sprint',
+        title: 'The 60s Speed Sprint',
         description: 'Sustain 50+ WPM with 95%+ precision over a continuous 60-second track.',
         targetKeys: ['all'],
         goalWpm: 50,
@@ -373,7 +373,7 @@ export const SPINE_PARTS = [
     partNumber: 7,
     id: 'part-7-computer-skills',
     title: 'Part 7: Computer Skills & Shortcuts',
-    subtitle: 'Cockpit Mastery',
+    subtitle: 'Shortcut Lab',
     focus: 'Chording mastery: Ctrl+C, Ctrl+V, Alt+Tab, Win+D. Hands stay on the board.',
     targetSpeed: '8/10 Clean Chords',
     passAccuracy: 95,
@@ -431,7 +431,7 @@ export const SPINE_PARTS = [
     partNumber: 8,
     id: 'part-8-pro-lane',
     title: 'Part 8: Pro Lane',
-    subtitle: 'High Performance',
+    subtitle: 'Pro Work',
     focus: 'Developer code syntax, terminal commands, or professional speed typing.',
     targetSpeed: '60 WPM',
     passAccuracy: 96,

@@ -1,5 +1,5 @@
-// Drop Chits Workshop Game
-// Paper chits fall from the top sorting rail: Type the word to stamp and clear before they hit the desk bottom.
+// Drop Slips Game
+// Paper slips fall from the top sorting rail: Type the word to stamp and clear before they hit the desk bottom.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';
 import { sound } from '../../utils/audio';

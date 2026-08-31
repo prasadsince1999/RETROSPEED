@@ -1,4 +1,4 @@
-// Play Room: 8 Paper-Arcade Workshop Games & Core Skill Trials
+// Play Room: 8 Paper-Arcade Games & Core Skill Trials
 import React, { useState } from 'react';
 import { 
   Play, 
@@ -95,7 +95,7 @@ const WORKSHOP_GAMES = [
     title: 'Night Market',
     badge: 'Accuracy',
     badgeColor: 'bg-[#F28B82]',
-    description: 'Counter dispatch: Order chits slide in from the right. Type item names to stamp PAID.',
+    description: 'Counter dispatch: Market order slips slide in from the right. Type item names to stamp PAID.',
     icon: ShoppingBag,
     focus: 'Part 4 Phrases'
   },
@@ -170,19 +170,19 @@ export default function ChallengeHub({
         <div>
           <div className="flex items-center space-x-2">
             <span className="px-2 py-0.5 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-              PAPER ARCADE WORKSHOP
+              PAPER ARCADE
             </span>
             <span className="text-xs font-mono text-[#2D2319]/70 font-bold">
               8 Original Games · One Shared HUD
             </span>
           </div>
           <h1 className="text-xl sm:text-2xl font-black text-[#2D2319] font-display mt-0.5">
-            Arcade & Skill Workshop
+            Arcade & Skill Games
           </h1>
         </div>
 
         <div className="px-3 py-1.5 rounded-xl bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-bold text-[#2D2319]">
-          ★ 8 Active Workshop Games
+          ★ 8 Active Games
         </div>
       </div>
 
@@ -243,12 +243,12 @@ export default function ChallengeHub({
         </div>
       </div>
 
-      {/* SECTION 2: THE 8 WORKSHOP GAMES */}
+      {/* SECTION 2: THE 8 GAMES */}
       <div className="space-y-3">
         <div className="flex items-center space-x-2">
           <Gamepad2 className="w-4 h-4 text-[#48B89F]" />
           <h2 className="text-xs font-mono font-black uppercase tracking-wider text-[#2D2319]">
-            The 8 Workshop Games
+            The 8 Games
           </h2>
         </div>
 

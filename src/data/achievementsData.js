@@ -301,7 +301,7 @@ export const ACHIEVEMENTS = [
   {
     id: 'night-market-chef',
     title: 'Night Market Chef',
-    subtitle: 'Pack 50 Order Chits',
+    subtitle: 'Pack 50 Market Orders',
     category: 'arcade',
     categoryLabel: 'Arcade Champions',
     targetValue: 50,
@@ -309,7 +309,7 @@ export const ACHIEVEMENTS = [
     rarity: 'Epic',
     rarityColor: 'rose',
     xp: 700,
-    requirement: 'Pack and stamp 50 kitchen order chits in Night Market.',
+    requirement: 'Pack and stamp 50 market order slips in Night Market.',
     lore: 'Service with style! Orders fly across the counter stamped PAID with flawless accuracy.',
     courseShortcut: 'keystroke-foundations',
     targetLevel: 20,

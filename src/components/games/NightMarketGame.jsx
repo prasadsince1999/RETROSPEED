@@ -1,5 +1,5 @@
-// Night Market Workshop Game
-// Order chits slide across the counter from the right: Type the item name to stamp PAID and pack the order.
+// Night Market Game
+// Market order slips slide across the counter from the right: Type the item name to stamp PAID and pack the order.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';
 import { sound } from '../../utils/audio';
@@ -135,7 +135,7 @@ export default function NightMarketGame({
       ctx.fillStyle = '#FDF8EE';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Kitchen Counter Shelf
+      // Market Counter Shelf
       ctx.fillStyle = '#FAF3E0';
       ctx.fillRect(0, 160, canvas.width, 180);
       ctx.strokeStyle = '#2D2319';

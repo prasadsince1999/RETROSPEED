@@ -1,4 +1,4 @@
-// Universal GameShell & HUD for all 8 RETROSPEED Workshop Games
+// Universal GameShell & HUD for all 8 RETROSPEED Games
 // "Same in every game: Window chrome, HUD, 3 Paper Hearts, Score, Streak, WPM, Acc, Exit, Retry"
 import React, { useState, useEffect } from 'react';
 import {
@@ -16,7 +16,7 @@ import {
 import { sound } from '../../../utils/audio';
 
 export default function GameShell({
-  title = 'WORKSHOP GAME',
+  title = 'GAME',
   subtitle = 'PRACTICE',
   score = 0,
   streak = 0,
