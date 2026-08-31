@@ -171,17 +171,6 @@ const KEYWORD_PRACTICE_SUITE = [
     mode: 'Hacker Defense',
     status: 'Ready to Drill',
     icon: '🛡️'
-  },
-  {
-    id: 'cipher-hacker',
-    title: 'Cipher Hacker',
-    subtitle: 'Terminal Stream Decryptor',
-    badge: 'Cyber Terminal',
-    badgeColor: 'bg-[#C7E8CA]',
-    description: 'Decrypt hexadecimal logs and classified intelligence streams with rapid multi-key cipher keystrokes.',
-    mode: 'Code Decryption',
-    status: 'Ready to Drill',
-    icon: '🔒'
   }
 ];
 
@@ -191,6 +180,7 @@ export default function ChallengeHub({
   onSelectCourse,
   onStartLesson,
   onLaunchGame,
+  onStartSkillTrial,
   onNavigate
 }) {
   const [activeTab, setActiveTab] = useState('all'); // 'all' | 'trials' | 'arcade' | 'keyword-suite'
@@ -354,7 +344,14 @@ export default function ChallengeHub({
 
                     <button
                       type="button"
-                      onClick={() => handleNav('daily')}
+                      onClick={() => {
+                        sound.playKeyClick();
+                        if (onStartSkillTrial) {
+                          onStartSkillTrial(trial.id);
+                        } else if (onNavigate) {
+                          onNavigate('drill');
+                        }
+                      }}
                       className="w-full px-4 py-2 rounded-xl bg-[#F6C445] hover:bg-[#ffd95e] text-[#2D2319] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 font-display font-black text-xs uppercase tracking-wide flex items-center justify-center space-x-1.5 transition-all cursor-pointer"
                     >
                       <Play className="w-3.5 h-3.5 fill-[#2D2319]" />

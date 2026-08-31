@@ -47,8 +47,9 @@ function ViewLoadingFallback() {
 
 export default function App() {
   const [userProgress, setUserProgress] = useState(loadProgress());
-  const [activeCourseId, setActiveCourseId] = useState(userProgress.activeCourseId || 'keycraft-odyssey');
+  const [activeCourseId, setActiveCourseId] = useState(userProgress.activeCourseId || 'keystroke-foundations');
   const [currentView, setCurrentView] = useState('home');
+  const [gameLaunchOrigin, setGameLaunchOrigin] = useState('play'); // 'learn' | 'play'
   
   // Drill config
   const [drillConfig, setDrillConfig] = useState({
@@ -61,7 +62,7 @@ export default function App() {
   const currentCurriculum = getCurriculumForCourse(activeCourseId);
   const { course, stages, lessons } = currentCurriculum;
 
-  const [activeLesson, setActiveLesson] = useState(lessons[1] || lessons[0]);
+  const [activeLesson, setActiveLesson] = useState(lessons[0]);
   
   // Modals state
   const [scoreModalStats, setScoreModalStats] = useState(null);
@@ -69,8 +70,6 @@ export default function App() {
 
   // Settings
   const [soundEnabled, setSoundEnabled] = useState(userProgress.settings?.sound ?? true);
-  const [keyboardEnabled, setKeyboardEnabled] = useState(userProgress.settings?.keyboard ?? true);
-  const [handsEnabled, setHandsEnabled] = useState(userProgress.settings?.hands ?? true);
   const [selectedTheme, setSelectedTheme] = useState(userProgress.settings?.theme || 'bone');
 
   // Sync sound engine state
@@ -83,7 +82,7 @@ export default function App() {
     setActiveCourseId(courseId);
     
     // Enroll if not already enrolled
-    const enrolled = userProgress.enrolledCourses || ['keycraft-odyssey'];
+    const enrolled = userProgress.enrolledCourses || ['keystroke-foundations'];
     let updatedEnrolled = [...enrolled];
     if (!updatedEnrolled.includes(courseId)) {
       updatedEnrolled.push(courseId);
@@ -99,8 +98,8 @@ export default function App() {
 
     const newCurriculum = getCurriculumForCourse(courseId);
     if (targetLevelId) {
-      const target = newCurriculum.lessons.find(l => l.id === targetLevelId) || newCurriculum.lessons[0];
-      launchLesson(target);
+      const target = newCurriculum.lessons.find(l => l.id === targetLevelId || l.rawId === targetLevelId) || newCurriculum.lessons[0];
+      launchLesson(target, 'learn');
     } else {
       setActiveLesson(newCurriculum.lessons[0]);
       setCurrentView('map');
@@ -121,33 +120,47 @@ export default function App() {
   };
 
   // Launch a specific lesson
-  const launchLesson = (lesson) => {
+  const launchLesson = (lesson, origin = 'learn') => {
     setActiveLesson(lesson);
     setScoreModalStats(null);
     setJumpWarningLesson(null);
+    setGameLaunchOrigin(origin);
 
     if (lesson.type === 'video') {
       setCurrentView('video');
     } else if (lesson.type === 'game') {
-      const app = (lesson.gameApp || lesson.activityApp || '').toLowerCase();
+      const gId = (lesson.gameId || lesson.gameApp || lesson.activityApp || '').toLowerCase();
       const title = (lesson.title || '').toLowerCase();
-      const eng = (lesson.renderEngine || '').toLowerCase();
-      const combined = `${app} ${title} ${eng}`;
+      const combined = `${gId} ${title}`;
 
-      if (combined.includes('apple') || combined.includes('thief') || combined.includes('thieves') || combined.includes('orchard') || combined.includes('raccoon')) {
+      if (combined.includes('apple')) {
         setCurrentView('apple');
-      } else if (combined.includes('monster') || combined.includes('alien') || combined.includes('space')) {
+      } else if (combined.includes('monster')) {
         setCurrentView('monster');
-      } else if (combined.includes('temple') || combined.includes('bash') || combined.includes('desert') || combined.includes('tomb') || combined.includes('relic')) {
+      } else if (combined.includes('temple')) {
         setCurrentView('temple');
-      } else if (combined.includes('bubble') || combined.includes('ocean') || combined.includes('float')) {
+      } else if (combined.includes('bubble')) {
         setCurrentView('bubble');
+      } else if (combined.includes('meteor')) {
+        setCurrentView('meteor-words');
+      } else if (combined.includes('racer') || combined.includes('velocity')) {
+        setCurrentView('velocity-gp');
+      } else if (combined.includes('bomb')) {
+        setCurrentView('word-bomb');
+      } else if (combined.includes('syntax') || combined.includes('hacker')) {
+        setCurrentView('syntax-matrix');
       } else {
         setCurrentView('balloon');
       }
     } else {
       setCurrentView('lesson');
     }
+  };
+
+  // Launch direct arcade game from Play Hub
+  const launchPlayArcadeGame = (gameViewId) => {
+    setGameLaunchOrigin('play');
+    setCurrentView(gameViewId);
   };
 
   // Start Quick Play Drill
@@ -170,6 +183,20 @@ export default function App() {
     setCurrentView('drill');
   };
 
+  // Start Specific Skill Trial
+  const handleStartSkillTrial = (trialType) => {
+    if (trialType === 'speed-sprint') {
+      setDrillConfig({ mode: 'sprint', difficulty: 'medium', timeLimit: 60 });
+    } else if (trialType === 'accuracy-gauntlet') {
+      setDrillConfig({ mode: 'gauntlet', difficulty: 'hard', timeLimit: 90 });
+    } else if (trialType === 'survival-attack') {
+      setDrillConfig({ mode: 'survival', difficulty: 'hard', timeLimit: 15 });
+    } else {
+      setDrillConfig({ mode: 'quick', difficulty: 'medium', timeLimit: 60 });
+    }
+    setCurrentView('drill');
+  };
+
   // Handle lesson / game completion
   const handleComplete = (stats) => {
     const updatedProgress = saveLessonResult(activeCourseId, activeLesson.id, stats);
@@ -177,12 +204,27 @@ export default function App() {
     setScoreModalStats(stats);
   };
 
+  // Handle standalone arcade game completion
+  const handleArcadeComplete = (gameId, stats) => {
+    const updatedProgress = saveLessonResult('arcade', gameId, {
+      title: gameId.replace('-', ' ').toUpperCase(),
+      wpm: stats.wpm || 0,
+      accuracy: stats.accuracy || 100,
+      score: stats.score || 500,
+      points: stats.score || 500,
+      stars: stats.accuracy >= 95 ? 5 : stats.accuracy >= 85 ? 4 : 3,
+      durationSeconds: stats.durationSeconds || Math.round((stats.durationMs || 30000) / 1000),
+      errors: stats.errors || 0
+    });
+    setUserProgress(updatedProgress);
+  };
+
   // Move to next lesson
   const handleNextLesson = () => {
     const nextId = activeLesson.id + 1;
     const nextLesson = lessons.find(l => l.id === nextId);
     if (nextLesson) {
-      launchLesson(nextLesson);
+      launchLesson(nextLesson, 'learn');
     } else {
       setCurrentView('map');
     }
@@ -190,16 +232,26 @@ export default function App() {
 
   // Retry active lesson
   const handleRetry = () => {
-    launchLesson(activeLesson);
+    launchLesson(activeLesson, gameLaunchOrigin);
+  };
+
+  // Exit from game back to origin room
+  const handleGameExit = () => {
+    if (gameLaunchOrigin === 'learn') {
+      setCurrentView('map');
+    } else {
+      setCurrentView('play');
+    }
   };
 
   // Determine if current view should be wrapped inside DesktopWindowShell
   const isDesktopWindowView = [
     'home', 
-    'portal', 
+    'learn', 
     'practice', 
+    'play', 
     'challenge', 
-    'daily', 
+    'progress',
     'stats', 
     'badges', 
     'shop', 
@@ -216,20 +268,24 @@ export default function App() {
   ].includes(currentView);
 
   return (
-    <div className="min-h-screen bg-[#B9D2E8] text-[#2D2319] flex flex-col font-sans select-none">
+    <div className="min-h-screen bg-[#B9D2E8] text-[#2D2319] flex flex-col font-sans">
       
       {/* Main View Router */}
       <main className="flex-1">
         <Suspense fallback={<ViewLoadingFallback />}>
           
-          {/* Unified Desktop Window Shell for Home, Hubs, Stats, Badges, Shop, Drills, & ALL 9 Arcade Games */}
+          {/* Unified Desktop Window Shell for 5 Rooms & Live Arcade Games */}
           {isDesktopWindowView && (
             <DesktopWindowShell
               currentView={
                 ['meteor-words', 'velocity-gp', 'word-bomb', 'syntax-matrix', 'balloon', 'monster', 'temple', 'bubble', 'apple'].includes(currentView)
-                  ? 'challenge'
+                  ? 'play'
+                  : currentView === 'challenge'
+                  ? 'play'
                   : currentView === 'drill' 
-                  ? (drillConfig.mode === 'daily' ? 'daily' : 'home') 
+                  ? 'practice'
+                  : currentView === 'stats' || currentView === 'badges' || currentView === 'shop'
+                  ? 'progress'
                   : currentView
               }
               userProgress={userProgress}
@@ -238,6 +294,8 @@ export default function App() {
               onNavigate={view => {
                 if (view === 'daily') {
                   handleStartDailyChallenge();
+                } else if (view === 'challenge') {
+                  setCurrentView('play');
                 } else {
                   setCurrentView(view);
                 }
@@ -250,7 +308,8 @@ export default function App() {
               }}
               onProfileUpdated={updated => setUserProgress(updated)}
             >
-              {(currentView === 'home' || currentView === 'portal') && (
+              {/* Room 1: Home */}
+              {currentView === 'home' && (
                 <HomeView
                   userProgress={userProgress}
                   activeCourseId={activeCourseId}
@@ -260,7 +319,8 @@ export default function App() {
                 />
               )}
 
-              {currentView === 'practice' && (
+              {/* Room 2: Learn (Curriculum Tracks Directory) */}
+              {currentView === 'learn' && (
                 <PracticeHub
                   userProgress={userProgress}
                   activeCourseId={activeCourseId}
@@ -272,7 +332,31 @@ export default function App() {
                 />
               )}
 
-              {(currentView === 'challenge' || currentView === 'daily') && (
+              {/* Room 3: Practice (Timed Drills, Accuracy Gauntlets, Weak Keys) */}
+              {currentView === 'practice' && (
+                <QuickDrillPlayer
+                  mode={drillConfig.mode}
+                  difficulty={drillConfig.difficulty}
+                  timeLimit={drillConfig.timeLimit}
+                  userProgress={userProgress}
+                  onComplete={updated => setUserProgress(updated)}
+                  onExit={() => setCurrentView('home')}
+                />
+              )}
+
+              {currentView === 'drill' && (
+                <QuickDrillPlayer
+                  mode={drillConfig.mode}
+                  difficulty={drillConfig.difficulty}
+                  timeLimit={drillConfig.timeLimit}
+                  userProgress={userProgress}
+                  onComplete={updated => setUserProgress(updated)}
+                  onExit={() => setCurrentView('home')}
+                />
+              )}
+
+              {/* Room 4: Play (Arcade Catalog & Trials) */}
+              {(currentView === 'play' || currentView === 'challenge') && (
                 <ChallengeHub
                   userProgress={userProgress}
                   activeCourseId={activeCourseId}
@@ -280,15 +364,34 @@ export default function App() {
                   onStartLesson={(courseId, targetLevelId) => {
                     handleSelectCourse(courseId, targetLevelId);
                   }}
-                  onLaunchGame={gameViewId => setCurrentView(gameViewId)}
+                  onLaunchGame={launchPlayArcadeGame}
+                  onStartSkillTrial={handleStartSkillTrial}
                   onNavigate={view => setCurrentView(view)}
+                />
+              )}
+
+              {/* Room 5: Progress (Diagnostics, Trophies & Theme Settings) */}
+              {(currentView === 'progress' || currentView === 'stats') && (
+                <StatsDashboard
+                  userProgress={userProgress}
+                  activeCourseId={activeCourseId}
+                  onSelectCourse={courseId => handleSelectCourse(courseId)}
+                  onNavigate={view => setCurrentView(view)}
+                  onStartLesson={(courseId, lessonId) => {
+                    handleSelectCourse(courseId, lessonId);
+                  }}
+                  onPracticeKey={keyChar => {
+                    const cur = getCurriculumForCourse(activeCourseId);
+                    const found = cur.lessons.find(l => (l.targetKeys || []).includes(keyChar)) || cur.lessons[0];
+                    launchLesson(found, 'learn');
+                  }}
                 />
               )}
 
               {currentView === 'badges' && (
                 <BadgesDashboard
                   userProgress={userProgress}
-                  onBack={() => setCurrentView('home')}
+                  onBack={() => setCurrentView('progress')}
                   onNavigate={view => setCurrentView(view)}
                   onSelectCourse={(courseId, targetLevelId) => {
                     handleSelectCourse(courseId, targetLevelId);
@@ -309,65 +412,40 @@ export default function App() {
                 />
               )}
 
-              {currentView === 'stats' && (
-                <StatsDashboard
-                  userProgress={userProgress}
-                  activeCourseId={activeCourseId}
-                  onSelectCourse={courseId => handleSelectCourse(courseId)}
-                  onNavigate={view => setCurrentView(view)}
-                  onStartLesson={(courseId, lessonId) => {
-                    handleSelectCourse(courseId, lessonId);
-                  }}
-                  onPracticeKey={keyChar => {
-                    const cur = getCurriculumForCourse(activeCourseId);
-                    const found = cur.lessons.find(l => (l.targetKeys || []).includes(keyChar)) || cur.lessons[0];
-                    launchLesson(found);
-                  }}
-                />
-              )}
-
-              {currentView === 'drill' && (
-                <QuickDrillPlayer
-                  mode={drillConfig.mode}
-                  difficulty={drillConfig.difficulty}
-                  timeLimit={drillConfig.timeLimit}
-                  userProgress={userProgress}
-                  onComplete={updated => setUserProgress(updated)}
-                  onExit={() => setCurrentView('home')}
-                />
-              )}
-
-              {/* Next-Gen Arcade Game Engines */}
+              {/* All 9 Live Arcade Game Engines (Inside Unified Window Shell) */}
               {currentView === 'meteor-words' && (
                 <FallingWordsDefenseGame
-                  onExit={() => setCurrentView('challenge')}
+                  onComplete={stats => handleArcadeComplete('meteor-words', stats)}
+                  onExit={handleGameExit}
                 />
               )}
 
               {currentView === 'velocity-gp' && (
                 <TypingRacerGame
-                  onExit={() => setCurrentView('challenge')}
+                  onComplete={stats => handleArcadeComplete('velocity-gp', stats)}
+                  onExit={handleGameExit}
                 />
               )}
 
               {currentView === 'word-bomb' && (
                 <WordBombGame
-                  onExit={() => setCurrentView('challenge')}
+                  onComplete={stats => handleArcadeComplete('word-bomb', stats)}
+                  onExit={handleGameExit}
                 />
               )}
 
               {currentView === 'syntax-matrix' && (
                 <SyntaxHackerGame
-                  onExit={() => setCurrentView('challenge')}
+                  onComplete={stats => handleArcadeComplete('syntax-matrix', stats)}
+                  onExit={handleGameExit}
                 />
               )}
 
-              {/* 5 Classic Arcade Games (Inside Unified Window Shell) */}
               {currentView === 'balloon' && (
                 <BalloonNinjaGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
-                  onExit={() => setCurrentView('challenge')}
+                  onExit={handleGameExit}
                 />
               )}
 
@@ -375,7 +453,7 @@ export default function App() {
                 <MonsterAttackGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
-                  onExit={() => setCurrentView('challenge')}
+                  onExit={handleGameExit}
                 />
               )}
 
@@ -383,7 +461,7 @@ export default function App() {
                 <TempleBashGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
-                  onExit={() => setCurrentView('challenge')}
+                  onExit={handleGameExit}
                 />
               )}
 
@@ -391,7 +469,7 @@ export default function App() {
                 <FloatingBubblesGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
-                  onExit={() => setCurrentView('challenge')}
+                  onExit={handleGameExit}
                 />
               )}
 
@@ -399,7 +477,7 @@ export default function App() {
                 <AppleThievesGame
                   lesson={activeLesson}
                   onComplete={handleComplete}
-                  onExit={() => setCurrentView('challenge')}
+                  onExit={handleGameExit}
                 />
               )}
 
@@ -408,7 +486,7 @@ export default function App() {
 
           {currentView === 'catalog' && (
             <CourseCatalog
-              onBack={() => setCurrentView('practice')}
+              onBack={() => setCurrentView('learn')}
               enrolledCourses={userProgress.enrolledCourses || []}
               onSelectCourse={courseId => {
                 handleSelectCourse(courseId);
@@ -423,10 +501,10 @@ export default function App() {
               stages={stages}
               lessons={lessons}
               userProgress={userProgress}
-              onSelectLesson={launchLesson}
+              onSelectLesson={l => launchLesson(l, 'learn')}
               onJumpWarning={lesson => setJumpWarningLesson(lesson)}
               onNavigate={view => setCurrentView(view)}
-              onBack={() => setCurrentView('home')}
+              onBack={() => setCurrentView('learn')}
             />
           )}
 
@@ -439,16 +517,21 @@ export default function App() {
               layout={course.keyboardType || 'qwerty'}
               onComplete={handleComplete}
               onExit={() => setCurrentView('map')}
-              keyboardEnabled={keyboardEnabled}
-              handsEnabled={handsEnabled}
-              theme={selectedTheme}
             />
           )}
 
           {currentView === 'video' && (
             <VideoPlayer
               lesson={activeLesson}
-              onComplete={handleComplete}
+              onComplete={() => {
+                handleComplete({
+                  wpm: 25,
+                  accuracy: 100,
+                  stars: 5,
+                  points: 500,
+                  durationSeconds: 15
+                });
+              }}
               onExit={() => setCurrentView('map')}
             />
           )}
@@ -456,25 +539,31 @@ export default function App() {
         </Suspense>
       </main>
 
-      {/* Score Modal on Finish */}
+      {/* Post-Lesson Celebration Score Modal */}
       {scoreModalStats && (
         <ScoreModal
-          lesson={activeLesson}
           stats={scoreModalStats}
-          onNextLesson={handleNextLesson}
+          lesson={activeLesson}
+          courseTitle={course.title}
+          onNext={handleNextLesson}
           onRetry={handleRetry}
-          onGoToMap={() => {
+          onExit={() => {
             setScoreModalStats(null);
-            setCurrentView('map');
+            handleGameExit();
           }}
         />
       )}
 
-      {/* Jump Ahead Confirmation Modal */}
+      {/* Lesson Jump Confirmation Warning Modal */}
       {jumpWarningLesson && (
         <JumpWarningModal
-          lesson={jumpWarningLesson}
-          onConfirm={() => launchLesson(jumpWarningLesson)}
+          targetLesson={jumpWarningLesson}
+          currentUnlockedLevel={userProgress.courses?.[activeCourseId]?.unlockedLevel || 1}
+          onConfirm={() => {
+            const target = jumpWarningLesson;
+            setJumpWarningLesson(null);
+            launchLesson(target, 'learn');
+          }}
           onCancel={() => setJumpWarningLesson(null)}
         />
       )}

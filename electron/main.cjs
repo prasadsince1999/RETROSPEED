@@ -30,7 +30,7 @@ function createApplicationMenu() {
       label: 'File',
       submenu: [
         {
-          label: 'Restart KeyCraft',
+          label: 'Restart RETROSPEED',
           accelerator: 'CmdOrCtrl+R',
           click: () => {
             if (mainWindow) {
@@ -91,9 +91,9 @@ function createApplicationMenu() {
       label: 'Help',
       submenu: [
         {
-          label: 'Learn More',
+          label: 'Documentation & Support',
           click: async () => {
-            await shell.openExternal('https://github.com');
+            await shell.openExternal('https://github.com/prasadsince1999/RETROSPEED');
           }
         },
         {
@@ -128,7 +128,7 @@ function createWindow() {
     title: 'RETROSPEED — Race Your Fingers',
     titleBarStyle: 'default',
     icon: hasIcon ? iconPath : undefined,
-    backgroundColor: '#f0f9ff',
+    backgroundColor: '#B9D2E8',
     show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
@@ -137,7 +137,7 @@ function createWindow() {
       sandbox: true,
       webSecurity: true,
       allowRunningInsecureContent: false,
-      devTools: isDev || true
+      devTools: isDev
     }
   });
 

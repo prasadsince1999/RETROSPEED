@@ -69,16 +69,23 @@ export default function DesktopWindowShell({
     }
   };
 
-  // Nav Items config matching user reference image + integrated features
+  // 5 Distinct Desktop Rooms
   const NAV_ITEMS = [
     { id: 'home', label: 'Home', icon: Home, highlight: 'bg-[#C7E8CA]' },
+    { id: 'learn', label: 'Learn', icon: BookOpen, highlight: 'bg-[#C7E8CA]' },
     { id: 'practice', label: 'Practice', icon: Target, highlight: 'bg-[#C7E8CA]' },
-    { id: 'challenge', label: 'Challenge', icon: Trophy, highlight: 'bg-[#C7E8CA]' },
-    { id: 'daily', label: 'Daily', icon: Calendar, highlight: 'bg-[#C7E8CA]' },
-    { id: 'stats', label: 'Stats', icon: BarChart2, highlight: 'bg-[#C7E8CA]' },
-    { id: 'badges', label: 'Trophies', icon: Award, highlight: 'bg-[#C7E8CA]' },
-    { id: 'shop', label: 'Shop', icon: ShoppingBag, highlight: 'bg-[#C7E8CA]' }
+    { id: 'play', label: 'Play', icon: Trophy, highlight: 'bg-[#C7E8CA]' },
+    { id: 'progress', label: 'Progress', icon: BarChart2, highlight: 'bg-[#C7E8CA]' }
   ];
+
+  const isNavActive = (itemId) => {
+    if (itemId === 'home') return currentView === 'home';
+    if (itemId === 'learn') return currentView === 'learn' || currentView === 'map' || currentView === 'catalog';
+    if (itemId === 'practice') return currentView === 'practice' || currentView === 'drill' || currentView === 'daily';
+    if (itemId === 'play') return currentView === 'play' || currentView === 'challenge' || ['meteor-words', 'velocity-gp', 'word-bomb', 'syntax-matrix', 'balloon', 'monster', 'temple', 'bubble', 'apple'].includes(currentView);
+    if (itemId === 'progress') return currentView === 'progress' || currentView === 'stats' || currentView === 'badges' || currentView === 'shop';
+    return currentView === itemId;
+  };
 
   return (
     <div className="relative min-h-[calc(100vh-1rem)] bg-[#B9D2E8] p-2 sm:p-4 md:p-6 flex items-center justify-center font-sans select-none overflow-hidden">
@@ -436,7 +443,7 @@ export default function DesktopWindowShell({
               <div className="space-y-1.5 flex md:flex-col flex-row overflow-x-auto md:overflow-visible gap-1.5 md:gap-0 pb-2 md:pb-0">
                 {NAV_ITEMS.map((item) => {
                   const Icon = item.icon;
-                  const isActive = currentView === item.id;
+                  const isActive = isNavActive(item.id);
                   return (
                     <button
                       key={item.id}

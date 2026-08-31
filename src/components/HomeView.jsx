@@ -29,17 +29,12 @@ export default function HomeView({
   const profile = getPlayerProfile(userProgress);
   const dailyState = getDailyChallengeState(userProgress);
 
-  // Compute stats from userProgress
-  let bestWpm = 78;
-  let totalScore = profile.totalXp || 5580;
-  let totalAttempts = 12;
-  const streakDays = userProgress.streakDays || 3;
-
-  if (Array.isArray(userProgress.attemptLogs) && userProgress.attemptLogs.length > 0) {
-    const userMaxWpm = Math.max(...userProgress.attemptLogs.map(a => Number(a.wpm) || 0));
-    if (userMaxWpm > 0) bestWpm = Math.max(bestWpm, userMaxWpm);
-    totalAttempts = Math.max(totalAttempts, userProgress.attemptLogs.length);
-  }
+  // Compute honest session truth from userProgress
+  const attempts = Array.isArray(userProgress.attemptLogs) ? userProgress.attemptLogs : [];
+  const bestWpm = attempts.length > 0 ? Math.max(...attempts.map(a => Number(a.wpm) || 0)) : 0;
+  const totalScore = profile.totalXp || 0;
+  const totalAttempts = attempts.length;
+  const streakDays = userProgress.streakDays || 0;
 
   const handleStartGame = () => {
     sound.playKeyClick();
@@ -204,12 +199,12 @@ export default function HomeView({
             <div className="space-y-1.5 text-xs">
               <div className="flex items-center justify-between p-1.5 rounded bg-[#FAF3E0] border border-[#2D2319]/30">
                 <span className="text-[#2D2319]/70 font-bold">High Score:</span>
-                <span className="font-black text-[#2D2319]">{totalScore.toLocaleString()}</span>
+                <span className="font-black text-[#2D2319]">{totalScore > 0 ? totalScore.toLocaleString() : '0'}</span>
               </div>
 
               <div className="flex items-center justify-between p-1.5 rounded bg-[#FAF3E0] border border-[#2D2319]/30">
                 <span className="text-[#2D2319]/70 font-bold">Best WPM:</span>
-                <span className="font-black text-[#2D2319]">{bestWpm} WPM</span>
+                <span className="font-black text-[#2D2319]">{bestWpm > 0 ? `${bestWpm} WPM` : '—'}</span>
               </div>
 
               <div className="flex items-center justify-between p-1.5 rounded bg-[#FAF3E0] border border-[#2D2319]/30">
@@ -221,7 +216,7 @@ export default function HomeView({
                 <span className="text-[#2D2319]/70 font-bold">Current Streak:</span>
                 <span className="font-black text-amber-700 flex items-center space-x-1">
                   <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-600 inline" />
-                  <span>{streakDays} Days</span>
+                  <span>{streakDays} {streakDays === 1 ? 'Day' : 'Days'}</span>
                 </span>
               </div>
             </div>

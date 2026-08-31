@@ -1,5 +1,4 @@
-// KeyCraft Course Catalog Registry - 100% Original Nomenclature
-import jungleLessons from './edclub_full_lessons.json';
+// RETROSPEED Course Catalog Registry
 import basicsLessons from './courses/typing_basics_1.json';
 import codeLessons from './courses/code_typing_306.json';
 import funFactsLessons from './courses/fun_facts_246.json';
@@ -15,18 +14,32 @@ import vocabNonfictionLessons from './courses/vocab_nonfiction_289.json';
 
 export const COURSES_CATALOG = [
   {
+    id: 'keystroke-foundations',
+    programId: 1,
+    title: 'Keystroke Foundations',
+    category: 'Core Touch Typing',
+    grade: 'Foundations (100 Lessons)',
+    lessonsCount: 100,
+    description: 'The definitive touch typing curriculum covering home row to full punctuation and muscle memory reflexes.',
+    badge: 'Core',
+    color: 'from-blue-500 to-cyan-700',
+    titleVariant: 'sky',
+    keyboardType: 'qwerty',
+    data: basicsLessons.lessons
+  },
+  {
     id: 'keycraft-odyssey',
-    programId: 3,
-    title: 'KeyCraft Odyssey',
+    programId: 1,
+    title: 'RETROSPEED Odyssey',
     category: 'Core Touch Typing',
     grade: 'All Levels',
-    lessonsCount: 701,
-    description: 'The premier 701-lesson touch typing journey for standard QWERTY keyboards with arcade games, videos, and full finger guides.',
+    lessonsCount: 100,
+    description: 'A comprehensive touch typing journey across all keyboard zones with arcade defense challenges.',
     badge: 'Popular',
     color: 'from-sky-400 to-indigo-600',
     titleVariant: 'sky',
     keyboardType: 'qwerty',
-    data: jungleLessons
+    data: basicsLessons.lessons
   },
   {
     id: 'keystroke-foundations',
