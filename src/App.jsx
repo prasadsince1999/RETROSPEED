@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import DesktopWindowShell from './components/DesktopWindowShell';
 import HomeView from './components/HomeView';
+import PracticeLobby from './components/PracticeLobby';
 import LessonMap from './components/LessonMap';
 import LessonPlayer from './components/LessonPlayer';
 import VideoPlayer from './components/VideoPlayer';
@@ -13,6 +14,7 @@ import { getCurriculumForCourse } from './data/curriculum';
 import { loadProgress, saveLessonResult, saveProgress, resetAllProgress } from './utils/storage';
 import { sound } from './utils/audio';
 import { isGameUnlocked, isLessonUnlocked } from './utils/license';
+import { applyTheme, DEFAULT_THEME_ID } from './theme';
 
 // Lazy load hub views and arcade engines on demand
 const PracticeHub = lazy(() => import('./components/PracticeHub'));
@@ -76,6 +78,21 @@ export default function App() {
   useEffect(() => {
     sound.setMuted(!soundEnabled);
   }, [soundEnabled]);
+
+  // Sync theme & sound pack on mount and when changed
+  useEffect(() => {
+    applyTheme(selectedTheme || DEFAULT_THEME_ID);
+  }, [selectedTheme]);
+
+  useEffect(() => {
+    if (userProgress.settings?.soundPack) {
+      sound.setPack(userProgress.settings.soundPack);
+    }
+    if (userProgress.settings?.theme) {
+      setSelectedTheme(userProgress.settings.theme);
+      applyTheme(userProgress.settings.theme);
+    }
+  }, []);
 
   // Handle course switching
   const handleSelectCourse = (courseId, targetLevelId = null) => {
@@ -296,28 +313,16 @@ export default function App() {
     'patch-terminal'
   ];
 
-  const isDesktopWindowView = [
-    'home', 
-    'learn', 
-    'practice', 
-    'play', 
-    'challenge', 
-    'progress',
-    'stats', 
-    'badges', 
-    'shop', 
-    'drill',
-    ...WORKSHOP_GAME_IDS
-  ].includes(currentView);
+  const isDesktopWindowView = true;
 
   return (
-    <div className="min-h-screen bg-[#B9D2E8] text-[#2D2319] flex flex-col font-sans">
+    <div className="min-h-screen bg-retro-bg text-retro-ink flex flex-col font-sans">
       
       {/* Main View Router */}
       <main className="flex-1">
         <Suspense fallback={<ViewLoadingFallback />}>
           
-          {/* Unified Desktop Window Shell for 5 Rooms & Live Arcade Games */}
+          {/* Unified Desktop Window Shell for All Views & Live Arcade Games */}
           {isDesktopWindowView && (
             <DesktopWindowShell
               currentView={
@@ -327,8 +332,10 @@ export default function App() {
                   ? 'play'
                   : currentView === 'drill' 
                   ? 'practice'
+                  : currentView === 'map' || currentView === 'catalog' || currentView === 'lesson' || currentView === 'video' || currentView === 'shortcuts'
+                  ? 'learn'
                   : currentView === 'stats' || currentView === 'badges' || currentView === 'shop'
-                  ? 'progress'
+                  ? currentView
                   : currentView
               }
               userProgress={userProgress}
@@ -392,15 +399,73 @@ export default function App() {
                 />
               )}
 
-              {/* Room 3: Practice (Timed Drills, Accuracy Gauntlets, Weak Keys) */}
-              {currentView === 'practice' && (
-                <QuickDrillPlayer
-                  mode={drillConfig.mode}
-                  difficulty={drillConfig.difficulty}
-                  timeLimit={drillConfig.timeLimit}
+              {/* Course Catalog inside Desktop Window */}
+              {currentView === 'catalog' && (
+                <CourseCatalog
+                  onBack={() => setCurrentView('learn')}
+                  enrolledCourses={userProgress.enrolledCourses || []}
+                  onSelectCourse={courseId => {
+                    handleSelectCourse(courseId);
+                    setCurrentView('map');
+                  }}
+                />
+              )}
+
+              {/* Lesson Map inside Desktop Window */}
+              {currentView === 'map' && (
+                <LessonMap
+                  course={course}
+                  stages={stages}
+                  lessons={lessons}
                   userProgress={userProgress}
-                  onComplete={updated => setUserProgress(updated)}
-                  onExit={() => setCurrentView('home')}
+                  onSelectLesson={l => launchLesson(l, 'learn')}
+                  onJumpWarning={lesson => setJumpWarningLesson(lesson)}
+                  onNavigate={view => setCurrentView(view)}
+                  onBack={() => setCurrentView('learn')}
+                />
+              )}
+
+              {/* Lesson Player inside Desktop Window */}
+              {currentView === 'lesson' && (
+                <LessonPlayer
+                  lesson={activeLesson}
+                  course={course}
+                  courseId={activeCourseId}
+                  programId={course.programId}
+                  layout={course.keyboardType || 'qwerty'}
+                  onComplete={handleComplete}
+                  onExit={() => setCurrentView('map')}
+                />
+              )}
+
+              {/* Video Player inside Desktop Window */}
+              {currentView === 'video' && (
+                <VideoPlayer
+                  lesson={activeLesson}
+                  onComplete={() => {
+                    handleComplete({
+                      wpm: 25,
+                      accuracy: 100,
+                      stars: 5,
+                      points: 500,
+                      durationSeconds: 15
+                    });
+                  }}
+                  onExit={() => setCurrentView('map')}
+                />
+              )}
+
+              {/* Room 3: Practice (Practice Lobby & Drills) */}
+              {currentView === 'practice' && (
+                <PracticeLobby
+                  onStartDrill={(drill) => {
+                    setDrillConfig({
+                      mode: drill.id,
+                      difficulty: drill.difficulty,
+                      timeLimit: drill.timeLimit
+                    });
+                    setCurrentView('drill');
+                  }}
                 />
               )}
 
@@ -411,7 +476,7 @@ export default function App() {
                   timeLimit={drillConfig.timeLimit}
                   userProgress={userProgress}
                   onComplete={updated => setUserProgress(updated)}
-                  onExit={() => setCurrentView('home')}
+                  onExit={() => setCurrentView('practice')}
                 />
               )}
 
@@ -450,15 +515,23 @@ export default function App() {
                 />
               )}
 
+              {/* Room 6: Shop (Themes & Sound Packs) */}
               {currentView === 'shop' && (
                 <ShopView
                   userProgress={userProgress}
                   selectedTheme={selectedTheme}
                   onSelectTheme={theme => {
                     setSelectedTheme(theme);
+                    applyTheme(theme);
                     updateSettings({ theme });
                   }}
-                  onUpdateProfile={updated => setUserProgress(updated)}
+                  onUpdateProfile={updated => {
+                    setUserProgress(updated);
+                    saveProgress(updated);
+                    if (updated.settings?.soundPack) {
+                      sound.setPack(updated.settings.soundPack);
+                    }
+                  }}
                   onNavigate={view => setCurrentView(view)}
                 />
               )}
@@ -525,58 +598,6 @@ export default function App() {
               )}
 
             </DesktopWindowShell>
-          )}
-
-          {currentView === 'catalog' && (
-            <CourseCatalog
-              onBack={() => setCurrentView('learn')}
-              enrolledCourses={userProgress.enrolledCourses || []}
-              onSelectCourse={courseId => {
-                handleSelectCourse(courseId);
-                setCurrentView('map');
-              }}
-            />
-          )}
-
-          {currentView === 'map' && (
-            <LessonMap
-              course={course}
-              stages={stages}
-              lessons={lessons}
-              userProgress={userProgress}
-              onSelectLesson={l => launchLesson(l, 'learn')}
-              onJumpWarning={lesson => setJumpWarningLesson(lesson)}
-              onNavigate={view => setCurrentView(view)}
-              onBack={() => setCurrentView('learn')}
-            />
-          )}
-
-          {currentView === 'lesson' && (
-            <LessonPlayer
-              lesson={activeLesson}
-              course={course}
-              courseId={activeCourseId}
-              programId={course.programId}
-              layout={course.keyboardType || 'qwerty'}
-              onComplete={handleComplete}
-              onExit={() => setCurrentView('map')}
-            />
-          )}
-
-          {currentView === 'video' && (
-            <VideoPlayer
-              lesson={activeLesson}
-              onComplete={() => {
-                handleComplete({
-                  wpm: 25,
-                  accuracy: 100,
-                  stars: 5,
-                  points: 500,
-                  durationSeconds: 15
-                });
-              }}
-              onExit={() => setCurrentView('map')}
-            />
           )}
 
         </Suspense>

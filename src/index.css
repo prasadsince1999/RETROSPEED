@@ -2,12 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --rs-wallpaper: #B9D2E8;
+  --rs-paper: #FDF8EE;
+  --rs-paper-alt: #FAF3E0;
+  --rs-ink: #2D2319;
+  --rs-titlebar: #C3A6E8;
+  --rs-accent: #F6C445;
+  --rs-mint: #48B89F;
+  --rs-coral: #F28B82;
+  --rs-sky: #4BA3E3;
+  --rs-lilac: #C3A6E8;
+  --rs-shadow: #2D2319;
+}
+
 @layer base {
   body {
     margin: 0;
     font-family: 'Rubik', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: #B9D2E8;
-    color: #2D2319;
+    background-color: var(--rs-wallpaper);
+    color: var(--rs-ink);
     overflow-x: hidden;
   }
 }

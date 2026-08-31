@@ -5,6 +5,7 @@ class SoundEngine {
     this.ctx = null;
     this.muted = false;
     this.volume = 0.7;
+    this.soundPack = 'cherry-blue';
   }
 
   init() {
@@ -27,28 +28,119 @@ class SoundEngine {
     this.volume = Math.max(0, Math.min(1, vol));
   }
 
-  // Crisp mechanical typewriter click
+  setPack(packId) {
+    if (packId) {
+      this.soundPack = packId;
+    }
+  }
+
+  getPack() {
+    return this.soundPack;
+  }
+
+  // Keycap click with switchable acoustic profiles
   playKeyClick() {
     if (this.muted) return;
     this.init();
     if (!this.ctx) return;
 
     const t = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
+    const pack = this.soundPack || 'cherry-blue';
 
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(800 + Math.random() * 200, t);
-    osc.frequency.exponentialRampToValueAtTime(100, t + 0.04);
+    if (pack === 'ibm-model-m') {
+      // Heavy vintage buckling spring (clack + spring reverberation)
+      const osc1 = this.ctx.createOscillator();
+      const osc2 = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
 
-    gain.gain.setValueAtTime(0.2 * this.volume, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
+      osc1.type = 'triangle';
+      osc1.frequency.setValueAtTime(450 + Math.random() * 50, t);
+      osc1.frequency.exponentialRampToValueAtTime(120, t + 0.06);
 
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
+      osc2.type = 'square';
+      osc2.frequency.setValueAtTime(1100 + Math.random() * 100, t);
+      osc2.frequency.exponentialRampToValueAtTime(320, t + 0.03);
 
-    osc.start(t);
-    osc.stop(t + 0.04);
+      gain.gain.setValueAtTime(0.35 * this.volume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+
+      osc1.connect(gain);
+      osc2.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc1.start(t);
+      osc2.start(t);
+      osc1.stop(t + 0.06);
+      osc2.stop(t + 0.06);
+    } else if (pack === 'gateron-brown') {
+      // Tactile dampened bump
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(550 + Math.random() * 80, t);
+      osc.frequency.exponentialRampToValueAtTime(140, t + 0.045);
+
+      gain.gain.setValueAtTime(0.22 * this.volume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.045);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(t);
+      osc.stop(t + 0.045);
+    } else if (pack === 'thocky') {
+      // Deep marbly thock
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(340 + Math.random() * 40, t);
+      osc.frequency.exponentialRampToValueAtTime(75, t + 0.055);
+
+      gain.gain.setValueAtTime(0.3 * this.volume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.055);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(t);
+      osc.stop(t + 0.055);
+    } else if (pack === 'chiptune') {
+      // 8-bit arcade arpeggio blip
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(520, t);
+      osc.frequency.setValueAtTime(880, t + 0.015);
+
+      gain.gain.setValueAtTime(0.12 * this.volume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(t);
+      osc.stop(t + 0.035);
+    } else {
+      // Default cherry-blue crisp clicky
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(900 + Math.random() * 200, t);
+      osc.frequency.exponentialRampToValueAtTime(180, t + 0.035);
+
+      gain.gain.setValueAtTime(0.22 * this.volume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(t);
+      osc.stop(t + 0.035);
+    }
   }
 
   // Error buzzer / wrong key sound
