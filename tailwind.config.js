@@ -8,15 +8,16 @@ export default {
     extend: {
       colors: {
         retro: {
-          bg: '#B9D2E8',
-          surface: '#FDF8EE',
-          'surface-alt': '#FBF6EA',
-          ink: '#2D2319',
-          coral: '#F28B82',
-          mustard: '#F6C445',
-          teal: '#48B89F',
-          sky: '#4BA3E3',
-          lilac: '#C3A6E8'
+          bg: 'var(--rs-wallpaper)',
+          surface: 'var(--rs-paper)',
+          'surface-alt': 'var(--rs-paper-alt)',
+          ink: 'var(--rs-ink)',
+          coral: 'var(--rs-coral)',
+          mustard: 'var(--rs-accent)',
+          teal: 'var(--rs-mint)',
+          sky: 'var(--rs-sky)',
+          lilac: 'var(--rs-lilac)',
+          titlebar: 'var(--rs-titlebar)',
         },
         brand: {
           dark: '#1e293b',
@@ -31,10 +32,10 @@ export default {
         }
       },
       boxShadow: {
-        'retro': '4px 4px 0px #2D2319',
-        'retro-sm': '2px 2px 0px #2D2319',
-        'retro-lg': '6px 6px 0px #2D2319',
-        'retro-pressed': '1px 1px 0px #2D2319',
+        'retro': '4px 4px 0px var(--rs-shadow)',
+        'retro-sm': '2px 2px 0px var(--rs-shadow)',
+        'retro-lg': '6px 6px 0px var(--rs-shadow)',
+        'retro-pressed': '1px 1px 0px var(--rs-shadow)',
       },
       fontFamily: {
         sans: ['Rubik', 'Montserrat', 'system-ui', 'sans-serif'],
