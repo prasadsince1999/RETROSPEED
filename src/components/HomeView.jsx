@@ -314,25 +314,6 @@ export default function HomeView({
 
       </div>
 
-      {/* QUIET STUDIO SHELF FOOTER */}
-      <div className="pt-2 border-t-2 border-[#2D2319]/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono text-[#2D2319]/70">
-        <div className="flex items-center space-x-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-[#F6C445]" />
-          <span>Built with care by PrasaD at KSM × Tech, India · 100% Offline</span>
-        </div>
-
-        <button
-          onClick={() => {
-            if (sound && typeof sound.playKeyClick === 'function') sound.playKeyClick();
-            if (onOpenStudio) onOpenStudio();
-          }}
-          className="hover:text-[#2D2319] font-bold underline cursor-pointer flex items-center space-x-1"
-        >
-          <span>More from the studio</span>
-          <ArrowRight className="w-3 h-3" />
-        </button>
-      </div>
-
     </div>
   );
 }

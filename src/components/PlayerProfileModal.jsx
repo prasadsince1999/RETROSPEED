@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   User, 
   Award, 
@@ -21,8 +21,6 @@ export default function PlayerProfileModal({
   userProgress = {},
   onProfileUpdated
 }) {
-  if (!isOpen) return null;
-
   const currentProfile = getPlayerProfile(userProgress);
 
   const [name, setName] = useState(currentProfile.displayName);
@@ -30,9 +28,21 @@ export default function PlayerProfileModal({
   const [selectedTitle, setSelectedTitle] = useState(currentProfile.title);
   const [savedSuccess, setSavedSuccess] = useState(false);
 
-  // Compute lifetime stats
+  // Sync state whenever modal is opened or userProgress changes
+  useEffect(() => {
+    if (isOpen) {
+      const fresh = getPlayerProfile(userProgress);
+      setName(fresh.displayName);
+      setSelectedAvatar(fresh.avatarId);
+      setSelectedTitle(fresh.title);
+    }
+  }, [isOpen, userProgress]);
+
+  if (!isOpen) return null;
+
+  // Compute honest lifetime stats
   const attemptLogs = Array.isArray(userProgress.attemptLogs) ? userProgress.attemptLogs : [];
-  const maxWpm = attemptLogs.length > 0 ? Math.max(...attemptLogs.map(a => Number(a.wpm) || 0)) : 78;
+  const maxWpm = attemptLogs.length > 0 ? Math.max(...attemptLogs.map(a => Number(a.wpm) || 0)) : 0;
   
   let totalMinutes = 0;
   if (userProgress.courses) {
@@ -40,7 +50,6 @@ export default function PlayerProfileModal({
       totalMinutes += (Number(c.totalTimeSeconds) || 0) / 60;
     });
   }
-  if (totalMinutes < 5) totalMinutes = 14.5;
 
   let totalStars = 0;
   if (userProgress.courses) {
@@ -48,7 +57,9 @@ export default function PlayerProfileModal({
       totalStars += Number(c.totalStars) || 0;
     });
   }
-  if (totalStars < 38) totalStars = 45;
+
+  const currentTier = LEVEL_TIERS.find(t => currentProfile.level >= t.minLevel && currentProfile.level <= t.maxLevel) || LEVEL_TIERS[0];
+  const nextTier = LEVEL_TIERS.find(t => (currentProfile.level + 1) >= t.minLevel && (currentProfile.level + 1) <= t.maxLevel) || currentTier;
 
   const handleSave = (e) => {
     e?.preventDefault();
@@ -57,16 +68,21 @@ export default function PlayerProfileModal({
     const trimmed = name.trim() || 'Player';
     const updated = updatePlayerProfile(userProgress, {
       displayName: trimmed,
+      name: trimmed,
       avatarId: selectedAvatar,
+      title: selectedTitle,
       customTitle: selectedTitle
     });
 
     setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 2000);
-
     if (onProfileUpdated) {
       onProfileUpdated(updated);
     }
+
+    setTimeout(() => {
+      setSavedSuccess(false);
+      onClose();
+    }, 400);
   };
 
   return (
@@ -88,7 +104,7 @@ export default function PlayerProfileModal({
               sound.playKeyClick();
               onClose();
             }}
-            className="w-5 h-5 bg-[#F28B82] hover:bg-[#eb746a] border-2 border-[#2D2319] rounded flex items-center justify-center text-xs font-mono font-black shadow-[1px_1px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5"
+            className="w-5 h-5 bg-[#F28B82] hover:bg-[#eb746a] border-2 border-[#2D2319] rounded flex items-center justify-center text-xs font-mono font-black shadow-[1px_1px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
             title="Close"
           >
             ✕
@@ -132,7 +148,7 @@ export default function PlayerProfileModal({
                   <button
                     type="button"
                     onClick={handleSave}
-                    className="px-3 py-1.5 bg-[#48B89F] hover:bg-[#3ca089] border-2 border-[#2D2319] rounded-lg font-display font-black text-xs text-white shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all shrink-0"
+                    className="px-3.5 py-1.5 bg-[#48B89F] hover:bg-[#3ca089] border-2 border-[#2D2319] rounded-lg font-display font-black text-xs text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all shrink-0 cursor-pointer"
                   >
                     Save
                   </button>
@@ -142,7 +158,7 @@ export default function PlayerProfileModal({
               {/* Title & Rank */}
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1">
                 <span className="px-2 py-0.5 rounded bg-[#C3A6E8] border border-[#2D2319] text-[10px] font-mono font-bold text-[#2D2319]">
-                  {selectedTitle}
+                  {selectedTitle || currentTier.title}
                 </span>
                 <span className="px-2 py-0.5 rounded bg-[#C7E8CA] border border-[#2D2319] text-[10px] font-mono font-bold text-[#2D2319] flex items-center space-x-1">
                   <Flame className="w-3 h-3 text-[#F28B82] fill-[#F28B82]" />
@@ -171,7 +187,7 @@ export default function PlayerProfileModal({
             </div>
             
             <div className="text-[10px] font-mono text-[#2D2319]/70 flex justify-between">
-              <span>Next Rank: Level {currentProfile.level + 1} ({LEVEL_TIERS[Math.min(currentProfile.level, LEVEL_TIERS.length - 1)].title})</span>
+              <span>Next Rank: Level {currentProfile.level + 1} ({nextTier.title})</span>
               <span>Total XP: {currentProfile.totalXp.toLocaleString()}</span>
             </div>
           </div>
@@ -183,7 +199,7 @@ export default function PlayerProfileModal({
               <span>Choose Your Retro Character Avatar:</span>
             </label>
 
-            <div className="grid grid-cols-5 gap-2 sm:gap-2.5">
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-2.5">
               {PLAYER_AVATARS.map((av) => {
                 const isSelected = selectedAvatar === av.id;
                 return (
@@ -194,7 +210,7 @@ export default function PlayerProfileModal({
                       sound.playKeyClick();
                       setSelectedAvatar(av.id);
                     }}
-                    className={`p-2 rounded-xl border-2 border-[#2D2319] flex flex-col items-center justify-center space-y-1 transition-all ${
+                    className={`p-2 rounded-xl border-2 border-[#2D2319] flex flex-col items-center justify-center space-y-1 transition-all cursor-pointer ${
                       isSelected
                         ? 'bg-[#F6C445] shadow-[3px_3px_0px_#2D2319] -translate-y-0.5'
                         : 'bg-[#FDF8EE] hover:bg-white shadow-[1px_1px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5'
@@ -207,7 +223,7 @@ export default function PlayerProfileModal({
                       {av.icon}
                     </div>
                     <span className="text-[9px] font-mono font-bold text-[#2D2319] truncate max-w-full text-center">
-                      {av.name.split(' ')[0]}
+                      {(av.label || av.name || av.id).split(' ')[0]}
                     </span>
                     {isSelected && (
                       <span className="w-2 h-2 rounded-full bg-[#2D2319]" />
@@ -242,7 +258,7 @@ export default function PlayerProfileModal({
 
               <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-xl p-2.5 shadow-[2px_2px_0px_#2D2319] text-center">
                 <div className="text-[10px] text-[#2D2319]/70 font-bold uppercase">Total Drills</div>
-                <div className="text-base font-black text-[#2D2319] font-display mt-0.5">{attemptLogs.length || 12}</div>
+                <div className="text-base font-black text-[#2D2319] font-display mt-0.5">{attemptLogs.length}</div>
               </div>
 
               <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-xl p-2.5 shadow-[2px_2px_0px_#2D2319] text-center">
@@ -268,7 +284,7 @@ export default function PlayerProfileModal({
                 sound.playKeyClick();
                 onClose();
               }}
-              className="px-4 py-1.5 bg-[#FDF8EE] hover:bg-white border-2 border-[#2D2319] rounded-xl text-xs font-mono font-bold text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5"
+              className="px-4 py-1.5 bg-[#FDF8EE] hover:bg-white border-2 border-[#2D2319] rounded-xl text-xs font-mono font-bold text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
             >
               Cancel
             </button>
@@ -276,7 +292,7 @@ export default function PlayerProfileModal({
             <button
               type="button"
               onClick={handleSave}
-              className="px-5 py-1.5 bg-[#F6C445] hover:bg-[#f4ba24] border-2 border-[#2D2319] rounded-xl text-xs font-display font-black text-[#2D2319] shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 flex items-center space-x-1.5"
+              className="px-5 py-1.5 bg-[#F6C445] hover:bg-[#f4ba24] border-2 border-[#2D2319] rounded-xl text-xs font-display font-black text-[#2D2319] shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 flex items-center space-x-1.5 cursor-pointer"
             >
               <Check className="w-4 h-4" />
               <span>Apply Changes</span>

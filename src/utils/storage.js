@@ -459,20 +459,28 @@ export function getPlayerProfile(userProgress = {}) {
   const level = Math.max(1, Math.floor(totalPoints / 500) + 1);
   const currentLevelBaseXp = (level - 1) * 500;
   const currentLevelXp = Math.max(0, totalPoints - currentLevelBaseXp);
+  const percent = Math.min(100, Math.round((currentLevelXp / 500) * 100));
+
+  const avatarId = customProfile.avatarId || 'ninja';
+  const avatarMeta = PLAYER_AVATARS.find(a => a.id === avatarId) || PLAYER_AVATARS[0];
 
   return {
     displayName: customProfile.displayName || customProfile.name || 'Player',
-    name: customProfile.name || 'Player',
+    name: customProfile.displayName || customProfile.name || 'Player',
     title: customProfile.title || (level > 10 ? 'Typing Grandmaster' : level > 5 ? 'Velocity Racer' : 'Novice Typist'),
-    avatarIcon: customProfile.avatar || '🎮',
-    avatarBg: customProfile.avatarBg || '#F28B82',
-    avatar: customProfile.avatar || '🎮',
+    avatarIcon: customProfile.avatar || avatarMeta.icon,
+    avatarBg: customProfile.avatarBg || avatarMeta.bg,
+    avatar: customProfile.avatar || avatarMeta.icon,
+    avatarId,
     theme: customProfile.theme || userProgress.settings?.theme || 'bone',
     level,
     totalXp: totalPoints,
     currentLevelXp,
     nextLevelXp: 500,
-    progressPct: Math.min(100, Math.round((currentLevelXp / 500) * 100))
+    nextLevelXpRequirement: 500,
+    percent,
+    progressPct: percent,
+    streakDays: userProgress.streakDays || 0
   };
 }
 
@@ -541,14 +549,28 @@ export const LEVEL_TIERS = [
   { minLevel: 20, maxLevel: 99, title: 'Arcade Legend', badge: 'Tier 4' }
 ];
 
-export function updatePlayerProfile(partialProfile) {
-  const current = loadProgress();
+export function updatePlayerProfile(userProgressOrPartial, maybePartial) {
+  let current = loadProgress();
+  let baseProgress = current;
+  let partial = {};
+
+  if (typeof userProgressOrPartial === 'object' && maybePartial !== undefined) {
+    baseProgress = userProgressOrPartial || current;
+    partial = maybePartial || {};
+  } else if (typeof userProgressOrPartial === 'object') {
+    partial = userProgressOrPartial;
+  }
+
+  const avatarMeta = PLAYER_AVATARS.find(a => a.id === partial.avatarId);
+  const updatedProfile = {
+    ...(baseProgress.profile || {}),
+    ...partial,
+    ...(avatarMeta ? { avatar: avatarMeta.icon, avatarBg: avatarMeta.bg, avatarIcon: avatarMeta.icon } : {})
+  };
+
   const updated = {
-    ...current,
-    profile: {
-      ...(current.profile || {}),
-      ...partialProfile
-    }
+    ...baseProgress,
+    profile: updatedProfile
   };
   saveProgress(updated);
   return updated;

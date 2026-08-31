@@ -360,6 +360,17 @@ export default function DesktopWindowShell({
                       <button
                         type="button"
                         onClick={() => {
+                          setActiveMenuDropdown(null);
+                          setProfileModalOpen(true);
+                        }}
+                        className="w-full text-left px-3 py-1.5 hover:bg-[#F6C445] text-[#2D2319] flex items-center justify-between font-bold"
+                      >
+                        <span>Player Profile & Avatar</span>
+                        <User className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
                           toggleSound();
                           setActiveMenuDropdown(null);
                         }}
