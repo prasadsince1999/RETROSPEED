@@ -82,6 +82,56 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
     };
   }
 
+  // 2. Structured Stage Course Data (e.g. typing_jungle_685.json)
+  if (course.data && Array.isArray(course.data.stages)) {
+    const stages = [];
+    const playableLessons = [];
+    let globalIndex = 1;
+
+    course.data.stages.forEach((stage, sIdx) => {
+      const start = globalIndex;
+      stage.lessons.forEach((l) => {
+        const lessonNumber = l.id || globalIndex;
+        const targetKeys = l.keys || [];
+        const rawText = l.text || `Practice typing: ${l.title}`;
+        const isGame = l.type === 'game' || !!l.gameId;
+        const renderEngine = isGame ? (l.gameId || 'press-room') : (l.type === 'motion' ? 'motion' : 'normal');
+
+        playableLessons.push({
+          id: lessonNumber,
+          rawId: l.id || lessonNumber,
+          title: cleanString(l.title),
+          type: isGame ? 'game' : (l.type || 'practice'),
+          targetKeys,
+          text: rawText,
+          goalWpm: l.goalWpm || 20,
+          minAccuracy: l.minAccuracy || 80,
+          gameId: l.gameId || null,
+          renderEngine,
+          stageTitle: cleanString(stage.title)
+        });
+        globalIndex++;
+      });
+      const end = globalIndex - 1;
+      stages.push({
+        id: `stage-${sIdx + 1}`,
+        title: cleanString(stage.title),
+        start,
+        end,
+        goal: `${stage.targetWpm || 25} WPM`
+      });
+    });
+
+    return {
+      course: {
+        ...course,
+        lessonsCount: playableLessons.length
+      },
+      stages,
+      lessons: playableLessons
+    };
+  }
+
   const rawData = course.data || [];
   const rawItems = Array.isArray(rawData) ? rawData : (rawData.lessons || rawData.data || []);
 

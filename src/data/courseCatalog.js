@@ -1,5 +1,6 @@
 // RETROSPEED Course Catalog Registry
 import basicsLessons from './courses/typing_basics_1.json';
+import typingJungle685 from './courses/typing_jungle_685.json';
 import codeLessons from './courses/code_typing_306.json';
 import funFactsLessons from './courses/fun_facts_246.json';
 import loanwordsLessons from './courses/loanwords_240.json';
@@ -14,9 +15,23 @@ import vocabNonfictionLessons from './courses/vocab_nonfiction_289.json';
 
 export const COURSES_CATALOG = [
   {
+    id: 'typing-jungle-685',
+    programId: 1,
+    title: 'Typing Jungle (Full 685 Lessons)',
+    category: 'Core Touch Typing',
+    grade: 'Comprehensive (685 Lessons)',
+    lessonsCount: 685,
+    description: 'The authentic full 685-lesson Typing Jungle curriculum spanning 25 stages from Home Row to Speed Goal 75 WPM.',
+    badge: 'Flagship',
+    color: 'from-emerald-500 to-teal-700',
+    titleVariant: 'teal',
+    keyboardType: 'qwerty',
+    data: typingJungle685
+  },
+  {
     id: 'retrospeed-odyssey',
     programId: 1,
-    title: 'RETROSPEED Odyssey (Typing Jungle)',
+    title: 'RETROSPEED Odyssey (97 Lessons)',
     category: 'Core Touch Typing',
     grade: 'Primary Path (97 Lessons)',
     lessonsCount: 97,
