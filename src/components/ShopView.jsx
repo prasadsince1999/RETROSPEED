@@ -11,10 +11,16 @@ import {
   Radio, 
   Zap,
   Headphones,
-  Keyboard
+  Keyboard,
+  BookOpen,
+  Search,
+  ArrowRight,
+  Layers,
+  CheckCircle2
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { PLAYER_AVATARS, getPlayerProfile, updatePlayerProfile } from '../utils/storage';
+import { COURSES_CATALOG } from '../data/courseCatalog';
 
 export const RETRO_THEMES = [
   {
@@ -105,15 +111,20 @@ export const KEYCAP_SOUND_PACKS = [
 export default function ShopView({
   userProgress = {},
   selectedTheme = 'bone',
+  activeCourseId = 'retrospeed-odyssey',
+  initialTab = 'themes',
   onSelectTheme,
+  onSelectCourse,
   onUpdateProfile,
   onNavigate
 }) {
   const profile = getPlayerProfile(userProgress);
   
-  const [activeTab, setActiveTab] = useState('themes'); // 'themes' | 'audio' | 'avatars'
+  const [activeTab, setActiveTab] = useState(initialTab); // 'themes' | 'audio' | 'avatars' | 'courses'
   const [currentSoundPack, setCurrentSoundPack] = useState(userProgress.settings?.soundPack || 'cherry-blue');
   const [selectedAvatarId, setSelectedAvatarId] = useState(profile.avatarId);
+  const [courseCategory, setCourseCategory] = useState('All');
+  const [courseSearch, setCourseSearch] = useState('');
   const [notification, setNotification] = useState('');
   const [pressedKey, setPressedKey] = useState(null);
   const [testInput, setTestInput] = useState('');
@@ -164,6 +175,16 @@ export default function ShopView({
     showNotification(`Active Avatar: ${PLAYER_AVATARS.find(a => a.id === avatarId)?.name}`);
   };
 
+  const handlePickCourse = (courseId) => {
+    sound.playKeyClick();
+    if (onSelectCourse) {
+      onSelectCourse(courseId);
+    }
+    if (onNavigate) {
+      onNavigate('learn');
+    }
+  };
+
   return (
     <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[#FDF8EE] p-4 sm:p-6 overflow-y-auto">
       
@@ -179,7 +200,7 @@ export default function ShopView({
               </h1>
             </div>
             <p className="text-xs text-[#2D2319]/70 font-medium mt-0.5 font-serif italic">
-              Personalize your Retro OS theme, keycap acoustics, and player identity.
+              Personalize your Retro OS theme, keycap acoustics, player identity, and course curricula.
             </p>
           </div>
 
@@ -190,12 +211,13 @@ export default function ShopView({
           </div>
         </div>
 
-        {/* Tab Pills: Themes | Audio Sound Packs | Avatars */}
-        <div className="flex items-center space-x-2 font-mono text-xs">
+        {/* Tab Pills: Themes | Audio Sound Packs | Avatars | Course Library */}
+        <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
           {[
             { id: 'themes', label: 'Palette Themes', icon: Palette },
             { id: 'audio', label: 'Keycap Audio Packs', icon: Volume2 },
-            { id: 'avatars', label: 'Player Avatars', icon: Sparkles }
+            { id: 'avatars', label: 'Player Avatars', icon: Sparkles },
+            { id: 'courses', label: 'Course Library', icon: BookOpen }
           ].map(tab => {
             const isSel = activeTab === tab.id;
             const Icon = tab.icon;
@@ -469,6 +491,174 @@ export default function ShopView({
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* 4. Course Library Tab */}
+        {activeTab === 'courses' && (
+          <div className="space-y-4">
+            
+            {/* Filter Pills & Search Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#FAF3E0] p-3 rounded-2xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
+              
+              {/* Category Filter Pills */}
+              <div className="flex flex-wrap items-center gap-1.5 font-mono text-xs">
+                {[
+                  { id: 'All', label: 'All Curricula (10)' },
+                  { id: 'Core Touch Typing', label: 'Core Typing (2)' },
+                  { id: 'Programming & Tech', label: 'Coding & Tech (1)' },
+                  { id: 'Stories & Trivia', label: 'Stories & Trivia (5)' },
+                  { id: 'Language & Vocab', label: 'Language & Vocab (2)' }
+                ].map(cat => {
+                  const isSel = courseCategory === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => {
+                        sound.playKeyClick();
+                        setCourseCategory(cat.id);
+                      }}
+                      className={`px-3 py-1 rounded-xl border border-[#2D2319] font-bold text-[11px] transition-all ${
+                        isSel 
+                          ? 'bg-[#F6C445] text-[#2D2319] shadow-[1px_1px_0px_#2D2319] font-black' 
+                          : 'bg-white hover:bg-[#FDF8EE] text-[#2D2319]/80 shadow-[1px_1px_0px_#2D2319]'
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Search Bar */}
+              <div className="relative flex-1 sm:max-w-xs">
+                <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-[#2D2319]/50" />
+                <input
+                  type="text"
+                  value={courseSearch}
+                  onChange={e => setCourseSearch(e.target.value)}
+                  placeholder="Search course library..."
+                  className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-[#2D2319] bg-white text-xs font-mono font-bold placeholder-[#2D2319]/40 focus:outline-none focus:ring-2 focus:ring-[#48B89F] shadow-[1px_1px_0px_#2D2319]"
+                />
+              </div>
+
+            </div>
+
+            {/* Courses Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {COURSES_CATALOG
+                .filter(course => {
+                  // Category match
+                  if (courseCategory === 'Core Touch Typing' && course.category !== 'Core Touch Typing') return false;
+                  if (courseCategory === 'Programming & Tech' && course.category !== 'Programming & Tech') return false;
+                  if (courseCategory === 'Language & Vocab' && !(course.category === 'Language & Etymology' || course.category === 'Literature & Vocabulary')) return false;
+                  if (courseCategory === 'Stories & Trivia' && !(
+                    course.category === 'Interactive Story' ||
+                    course.category === 'General Knowledge' ||
+                    course.category === 'History & Tech' ||
+                    course.category === 'Science & Nature' ||
+                    course.category === 'Music & Arts'
+                  )) return false;
+
+                  // Search match
+                  if (courseSearch.trim()) {
+                    const query = courseSearch.toLowerCase();
+                    return (
+                      course.title.toLowerCase().includes(query) ||
+                      course.description.toLowerCase().includes(query) ||
+                      course.category.toLowerCase().includes(query)
+                    );
+                  }
+                  return true;
+                })
+                .map(course => {
+                  const isActive = activeCourseId === course.id;
+                  const headerBg = 
+                    course.titleVariant === 'teal' ? 'bg-[#48B89F]' :
+                    course.titleVariant === 'mustard' ? 'bg-[#F6C445]' :
+                    course.titleVariant === 'coral' ? 'bg-[#F28B82]' :
+                    course.titleVariant === 'lilac' ? 'bg-[#C3A6E8]' :
+                    course.titleVariant === 'dark' ? 'bg-[#2D2319] text-white' :
+                    'bg-[#4BA3E3]';
+
+                  return (
+                    <div
+                      key={course.id}
+                      className={`rounded-2xl border-2 border-[#2D2319] bg-[#FAF3E0] shadow-[4px_4px_0px_#2D2319] flex flex-col justify-between overflow-hidden transition-all ${
+                        isActive ? 'ring-2 ring-[#48B89F]' : 'hover:-translate-y-0.5'
+                      }`}
+                    >
+                      {/* Course Card Titlebar */}
+                      <div>
+                        <div className={`px-3.5 py-2 border-b-2 border-[#2D2319] flex items-center justify-between font-mono text-xs font-bold ${headerBg}`}>
+                          <div className="flex items-center space-x-1.5 truncate">
+                            <BookOpen className="w-3.5 h-3.5 shrink-0" />
+                            <span className="truncate">{course.badge || 'Course'}</span>
+                          </div>
+                          <span className="px-2 py-0.5 rounded bg-white/80 text-[#2D2319] border border-[#2D2319] text-[10px] font-black shrink-0 shadow-[1px_1px_0px_#2D2319]">
+                            {course.lessonsCount} Lessons
+                          </span>
+                        </div>
+
+                        {/* Course Card Body */}
+                        <div className="p-4 space-y-2">
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="font-display font-black text-base text-[#2D2319] leading-tight">
+                              {course.title}
+                            </h3>
+                            {isActive && (
+                              <span className="px-2 py-0.5 rounded bg-[#C7E8CA] border border-[#2D2319] text-[10px] font-mono font-black text-[#2D2319] shrink-0 shadow-[1px_1px_0px_#2D2319] flex items-center space-x-1">
+                                <CheckCircle2 className="w-3 h-3 text-emerald-700" />
+                                <span>ACTIVE</span>
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="flex items-center space-x-2 text-[10px] font-mono font-bold text-[#2D2319]/70">
+                            <span className="px-2 py-0.5 rounded bg-white border border-[#2D2319]">
+                              {course.category}
+                            </span>
+                            <span>•</span>
+                            <span>{course.grade}</span>
+                          </div>
+
+                          <p className="text-xs text-[#2D2319]/80 font-medium leading-relaxed font-serif pt-1">
+                            {course.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Course Card Action Footer */}
+                      <div className="p-4 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => handlePickCourse(course.id)}
+                          className={`w-full py-2.5 px-4 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black transition-all flex items-center justify-center space-x-2 cursor-pointer ${
+                            isActive
+                              ? 'bg-[#C7E8CA] hover:bg-[#b2e2b6] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5'
+                              : 'bg-[#F6C445] hover:bg-[#fbd366] text-[#2D2319] shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5'
+                          }`}
+                        >
+                          {isActive ? (
+                            <>
+                              <span>▶ Open in Learn Map</span>
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </>
+                          ) : (
+                            <>
+                              <span>✦ Add to Learn & Open Course</span>
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                    </div>
+                  );
+                })}
+            </div>
+
           </div>
         )}
 

@@ -83,11 +83,10 @@ export default function DesktopWindowShell({
     }
   };
 
-  // 6 Distinct Desktop Rooms in Left Sidebar
+  // 5 Primary Desktop Rooms in Left Sidebar
   const NAV_ITEMS = [
     { id: 'home', label: 'Home', icon: Home, highlight: 'bg-[#C7E8CA]' },
     { id: 'learn', label: 'Learn', icon: BookOpen, highlight: 'bg-[#C7E8CA]' },
-    { id: 'tracks', label: 'Tracks', icon: Layers, highlight: 'bg-[#C7E8CA]' },
     { id: 'play', label: 'Play', icon: Trophy, highlight: 'bg-[#C7E8CA]' },
     { id: 'stats', label: 'Stats', icon: BarChart2, highlight: 'bg-[#C7E8CA]' },
     { id: 'shop', label: 'Shop', icon: ShoppingBag, highlight: 'bg-[#C7E8CA]' }
@@ -95,11 +94,10 @@ export default function DesktopWindowShell({
 
   const isNavActive = (itemId) => {
     if (itemId === 'home') return currentView === 'home' || currentView === 'drill' || currentView === 'daily' || currentView === 'practice';
-    if (itemId === 'learn') return currentView === 'learn' || currentView === 'map' || currentView === 'lesson' || currentView === 'motion' || currentView === 'video' || currentView === 'shortcuts';
-    if (itemId === 'tracks') return currentView === 'tracks' || currentView === 'catalog';
+    if (itemId === 'learn') return currentView === 'learn' || currentView === 'map' || currentView === 'lesson' || currentView === 'motion' || currentView === 'video' || currentView === 'shortcuts' || currentView === 'tracks';
     if (itemId === 'play') return currentView === 'play' || currentView === 'challenge' || ['press-room', 'paper-planes', 'local-line', 'night-market', 'drop-chits', 'pit-lane', 'fuse-box', 'fuse-desk', 'patch-terminal'].includes(currentView);
     if (itemId === 'stats') return currentView === 'stats' || currentView === 'progress' || currentView === 'badges';
-    if (itemId === 'shop') return currentView === 'shop';
+    if (itemId === 'shop') return currentView === 'shop' || currentView === 'catalog';
     return currentView === itemId;
   };
 

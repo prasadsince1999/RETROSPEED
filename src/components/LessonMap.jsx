@@ -282,13 +282,13 @@ export default function LessonMap({
             type="button"
             onClick={() => {
               sound.playKeyClick();
-              if (onBack) onBack();
-              else if (onNavigate) onNavigate('tracks');
+              if (onNavigate) onNavigate('shop');
+              else if (onBack) onBack();
             }}
             className="px-3 py-1.5 rounded-xl bg-[var(--rs-paper-alt)] hover:bg-white text-[#2D2319] font-mono text-xs font-bold border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1.5 cursor-pointer"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Tracks</span>
+            <BookOpen className="w-3.5 h-3.5 text-[#4BA3E3]" />
+            <span>Course Library</span>
           </button>
 
           <div className="text-xs text-[#2D2319] font-mono font-bold hidden sm:flex items-center space-x-2 bg-[var(--rs-paper-alt)] px-3.5 py-1.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]">

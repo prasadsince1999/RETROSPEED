@@ -440,8 +440,8 @@ export default function App() {
                   setCurrentView('play');
                 } else if (view === 'practice') {
                   setCurrentView('home');
-                } else if (view === 'tracks') {
-                  setCurrentView('tracks');
+                } else if (view === 'tracks' || view === 'map') {
+                  setCurrentView('learn');
                 } else {
                   setCurrentView(view);
                 }
@@ -467,18 +467,17 @@ export default function App() {
                 />
               )}
 
-              {/* Room 2: Learn (Curriculum Tracks Directory & 8-Part Spine) */}
-              {currentView === 'learn' && (
-                <PracticeHub
+              {/* Room 2: Learn (Active Course Lesson Map with Stages & Level Grid) */}
+              {(currentView === 'learn' || currentView === 'map' || currentView === 'tracks') && (
+                <LessonMap
+                  course={course}
+                  stages={stages}
+                  lessons={lessons}
                   userProgress={userProgress}
-                  activeCourseId={activeCourseId}
-                  onSelectCourse={handleSelectCourse}
-                  onStartSpineLesson={handleStartSpineLesson}
-                  onStartLesson={(courseId, targetLevelId) => {
-                    handleSelectCourse(courseId, targetLevelId);
-                  }}
+                  onSelectLesson={l => launchLesson(l, 'learn')}
+                  onJumpWarning={lesson => setJumpWarningLesson(lesson)}
                   onNavigate={view => setCurrentView(view)}
-                  onOpenUnlockModal={() => setUnlockModalOpen(true)}
+                  onBack={() => setCurrentView('home')}
                 />
               )}
 
@@ -495,29 +494,15 @@ export default function App() {
                 />
               )}
 
-              {/* Course Catalog & Specialty Tracks */}
-              {(currentView === 'catalog' || currentView === 'tracks') && (
+              {/* Course Catalog (Direct Access / Fallback) */}
+              {currentView === 'catalog' && (
                 <CourseCatalog
                   onBack={() => setCurrentView('learn')}
                   enrolledCourses={userProgress.enrolledCourses || []}
                   onSelectCourse={courseId => {
                     handleSelectCourse(courseId);
-                    setCurrentView('map');
+                    setCurrentView('learn');
                   }}
-                />
-              )}
-
-              {/* Lesson Map inside Desktop Window */}
-              {currentView === 'map' && (
-                <LessonMap
-                  course={course}
-                  stages={stages}
-                  lessons={lessons}
-                  userProgress={userProgress}
-                  onSelectLesson={l => launchLesson(l, 'tracks')}
-                  onJumpWarning={lesson => setJumpWarningLesson(lesson)}
-                  onNavigate={view => setCurrentView(view)}
-                  onBack={() => setCurrentView('tracks')}
                 />
               )}
 
@@ -647,11 +632,16 @@ export default function App() {
                 />
               )}
 
-              {/* Room 6: Shop (Themes & Sound Packs) */}
+              {/* Room 5: Shop (Themes, Sound Packs, Avatars & Course Library) */}
               {currentView === 'shop' && (
                 <ShopView
                   userProgress={userProgress}
                   selectedTheme={selectedTheme}
+                  activeCourseId={activeCourseId}
+                  onSelectCourse={courseId => {
+                    handleSelectCourse(courseId);
+                    setCurrentView('learn');
+                  }}
                   onSelectTheme={theme => {
                     setSelectedTheme(theme);
                     applyTheme(theme);
