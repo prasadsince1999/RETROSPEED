@@ -15,11 +15,11 @@ function cleanString(str) {
     .replace(/\r/g, '\n');
 }
 
-export function getCurriculumForCourse(courseId = 'keystroke-foundations') {
+export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
   const course = getCourseById(courseId);
 
-  // Canonical Primary Path: RETROSPEED Odyssey & Keystroke Foundations use 97-lesson 8-unit Spine
-  if (course.id === 'retrospeed-odyssey' || course.id === 'keystroke-foundations' || course.id === 'typing-basics') {
+  // 1. RETROSPEED Odyssey: Uses the 97-lesson 8-unit Spine Curriculum (23 Home Row lessons + games)
+  if (course.id === 'retrospeed-odyssey') {
     const stages = [];
     const playableLessons = [];
     let globalIndex = 1;
