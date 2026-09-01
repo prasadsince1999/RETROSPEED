@@ -311,10 +311,36 @@ export default function App() {
 
   // Handle lesson / game completion
   const handleComplete = (stats) => {
-    const courseKey = gameLaunchOrigin === 'learn' ? 'spine' : activeCourseId;
-    const updatedProgress = saveLessonResult(courseKey, activeLesson.id, stats);
+    const updatedProgress = saveLessonResult(activeCourseId, activeLesson.id, stats);
     setUserProgress(updatedProgress);
     setScoreModalStats(stats);
+  };
+
+  // Handle video / motion intro completion (or "Start Drill" skip)
+  const handleMotionComplete = (stats = {}) => {
+    // Record motion intro as completed (unlocking next level)
+    const introStats = {
+      completed: true,
+      stars: 5,
+      points: 250,
+      wpm: 0,
+      accuracy: 100,
+      errors: 0,
+      durationSeconds: stats.time || 30
+    };
+    const updatedProgress = saveLessonResult(activeCourseId, activeLesson.id, introStats);
+    setUserProgress(updatedProgress);
+    setScoreModalStats(null); // No fake speed modal for introductory videos!
+
+    // Advance directly to the next lesson (e.g. Level 2: Keys f & j)
+    const currentIdx = lessons.findIndex(l => l.id === activeLesson?.id || l.rawId === activeLesson?.id);
+    if (currentIdx !== -1 && currentIdx + 1 < lessons.length) {
+      const nextLesson = lessons[currentIdx + 1];
+      launchLesson(nextLesson, gameLaunchOrigin || 'learn');
+    } else {
+      setIsViewingMap(true);
+      setCurrentView('learn');
+    }
   };
 
   // Handle standalone arcade game completion
@@ -330,75 +356,40 @@ export default function App() {
       durationSeconds: stats.durationSeconds || Math.round((stats.durationMs || 30000) / 1000),
       errors: stats.errors || 0
     };
-    const courseKey = gameLaunchOrigin === 'learn' ? 'spine' : 'arcade';
-    const updatedProgress = saveLessonResult(courseKey, gameId, formattedStats);
+    const updatedProgress = saveLessonResult(activeCourseId, gameId, formattedStats);
     setUserProgress(updatedProgress);
     setScoreModalStats(formattedStats);
   };
 
   // Move to next lesson seamlessly based on launch context
   const handleNextLesson = () => {
-    if (gameLaunchOrigin === 'learn') {
-      let currentPartIdx = -1;
-      let currentLessonIdx = -1;
+    setScoreModalStats(null); // Dissolve Score Modal!
 
-      for (let p = 0; p < SPINE_PARTS.length; p++) {
-        const lIdx = SPINE_PARTS[p].lessons.findIndex(l => l.id === activeLesson?.id);
-        if (lIdx !== -1) {
-          currentPartIdx = p;
-          currentLessonIdx = lIdx;
-          break;
-        }
-      }
-
-      if (currentPartIdx !== -1 && currentLessonIdx !== -1) {
-        const currentPart = SPINE_PARTS[currentPartIdx];
-        if (currentLessonIdx + 1 < currentPart.lessons.length) {
-          const nextLesson = currentPart.lessons[currentLessonIdx + 1];
-          handleStartSpineLesson(currentPart, nextLesson);
-          return;
-        } else if (currentPartIdx + 1 < SPINE_PARTS.length) {
-          const nextPart = SPINE_PARTS[currentPartIdx + 1];
-          if (nextPart.lessons && nextPart.lessons.length > 0) {
-            handleStartSpineLesson(nextPart, nextPart.lessons[0]);
-            return;
-          }
-        }
-      }
-
-      // If completed entire spine or not found, return to Learn Hub
-      setCurrentView('learn');
+    // Find next lesson in the current course
+    const currentIdx = lessons.findIndex(l => l.id === activeLesson?.id || l.rawId === activeLesson?.id);
+    if (currentIdx !== -1 && currentIdx + 1 < lessons.length) {
+      const nextLesson = lessons[currentIdx + 1];
+      launchLesson(nextLesson, gameLaunchOrigin || 'learn');
     } else {
-      // Normal course track lesson progression
-      const currentIdx = lessons.findIndex(l => l.id === activeLesson?.id);
-      if (currentIdx !== -1 && currentIdx + 1 < lessons.length) {
-        const nextLesson = lessons[currentIdx + 1];
-        launchLesson(nextLesson, 'tracks');
-      } else {
-        setCurrentView('map');
-      }
+      setIsViewingMap(true);
+      setCurrentView('learn');
     }
   };
 
   // Retry active lesson
   const handleRetry = () => {
-    setScoreModalStats(null);
-    if (gameLaunchOrigin === 'learn') {
-      handleStartSpineLesson(null, activeLesson);
-    } else {
-      launchLesson(activeLesson, gameLaunchOrigin);
-    }
+    setScoreModalStats(null); // Dissolve Score Modal!
+    launchLesson(activeLesson, gameLaunchOrigin || 'learn');
   };
 
   // Exit from game back to origin room
   const handleGameExit = () => {
-    setScoreModalStats(null);
-    if (gameLaunchOrigin === 'learn') {
-      setCurrentView('learn');
-    } else if (gameLaunchOrigin === 'tracks') {
-      setCurrentView('map');
-    } else {
+    setScoreModalStats(null); // Dissolve Score Modal!
+    if (gameLaunchOrigin === 'play') {
       setCurrentView('play');
+    } else {
+      setIsViewingMap(true);
+      setCurrentView('learn');
     }
   };
 
@@ -572,15 +563,7 @@ export default function App() {
               {currentView === 'motion' && (
                 <MotionLessonPlayer
                   lesson={activeLesson}
-                  onComplete={stats => {
-                    handleComplete(stats || {
-                      wpm: activeLesson?.goalWpm || 20,
-                      accuracy: 100,
-                      stars: 5,
-                      points: 500,
-                      durationSeconds: 30
-                    });
-                  }}
+                  onComplete={handleMotionComplete}
                   onExit={handleGameExit}
                 />
               )}
@@ -608,15 +591,7 @@ export default function App() {
               {currentView === 'video' && (
                 <VideoPlayer
                   lesson={activeLesson}
-                  onComplete={stats => {
-                    handleComplete(stats || {
-                      wpm: 25,
-                      accuracy: 100,
-                      stars: 5,
-                      points: 500,
-                      durationSeconds: 15
-                    });
-                  }}
+                  onComplete={handleMotionComplete}
                   onExit={handleGameExit}
                 />
               )}
@@ -815,8 +790,14 @@ export default function App() {
           stats={scoreModalStats}
           lesson={activeLesson}
           courseTitle={course.title}
+          onNextLesson={handleNextLesson}
           onNext={handleNextLesson}
           onRetry={handleRetry}
+          onGoToMap={() => {
+            setScoreModalStats(null);
+            setIsViewingMap(true);
+            setCurrentView('learn');
+          }}
           onExit={() => {
             setScoreModalStats(null);
             handleGameExit();
