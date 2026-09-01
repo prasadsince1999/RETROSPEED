@@ -21,9 +21,11 @@ export default function MyLearningsView({
   onUnenrollCourse,
   onNavigate
 }) {
-  const enrolledCourseIds = Array.isArray(userProgress.enrolledCourses) && userProgress.enrolledCourses.length > 0
+  const rawEnrolledIds = Array.isArray(userProgress.enrolledCourses) && userProgress.enrolledCourses.length > 0
     ? userProgress.enrolledCourses
     : ['keystroke-foundations'];
+
+  const enrolledCourseIds = Array.from(new Set(rawEnrolledIds));
 
   const enrolledCourses = enrolledCourseIds
     .map(id => getCourseById(id))
@@ -117,7 +119,7 @@ export default function MyLearningsView({
 
             return (
               <div
-                key={course.id}
+                key={`${course.id}-${idx}`}
                 onClick={() => handleOpenCourse(course.id)}
                 className={`rounded-2xl border-2 border-[#2D2319] bg-[#FAF3E0] shadow-[4px_4px_0px_#2D2319] flex flex-col justify-between overflow-hidden cursor-pointer transition-all ${
                   isActive 

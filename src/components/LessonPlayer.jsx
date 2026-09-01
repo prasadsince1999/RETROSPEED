@@ -257,21 +257,6 @@ export default function LessonPlayer({
   // Progress percentage
   const progressPercent = Math.min(100, Math.round((currentIndex / Math.max(1, tokens.length)) * 100));
 
-  // If in New Key Intro mode, render the authentic EdClub-style Introduction page
-  if (mode === 'intro') {
-    return (
-      <NewKeyIntro
-        lesson={lesson}
-        layout={layout}
-        onFinish={() => {
-          sound.playKeyClick();
-          setMode('practice');
-        }}
-        onExit={onExit}
-      />
-    );
-  }
-
   // Parse text into lines for multi-line stream rendering
   const lines = useMemo(() => {
     const res = [];
@@ -286,6 +271,21 @@ export default function LessonPlayer({
     if (currentLine.length > 0) res.push(currentLine);
     return res;
   }, [tokens, tokenStatuses, currentIndex]);
+
+  // If in New Key Intro mode, render the authentic EdClub-style Introduction page
+  if (mode === 'intro') {
+    return (
+      <NewKeyIntro
+        lesson={lesson}
+        layout={layout}
+        onFinish={() => {
+          sound.playKeyClick();
+          setMode('practice');
+        }}
+        onExit={onExit}
+      />
+    );
+  }
 
   return (
     <div className="w-full flex flex-col justify-between py-2 px-2 sm:px-6 max-w-5xl mx-auto font-sans select-none animate-in fade-in duration-200">
