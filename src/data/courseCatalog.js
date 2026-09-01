@@ -15,32 +15,18 @@ import vocabNonfictionLessons from './courses/vocab_nonfiction_289.json';
 
 export const COURSES_CATALOG = [
   {
-    id: 'typing-jungle-685',
+    id: 'retrospeed-odyssey',
     programId: 1,
-    title: 'Typing Jungle (Full 685 Lessons)',
+    title: 'RETROSPEED Odyssey',
     category: 'Core Touch Typing',
-    grade: 'Comprehensive (685 Lessons)',
+    grade: 'Flagship (685 Lessons)',
     lessonsCount: 685,
-    description: 'The authentic full 685-lesson Typing Jungle curriculum spanning 25 stages from Home Row to Speed Goal 75 WPM.',
+    description: 'The definitive touch typing curriculum across 25 stages from Home Row fundamentals to Speed Goal 75 WPM.',
     badge: 'Flagship',
     color: 'from-emerald-500 to-teal-700',
     titleVariant: 'teal',
     keyboardType: 'qwerty',
     data: typingJungle685
-  },
-  {
-    id: 'retrospeed-odyssey',
-    programId: 1,
-    title: 'RETROSPEED Odyssey (97 Lessons)',
-    category: 'Core Touch Typing',
-    grade: 'Primary Path (97 Lessons)',
-    lessonsCount: 97,
-    description: 'The definitive touch typing journey with 23 Home Row lessons, videos, motion drills, and arcade challenges.',
-    badge: 'Popular',
-    color: 'from-sky-400 to-indigo-600',
-    titleVariant: 'sky',
-    keyboardType: 'qwerty',
-    data: basicsLessons.lessons
   },
   {
     id: 'keystroke-foundations',

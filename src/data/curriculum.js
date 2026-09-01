@@ -18,71 +18,7 @@ function cleanString(str) {
 export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
   const course = getCourseById(courseId);
 
-  // 1. RETROSPEED Odyssey: Uses the 97-lesson 8-unit Spine Curriculum (23 Home Row lessons + games)
-  if (course.id === 'retrospeed-odyssey') {
-    const stages = [];
-    const playableLessons = [];
-    let globalIndex = 1;
-
-    SPINE_PARTS.forEach((part) => {
-      const start = globalIndex;
-      part.lessons.forEach((l) => {
-        const lessonNumber = globalIndex;
-        const targetKeys = l.keys || [];
-        const rawText = l.text || `Practice typing: ${l.title}`;
-        const isGame = l.type === 'play' || !!l.gameId;
-        const renderEngine = isGame ? (l.gameId || 'press-room') : (l.type === 'motion' ? 'motion' : 'normal');
-
-        playableLessons.push({
-          id: lessonNumber,
-          rawId: l.id || lessonNumber,
-          spineId: l.id,
-          partNumber: part.partNumber,
-          courseId: course.id,
-          programId: course.programId,
-          courseTitle: course.title,
-          title: l.title,
-          stageTitle: part.title,
-          type: l.type === 'keys' ? 'intro' : l.type === 'play' ? 'game' : l.type,
-          renderEngine,
-          activityApp: l.gameId || null,
-          gameApp: l.gameId || null,
-          isGame,
-          goalWpm: l.goalWpm || part.targetWpm || 20,
-          minWpm: l.minWpm || null,
-          minAccuracy: l.minAccuracy || 90,
-          text: rawText,
-          keys: l.keys || [],
-          targetKeys: targetKeys.length > 0 ? targetKeys : ['f', 'j'],
-          letters: targetKeys,
-          instruction: null,
-          motionId: l.motionId || null,
-          hand: l.hand || null
-        });
-        globalIndex++;
-      });
-      const end = globalIndex - 1;
-      stages.push({
-        id: `stage-${part.partNumber}`,
-        title: part.title,
-        shortTitle: part.shortTitle,
-        start,
-        end,
-        goal: `${part.targetWpm || 20} WPM`
-      });
-    });
-
-    return {
-      course: {
-        ...course,
-        lessonsCount: playableLessons.length
-      },
-      stages,
-      lessons: playableLessons
-    };
-  }
-
-  // 2. Structured Stage Course Data (e.g. typing_jungle_685.json)
+  // 1. Structured Stage Course Data (e.g. RETROSPEED Odyssey with 685 lessons)
   if (course.data && Array.isArray(course.data.stages)) {
     const stages = [];
     const playableLessons = [];
