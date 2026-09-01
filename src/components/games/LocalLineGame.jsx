@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';
 import { sound } from '../../utils/audio';
+import { getWordsForLesson } from './common/wordGenerator';
 
 const WORD_BANK = [
   'train', 'track', 'signal', 'speed', 'coach', 'ticket', 'station',
@@ -30,21 +31,10 @@ export default function LocalLineGame({
   const canvasRef = useRef(null);
   const targetGoalDistance = 600;
 
-  // Filter word bank to only keys taught in this lesson
-  const rawKeys = lesson?.keys || [];
-  const cleanKeys = rawKeys.filter(k => k && k !== ' ');
-
+  // Filter word bank guaranteed to only keys taught in this lesson
   const activeWordBank = React.useMemo(() => {
-    if (cleanKeys.length === 0) return WORD_BANK;
-    const matching = WORD_BANK.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
-    if (matching.length >= 4) return matching;
-
-    const fallbackWords = ['write', 'type', 'power', 'quiet', 'report', 'route', 'water', 'tower', 'speed', 'true', 'spark', 'today', 'press', 'track', 'swift', 'order', 'yield', 'great', 'light', 'ready', 'train', 'coach', 'wheel'];
-    const validFallback = fallbackWords.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
-    if (validFallback.length >= 3) return validFallback;
-
-    return WORD_BANK;
-  }, [cleanKeys]);
+    return getWordsForLesson(lesson, WORD_BANK);
+  }, [lesson]);
 
   const currentWord = activeWordBank[wordIndex % activeWordBank.length];
 

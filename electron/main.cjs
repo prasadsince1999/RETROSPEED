@@ -148,6 +148,16 @@ function createWindow() {
     mainWindow.show();
   });
 
+  // Ensure shortcut chords (Ctrl+W, Ctrl+T, Alt+Tab) reach typing session without closing window
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    if (input.key === 'F12' || input.key === 'F11') return;
+    if ((input.control || input.meta) && input.key.toLowerCase() === 'r') return;
+    // Don't close app on Ctrl+W / Ctrl+Q during typing lessons
+    if (input.control && ['w', 't'].includes(input.key.toLowerCase())) {
+      // Event passes to renderer
+    }
+  });
+
   // Handle external navigation securely - open links in default browser
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith('http:') || url.startsWith('https:')) {

@@ -95,9 +95,9 @@ export default function DesktopWindowShell({
 
   const isNavActive = (itemId) => {
     if (itemId === 'home') return currentView === 'home' || currentView === 'drill' || currentView === 'daily' || currentView === 'practice';
-    if (itemId === 'learn') return currentView === 'learn' || currentView === 'map' || currentView === 'lesson' || currentView === 'video' || currentView === 'shortcuts';
+    if (itemId === 'learn') return currentView === 'learn' || currentView === 'map' || currentView === 'lesson' || currentView === 'motion' || currentView === 'video' || currentView === 'shortcuts';
     if (itemId === 'tracks') return currentView === 'tracks' || currentView === 'catalog';
-    if (itemId === 'play') return currentView === 'play' || currentView === 'challenge' || ['press-room', 'paper-planes', 'local-line', 'night-market', 'drop-chits', 'pit-lane', 'fuse-desk', 'patch-terminal'].includes(currentView);
+    if (itemId === 'play') return currentView === 'play' || currentView === 'challenge' || ['press-room', 'paper-planes', 'local-line', 'night-market', 'drop-chits', 'pit-lane', 'fuse-box', 'fuse-desk', 'patch-terminal'].includes(currentView);
     if (itemId === 'stats') return currentView === 'stats' || currentView === 'progress' || currentView === 'badges';
     if (itemId === 'shop') return currentView === 'shop';
     return currentView === itemId;

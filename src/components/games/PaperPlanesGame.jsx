@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';
 import { sound } from '../../utils/audio';
+import { getWordsForLesson } from './common/wordGenerator';
 
 const WORDS_POOL = [
   'fly', 'wing', 'fold', 'sky', 'soar', 'glide', 'paper', 'draft',
@@ -29,22 +30,10 @@ export default function PaperPlanesGame({
   const lastSpawnRef = useRef(0);
   const totalGoal = 20;
 
-  // Derive words pool based on lesson.keys
-  const rawKeys = lesson?.keys || [];
-  const cleanKeys = rawKeys.filter(k => k && k !== ' ');
-
+  // Derive guaranteed key-locked words pool
   const activeWordsPool = React.useMemo(() => {
-    if (cleanKeys.length === 0) return WORDS_POOL;
-    const matching = WORDS_POOL.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
-    if (matching.length >= 4) return matching;
-    
-    // Top row words fallback
-    const topWords = ['sure', 'user', 'fire', 'rush', 'ride', 'rule', 'dark', 'fuel', 'sail', 'like', 'drill', 'skill', 'stay', 'year', 'they', 'duty', 'city', 'late', 'word', 'work', 'flow', 'wood', 'grow'];
-    const validTop = topWords.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
-    if (validTop.length >= 4) return validTop;
-
-    return WORDS_POOL;
-  }, [cleanKeys]);
+    return getWordsForLesson(lesson, WORDS_POOL);
+  }, [lesson]);
 
   const spawnPlane = useCallback(() => {
     const word = activeWordsPool[Math.floor(Math.random() * activeWordsPool.length)];

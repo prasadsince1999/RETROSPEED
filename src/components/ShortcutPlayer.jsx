@@ -66,7 +66,7 @@ const SHORTCUT_DRILLS = [
   }
 ];
 
-export default function ShortcutPlayer({ onExit, onComplete, userProgress = {}, onOpenUnlockModal }) {
+export default function ShortcutPlayer({ lesson = null, onExit, onComplete, userProgress = {}, onOpenUnlockModal }) {
   const [drillIndex, setDrillIndex] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
   const [pressedKeys, setPressedKeys] = useState(new Set());
@@ -78,7 +78,39 @@ export default function ShortcutPlayer({ onExit, onComplete, userProgress = {}, 
   const containerRef = useRef(null);
 
   const license = getLicenseStatus(userProgress);
-  const currentDrill = SHORTCUT_DRILLS[drillIndex] || SHORTCUT_DRILLS[0];
+  
+  // Dynamically resolve drill from lesson or built-in list
+  const currentDrill = React.useMemo(() => {
+    if (lesson?.steps && Array.isArray(lesson.steps) && lesson.steps.length > 0) {
+      return {
+        id: lesson.id,
+        title: lesson.title,
+        task: lesson.description || 'Perform the shortcut chords in sequence.',
+        steps: lesson.steps
+      };
+    }
+    if (lesson?.chords && Array.isArray(lesson.chords) && lesson.chords.length > 0) {
+      return {
+        id: lesson.id,
+        title: lesson.title,
+        task: lesson.description || 'Perform the shortcut chords in sequence.',
+        steps: lesson.chords.map(c => ({
+          chord: c.chord || c,
+          keys: c.keys || (typeof c === 'string' ? c.toLowerCase().split('+') : ['ctrl', 'a']),
+          label: c.label || c.chord || c,
+          desc: c.desc || 'System shortcut chord'
+        }))
+      };
+    }
+    // Match by lesson ID or title index
+    const matchingIdx = SHORTCUT_DRILLS.findIndex(d => 
+      (lesson?.id && d.id === lesson.id) || 
+      (lesson?.title && lesson.title.toLowerCase().includes(d.title.toLowerCase()))
+    );
+    if (matchingIdx !== -1) return SHORTCUT_DRILLS[matchingIdx];
+    return SHORTCUT_DRILLS[drillIndex % SHORTCUT_DRILLS.length];
+  }, [lesson, drillIndex]);
+
   const currentStep = currentDrill.steps[stepIndex] || currentDrill.steps[0];
 
   // Helper to normalize key names

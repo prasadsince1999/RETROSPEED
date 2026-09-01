@@ -551,6 +551,25 @@ export default function App() {
                 />
               )}
 
+              {/* Shortcut & Chord Practice Player */}
+              {currentView === 'shortcuts' && (
+                <ShortcutPlayer
+                  lesson={activeLesson}
+                  userProgress={userProgress}
+                  onComplete={stats => {
+                    handleComplete(stats || {
+                      wpm: activeLesson?.goalWpm || 25,
+                      accuracy: 100,
+                      stars: 5,
+                      points: 500,
+                      durationSeconds: 30
+                    });
+                  }}
+                  onExit={handleGameExit}
+                  onOpenUnlockModal={() => setUnlockModalOpen(true)}
+                />
+              )}
+
               {/* Video Player inside Desktop Window */}
               {currentView === 'video' && (
                 <VideoPlayer

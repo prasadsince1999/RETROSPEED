@@ -7,9 +7,11 @@ import { sound } from '../../utils/audio';
 const RACE_TEXT = "The typewriter carriage glides across the desk. Steady fingers tap with rhythm and precision. Speed comes naturally when tension fades away.";
 
 export default function PitLaneGame({
+  lesson = null,
   onComplete,
   onExit
 }) {
+  const activeRaceText = lesson?.text || RACE_TEXT;
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [lives, setLives] = useState(3);
@@ -32,7 +34,7 @@ export default function PitLaneGame({
     }
 
     if (key.length === 1 || key === ' ') {
-      const expected = RACE_TEXT[charIndex];
+      const expected = activeRaceText[charIndex];
 
       if (key === expected) {
         sound.playKeyClick();
@@ -42,11 +44,11 @@ export default function PitLaneGame({
 
         const nextIndex = charIndex + 1;
         setCharIndex(nextIndex);
-        setPlayerProgress(Math.round((nextIndex / RACE_TEXT.length) * 100));
+        setPlayerProgress(Math.round((nextIndex / activeRaceText.length) * 100));
 
-        if (nextIndex >= RACE_TEXT.length && onComplete) {
+        if (nextIndex >= activeRaceText.length && onComplete) {
           const duration = Math.max(1, Math.round((Date.now() - (startTime || Date.now())) / 1000));
-          const wpm = Math.round((RACE_TEXT.length / 5) / (duration / 60));
+          const wpm = Math.round((activeRaceText.length / 5) / (duration / 60));
           const acc = Math.round((hits / (hits + misses + 1)) * 100);
 
           sound.playSuccess();
@@ -55,7 +57,7 @@ export default function PitLaneGame({
               modeId: 'pit-lane',
               wpm,
               accuracy: acc,
-              chars: RACE_TEXT.length,
+              chars: activeRaceText.length,
               errors: misses,
               durationSeconds: duration,
               score: score + 600,

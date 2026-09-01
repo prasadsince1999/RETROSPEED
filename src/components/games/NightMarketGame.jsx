@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';
 import { sound } from '../../utils/audio';
+import { getWordsForLesson } from './common/wordGenerator';
 
 const CHIT_ITEMS = [
   'chai', 'samosa', 'mango', 'kulfi', 'ginger', 'clove',
@@ -29,21 +30,10 @@ export default function NightMarketGame({
   const lastSpawnRef = useRef(0);
   const totalGoal = 20;
 
-  // Filter items to lesson keys
-  const rawKeys = lesson?.keys || [];
-  const cleanKeys = rawKeys.filter(k => k && k !== ' ');
-
+  // Filter items strictly guaranteed to lesson keys
   const activeItemsPool = React.useMemo(() => {
-    if (cleanKeys.length === 0) return CHIT_ITEMS;
-    const matching = CHIT_ITEMS.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
-    if (matching.length >= 4) return matching;
-
-    const fallbackItems = ['chai', 'samosa', 'mango', 'clove', 'pepper', 'roti', 'halwa', 'ladoo', 'dosa', 'idli', 'rice', 'tea', 'bread', 'card', 'box'];
-    const validFallback = fallbackItems.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
-    if (validFallback.length >= 3) return validFallback;
-
-    return CHIT_ITEMS;
-  }, [cleanKeys]);
+    return getWordsForLesson(lesson, CHIT_ITEMS);
+  }, [lesson]);
 
   const spawnChit = useCallback(() => {
     const item = activeItemsPool[Math.floor(Math.random() * activeItemsPool.length)];

@@ -291,26 +291,32 @@ export default function LessonPlayer({
 
         if (nextIdx >= tokens.length) {
           const duration = Math.max(1, (Date.now() - (startTime || Date.now())) / 1000);
-          const rawWpm = Math.round((tokens.length / 5) / (duration / 60));
-          const accuracy = Math.round(((tokens.length - errors) / Math.max(1, totalKeystrokes + 1)) * 100);
+          const durationMin = Math.max(0.01, duration / 60);
+          const grossWpm = Math.round((tokens.length / 5) / durationMin);
+          // Honest ATS Net WPM: (Chars / 5 - errors) / durationMin
+          const netWpm = Math.max(0, Math.round(((tokens.length / 5) - errors) / durationMin));
+          const totalTaps = totalKeystrokes + 1;
+          const accuracy = Math.min(100, Math.max(0, Math.round(((totalTaps - errors) / totalTaps) * 100)));
           const stars = calculateStarsFromAttempt({
-            wpm: rawWpm,
+            wpm: netWpm,
             accuracy,
             goalWpm: lesson.goalWpm || 20,
+            minWpm: lesson.minWpm || null,
             minAccuracy: lesson.minAccuracy || 90
           });
           setTimeout(() => onComplete({ 
-            wpm: Math.max(10, rawWpm), 
-            accuracy: Math.max(50, accuracy), 
+            wpm: netWpm, 
+            grossWpm,
+            accuracy, 
             stars, 
-            points: 500 + stars * 100 + Math.max(0, (30 - Math.round(duration))) * 5, 
+            points: Math.max(50, 400 + stars * 120 + netWpm * 5), 
             time: Math.round(duration), 
             durationSeconds: Math.round(duration),
             errors,
             maxStreak: Math.max(maxStreak, streak + 1),
             lessonTitle: lesson.title,
             keyStats: { ...keyStatsRef.current }
-          }), 350);
+          }), 300);
         }
       } else {
         sound.playErrorBuzz();
@@ -785,24 +791,19 @@ export default function LessonPlayer({
           </div>
         )}
 
-        {/* Virtual Keyboard and Tactile Hand Guide */}
+        {/* Virtual Keyboard with Integrated Tactile Hands & Bezier Guides */}
         {keyboardEnabled && (
-          <div className="w-full flex flex-col items-center">
+          <div className="w-full max-w-[760px] mx-auto transition-all duration-300">
             <VirtualKeyboard 
               activeChar={activeChar} 
               pressedKeyId={pressedKeyId} 
               errorKeyId={errorKeyId} 
               layout={layout} 
-              theme={theme} 
+              theme={theme}
+              showHands={handsEnabled}
+              handFilter={lesson.hand || (lesson.type === 'one-hand' ? (lesson.keys?.some(k => ['a','s','d','f','q','w','e','r','t','g','z','x','c','v'].includes(k)) ? 'left' : 'right') : 'both')}
             />
           </div>
-        )}
-
-        {handsEnabled && keyboardEnabled && (
-          <HandGuide 
-            activeChar={activeChar} 
-            layout={layout} 
-          />
         )}
       </div>
 

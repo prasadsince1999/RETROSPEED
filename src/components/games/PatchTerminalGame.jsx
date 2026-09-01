@@ -20,6 +20,7 @@ const CODE_LINES = [
 ];
 
 export default function PatchTerminalGame({
+  lesson = null,
   onComplete,
   onExit
 }) {
@@ -34,7 +35,25 @@ export default function PatchTerminalGame({
   const [lineY, setLineY] = useState(60);
   const [isPaused, setIsPaused] = useState(false);
 
-  const currentCode = CODE_LINES[lineIndex % CODE_LINES.length];
+  // Derive code lines matching lesson keys
+  const rawKeys = lesson?.keys || [];
+  const cleanKeys = rawKeys.filter(k => k && k !== ' ');
+
+  const activeCodeLines = React.useMemo(() => {
+    if (cleanKeys.length === 0) return CODE_LINES;
+    const matching = CODE_LINES.filter(line => line.split('').every(ch => cleanKeys.includes(ch) || ch === ' ' || ch === ';' || ch === '=' || ch === '(' || ch === ')'));
+    if (matching.length >= 3) return matching;
+
+    return [
+      `let a = "${cleanKeys.slice(0, 3).join('')}";`,
+      `const key = "${cleanKeys.slice(1, 4).join('')}";`,
+      `fn parse("${cleanKeys.slice(0, 2).join('')}");`,
+      `send("${cleanKeys.slice(0, 3).join('')}");`,
+      `data = "${cleanKeys.join('')}";`
+    ];
+  }, [cleanKeys]);
+
+  const currentCode = activeCodeLines[lineIndex % activeCodeLines.length];
   const totalGoal = 15;
 
   // Line Falling Timer Loop

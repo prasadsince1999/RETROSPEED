@@ -179,29 +179,39 @@ export function saveProgress(data) {
 }
 
 /**
- * Deterministic 1-5 Star Grading Math matching Touch Typing Pedagogy.
- * Evaluates WPM speed benchmarks against minimum and goal requirements.
+ * Deterministic 0-5 Star Grading Math matching Authentic Typing Pedagogy.
+ * Requires both accuracy and speed benchmarks to be met.
+ * Returns 0 on severe failure, 1-2 on sub-benchmark, 3 on standard pass, 4 on proficient, 5 on platinum mastery.
  */
-export function calculateStarsFromAttempt({ wpm = 0, accuracy = 100, goalWpm = 20, minAccuracy = 90 }) {
+export function calculateStarsFromAttempt({ 
+  wpm = 0, 
+  accuracy = 100, 
+  goalWpm = 20, 
+  minWpm = null, 
+  minAccuracy = 90 
+}) {
   const acc = Math.round(accuracy);
   const speed = Math.round(wpm);
+  const passWpm = minWpm !== null ? minWpm : Math.max(5, Math.round(goalWpm * 0.6));
+  const passAcc = minAccuracy || 90;
 
-  // Severe accuracy drop (< 75%) -> 1 star
-  if (acc < 75) return 1;
+  // Complete failure: unplayable accuracy or zero speed
+  if (acc < 65 || speed < 2) return 0;
 
-  // 5 Stars (Platinum / Flawless): Acc >= 98% and (Speed >= goalWpm or 100% acc)
-  if (acc >= 98 && (speed >= goalWpm || acc === 100)) return 5;
+  // Below passing standards (fail gate)
+  if (acc < passAcc || speed < passWpm) {
+    if (acc >= 80 && speed >= Math.round(passWpm * 0.75)) return 2;
+    return 1;
+  }
 
-  // 4 Stars: Acc >= 95% and Speed >= 80% of goalWpm
+  // 5 Stars (Platinum Mastery): Acc >= 98% AND Speed >= goalWpm
+  if (acc >= 98 && speed >= goalWpm) return 5;
+
+  // 4 Stars (Gold Proficient): Acc >= 95% AND Speed >= 80% of goal
   if (acc >= 95 && speed >= Math.round(goalWpm * 0.8)) return 4;
 
-  // 3 Stars (Pass Standard): Acc >= minAccuracy (default 90%)
-  if (acc >= minAccuracy) return 3;
-
-  // 2 Stars: Acc >= 80%
-  if (acc >= 80) return 2;
-
-  return 1;
+  // 3 Stars (Silver Pass Benchmark): Met both minAccuracy and minWpm
+  return 3;
 }
 
 /**
@@ -230,7 +240,7 @@ export function saveLessonResult(courseId, lessonId, result) {
         minAccuracy: result.minAccuracy || 90
       });
 
-  const stars = Math.max(existing.stars || 0, Math.min(5, Math.max(1, earnedStars)));
+  const stars = Math.max(existing.stars || 0, Math.min(5, Math.max(0, earnedStars)));
   const points = Math.max(existing.points || 0, Number(result.score || result.points) || 100);
   const durationSeconds = Math.max(1, Math.round(Number(result.durationSeconds ?? (result.durationMs ? result.durationMs / 1000 : result.time)) || 10));
   const timestamp = result.timestamp || Date.now();
