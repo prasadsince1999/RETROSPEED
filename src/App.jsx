@@ -345,8 +345,22 @@ export default function App() {
 
   // Handle standalone arcade game completion
   const handleArcadeComplete = (gameId, stats = {}) => {
+    const gameTitles = {
+      'press-room': 'PRESS ROOM — STAMP FACTORY',
+      'paper-planes': 'PAPER PLANES — AIR DISPATCH',
+      'local-line': 'LOCAL LINE — RAIL DISPATCH',
+      'night-market': 'NIGHT MARKET — STREET ORDERS',
+      'drop-chits': 'DROP CHITS — OFFICE VAULT',
+      'pit-lane': 'PIT LANE — GRAND PRIX RACER',
+      'fuse-desk': 'FUSE DESK — WIRE RUNNER',
+      'patch-terminal': 'PATCH TERMINAL — CODE HACKER'
+    };
+    const title = stats.title || gameTitles[gameId] || gameId.replace('-', ' ').toUpperCase();
     const formattedStats = {
-      title: (stats.title || gameId.replace('-', ' ')).toUpperCase(),
+      isArcade: true,
+      gameId,
+      title,
+      lessonTitle: title,
       wpm: Math.round(stats.wpm || 0),
       accuracy: Math.round(stats.accuracy ?? 100),
       score: stats.score || 500,
@@ -788,19 +802,59 @@ export default function App() {
       {scoreModalStats && (
         <ScoreModal
           stats={scoreModalStats}
-          lesson={activeLesson}
-          courseTitle={course.title}
-          onNextLesson={handleNextLesson}
-          onNext={handleNextLesson}
-          onRetry={handleRetry}
+          lesson={
+            scoreModalStats.isArcade || gameLaunchOrigin === 'play'
+              ? { id: scoreModalStats.gameId || 'arcade', title: scoreModalStats.title || 'Arcade Minigame', isArcade: true }
+              : activeLesson
+          }
+          courseTitle={
+            scoreModalStats.isArcade || gameLaunchOrigin === 'play'
+              ? 'RETROSPEED ARCADE'
+              : course.title
+          }
+          isArcade={scoreModalStats.isArcade || gameLaunchOrigin === 'play'}
+          onNextLesson={() => {
+            if (gameLaunchOrigin === 'play') {
+              setScoreModalStats(null);
+              setCurrentView('play');
+            } else {
+              handleNextLesson();
+            }
+          }}
+          onNext={() => {
+            if (gameLaunchOrigin === 'play') {
+              setScoreModalStats(null);
+              setCurrentView('play');
+            } else {
+              handleNextLesson();
+            }
+          }}
+          onRetry={() => {
+            setScoreModalStats(null);
+            if (gameLaunchOrigin === 'play') {
+              const gId = scoreModalStats.gameId || 'press-room';
+              setCurrentView('home');
+              setTimeout(() => setCurrentView(gId), 20);
+            } else {
+              handleRetry();
+            }
+          }}
           onGoToMap={() => {
             setScoreModalStats(null);
-            setIsViewingMap(true);
-            setCurrentView('learn');
+            if (gameLaunchOrigin === 'play') {
+              setCurrentView('play');
+            } else {
+              setIsViewingMap(true);
+              setCurrentView('learn');
+            }
           }}
           onExit={() => {
             setScoreModalStats(null);
-            handleGameExit();
+            if (gameLaunchOrigin === 'play') {
+              setCurrentView('play');
+            } else {
+              handleGameExit();
+            }
           }}
         />
       )}

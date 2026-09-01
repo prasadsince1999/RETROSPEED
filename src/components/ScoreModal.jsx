@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { 
+  Gamepad2,
   RotateCcw, 
   ArrowRight, 
   Map, 
@@ -58,12 +59,14 @@ function StarParticles({ active, color = '#f59e0b' }) {
   );
 }
 
-export default function ScoreModal({ 
-  lesson, 
-  stats, 
-  onNextLesson, 
+export default function ScoreModal({
+  lesson,
+  stats,
+  courseTitle,
+  isArcade = false,
+  onNextLesson,
   onNext,
-  onRetry, 
+  onRetry,
   onGoToMap,
   onExit
 }) {
@@ -270,13 +273,23 @@ export default function ScoreModal({
         {/* Top Victory Fanfare Banner Header */}
         <div className="flex flex-col items-center animate-banner-drop">
           <div className="inline-flex items-center space-x-2 bg-[#fef08a] text-slate-950 px-4 py-1 rounded-md border-2 border-slate-900 shadow-[2px_2px_0_#0f172a] font-mono font-black text-xs uppercase">
-            <Crown className="w-4 h-4 fill-amber-500 text-amber-900" />
-            <span>VICTORY FANFARE</span>
-            <Sparkles className="w-4 h-4 text-amber-600" />
+            {isArcade || stats?.isArcade || lesson?.isArcade ? (
+              <>
+                <Gamepad2 className="w-4 h-4 text-slate-950" />
+                <span>ARCADE VICTORY</span>
+                <Sparkles className="w-4 h-4 text-amber-600" />
+              </>
+            ) : (
+              <>
+                <Crown className="w-4 h-4 fill-amber-500 text-amber-900" />
+                <span>VICTORY FANFARE</span>
+                <Sparkles className="w-4 h-4 text-amber-600" />
+              </>
+            )}
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight font-display mt-2.5">
-            Stage Conquered!
+            {isArcade || stats?.isArcade || lesson?.isArcade ? 'High Score Achieved!' : 'Stage Conquered!'}
           </h2>
           
           <p className="text-xs font-mono font-bold text-slate-800 mt-1 bg-amber-100 px-3 py-0.5 rounded border border-slate-900 inline-block shadow-[1px_1px_0_#0f172a]">
@@ -284,7 +297,15 @@ export default function ScoreModal({
           </p>
 
           <p className="text-xs font-mono font-semibold text-slate-600 mt-1">
-            Lesson {lesson.id}: <span className="text-slate-900 font-bold">{lesson.title}</span>
+            {isArcade || stats?.isArcade || lesson?.isArcade ? (
+              <>
+                Minigame: <span className="text-slate-900 font-bold">{stats?.title || lesson?.title || 'Arcade Game'}</span>
+              </>
+            ) : (
+              <>
+                Lesson {lesson?.id}: <span className="text-slate-900 font-bold">{lesson?.title}</span>
+              </>
+            )}
           </p>
         </div>
 
@@ -402,7 +423,7 @@ export default function ScoreModal({
             }}
             className="w-full py-3 rounded-xl bg-[#1888ff] hover:bg-[#38bdf8] text-white font-black text-sm border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-2 uppercase font-display cursor-pointer"
           >
-            <span>Continue to Next Level</span>
+            <span>{isArcade || stats?.isArcade || lesson?.isArcade ? 'Play More Games' : 'Continue to Next Level'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
@@ -416,7 +437,7 @@ export default function ScoreModal({
               className="py-2 rounded-xl bg-white hover:bg-slate-100 text-[#2D2319] font-bold text-xs border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-1.5 cursor-pointer font-mono"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>Try Again</span>
+              <span>Play Again</span>
             </button>
 
             <button
@@ -427,8 +448,17 @@ export default function ScoreModal({
               }}
               className="py-2 rounded-xl bg-white hover:bg-slate-100 text-[#2D2319] font-bold text-xs border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-1.5 cursor-pointer font-mono"
             >
-              <Map className="w-3.5 h-3.5" />
-              <span>{String(lesson?.id || '').startsWith('spine-') ? 'Curriculum Hub' : 'Course Map'}</span>
+              {isArcade || stats?.isArcade || lesson?.isArcade ? (
+                <>
+                  <Gamepad2 className="w-3.5 h-3.5" />
+                  <span>Arcade Hub</span>
+                </>
+              ) : (
+                <>
+                  <Map className="w-3.5 h-3.5" />
+                  <span>{String(lesson?.id || '').startsWith('spine-') ? 'Curriculum Hub' : 'Course Map'}</span>
+                </>
+              )}
             </button>
           </div>
         </div>
