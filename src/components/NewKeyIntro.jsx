@@ -1,135 +1,167 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { ArrowLeft, Check, Sparkles } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { getKeysForLayout, getKeyForChar } from '../data/keyboardLayout';
 import VirtualKeyboard from './VirtualKeyboard';
 
 /**
- * RETROSPEED New Key Introduction Component
- * Step-by-step finger placement onboarding on the paper desk:
- * - Subtitle: "NEW KEY INTRODUCTION"
- * - Title: "Type the [ f ] key using your left index finger."
- * - Center: Keyboard with hands overlay and tactile finger guidance.
- * - Bottom: [ Previous ]  --- [ Progress Bar ] ---  [ Skip ]
+ * Authentic EdClub Key Introduction Component
+ * Exact match to user reference images:
+ * - Top: Clean white letter boxes [ f ] [   ] [ f ] [   ] [ j ] [   ] [ j ]
+ * - Active box has solid blue underline cursor
+ * - Completed box turns mint green with green checkmark ✓ above
+ * - Center: Keyboard with active key highlighted in vibrant blue + finger outline on hands
+ * - Bottom: Sleek minimal green progress bar
  */
 export default function NewKeyIntro({
-  lesson,
+  lesson = {},
   layout = 'qwerty',
   onFinish,
   onExit
 }) {
-  // Determine the sequence of keys to introduce for this lesson
-  const introKeys = useMemo(() => {
-    const raw = lesson.keys || lesson.introKeys || lesson.targetKeys || [];
-    const filtered = raw.filter(k => k && k !== ' ' && k !== '\n' && k !== '\t');
-    return filtered.length > 0 ? filtered.slice(0, 3) : ['f', 'j'];
+  // Determine the sequence of boxes to type
+  const sequence = useMemo(() => {
+    if (Array.isArray(lesson.introSequence) && lesson.introSequence.length > 0) {
+      return lesson.introSequence;
+    }
+
+    const title = (lesson.title || '').toLowerCase();
+    const rawKeys = lesson.keys || lesson.targetKeys || ['f', 'j'];
+
+    if (title.includes('space bar')) {
+      return ['f', ' ', 'f', ' ', 'j', ' ', 'j'];
+    }
+
+    if (rawKeys.length >= 2) {
+      const k1 = rawKeys[0];
+      const k2 = rawKeys[1];
+      return [k1, ' ', k1, ' ', k2, ' ', k2];
+    } else if (rawKeys.length === 1) {
+      const k = rawKeys[0];
+      return [k, ' ', k, ' ', k, ' ', k];
+    }
+
+    return ['f', ' ', 'f', ' ', 'j', ' ', 'j'];
   }, [lesson]);
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [hasError, setHasError] = useState(false);
 
-  const currentKey = introKeys[currentStepIndex] || introKeys[0] || 'f';
-  const allKeys = useMemo(() => getKeysForLayout(layout), [layout]);
-  const activeKeyDef = useMemo(() => getKeyForChar(currentKey, layout), [currentKey, layout]);
+  const currentKey = sequence[currentStepIndex] || sequence[0] || 'f';
 
-  // Finger friendly description
-  const fingerLabel = useMemo(() => {
-    if (!activeKeyDef) return 'designated finger';
-    const finger = activeKeyDef.finger;
-    const map = {
-      'left-pinky': 'left pinky finger',
-      'left-ring': 'left ring finger',
-      'left-middle': 'left middle finger',
-      'left-index': 'left index finger',
-      'thumbs': 'thumb',
-      'right-index': 'right index finger',
-      'right-middle': 'right middle finger',
-      'right-ring': 'right ring finger',
-      'right-pinky': 'right pinky finger'
-    };
-    return map[finger] || finger.replace('-', ' ') + ' finger';
-  }, [activeKeyDef]);
-
-  // Handle keyboard keypresses
+  // Handle physical key presses
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Ignore system shortcuts
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
       const pressed = e.key;
 
-      // Check for match (case-insensitive for letters)
+      // Check match
       const isMatch = 
-        pressed === currentKey || 
-        (typeof currentKey === 'string' && pressed.toLowerCase() === currentKey.toLowerCase()) ||
-        (currentKey === ' ' && pressed === ' ') ||
-        (currentKey === 'Enter' && pressed === 'Enter');
+        pressed === currentKey ||
+        (currentKey === ' ' && (pressed === ' ' || e.code === 'Space')) ||
+        (currentKey === 'Enter' && pressed === 'Enter') ||
+        (typeof currentKey === 'string' && pressed.toLowerCase() === currentKey.toLowerCase());
 
       if (isMatch) {
         sound.playKeyClick();
-        setIsSuccess(true);
         setHasError(false);
 
-        // Advance to next key or complete
-        setTimeout(() => {
-          setIsSuccess(false);
-          if (currentStepIndex + 1 < introKeys.length) {
-            setCurrentStepIndex(prev => prev + 1);
-          } else {
-            // All intro keys completed! Launch practice drill
-            sound.playSuccessChime();
+        const nextIndex = currentStepIndex + 1;
+        if (nextIndex < sequence.length) {
+          setCurrentStepIndex(nextIndex);
+        } else {
+          // Sequence fully completed!
+          sound.playSuccessChime();
+          setTimeout(() => {
             onFinish();
-          }
-        }, 320);
+          }, 350);
+        }
       } else {
         sound.playErrorBuzz();
         setHasError(true);
-        setTimeout(() => setHasError(false), 260);
+        setTimeout(() => setHasError(false), 200);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentKey, currentStepIndex, introKeys, onFinish]);
+  }, [currentKey, currentStepIndex, sequence, onFinish]);
 
-  const handlePrev = () => {
-    sound.playKeyClick();
-    setCurrentStepIndex(prev => Math.max(0, prev - 1));
-  };
-
-  const handleSkip = () => {
-    sound.playKeyClick();
-    onFinish();
-  };
-
-  const activeHand = activeKeyDef?.hand || 'left';
-  const activeFinger = activeKeyDef?.finger || 'left-index';
-
-  // Progress percentage
-  const progressPercent = ((currentStepIndex + 1) / introKeys.length) * 100;
+  const progressPercent = ((currentStepIndex) / sequence.length) * 100;
 
   return (
-    <div className="w-full h-full flex flex-col justify-between items-center py-6 px-4 max-w-4xl mx-auto font-sans select-none animate-in fade-in duration-200">
+    <div className="w-full h-full flex flex-col justify-between py-4 px-3 sm:px-6 max-w-5xl mx-auto font-sans select-none animate-in fade-in duration-200">
       
-      {/* TOP HEADER SECTION (Exact match to EdClub reference) */}
-      <div className="text-center space-y-2 mt-2">
-        <div className="text-xs font-mono font-bold tracking-widest text-[#2D2319]/50 uppercase">
-          NEW KEY INTRODUCTION
-        </div>
-        
-        <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#2D2319] font-sans flex items-center justify-center flex-wrap gap-2 leading-tight">
-          <span>Type the</span>
-          <span className={`inline-flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#1888ff] text-white font-mono font-black text-2xl sm:text-3xl shadow-[3px_3px_0px_#2D2319] border-2 border-[#2D2319] mx-1 transition-all duration-150 ${
-            isSuccess ? 'scale-115 bg-[#10B981]' : hasError ? 'animate-error-shake bg-[#EF4444]' : ''
-          }`}>
-            {currentKey === ' ' ? '␣' : currentKey}
+      {/* Top Bar: Minimal Back Button & Lesson Badge */}
+      <div className="flex items-center justify-between border-b border-[#2D2319]/15 pb-2.5">
+        <button
+          type="button"
+          onClick={() => {
+            sound.playKeyClick();
+            onExit();
+          }}
+          className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-[#2D2319] font-mono text-xs font-bold border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1.5 cursor-pointer"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Map</span>
+        </button>
+
+        <div className="flex items-center space-x-2 font-mono text-xs font-bold text-[#2D2319]/80">
+          <span className="px-2.5 py-0.5 rounded-md bg-[#C7E8CA] border border-[#2D2319] text-[#2D2319]">
+            {lesson.stageTitle || 'Home Row'}
           </span>
-          <span>key using your {fingerLabel}.</span>
+          <span className="px-2.5 py-0.5 rounded-md bg-[#F6C445] border border-[#2D2319] text-[#2D2319]">
+            {lesson.title}
+          </span>
         </div>
       </div>
 
+      {/* CENTER TOP: CHARACTER BOXES SEQUENCE TRACK */}
+      <div className="my-auto py-6 flex flex-col items-center justify-center">
+        
+        <div className="flex items-center justify-center gap-2.5 sm:gap-3.5 flex-wrap pt-6 pb-4">
+          {sequence.map((char, idx) => {
+            const isCompleted = idx < currentStepIndex;
+            const isActive = idx === currentStepIndex;
+
+            return (
+              <div key={idx} className="relative flex flex-col items-center">
+                
+                {/* Floating Green Checkmark ✓ Above Completed Box */}
+                {isCompleted && (
+                  <div className="absolute -top-7 text-emerald-600 animate-in zoom-in duration-150">
+                    <Check className="w-5 h-5 stroke-[3.5]" />
+                  </div>
+                )}
+
+                {/* Box Card */}
+                <div
+                  className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl border-2 flex items-center justify-center font-mono text-xl sm:text-2xl font-bold transition-all duration-150 relative ${
+                    isCompleted
+                      ? 'bg-[#dcfce7] border-[#22c55e] text-[#15803d] shadow-sm'
+                      : isActive
+                      ? `bg-white border-[#1888ff] text-[#2D2319] ring-2 ring-[#1888ff]/40 shadow-md ${hasError ? 'animate-error-shake border-rose-500 ring-rose-500/40 bg-rose-50' : ''}`
+                      : 'bg-white border-slate-300 text-slate-400 shadow-sm'
+                  }`}
+                >
+                  {char === ' ' ? '' : char}
+
+                  {/* Active Blue Underline Bar Cursor */}
+                  {isActive && (
+                    <div className="absolute -bottom-2.5 left-2 right-2 h-1 bg-[#1888ff] rounded-full animate-pulse" />
+                  )}
+                </div>
+
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+
       {/* CENTER HERO: KEYBOARD WITH INTEGRATED TACTILE HANDS */}
-      <div className="w-full max-w-[760px] my-auto relative flex flex-col items-center justify-center">
+      <div className="w-full max-w-[680px] mx-auto relative flex flex-col items-center justify-center my-auto">
         <VirtualKeyboard
           activeChar={currentKey}
           layout={layout}
@@ -138,36 +170,14 @@ export default function NewKeyIntro({
         />
       </div>
 
-      {/* BOTTOM CONTROL BAR (Exact match to EdClub reference: Previous, Progress Bar, Skip) */}
-      <div className="w-full max-w-[760px] flex items-center justify-between gap-4 mt-4 select-none">
-        
-        {/* Previous Button */}
-        <button
-          type="button"
-          onClick={handlePrev}
-          disabled={currentStepIndex === 0}
-          className="px-6 sm:px-8 py-2.5 rounded-full border-2 border-[#2D2319] bg-white hover:bg-[var(--rs-paper-alt)] text-[#2D2319] font-display font-black text-xs uppercase shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0 transition-all cursor-pointer"
-        >
-          Previous
-        </button>
-
-        {/* Progress Bar */}
-        <div className="flex-1 max-w-md h-3.5 bg-white border-2 border-[#2D2319] rounded-full p-0.5 shadow-[2px_2px_0px_#2D2319] overflow-hidden">
+      {/* BOTTOM PROGRESS BAR */}
+      <div className="w-full max-w-xl mx-auto pt-4 pb-2 select-none">
+        <div className="h-2.5 w-full bg-slate-200 rounded-full overflow-hidden p-0.5 border border-slate-300 shadow-inner">
           <div 
-            className="h-full bg-[#1888ff] rounded-full transition-all duration-300"
-            style={{ width: `${progressPercent}%` }}
+            className="h-full bg-emerald-400 rounded-full transition-all duration-300"
+            style={{ width: `${Math.max(4, progressPercent)}%` }}
           />
         </div>
-
-        {/* Skip Button */}
-        <button
-          type="button"
-          onClick={handleSkip}
-          className="px-6 sm:px-8 py-2.5 rounded-full border-2 border-[#2D2319] bg-white hover:bg-[#F6C445] text-[#2D2319] font-display font-black text-xs uppercase shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
-        >
-          Skip
-        </button>
-
       </div>
 
     </div>
