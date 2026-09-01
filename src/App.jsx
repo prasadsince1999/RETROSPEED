@@ -35,6 +35,7 @@ const FuseDeskGame = lazy(() => import('./components/games/FuseDeskGame'));
 const PatchTerminalGame = lazy(() => import('./components/games/PatchTerminalGame'));
 const ShortcutPlayer = lazy(() => import('./components/ShortcutPlayer'));
 const MotionLessonPlayer = lazy(() => import('./components/motion/MotionLessonPlayer'));
+const PythonCodeStudio = lazy(() => import('./components/code/PythonCodeStudio'));
 
 function ViewLoadingFallback() {
   return (
@@ -247,7 +248,9 @@ export default function App() {
     setGameLaunchOrigin('learn');
     setActiveLesson(spineLesson);
 
-    if (spineLesson.isShortcut || spineLesson.type === 'chord') {
+    if (spineLesson.renderEngine === 'python-studio' || spineLesson.type === 'code' || activeCourseId === 'python-zero-to-hero') {
+      setCurrentView('python-studio');
+    } else if (spineLesson.isShortcut || spineLesson.type === 'chord') {
       setCurrentView('shortcuts');
     } else if (spineLesson.type === 'motion') {
       setCurrentView('motion');
@@ -570,6 +573,17 @@ export default function App() {
                   layout={course.keyboardType || 'qwerty'}
                   onComplete={handleComplete}
                   onExit={handleGameExit}
+                />
+              )}
+
+              {/* Interactive Python Code Studio with Live Terminal & Simulated Compiler */}
+              {currentView === 'python-studio' && (
+                <PythonCodeStudio
+                  lesson={activeLesson}
+                  chapter={activeLesson?.chapter}
+                  onComplete={handleComplete}
+                  onExit={handleGameExit}
+                  onRetry={handleRetry}
                 />
               )}
 

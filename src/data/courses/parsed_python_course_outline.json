@@ -1,0 +1,362 @@
+[
+  {
+    "chapter": 1,
+    "section": "1.1",
+    "title": "Course Intro & Python Learning Roadmap",
+    "timestamp_start": "00:00",
+    "timestamp_end": "05:55",
+    "lines": "1 - 475",
+    "total_words": 1104,
+    "transcript_summary": "Hey friends and welcome to this very  unique course to master Python. And of  course you might ask what makes it  unique and different from all other  Python courses. First I will not only  share my screen and start showing you  how to write Python code and hope that  you're going to remember it tomorrow.  Instead I'm going to show you how Python  actually works behind the scenes. How  Python exec..."
+  },
+  {
+    "chapter": 1,
+    "section": "1.2",
+    "title": "What Is Python & How It Works (Interpreter & Bytecode)",
+    "timestamp_start": "05:55",
+    "timestamp_end": "12:48",
+    "lines": "476 - 1036",
+    "total_words": 1304,
+    "transcript_summary": " Okay. So now [music] let's start with  basics. What is programming language? So  now imagine that you want to give your  computer a task and you say hey computer  calculate 5 + 5. Well your computer will  not understand what is exactly you're  talking about and nothing going to  happen. So we cannot use the natural  human language in order to give tasks  for your PC. So now instead of that we  ha..."
+  },
+  {
+    "chapter": 1,
+    "section": "1.3",
+    "title": "Installing Python & Editor Setup",
+    "timestamp_start": "12:48",
+    "timestamp_end": "26:11",
+    "lines": "1037 - 2194",
+    "total_words": 2905,
+    "transcript_summary": " learns [music] and works with Python.  Okay. Now the first thing that we need  to do is to go and download Python. So  open your browser and go to python.org.  And then we're going to go to the  download section. And here you're going  to see one big yellow button that says  download Python. And then we have like a  version. For me now it's like 3.13. You  might see here like higher version that ..."
+  },
+  {
+    "chapter": 1,
+    "section": "1.4",
+    "title": "Comments & print() Function Deep Dive",
+    "timestamp_start": "26:11",
+    "timestamp_end": "52:01",
+    "lines": "2195 - 4375",
+    "total_words": 5592,
+    "transcript_summary": " The first thing that we usually learn  about any programming language is how to  add comments to our code. So what  [music] are comments? A comment is a  line of text in your code that Python  totally ignores. It is there only to  help us in order to understand what the  code is doing. Okay. So now let's  understand how this exactly works. So  now let's say that you are coding a  script in Python..."
+  },
+  {
+    "chapter": 1,
+    "section": "1.5",
+    "title": "Variables & Memory Storage",
+    "timestamp_start": "52:01",
+    "timestamp_end": "01:05:39",
+    "lines": "4376 - 5524",
+    "total_words": 2970,
+    "transcript_summary": " So now we're going to talk about a  fundamental and very important [music]  concept in Python. We have the  variables. So what is a variable? A  variable is a name that you create to  store value inside it in order to reuse  it later in your program. So think about  variables like a box and you give for  this box a label like a name for it. It  could be anything like a username, a  country, an X...."
+  },
+  {
+    "chapter": 1,
+    "section": "1.6",
+    "title": "User input() & Interactive Programs",
+    "timestamp_start": "01:05:39",
+    "timestamp_end": "01:14:25",
+    "lines": "5525 - 6289",
+    "total_words": 1937,
+    "transcript_summary": " All right, my friends. So now we're  going to talk about the second most  important function in Python. We have  the input. So so far what we have  learned is we can use the print in order  to show something to the user. But now  we're going to go and flip things. We're  going to go and get something back from  the user. So for that we can use the  input function. It is as well a built-in  Python..."
+  },
+  {
+    "chapter": 1,
+    "section": "1.7",
+    "title": "Python Data Types & Type Casting",
+    "timestamp_start": "01:14:25",
+    "timestamp_end": "01:46:54",
+    "lines": "6290 - 8983",
+    "total_words": 6673,
+    "transcript_summary": " Hey friends. So now if you are learning  any new programming language like  Python, you have to understand and  master at early phase one concepts the  data types. [music] So that's why now  we're going to go and deep dive into the  data types in Python. And we're going to  start with the first question. What is a  data type? So now let's say that I got a  box like this and I don't know what is  ..."
+  },
+  {
+    "chapter": 2,
+    "section": "2.1",
+    "title": "String Basics & Escape Sequences",
+    "timestamp_start": "01:46:54",
+    "timestamp_end": "02:16:56",
+    "lines": "8984 - 11548",
+    "total_words": 6586,
+    "transcript_summary": " So let's go.  All right. So let's start. Now we're  going to go and get any value. So let's  have a variable and inside it we put a  string value like your first name. And  of course, you can put this in single  quotes or in double quotes. It's all the  same for Python. Now, the first built-in  function that we can use is the type.  You can use it in order to check the  data type of your value. L..."
+  },
+  {
+    "chapter": 2,
+    "section": "2.2",
+    "title": "String Indexing & Slicing [start:stop:step]",
+    "timestamp_start": "02:16:56",
+    "timestamp_end": "02:39:04",
+    "lines": "11549 - 13480",
+    "total_words": 4932,
+    "transcript_summary": " let's go.  Now let's take this example. So we have  a simple hello. Now we usually think  about this as like one value, one string  value. But behind the scenes, Python  think about this as a sequence of  characters. So we have like a list of  characters.  >> [music]  >> And it's very very important to  understand that each character has a  position and we call it an index. So  it's like we have ..."
+  },
+  {
+    "chapter": 2,
+    "section": "2.3",
+    "title": "Search, Validation & Case Conversion Methods",
+    "timestamp_start": "02:39:04",
+    "timestamp_end": "02:59:31",
+    "lines": "13481 - 15256",
+    "total_words": 4522,
+    "transcript_summary": " So [music] let's go.  Okay, so [music] now let's have the  following example where we're going to  say the user went and enter this value  like this Python. So everything in lower  case and afterward we have programming  where the user enter everything in upper  case. So now of course this doesn't look  really nice and sometimes we have rules  in our project where we say everything  should be in ..."
+  },
+  {
+    "chapter": 3,
+    "section": "3.1",
+    "title": "Integer & Float Types & Arithmetic Math",
+    "timestamp_start": "02:59:31",
+    "timestamp_end": "03:11:33",
+    "lines": "15257 - 16297",
+    "total_words": 2620,
+    "transcript_summary": " course.  So let's start with the first question.  What are numeric values in Python? We  have learned that the numeric values or  the numbers they are just a data type  that belongs to the primitive data types  or the single values. The numeric data  like exist in any programming language.  So once you create a number, Python has  to treat it as a number. And in Python,  we don't have like one nu..."
+  },
+  {
+    "chapter": 3,
+    "section": "3.2",
+    "title": "Rounding, Random & Math Functions",
+    "timestamp_start": "03:11:33",
+    "timestamp_end": "03:28:04",
+    "lines": "16298 - 17791",
+    "total_words": 3791,
+    "transcript_summary": " Let's say that [music] I have this  scenario. I want to measure the distance  between two points. The first point is  two and the second one is 10. Now if you  go and print the distance between those  two points, you will get minus 8. Now if  I want to get rid of the sign, so that  means I'm interested only on the  absolute number. So now in order to do  this in Python, we have the built-in  func..."
+  },
+  {
+    "chapter": 4,
+    "section": "4.1",
+    "title": "Boolean Values & Truthiness",
+    "timestamp_start": "03:28:04",
+    "timestamp_end": "03:42:33",
+    "lines": "17792 - 19072",
+    "total_words": 3229,
+    "transcript_summary": " for and while. So now let's start with  the first question. What are you talking  about? What is a control flow in a code?  [music] And why do we need it in the  first place? So let's go. Control flow  is like a logic you build inside your  code to control the path your program  follows. So this logic going to tell  Python should I run this part? Should I  skip it? Should I repeat it? So it's a  ..."
+  },
+  {
+    "chapter": 4,
+    "section": "4.2",
+    "title": "Comparison & Logical Operators (and, or, not)",
+    "timestamp_start": "03:42:33",
+    "timestamp_end": "04:06:13",
+    "lines": "19073 - 21055",
+    "total_words": 5086,
+    "transcript_summary": " and used a lot. [music]  We use the comparison operators in order  to compare two values and return true or  false based on the results. And here we  have many nice operators like the equal  to where you have two equals and then  the not equal. We have less than, less  than or equal and the opposite the  greater than, greater than or equal. So  they are very simple. But now let's  understand exac..."
+  },
+  {
+    "chapter": 4,
+    "section": "4.3",
+    "title": "Membership (in) & Identity Operators (is vs ==)",
+    "timestamp_start": "04:06:13",
+    "timestamp_end": "04:19:19",
+    "lines": "21056 - 22129",
+    "total_words": 2778,
+    "transcript_summary": " works.  Well the in operator going to check  whether a value is inside another value.  It could be string value list or any  sequence. So now the syntax for that is  very easy where we say for example is  the character a exist inside the string  data. So we are using the n operator  between the two string and if you read  it in English it's very simple is a in  data. So if you go and execute it p..."
+  },
+  {
+    "chapter": 5,
+    "section": "5.1",
+    "title": "If, Else, Elif Branching Control",
+    "timestamp_start": "04:19:19",
+    "timestamp_end": "04:40:34",
+    "lines": "22130 - 23914",
+    "total_words": 4540,
+    "transcript_summary": " Let's dive in.  Okay. So now what is conditional  statements? It is very simple. It is  like a checkpoint in your code that's  going to check a condition. If the  condition is true, it's going to run  special block of code. But if the  condition is false, it will skip it. So  it's like you are making a decision  inside your code. So we have only those  two options. Either we're going to run  the ..."
+  },
+  {
+    "chapter": 5,
+    "section": "5.2",
+    "title": "Nested & Advanced Multi-Criteria Conditions",
+    "timestamp_start": "04:40:34",
+    "timestamp_end": "04:57:33",
+    "lines": "23915 - 25330",
+    "total_words": 3623,
+    "transcript_summary": " All right. Now moving on to the next  one. We can make branching on the  conditional statements. We don't have  for this like a new keyword or  statements. It's all about using the  else if multiple times. So let's  understand what this means. Now all what  we're going to do is to add another  follow-up question. For example, is the  score is higher or equal to 70. And  we're going to do the same..."
+  },
+  {
+    "chapter": 5,
+    "section": "5.3",
+    "title": "Inline If (Ternary) & Match-Case Structural Pattern",
+    "timestamp_start": "04:57:33",
+    "timestamp_end": "05:24:56",
+    "lines": "25331 - 27457",
+    "total_words": 5466,
+    "transcript_summary": " statements.  All right friends, now we're going to  talk about something cool. The inline if  statements or we call it sometimes  turnary operator. So instead of writing  the FL statements in multiple lines, you  can go and put the whole thing in one  quick line. So it is quick, shorter and  doesn't take a lot of space. So let's  understand what this means. So we start  as usual with the if state..."
+  },
+  {
+    "chapter": 6,
+    "section": "6.1",
+    "title": "For Loops & Sequence Iteration (range)",
+    "timestamp_start": "05:24:56",
+    "timestamp_end": "05:47:57",
+    "lines": "27458 - 29281",
+    "total_words": 4775,
+    "transcript_summary": " So now let's start with the first  question. What are loops? A loop is like  a tool that we use to control the flow  of our codes. And if you use it, you are  saying like, hey, I would like to repeat  this code, this thing over and over  until I say stop or something happened.  Maybe a condition is not fulfilled  anymore. So now let's have a sketch to  understand what this means. So now  normally..."
+  },
+  {
+    "chapter": 6,
+    "section": "6.2",
+    "title": "Loop Control: Break, Continue & Pass",
+    "timestamp_start": "05:47:57",
+    "timestamp_end": "06:18:39",
+    "lines": "29282 - 31738",
+    "total_words": 6194,
+    "transcript_summary": " Okay friends, now so far we have been  looping through items using a simple  way, very simple design. But now we're  going to level it up and we're going to  build and design an advanced loop. In  Python, they are like tools or add-ons  that we can put in our loop in order to  have more control like when to stop,  when to skip. And here I'm talking about  the special loop statements. We have  bre..."
+  },
+  {
+    "chapter": 6,
+    "section": "6.3",
+    "title": "For-Else & Nested Multi-Dimensional Loops",
+    "timestamp_start": "06:18:39",
+    "timestamp_end": "06:40:52",
+    "lines": "31739 - 33424",
+    "total_words": 4407,
+    "transcript_summary": " And now we come to the question that why  do we need those stuff and when we going  to use it in real projects? Well, the  main use case is that we use it in order  to search and validate our data. As we  are getting new data, we have to search  for bad data and report at the end  whether everything is clean or whether  we found some bad data and bad quality.  So let me show you now some real use..."
+  },
+  {
+    "chapter": 6,
+    "section": "6.4",
+    "title": "While Loops & Condition-Driven Loops",
+    "timestamp_start": "06:40:52",
+    "timestamp_end": "07:10:04",
+    "lines": "33425 - 35698",
+    "total_words": 5853,
+    "transcript_summary": " So now we're going to talk about the  second [music] type of looping in  Python. We're going to talk about the  while loop. So what is a while loop? We  use it in order to repeat the same code  over and over as long as a condition is  true. So this sounds like the for loop,  right? Now what are the differences  between for loop and while loop? Here's  the deal with the for loop. We have  understo..."
+  },
+  {
+    "chapter": 7,
+    "section": "7.1",
+    "title": "Lists Overview & Sequential Memory Structure",
+    "timestamp_start": "07:10:04",
+    "timestamp_end": "07:19:40",
+    "lines": "35699 - 36475",
+    "total_words": 1927,
+    "transcript_summary": " course.  So what is a data structure? It is a way  of organizing, managing, storing your  data in Python so that you can use it  efficiently. That means you can access  it, read it and modify it very easily.  And in Python we have four built-in data  structures like the list, tpple, set and  dictionary. And now of course the big  question is why do we need it? Why do we  need event to organize ou..."
+  },
+  {
+    "chapter": 7,
+    "section": "7.2",
+    "title": "Creating & Accessing Lists (Index & Slices)",
+    "timestamp_start": "07:19:40",
+    "timestamp_end": "07:48:08",
+    "lines": "36476 - 38701",
+    "total_words": 5837,
+    "transcript_summary": " now of course always the first question  is how to create things. how to create a  collection of data using list because  without it we cannot do anything right  so let's learn how we can do that now  I'm going to show you step by step how  to create a list and we're going to  start with the easiest one we're going  to create an empty list so in order to  create one we're going to go and use the ..."
+  },
+  {
+    "chapter": 7,
+    "section": "7.3",
+    "title": "List Unpacking & Statistical Analysis (len, sum, min, max)",
+    "timestamp_start": "07:48:08",
+    "timestamp_end": "08:19:18",
+    "lines": "38702 - 41173",
+    "total_words": 6349,
+    "transcript_summary": " All right friends, now we're going to  talk about something really interesting  on how to deal with the data structure.  We have the concept of unpacking. So far  what you have done is that we have  created a list where we have packed  multiple items together in one container  in one box. So it's like you are putting  your stuff in a traveling bag. So we are  packing and of course we can do now t..."
+  },
+  {
+    "chapter": 7,
+    "section": "7.4",
+    "title": "List Mutations: Add, Remove & Update (append, insert, pop)",
+    "timestamp_start": "08:19:18",
+    "timestamp_end": "08:41:46",
+    "lines": "41174 - 42985",
+    "total_words": 4799,
+    "transcript_summary": " All right. So now so far everything that  you have done is actually passive  things. So how to read, how to check,  how to analyze, we are not changing  anything in the original list. But the  thing is in real projects the data going  to change over the time. So you cannot  maintain the original data in the list.  You have to go and do changes and  usually we have three types of changes.  You mig..."
+  },
+  {
+    "chapter": 7,
+    "section": "7.5",
+    "title": "Sorting, Reversing & Combining Lists",
+    "timestamp_start": "08:41:46",
+    "timestamp_end": "09:18:29",
+    "lines": "42986 - 45913",
+    "total_words": 7453,
+    "transcript_summary": " All right friends, so now we come to  something very essential in any data  project that you have to learn how to  order your data. So the thing is now you  might say okay my data inside the list  is actually up to date there is no  change needed but the issue is that the  data is chaotic it is not organized so I  have to go and organize it rearrange it  change the order of the items inside my  l..."
+  },
+  {
+    "chapter": 7,
+    "section": "7.6",
+    "title": "Iterables, Filtering & Map Operations",
+    "timestamp_start": "09:18:29",
+    "timestamp_end": "09:41:38",
+    "lines": "45914 - 47788",
+    "total_words": 4861,
+    "transcript_summary": " All right my friends. So now so far I  can say we have covered the basics like  creating, reading, analyzing, changing,  sorting, copying and even combining list  in Python. And that was actually only  the foundations. And of course we don't  want to stop at the basics. We want to  push more to learn advanced techniques  on how to deal with the data structure  with the list. So we have to learn h..."
+  },
+  {
+    "chapter": 7,
+    "section": "7.7",
+    "title": "Lambda Functions & List Comprehensions",
+    "timestamp_start": "09:41:38",
+    "timestamp_end": "10:12:01",
+    "lines": "47789 - 50281",
+    "total_words": 6366,
+    "transcript_summary": " Okay my friends. So now we're going to  talk about another advanced concepts on  how to work with data structure the list  in Python. We're going to talk about the  lambda. The thing is in Python there are  a lot of built-in functions that we  could use but sometimes you want to  create your own custom logic and we can  use lambda to do that. So now let's deep  dive and understand this technique...."
+  },
+  {
+    "chapter": 7,
+    "section": "7.8",
+    "title": "Tuples: Immutable Ordered Sequences",
+    "timestamp_start": "10:12:01",
+    "timestamp_end": "10:19:59",
+    "lines": "50282 - 50908",
+    "total_words": 1564,
+    "transcript_summary": " it.  Hey friends, so now everything so far  that you have learned all the methods  the functions the operators they were  applied only on one type of data  structure the list. But the thing is in  Python we have three more. We have the  tubble, set [music] and dictionary. So  in total we have four types of data  structures. That's why we have to go and  learn them all understand the  differences ..."
+  },
+  {
+    "chapter": 7,
+    "section": "7.9",
+    "title": "Sets: Unique Unordered Collections & Set Math",
+    "timestamp_start": "10:19:59",
+    "timestamp_end": "10:38:12",
+    "lines": "50909 - 52357",
+    "total_words": 3730,
+    "transcript_summary": " data using a tpple.  All right friends, now we're going to  talk about the third type of data  structures. We have the sets. So now  what is the issue? Let's say that you  have a list of customers ID and as you  are checking the data you have found out  that some ids are appearing twice. Those  duplicates in my list is indicator that  the data is not clean. So now what we  can do we can start lik..."
+  },
+  {
+    "chapter": 7,
+    "section": "7.10",
+    "title": "Dictionaries: Key-Value Hash Maps & Dynamic Lookups",
+    "timestamp_start": "10:38:12",
+    "timestamp_end": "11:09:45",
+    "lines": "52358 - 54859",
+    "total_words": 6291,
+    "transcript_summary": " Hey friends. So now finally we're going  to talk about the most powerful data  [music] structure type in Python. My  favorite one and the one that I keep  using in my real data projects, the  dictionary. [music]  So now let's understand it and why do we  need it? The thing is all the other  types of data structure the list the  double the sets we use them in order to  store one piece of [music] i..."
+  },
+  {
+    "chapter": 8,
+    "section": "8.1",
+    "title": "Functions Introduction & Execution Call Stack",
+    "timestamp_start": "11:09:45",
+    "timestamp_end": "11:28:12",
+    "lines": "54860 - 56461",
+    "total_words": 3958,
+    "transcript_summary": " fundamentals.  Hey friends. So now we're going to talk  about the most important concepts that  you will learn in programming. It is  what separate casual coding from  professional coding. I'm talking here  about the functions. This is of course  not a Python thing. You're going to find  functions in every programming language.  And to be honest, learning functions can  get you overwhelmed and co..."
+  },
+  {
+    "chapter": 8,
+    "section": "8.2",
+    "title": "Function Parameters, Default Arguments & Return Values",
+    "timestamp_start": "11:28:12",
+    "timestamp_end": "12:20:31",
+    "lines": "56462 - 60901",
+    "total_words": 11113,
+    "transcript_summary": " So far we have covered all the basics  about the Python function. Now we have  to take things to the next level where  we have to understand something really  important. How our data actually move  through a function. So we're going to  learn things like the parameters,  arguments, how to return an output of a  function and we have to understand as  well the different types, shapes and  purposes ..."
+  },
+  {
+    "chapter": 8,
+    "section": "8.3",
+    "title": "Advanced Functions: *args, **kwargs & Variable Scope",
+    "timestamp_start": "12:20:31",
+    "timestamp_end": "12:46:09",
+    "lines": "60902 - 62938",
+    "total_words": 5003,
+    "transcript_summary": " So now so far we have learned all the  different types of Python function but  based on how the data flow through the  function. But now in real projects we  categorize and classify the functions by  something else by the purpose. We  classify them based on the job each  function is responsible for. So now what  we're going to do I'm going to show you  some famous patterns and function types  bas..."
+  },
+  {
+    "chapter": 8,
+    "section": "8.4",
+    "title": "Writing Clean, Pythonic & Production Functions",
+    "timestamp_start": "12:46:09",
+    "timestamp_end": "13:15:00",
+    "lines": "62939 - 64267",
+    "total_words": 3268,
+    "transcript_summary": " purpose.  So now we're going to start with the  first step where we're going to learn  simple but yet very powerful rules that  every Python developer should follow  when they are writing functions. The  goal is very simple. We have to write  code that is easy to read and easy to  understand not only for you but as well  for your colleagues. Many of those rules  are actually come from the pip 8. ..."
+  }
+]

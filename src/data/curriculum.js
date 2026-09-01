@@ -69,6 +69,57 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
     };
   }
 
+  // 1.5 Structured Chapter Course Data (e.g. Python Zero to Hero with 8 Chapters)
+  if (course.data && Array.isArray(course.data.chapters)) {
+    const stages = [];
+    const playableLessons = [];
+    let globalIndex = 1;
+
+    course.data.chapters.forEach((chapter, cIdx) => {
+      const start = globalIndex;
+      chapter.lessons.forEach((l) => {
+        const lessonNumber = globalIndex;
+        playableLessons.push({
+          id: l.id || `py-${lessonNumber}`,
+          rawId: l.id || `py-${lessonNumber}`,
+          title: cleanString(l.title),
+          type: 'code',
+          chapter: chapter.chapterNumber,
+          chapterTitle: cleanString(chapter.title),
+          section: l.section || `${chapter.chapterNumber}.${globalIndex}`,
+          concept: l.concept || '',
+          visualTopic: l.visualTopic || '',
+          code: l.code || '',
+          text: l.code || '',
+          expectedOutput: l.expectedOutput || '',
+          variables: l.variables || {},
+          goalWpm: l.goalWpm || 30,
+          minAccuracy: l.minAccuracy || 90,
+          renderEngine: 'python-studio',
+          stageTitle: `Chapter ${chapter.chapterNumber}: ${cleanString(chapter.title)}`
+        });
+        globalIndex++;
+      });
+      const end = globalIndex - 1;
+      stages.push({
+        id: `chapter-${chapter.chapterNumber}`,
+        title: `Chapter ${chapter.chapterNumber}: ${cleanString(chapter.title)}`,
+        start,
+        end,
+        goal: '32 WPM'
+      });
+    });
+
+    return {
+      course: {
+        ...course,
+        lessonsCount: playableLessons.length
+      },
+      stages,
+      lessons: playableLessons
+    };
+  }
+
   const rawData = course.data || [];
   const rawItems = Array.isArray(rawData) ? rawData : (rawData.lessons || rawData.data || []);
 

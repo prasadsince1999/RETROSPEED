@@ -2,6 +2,7 @@
 import basicsLessons from './courses/typing_basics_1.json';
 import typingJungle685 from './courses/typing_jungle_685.json';
 import codeLessons from './courses/code_typing_306.json';
+import pythonZeroToHero from './courses/python_zero_to_hero.json';
 import funFactsLessons from './courses/fun_facts_246.json';
 import loanwordsLessons from './courses/loanwords_240.json';
 import naturalWorldLessons from './courses/natural_world_248.json';
@@ -24,6 +25,20 @@ export const COURSES_CATALOG = [
     titleVariant: 'teal',
     keyboardType: 'qwerty',
     data: typingJungle685
+  },
+  {
+    id: 'python-zero-to-hero',
+    programId: 312,
+    title: 'Python Zero to Hero | 13-Hour Mastery',
+    category: 'Programming & Tech',
+    grade: 'Developers & Data Analysts',
+    lessonsCount: 26,
+    description: 'Master Python from fundamentals to advanced functions and data analysis. Featuring interactive code typing, simulated live terminal execution, and behind-the-scenes memory sketches.',
+    badge: 'Python 3.12',
+    color: 'from-amber-500 via-sky-600 to-indigo-900',
+    titleVariant: 'mustard',
+    keyboardType: 'qwerty',
+    data: pythonZeroToHero
   },
   {
     id: 'keystroke-foundations',
