@@ -229,26 +229,26 @@ export default function App() {
     setGameLaunchOrigin('learn');
     setActiveLesson(spineLesson);
 
-    if (spineLesson.isShortcut) {
+    if (spineLesson.isShortcut || spineLesson.type === 'chord') {
       setCurrentView('shortcuts');
     } else if (spineLesson.type === 'video' || spineLesson.type === 'motion') {
       setCurrentView('video');
-    } else if (spineLesson.type === 'game') {
+    } else if (spineLesson.type === 'play' || spineLesson.type === 'game') {
       const gId = (spineLesson.gameId || spineLesson.gameApp || '').toLowerCase();
       const combined = `${gId} ${(spineLesson.title || '').toLowerCase()}`;
-      if (combined.includes('plane') || combined.includes('bubble') || combined.includes('paper')) {
+      if (combined.includes('plane') || combined.includes('paper')) {
         setCurrentView('paper-planes');
-      } else if (combined.includes('local') || combined.includes('train') || combined.includes('monster') || combined.includes('line')) {
+      } else if (combined.includes('local') || combined.includes('line')) {
         setCurrentView('local-line');
-      } else if (combined.includes('market') || combined.includes('night') || combined.includes('apple') || combined.includes('chit')) {
+      } else if (combined.includes('market') || combined.includes('night')) {
         setCurrentView('night-market');
-      } else if (combined.includes('drop') || combined.includes('meteor')) {
+      } else if (combined.includes('drop') || combined.includes('chit') || combined.includes('slip')) {
         setCurrentView('drop-chits');
-      } else if (combined.includes('pit') || combined.includes('lane') || combined.includes('racer') || combined.includes('velocity')) {
+      } else if (combined.includes('pit') || combined.includes('lane') || combined.includes('racer')) {
         setCurrentView('pit-lane');
       } else if (combined.includes('fuse') || combined.includes('desk') || combined.includes('bomb')) {
         setCurrentView('fuse-desk');
-      } else if (combined.includes('patch') || combined.includes('terminal') || combined.includes('syntax') || combined.includes('hacker')) {
+      } else if (combined.includes('patch') || combined.includes('terminal')) {
         setCurrentView('patch-terminal');
       } else {
         setCurrentView('press-room');
@@ -256,14 +256,15 @@ export default function App() {
     } else {
       const adapted = {
         id: spineLesson.id,
-        number: spineLesson.lessonNumber,
+        number: spineLesson.index || spineLesson.lessonNumber,
         title: spineLesson.title,
         description: spineLesson.description,
-        type: 'drill',
+        type: spineLesson.type || 'drill',
         text: spineLesson.text,
         goalWpm: spineLesson.goalWpm || 20,
         minAccuracy: spineLesson.minAccuracy || 90,
-        targetKeys: spineLesson.targetKeys || []
+        targetKeys: spineLesson.keys || spineLesson.targetKeys || [],
+        keys: spineLesson.keys || []
       };
       setActiveLesson(adapted);
       setCurrentView('lesson');

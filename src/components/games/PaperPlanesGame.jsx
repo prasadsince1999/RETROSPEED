@@ -10,6 +10,7 @@ const WORDS_POOL = [
 ];
 
 export default function PaperPlanesGame({
+  lesson = null,
   onComplete,
   onExit
 }) {
@@ -28,8 +29,25 @@ export default function PaperPlanesGame({
   const lastSpawnRef = useRef(0);
   const totalGoal = 20;
 
+  // Derive words pool based on lesson.keys
+  const rawKeys = lesson?.keys || [];
+  const cleanKeys = rawKeys.filter(k => k && k !== ' ');
+
+  const activeWordsPool = React.useMemo(() => {
+    if (cleanKeys.length === 0) return WORDS_POOL;
+    const matching = WORDS_POOL.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
+    if (matching.length >= 4) return matching;
+    
+    // Top row words fallback
+    const topWords = ['sure', 'user', 'fire', 'rush', 'ride', 'rule', 'dark', 'fuel', 'sail', 'like', 'drill', 'skill', 'stay', 'year', 'they', 'duty', 'city', 'late', 'word', 'work', 'flow', 'wood', 'grow'];
+    const validTop = topWords.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
+    if (validTop.length >= 4) return validTop;
+
+    return WORDS_POOL;
+  }, [cleanKeys]);
+
   const spawnPlane = useCallback(() => {
-    const word = WORDS_POOL[Math.floor(Math.random() * WORDS_POOL.length)];
+    const word = activeWordsPool[Math.floor(Math.random() * activeWordsPool.length)];
     const newPlane = {
       id: Date.now() + Math.random(),
       word,
@@ -41,7 +59,7 @@ export default function PaperPlanesGame({
       launchVy: 0
     };
     planesRef.current.push(newPlane);
-  }, [planesLaunched]);
+  }, [activeWordsPool, planesLaunched]);
 
   // Handle typing input
   const handleKeyDown = useCallback((e) => {

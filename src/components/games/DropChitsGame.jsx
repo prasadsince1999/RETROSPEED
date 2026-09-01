@@ -11,6 +11,7 @@ const WORDS_BANK = [
 ];
 
 export default function DropChitsGame({
+  lesson = null,
   onComplete,
   onExit
 }) {
@@ -28,8 +29,33 @@ export default function DropChitsGame({
   const lastSpawnRef = useRef(0);
   const totalGoal = 25;
 
+  // Derive words bank based on lesson.keys
+  const rawKeys = lesson?.keys || [];
+  const cleanKeys = rawKeys.filter(k => k && k !== ' ');
+
+  const activeWordsBank = React.useMemo(() => {
+    if (cleanKeys.length === 0) return WORDS_BANK;
+    
+    // Check if numeric unit
+    const isNumeric = cleanKeys.some(k => !isNaN(k));
+    if (isNumeric) {
+      return ['2026', '1999', '402', '56', '7890', '14', '365', '24', '100', '250', '500', '1024', '8192', '42', '700'];
+    }
+
+    // Filter standard word bank or generate valid home/row words
+    const matching = WORDS_BANK.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
+    if (matching.length >= 5) return matching;
+
+    // Home row defaults if taught
+    const homeWords = ['glad', 'had', 'half', 'salad', 'dash', 'flag', 'flash', 'glass', 'shall', 'hall', 'fads', 'gads', 'ask', 'all', 'dad', 'flask', 'fall', 'lass'];
+    const validHome = homeWords.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
+    if (validHome.length >= 4) return validHome;
+
+    return cleanKeys.map(k => k + k);
+  }, [cleanKeys]);
+
   const spawnChit = useCallback(() => {
-    const word = WORDS_BANK[Math.floor(Math.random() * WORDS_BANK.length)];
+    const word = activeWordsBank[Math.floor(Math.random() * activeWordsBank.length)];
     const newChit = {
       id: Date.now() + Math.random(),
       word,
@@ -40,7 +66,7 @@ export default function DropChitsGame({
       isCleared: false
     };
     chitsRef.current.push(newChit);
-  }, [chitsCleared]);
+  }, [activeWordsBank, chitsCleared]);
 
   const handleKeyDown = useCallback((e) => {
     if (isPaused || lives <= 0) return;

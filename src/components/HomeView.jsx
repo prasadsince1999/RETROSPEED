@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { getDailyChallengeState, getPlayerProfile } from '../utils/storage';
-import { getNextSpineLesson, SPINE_PARTS } from '../data/spineCurriculum';
+import { getNextSpineLesson, SPINE_PARTS, TOTAL_SPINE_LESSONS } from '../data/spineCurriculum';
 
 export default function HomeView({
   userProgress = {},
@@ -114,35 +114,37 @@ export default function HomeView({
       </div>
 
       {/* ZERO-TO-HERO HERO CARD */}
-      <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors duration-200">
-        <div className="space-y-1">
-          <div className="flex items-center space-x-2">
-            <span className="px-2 py-0.5 rounded bg-[#4BA3E3] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-              {nextSpine.part.title}
-            </span>
-            <span className="text-xs font-mono font-bold text-[#2D2319]/70">
-              — {nextSpine.part.subtitle}
-            </span>
+      {nextSpine?.lesson && (
+        <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors duration-200">
+          <div className="space-y-1">
+            <div className="flex items-center space-x-2">
+              <span className="px-2 py-0.5 rounded bg-[#4BA3E3] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
+                Unit {nextSpine.part?.partNumber || 1}: {nextSpine.part?.shortTitle || 'Home Row'}
+              </span>
+              <span className="text-xs font-mono font-bold text-[#2D2319]/70">
+                — #{nextSpine.lesson.index} of {TOTAL_SPINE_LESSONS}
+              </span>
+            </div>
+            <h2 className="text-lg sm:text-xl font-black text-[#2D2319] font-display">
+              {nextSpine.lesson.title}
+            </h2>
+            <p className="text-xs text-[#2D2319]/80 font-mono">
+              {nextSpine.lesson.description} · Target: {nextSpine.lesson.goalWpm || nextSpine.part?.targetWpm || 15} WPM ({nextSpine.lesson.minAccuracy || 90}% Acc)
+            </p>
           </div>
-          <h2 className="text-lg sm:text-xl font-black text-[#2D2319] font-display">
-            {nextSpine.lesson.title}
-          </h2>
-          <p className="text-xs text-[#2D2319]/80 font-mono">
-            {nextSpine.lesson.description} · Target: {nextSpine.part.targetSpeed} ({nextSpine.part.passAccuracy}% Acc)
-          </p>
-        </div>
 
-        <div className="flex items-center space-x-3 shrink-0">
-          <button
-            onClick={handleContinueSpine}
-            className="px-5 py-2.5 rounded-xl bg-[#F6C445] hover:bg-[#F28B82] border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] font-mono text-xs font-black uppercase text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-2 cursor-pointer"
-          >
-            <Play className="w-4 h-4 fill-[#2D2319]" />
-            <span>Continue Journey</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          <div className="flex items-center space-x-3 shrink-0">
+            <button
+              onClick={handleContinueSpine}
+              className="px-5 py-2.5 rounded-xl bg-[#F6C445] hover:bg-[#F28B82] border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] font-mono text-xs font-black uppercase text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-2 cursor-pointer"
+            >
+              <Play className="w-4 h-4 fill-[#2D2319]" />
+              <span>Continue Journey</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Quick Play & Practice Drills Window Card */}
       <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] space-y-4 transition-colors duration-200">

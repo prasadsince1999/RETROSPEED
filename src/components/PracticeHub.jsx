@@ -1,14 +1,14 @@
-// Learn Room: The 8-Part Zero-to-Hero Path + Specialty Tracks
+// RETROSPEED Learn Room: Shelf A Primary Path (Zero-to-Hero Numbered Map)
 import React, { useState } from 'react';
-import { 
-  Play, 
-  Layers, 
-  Star, 
-  Code, 
-  BookOpen, 
-  Compass, 
-  CheckCircle2, 
-  Sparkles, 
+import {
+  Play,
+  Layers,
+  Star,
+  Code,
+  BookOpen,
+  Compass,
+  CheckCircle2,
+  Sparkles,
   Search,
   Filter,
   Gamepad2,
@@ -18,11 +18,14 @@ import {
   Zap,
   Terminal,
   Clock,
-  Command
+  Command,
+  Hand,
+  Trophy,
+  RotateCcw,
+  Check
 } from 'lucide-react';
 import { sound } from '../utils/audio';
-import { COURSES_CATALOG } from '../data/courseCatalog';
-import { SPINE_PARTS } from '../data/spineCurriculum';
+import { SPINE_PARTS, TOTAL_SPINE_LESSONS } from '../data/spineCurriculum';
 import { isLessonUnlocked } from '../utils/license';
 
 export default function PracticeHub({
@@ -34,12 +37,15 @@ export default function PracticeHub({
   onNavigate,
   onOpenUnlockModal
 }) {
-  const [activeTab, setActiveTab] = useState('spine'); // 'spine' | 'specialty'
   const [selectedPartNumber, setSelectedPartNumber] = useState(1);
-  const [specialtyCategory, setSpecialtyCategory] = useState('all');
-
   const selectedPart = SPINE_PARTS.find(p => p.partNumber === selectedPartNumber) || SPINE_PARTS[0];
-  const completedMap = userProgress.completedLessons || {};
+
+  const courseScores = userProgress.courses?.spine?.scores || {};
+  const unlockedLevel = userProgress.courses?.spine?.unlockedLevel || 1;
+
+  // Calculate total spine progress
+  const completedTotal = Object.values(courseScores).filter(s => s?.completed).length;
+  const totalStarsTotal = userProgress.courses?.spine?.totalStars || 0;
 
   const handleLaunchSpineLesson = (part, lesson) => {
     sound.playKeyClick();
@@ -52,292 +58,247 @@ export default function PracticeHub({
     }
   };
 
-  const handleLaunchCourse = (courseId) => {
-    sound.playKeyClick();
-    if (onSelectCourse) {
-      onSelectCourse(courseId);
+  // Render type icon and label for each tile
+  const renderTypeBadge = (lesson) => {
+    switch (lesson.type) {
+      case 'motion':
+        return (
+          <span className="px-2 py-0.5 rounded-md bg-[#C3A6E8] text-[#2D2319] font-mono text-[9px] font-black border border-[#2D2319] flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319]">
+            <Play className="w-2.5 h-2.5 fill-current" />
+            <span>COACH</span>
+          </span>
+        );
+      case 'play':
+        return (
+          <span className="px-2 py-0.5 rounded-md bg-[#F28B82] text-[#2D2319] font-mono text-[9px] font-black border border-[#2D2319] flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319]">
+            <Gamepad2 className="w-2.5 h-2.5" />
+            <span>GAME</span>
+          </span>
+        );
+      case 'practice':
+        return (
+          <span className="px-2 py-0.5 rounded-md bg-[#4BA3E3] text-white font-mono text-[9px] font-black border border-[#2D2319] flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319]">
+            <Clock className="w-2.5 h-2.5" />
+            <span>DRILL</span>
+          </span>
+        );
+      case 'review':
+        return (
+          <span className="px-2 py-0.5 rounded-md bg-[#C7E8CA] text-[#2D2319] font-mono text-[9px] font-black border border-[#2D2319] flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319]">
+            <RotateCcw className="w-2.5 h-2.5" />
+            <span>REVIEW</span>
+          </span>
+        );
+      case 'one-hand':
+        return (
+          <span className="px-2 py-0.5 rounded-md bg-[#F6C445] text-[#2D2319] font-mono text-[9px] font-black border border-[#2D2319] flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319]">
+            <Hand className="w-2.5 h-2.5" />
+            <span>ANCHOR</span>
+          </span>
+        );
+      case 'checkpoint':
+        return (
+          <span className="px-2 py-0.5 rounded-md bg-[#F6C445] text-[#2D2319] font-mono text-[9px] font-black border border-[#2D2319] flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319]">
+            <Trophy className="w-2.5 h-2.5" />
+            <span>GATE</span>
+          </span>
+        );
+      case 'chord':
+        return (
+          <span className="px-2 py-0.5 rounded-md bg-[#C3A6E8] text-[#2D2319] font-mono text-[9px] font-black border border-[#2D2319] flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319]">
+            <Command className="w-2.5 h-2.5" />
+            <span>CHORD</span>
+          </span>
+        );
+      case 'keys':
+      default:
+        return (
+          <span className="px-2 py-0.5 rounded-md bg-white text-[#2D2319] font-mono text-[9px] font-black border border-[#2D2319] flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319]">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+            <span>KEYS</span>
+          </span>
+        );
     }
   };
 
   return (
     <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[var(--rs-paper)] p-4 sm:p-6 overflow-y-auto space-y-6 transition-colors duration-200">
       
-      {/* HEADER BANNER */}
+      {/* 1. TOP BANNER (Shelf A: Primary Zero-to-Hero Spine) */}
       <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors duration-200">
         <div>
           <div className="flex items-center space-x-2">
             <span className="px-2 py-0.5 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-              ZERO TO HERO PATH
+              PRIMARY CURRICULUM
             </span>
             <span className="text-xs font-mono text-[#2D2319]/70 font-bold">
-              100% Offline · Local-First
+              {TOTAL_SPINE_LESSONS} Micro-Lessons · 4-Box Cycle
             </span>
           </div>
           <h1 className="text-xl sm:text-2xl font-black text-[#2D2319] font-display mt-0.5">
-            Learn to Race Your Fingers
+            Zero-to-Hero Typing Path
           </h1>
         </div>
 
-        {/* TAB SELECTOR PILLS */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => {
-              sound.playKeyClick();
-              setActiveTab('spine');
-            }}
-            className={`px-4 py-2 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-bold transition-all ${
-              activeTab === 'spine'
-                ? 'bg-[#C7E8CA] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
-                : 'bg-[var(--rs-paper)] hover:bg-white text-[#2D2319] shadow-[2px_2px_0px_#2D2319]'
-            }`}
-          >
-            🗺️ Zero-to-Hero Spine (8 Parts)
-          </button>
-
-          <button
-            onClick={() => {
-              sound.playKeyClick();
-              setActiveTab('specialty');
-            }}
-            className={`px-4 py-2 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-bold transition-all ${
-              activeTab === 'specialty'
-                ? 'bg-[#C3A6E8] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
-                : 'bg-[var(--rs-paper)] hover:bg-white text-[#2D2319] shadow-[2px_2px_0px_#2D2319]'
-            }`}
-          >
-            📚 Specialty Tracks
-          </button>
+        {/* Global Stats Pill */}
+        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-black text-[#2D2319]">
+          <div className="flex items-center space-x-1.5">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <span>{completedTotal} / {TOTAL_SPINE_LESSONS} done</span>
+          </div>
+          <span className="text-[#2D2319]/30">|</span>
+          <div className="flex items-center space-x-1">
+            <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+            <span>{totalStarsTotal}</span>
+          </div>
         </div>
       </div>
 
-      {/* TAB 1: 8-PART ZERO-TO-HERO PATH */}
-      {activeTab === 'spine' && (
-        <div key={`spine-${selectedPartNumber}`} className="space-y-6 tab-content-animate">
-          
-          {/* HORIZONTAL STEPPER OF 8 PARTS */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
-            {SPINE_PARTS.map((part) => {
-              const isSelected = selectedPartNumber === part.partNumber;
-              const partLessons = part.lessons;
-              const completedInPart = partLessons.filter(l => completedMap[l.id]).length;
-              const isPartComplete = completedInPart === partLessons.length && partLessons.length > 0;
+      {/* 2. UNIT SWITCHER CHIPS (Units 1 to 8) */}
+      <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
+        {SPINE_PARTS.map((part) => {
+          const isSelected = part.partNumber === selectedPartNumber;
+          const completedInPart = part.lessons.filter(l => courseScores[l.id]?.completed).length;
+          const isPartComplete = completedInPart === part.lessons.length;
 
-              return (
-                <button
-                  key={part.id}
-                  onClick={() => {
-                    sound.playKeyClick();
-                    setSelectedPartNumber(part.partNumber);
-                  }}
-                  className={`p-2.5 rounded-xl border-2 border-[#2D2319] text-left flex flex-col justify-between transition-all cursor-pointer min-h-[82px] ${
-                    isSelected
-                      ? 'bg-[#F6C445] shadow-[3px_3px_0px_#2D2319] translate-x-0.5 translate-y-0.5 font-bold'
-                      : 'bg-[var(--rs-paper-alt)] hover:bg-[var(--rs-paper)] shadow-[2px_2px_0px_#2D2319]'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[9px] font-black text-[#2D2319] uppercase">
-                      PART {part.partNumber}
-                    </span>
-                    {isPartComplete && <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />}
-                  </div>
-                  <div className="font-bold text-[11px] text-[#2D2319] font-display leading-tight my-1 break-words whitespace-normal">
-                    {part.subtitle}
-                  </div>
-                  <div className="text-[9px] font-mono text-[#2D2319]/70 leading-tight">
-                    {completedInPart}/{partLessons.length} done
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* ACTIVE PART DETAIL CARD */}
-          <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-5 sm:p-6 shadow-[4px_4px_0px_var(--rs-shadow)] space-y-5 transition-colors duration-200">
-            
-            {/* PART HEADER */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-[#2D2319]/15 pb-4">
-              <div>
-                <div className="flex items-center space-x-2">
-                  <span className="px-2 py-0.5 rounded bg-[#4BA3E3] text-[#2D2319] font-mono text-xs font-black border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-                    PART {selectedPart.partNumber} OF 8
-                  </span>
-                  <span className="text-sm font-mono font-bold text-[#2D2319]">
-                    {selectedPart.subtitle}
-                  </span>
-                </div>
-                <h2 className="text-xl sm:text-2xl font-black text-[#2D2319] font-display mt-1">
-                  {selectedPart.title}
-                </h2>
-                <p className="text-xs sm:text-sm text-[#2D2319]/80 font-mono mt-0.5">
-                  {selectedPart.focus}
-                </p>
-              </div>
-
-              {/* TARGET SPEED & ACCURACY BADGE */}
-              <div className="flex items-center gap-2">
-                <div className="px-3 py-2 rounded-xl bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] text-center">
-                  <span className="text-[10px] font-mono font-bold text-[#2D2319]/70 block">PASS TARGET</span>
-                  <span className="font-mono text-xs font-black text-[#2D2319]">{selectedPart.targetSpeed}</span>
-                </div>
-                <div className="px-3 py-2 rounded-xl bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] text-center">
-                  <span className="text-[10px] font-mono font-bold text-[#2D2319]/70 block">PRECISION</span>
-                  <span className="font-mono text-xs font-black text-[#10B981]">{selectedPart.passAccuracy}% Acc</span>
-                </div>
-              </div>
-            </div>
-
-            {/* LESSONS LIST */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-mono font-black uppercase tracking-wider text-[#2D2319]">
-                ✦ Structured Lessons in this Part:
-              </h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {selectedPart.lessons.map((lesson) => {
-                  const isDone = completedMap[lesson.id];
-
-                  return (
-                    <div 
-                      key={lesson.id} 
-                      className="bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-xl p-3.5 shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between transition-colors duration-200"
-                    >
-                      <div>
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="px-1.5 py-0.2 rounded bg-[var(--rs-paper-alt)] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319]">
-                            Lesson {lesson.lessonNumber}
-                          </span>
-                          {isDone ? (
-                            <span className="text-[10px] font-mono font-bold text-[#10B981] flex items-center space-x-1">
-                              <CheckCircle2 className="w-3.5 h-3.5" />
-                              <span>Passed</span>
-                            </span>
-                          ) : (
-                            <span className="text-[10px] font-mono font-bold text-[#2D2319]/60">Ready</span>
-                          )}
-                        </div>
-
-                        <h4 className="font-bold text-sm text-[#2D2319] font-display">
-                          {lesson.title}
-                        </h4>
-                        <p className="text-xs text-[#2D2319]/80 font-mono mt-1">
-                          {lesson.description}
-                        </p>
-                      </div>
-
-                      <div className="mt-3 pt-2 border-t border-[#2D2319]/10 flex items-center justify-between">
-                        <span className="text-[10px] font-mono font-bold text-[#2D2319]/70">
-                          Target: {lesson.goalWpm} WPM · {lesson.minAccuracy}%
-                        </span>
-                        <button
-                          onClick={() => handleLaunchSpineLesson(selectedPart, lesson)}
-                          className={`px-3 py-1 rounded-lg border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] font-mono text-xs font-bold active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1 cursor-pointer ${
-                            isLessonUnlocked(lesson, userProgress)
-                              ? 'bg-[#F6C445] hover:bg-[#F28B82] text-[#2D2319]'
-                              : 'bg-[var(--rs-paper-alt)] hover:bg-[#F28B82] text-[#2D2319]/80'
-                          }`}
-                        >
-                          {isLessonUnlocked(lesson, userProgress) ? (
-                            <>
-                              <Play className="w-3 h-3 fill-[#2D2319]" />
-                              <span>{isDone ? 'Practice Again' : 'Start Lesson'}</span>
-                            </>
-                          ) : (
-                            <>
-                              <Lock className="w-3 h-3" />
-                              <span>Unlock</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* PART GAME BREAK PROMPT */}
-            {selectedPart.gameBreak && (
-              <div className="bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-xl p-4 shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors duration-200">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#C3A6E8] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-[#2D2319] shrink-0">
-                    <Gamepad2 className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <span className="font-bold text-sm text-[#2D2319] font-display">
-                        Game Break: {selectedPart.gameBreak.name}
-                      </span>
-                      <span className="px-1.5 py-0.2 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[9px] font-bold border border-[#2D2319]">
-                        FUN STRETCH
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#2D2319]/80 font-mono mt-0.5">
-                      {selectedPart.gameBreak.description}
-                    </p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    sound.playKeyClick();
-                    if (onNavigate) onNavigate('play');
-                  }}
-                  className="px-4 py-2 rounded-xl bg-[#C3A6E8] hover:bg-[#F28B82] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-bold text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all shrink-0 cursor-pointer"
-                >
-                  Play Game Break ➔
-                </button>
-              </div>
-            )}
-
-          </div>
-
-        </div>
-      )}
-
-      {/* TAB 2: SPECIALTY TRACKS (CODE, STORIES, LAYOUTS) */}
-      {activeTab === 'specialty' && (
-        <div key="specialty" className="space-y-4 tab-content-animate">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {COURSES_CATALOG.map((course) => (
-              <div
-                key={course.id}
-                className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col justify-between transition-colors duration-200"
+          return (
+            <button
+              key={part.partNumber}
+              onClick={() => {
+                sound.playKeyClick();
+                setSelectedPartNumber(part.partNumber);
+              }}
+              className={`px-3.5 py-2 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black shrink-0 transition-all flex items-center space-x-2 cursor-pointer ${
+                isSelected
+                  ? 'bg-[#C7E8CA] text-[#2D2319] shadow-[3px_3px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
+                  : 'bg-[var(--rs-paper-alt)] hover:bg-white text-[#2D2319] shadow-[2px_2px_0px_#2D2319]'
+              }`}
+            >
+              <span>Unit {part.partNumber}: {part.shortTitle}</span>
+              <span className={`px-1.5 py-0.2 rounded text-[10px] border border-[#2D2319] ${
+                isPartComplete 
+                  ? 'bg-[#10B981] text-white' 
+                  : completedInPart > 0 
+                  ? 'bg-[#F6C445] text-[#2D2319]' 
+                  : 'bg-white text-[#2D2319]/60'
+              }`}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="px-2 py-0.5 rounded bg-[var(--rs-paper)] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319]">
-                      {course.category}
-                    </span>
-                    <span className="text-xs font-mono font-bold text-[#2D2319]/70">
-                      {course.lessonsCount} Lessons
-                    </span>
-                  </div>
+                {completedInPart}/{part.lessons.length}
+              </span>
+            </button>
+          );
+        })}
+      </div>
 
-                  <h3 className="font-bold text-base text-[#2D2319] font-display">
-                    {course.title}
-                  </h3>
-                  <p className="text-xs text-[#2D2319]/80 font-mono mt-1 leading-relaxed">
-                    {course.description}
-                  </p>
+      {/* 3. ACTIVE UNIT HEADER BANNER */}
+      <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-5 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center space-x-2 mb-1">
+            <span className="font-mono text-xs font-black uppercase text-[#2D2319]/60">
+              Unit {selectedPart.partNumber} of 8
+            </span>
+            <span className="text-[#2D2319]/40">•</span>
+            <span className="font-mono text-xs font-bold text-sky-800 bg-sky-100 px-2 py-0.5 rounded border border-sky-300">
+              Target Goal: {selectedPart.targetWpm} WPM
+            </span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-black text-[#2D2319] font-display">
+            {selectedPart.title}
+          </h2>
+          <p className="text-xs sm:text-sm text-[#2D2319]/80 font-mono mt-1 max-w-2xl">
+            {selectedPart.description}
+          </p>
+        </div>
+
+        {/* Quick Continue Button */}
+        <button
+          onClick={() => {
+            const nextUnfinished = selectedPart.lessons.find(l => !courseScores[l.id]?.completed) || selectedPart.lessons[0];
+            handleLaunchSpineLesson(selectedPart, nextUnfinished);
+          }}
+          className="px-5 py-2.5 rounded-xl bg-[#F6C445] hover:bg-[#eab308] text-[#2D2319] font-mono text-xs font-black border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-2 cursor-pointer shrink-0"
+        >
+          <span>Continue Unit {selectedPart.partNumber}</span>
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* 4. NUMBERED MICRO-STEP TILE MAP (4 to 6 Columns Grid) */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between font-mono text-xs font-bold text-[#2D2319]/70 px-1">
+          <span>PATH TILES ({selectedPart.lessons.length} STEPS)</span>
+          <span>4-BOX CYCLE: INTRO → REVIEW → PRACTICE → PLAY</span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 pt-2">
+          {selectedPart.lessons.map((lesson) => {
+            const score = courseScores[lesson.id];
+            const isCompleted = Boolean(score && score.completed);
+            const isUnlocked = isLessonUnlocked(lesson, userProgress);
+            const isNextActive = lesson.index === unlockedLevel;
+
+            return (
+              <div
+                key={lesson.id}
+                onClick={() => handleLaunchSpineLesson(selectedPart, lesson)}
+                className={`relative aspect-square p-3 border-2 border-[#2D2319] rounded-2xl flex flex-col justify-between cursor-pointer transition-all duration-150 select-none ${
+                  isNextActive
+                    ? 'bg-[#F6C445] text-[#2D2319] shadow-[5px_5px_0px_#2D2319] ring-2 ring-[#1888ff] -translate-y-1'
+                    : isCompleted
+                    ? 'bg-[#C7E8CA] text-[#2D2319] shadow-[3px_3px_0px_#2D2319] hover:shadow-[5px_5px_0px_#2D2319] hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5'
+                    : isUnlocked
+                    ? 'bg-white text-[#2D2319] shadow-[3px_3px_0px_#2D2319] hover:shadow-[5px_5px_0px_#2D2319] hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5'
+                    : 'bg-[#FDF8EE]/60 text-[#2D2319]/40 border-2 border-[#2D2319]/30 opacity-60 shadow-[1px_1px_0px_#2D2319] cursor-not-allowed'
+                }`}
+              >
+                {/* Top Row: Global Index + Type Badge */}
+                <div className="flex items-center justify-between">
+                  <span className="text-sm sm:text-base font-mono font-black text-[#2D2319]">
+                    #{lesson.index}
+                  </span>
+                  {renderTypeBadge(lesson)}
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-[#2D2319]/15 flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold text-[#2D2319]/70">
-                    {course.grade}
+                {/* Center: Key stamp / Game title */}
+                <div className="flex-1 flex flex-col items-center justify-center my-1 text-center">
+                  {lesson.type === 'play' ? (
+                    <div className="w-10 h-10 rounded-xl bg-white border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-lg">
+                      {lesson.gameId === 'drop-chits' ? '🪂' : lesson.gameId === 'paper-planes' ? '✈️' : lesson.gameId === 'local-line' ? '🚂' : lesson.gameId === 'fuse-desk' ? '💣' : lesson.gameId === 'patch-terminal' ? '💻' : lesson.gameId === 'pit-lane' ? '🏎️' : '📰'}
+                    </div>
+                  ) : lesson.type === 'motion' ? (
+                    <div className="w-10 h-10 rounded-xl bg-white border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-[#2D2319]">
+                      <Play className="w-4 h-4 fill-current ml-0.5 text-[#F28B82]" />
+                    </div>
+                  ) : (
+                    <div className="w-12 h-9 rounded-xl bg-white border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center font-mono font-black text-xs text-[#2D2319] px-1 truncate">
+                      {lesson.keys ? lesson.keys.filter(k => k !== ' ').slice(0, 3).join('·') || 'SPACE' : '⌨'}
+                    </div>
+                  )}
+                </div>
+
+                {/* Bottom: Title & Stars / Lock */}
+                <div className="border-t border-[#2D2319]/20 pt-1 flex items-center justify-between">
+                  <span className="text-[10px] font-black text-[#2D2319] truncate block max-w-[80px]">
+                    {lesson.title.replace('Keys ', '').replace('Review: ', '').replace('Practice: ', '').replace('Play: ', '')}
                   </span>
-                  <button
-                    onClick={() => handleLaunchCourse(course.id)}
-                    className="px-3.5 py-1.5 rounded-lg bg-[#F6C445] hover:bg-[#F28B82] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-bold text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
-                  >
-                    Open Course
-                  </button>
+
+                  {isCompleted ? (
+                    <span className="text-[10px] font-mono font-black text-amber-950 bg-amber-200 px-1 rounded border border-[#2D2319]">
+                      ★ {score.stars || 5}
+                    </span>
+                  ) : !isUnlocked ? (
+                    <Lock className="w-3 h-3 text-[#2D2319]/40" />
+                  ) : (
+                    <span className="text-[9px] font-mono font-bold text-[#2D2319]/50">
+                      {lesson.goalWpm}wpm
+                    </span>
+                  )}
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      )}
+      </div>
 
     </div>
   );

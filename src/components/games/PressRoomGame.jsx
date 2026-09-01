@@ -24,13 +24,13 @@ export default function PressRoomGame({
   const lastSpawnRef = useRef(0);
   const totalGoal = 30;
 
-  // Key bank: from lesson or default home row
-  const keyPool = lesson?.targetKeys && lesson.targetKeys.length > 0
-    ? lesson.targetKeys.filter(k => k !== ' ' && k !== 'all')
-    : ['f', 'j', 'd', 'k', 's', 'l', 'a', ';'];
+  // Key bank: from lesson or allowedKeys or default home row
+  const rawKeys = lesson?.keys || lesson?.targetKeys || ['f', 'j', 'd', 'k', 's', 'l', 'a', ';'];
+  const keyPool = rawKeys.filter(k => k && k !== ' ' && k !== 'all');
+  const validKeyPool = keyPool.length > 0 ? keyPool : ['f', 'j', 'd', 'k'];
 
   const spawnSlip = useCallback(() => {
-    const char = keyPool[Math.floor(Math.random() * keyPool.length)];
+    const char = validKeyPool[Math.floor(Math.random() * validKeyPool.length)];
     const newSlip = {
       id: Date.now() + Math.random(),
       char,
