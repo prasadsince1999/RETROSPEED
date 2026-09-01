@@ -67,34 +67,34 @@ const WORKSHOP_GAMES = [
     id: 'press-room',
     title: 'Press Room',
     badge: 'Letters',
-    badgeColor: 'bg-[#4BA3E3]',
+    badgeColor: 'bg-[#4BA3E3] text-[#2D2319]',
     description: 'Single-key reflex factory: Rubber stamp slams down on moving paper slips.',
     icon: Printer,
-    focus: 'Part 1–2 Home Row'
+    focus: 'Part 1–2 Home'
   },
   {
     id: 'paper-planes',
     title: 'Paper Planes',
     badge: 'Short Words',
-    badgeColor: 'bg-[#48B89F]',
+    badgeColor: 'bg-[#48B89F] text-[#2D2319]',
     description: 'Origami flight: Type words on ascending paper notes to fold and launch them.',
     icon: Send,
-    focus: 'Part 2 Home Words'
+    focus: 'Part 2 Words'
   },
   {
     id: 'local-line',
     title: 'Local Line',
     badge: 'Pace',
-    badgeColor: 'bg-[#F6C445]',
+    badgeColor: 'bg-[#F6C445] text-[#2D2319]',
     description: 'Commuter rail duel: Clean words accelerate your coach; typos slam the brakes.',
     icon: Train,
-    focus: 'Part 3–4 Mixed Words'
+    focus: 'Part 3–4 Mixed'
   },
   {
     id: 'night-market',
     title: 'Night Market',
     badge: 'Accuracy',
-    badgeColor: 'bg-[#F28B82]',
+    badgeColor: 'bg-[#F28B82] text-[#2D2319]',
     description: 'Counter dispatch: Market order slips slide in from the right. Type item names to stamp PAID.',
     icon: ShoppingBag,
     focus: 'Part 4 Phrases'
@@ -103,7 +103,7 @@ const WORKSHOP_GAMES = [
     id: 'drop-chits',
     title: 'Drop Slips',
     badge: 'Falling Words',
-    badgeColor: 'bg-[#C3A6E8]',
+    badgeColor: 'bg-[#C3A6E8] text-[#2D2319]',
     description: 'Sorting rail defense: Type words on falling paper slips before they reach the bottom.',
     icon: FileText,
     focus: 'Part 6 Speed'
@@ -112,16 +112,16 @@ const WORKSHOP_GAMES = [
     id: 'fuse-desk',
     title: 'Fuse Box',
     badge: 'Root Words',
-    badgeColor: 'bg-[#F6C445]',
+    badgeColor: 'bg-[#F6C445] text-[#2D2319]',
     description: 'Envelope pressure: Submit words containing the target root before the fuse burns.',
     icon: FlameKindling,
-    focus: 'Part 5 Symbols & Roots'
+    focus: 'Part 5 Symbols'
   },
   {
     id: 'pit-lane',
     title: 'Pit Lane',
     badge: '60s Race',
-    badgeColor: 'bg-[#48B89F]',
+    badgeColor: 'bg-[#48B89F] text-[#2D2319]',
     description: 'Typewriter duel: Two mechanical typewriters race on paper roads powered by live WPM.',
     icon: Car,
     focus: 'Part 6 Velocity'
@@ -130,10 +130,10 @@ const WORKSHOP_GAMES = [
     id: 'patch-terminal',
     title: 'Patch Terminal',
     badge: 'Code Syntax',
-    badgeColor: 'bg-[#2D2319]',
+    badgeColor: 'bg-[#2D2319] text-[#FDF8EE]',
     description: 'Clean code workbench: Patch single falling lines of real code syntax without errors.',
     icon: Terminal,
-    focus: 'Part 8 Pro Developers'
+    focus: 'Part 8 Pro'
   }
 ];
 
@@ -262,29 +262,33 @@ export default function ChallengeHub({
                 className="bg-[var(--rs-paper-alt)] hover:bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col justify-between transition-all group"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className={`px-2 py-0.5 rounded text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] ${game.badgeColor}`}>
+                  {/* Top Row: Badge & Part Focus */}
+                  <div className="flex items-center justify-between gap-2 mb-2.5">
+                    <span className={`px-2 py-0.5 rounded font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] shrink-0 ${game.badgeColor}`}>
                       {game.badge}
                     </span>
-                    <span className="text-[10px] font-mono font-bold text-[#2D2319]/60">
+                    <span className="text-[10px] font-mono font-bold text-[#2D2319]/70 text-right truncate">
                       {game.focus}
                     </span>
                   </div>
 
-                  <div className="flex items-center space-x-2.5 mt-1">
-                    <div className="w-8 h-8 rounded-lg bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center justify-center text-[#2D2319] shrink-0">
-                      <Icon className="w-4 h-4" />
+                  {/* Icon & Title Row */}
+                  <div className="flex items-center space-x-2.5 mt-2 min-h-[44px]">
+                    <div className="w-9 h-9 rounded-lg bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center justify-center text-[#2D2319] shrink-0">
+                      <Icon className="w-4.5 h-4.5" />
                     </div>
-                    <h3 className="font-black text-base text-[#2D2319] font-display">
+                    <h3 className="font-black text-base text-[#2D2319] font-display leading-tight">
                       {game.title}
                     </h3>
                   </div>
 
-                  <p className="text-xs text-[#2D2319]/80 font-mono mt-2 leading-relaxed">
+                  {/* Description Paragraph */}
+                  <p className="text-xs text-[#2D2319]/80 font-mono mt-2 leading-relaxed min-h-[72px]">
                     {game.description}
                   </p>
                 </div>
 
+                {/* Footer Controls */}
                 <div className="mt-4 pt-3 border-t border-[#2D2319]/15 flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold text-[#2D2319]/70">
                     {isGameUnlocked(game.id, userProgress) ? 'Full Edition' : 'Requires Unlock'}
