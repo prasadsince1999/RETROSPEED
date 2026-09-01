@@ -3,9 +3,9 @@ import { getKeyForChar } from '../data/keyboardLayout';
 
 /**
  * Authentic EdClub Vector Hand Guide
- * 100% exact replica of EdClub reference (media_1788287362532.png):
+ * 100% exact replica of EdClub reference:
  * - Natural fanned hand silhouette with straight wrist bottom
- * - Smooth outward thumbs with rounded tips
+ * - Smooth outward thumbs with rounded tips (zero loops)
  * - Deep inter-finger valley lines
  * - Large, perfectly centered colored circle dots
  * - Active finger: Solid vibrant rounded capsule covering the active finger
@@ -63,7 +63,7 @@ export default function HandGuide({
           <g id="left-hand">
             {/* Left Hand Outer Silhouette */}
             <path
-              d="M 38 175 L 38 150 C 38 128 20 108 20 85 C 20 62 21 42 26 34 C 30 24 44 24 48 34 C 51 44 52 70 52 86 M 52 86 C 52 66 53 38 58 26 C 62 16 76 16 80 26 C 83 38 84 66 84 86 M 84 86 C 84 62 85 28 90 18 C 94 8 108 8 112 18 C 115 28 116 62 116 86 M 116 86 C 116 66 117 38 122 26 C 126 16 140 16 144 26 C 147 38 144 75 140 96 C 137 106 138 114 145 118 C 154 122 174 116 178 108 C 182 98 172 90 160 96 C 144 104 126 128 116 150 L 116 175"
+              d="M 38 175 L 38 150 C 38 128 20 108 20 85 C 20 62 21 42 26 34 C 30 24 44 24 48 34 C 51 44 52 70 52 86 M 52 86 C 52 66 53 38 58 26 C 62 16 76 16 80 26 C 83 38 84 66 84 86 M 84 86 C 84 62 85 28 90 18 C 94 8 108 8 112 18 C 115 28 116 62 116 86 M 116 86 C 116 66 117 38 122 26 C 126 16 140 16 144 26 C 147 38 144 75 140 96 C 138 108 142 118 150 122 C 158 126 168 126 174 130 C 180 134 180 144 172 148 C 160 154 136 150 116 152 L 116 175"
               fill="#ffffff"
               stroke="#4b5563"
               strokeWidth="2.6"
@@ -150,7 +150,7 @@ export default function HandGuide({
             {/* ACTIVE THUMB: LEFT THUMB */}
             {isLeftThumb && (
               <path
-                d="M 140 98 C 137 110 138 118 145 124 C 154 130 174 125 178 116 C 182 106 172 98 160 104 C 144 112 126 132 116 150 C 116 140 132 115 140 98 Z"
+                d="M 140 96 C 138 108 142 118 150 122 C 158 126 168 126 174 130 C 180 134 180 144 172 148 C 160 154 136 150 116 152 C 116 140 132 115 140 96 Z"
                 fill={COLORS.thumb}
                 stroke="#4b5563"
                 strokeWidth="2.6"
@@ -166,7 +166,7 @@ export default function HandGuide({
           <g id="right-hand" transform="translate(380, 0) scale(-1, 1)">
             {/* Right Hand Outer Silhouette */}
             <path
-              d="M 38 175 L 38 150 C 38 128 20 108 20 85 C 20 62 21 42 26 34 C 30 24 44 24 48 34 C 51 44 52 70 52 86 M 52 86 C 52 66 53 38 58 26 C 62 16 76 16 80 26 C 83 38 84 66 84 86 M 84 86 C 84 62 85 28 90 18 C 94 8 108 8 112 18 C 115 28 116 62 116 86 M 116 86 C 116 66 117 38 122 26 C 126 16 140 16 144 26 C 147 38 144 75 140 96 C 137 106 138 114 145 118 C 154 122 174 116 178 108 C 182 98 172 90 160 96 C 144 104 126 128 116 150 L 116 175"
+              d="M 38 175 L 38 150 C 38 128 20 108 20 85 C 20 62 21 42 26 34 C 30 24 44 24 48 34 C 51 44 52 70 52 86 M 52 86 C 52 66 53 38 58 26 C 62 16 76 16 80 26 C 83 38 84 66 84 86 M 84 86 C 84 62 85 28 90 18 C 94 8 108 8 112 18 C 115 28 116 62 116 86 M 116 86 C 116 66 117 38 122 26 C 126 16 140 16 144 26 C 147 38 144 75 140 96 C 138 108 142 118 150 122 C 158 126 168 126 174 130 C 180 134 180 144 172 148 C 160 154 136 150 116 152 L 116 175"
               fill="#ffffff"
               stroke="#4b5563"
               strokeWidth="2.6"
