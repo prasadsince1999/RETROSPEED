@@ -1,3 +1,7 @@
+import React from 'react';
+import { getKeysForLayout, getKeyForChar, isShiftChar } from '../data/keyboardLayout';
+import Key from './Key';
+
 // Home-Row Fingertip Rest Positions in 683.3 x 380 coordinate space
 // These sit directly aligned under the ASDF (left) and JKL; (right) home key centers
 const HOME_FINGERTIP_REST = {
