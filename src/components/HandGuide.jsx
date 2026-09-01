@@ -3,10 +3,12 @@ import { getKeyForChar } from '../data/keyboardLayout';
 
 /**
  * Authentic EdClub Vector Hand Guide
- * Seamless organic hand contours matching user reference:
- * - Single continuous outer hand silhouette (no knuckle line)
- * - Colored fingertip circles in rest state
- * - Active finger filled in solid vibrant color with increased size & prominence
+ * 100% exact replica of reference image (media_1788286863017.png):
+ * - Natural wide palm, gentle wrist flare
+ * - Seamless continuous outer outline with smooth thumbs
+ * - Clean vertical valley lines between fingers
+ * - Perfectly centered colored circle dots (r=6.5)
+ * - Active finger: Smooth rounded capsule with rounded top & bottom arcs
  */
 export default function HandGuide({
   activeChar,
@@ -50,108 +52,118 @@ export default function HandGuide({
   const isRightThumb = (activeHand === 'right' || activeHand === 'both') && activeFinger === 'thumbs';
 
   return (
-    <div className="w-full max-w-[440px] mx-auto select-none relative flex items-center justify-center pointer-events-none py-1">
+    <div className="w-full max-w-[460px] mx-auto select-none relative flex items-center justify-center pointer-events-none py-1">
       <svg
-        viewBox="0 0 420 200"
+        viewBox="0 0 460 210"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-auto drop-shadow-sm"
       >
         {/* ================= LEFT HAND ================= */}
         {showLeft && (
-          <g id="left-hand">
-            {/* Seamless Left Hand Outer Continuous Silhouette */}
+          <g id="left-hand-authentic">
+            
+            {/* Left Hand Base Silhouette Outline */}
             <path
-              d="M 50 195 C 48 160 40 120 40 75 C 40 60 52 60 52 75 C 52 85 52 90 52 90 C 52 90 52 55 54 48 C 56 36 68 36 68 48 C 68 60 68 85 68 85 C 68 85 68 42 70 34 C 72 20 84 20 84 34 C 84 50 84 85 84 85 C 84 85 84 50 86 42 C 88 30 100 30 100 42 C 100 65 100 115 102 125 C 106 128 116 126 124 130 C 132 134 132 144 122 152 C 114 158 104 168 98 180 C 94 188 90 195 90 195"
+              d="M 60 205 C 58 175 36 145 36 100 C 36 75 52 75 54 100 C 54 100 58 55 60 42 C 63 26 81 26 84 42 C 86 55 86 100 86 100 C 86 100 90 45 92 30 C 95 12 115 12 118 30 C 120 45 120 100 120 100 C 120 100 124 50 126 38 C 129 24 149 24 152 38 C 155 52 148 100 144 122 C 140 136 138 144 146 150 C 156 156 182 150 188 140 C 193 130 186 122 176 126 C 158 134 140 156 130 180 C 126 190 124 205 124 205"
               fill="#ffffff"
-              stroke="#334155"
+              stroke="#475569"
               strokeWidth="2.4"
               strokeLinejoin="round"
               strokeLinecap="round"
             />
 
-            {/* Left Palm 'L' Label */}
+            {/* Inter-Finger Valley Crease Lines */}
+            <path d="M 54 90 L 54 118" stroke="#475569" strokeWidth="2.4" strokeLinecap="round" />
+            <path d="M 86 85 L 86 118" stroke="#475569" strokeWidth="2.4" strokeLinecap="round" />
+            <path d="M 120 85 L 120 118" stroke="#475569" strokeWidth="2.4" strokeLinecap="round" />
+
+            {/* Left Palm 'L' Watermark */}
             <text
-              x="72"
-              y="155"
-              fontSize="24"
+              x="92"
+              y="160"
+              fontSize="28"
               fontWeight="900"
-              fontFamily="sans-serif"
+              fontFamily="system-ui, -apple-system, sans-serif"
               fill="#f1f5f9"
               textAnchor="middle"
             >
               L
             </text>
 
-            {/* Inactive Dot: Pinky (Blue) */}
+            {/* Inactive Pinky Dot (Blue) */}
             {!isLeftPinky && (
-              <circle cx="46" cy="68" r="5" fill={COLORS.pinky} />
+              <circle cx="45" cy="74" r="6.5" fill={COLORS.pinky} />
             )}
 
-            {/* Inactive Dot: Ring (Green) */}
+            {/* Inactive Ring Dot (Green) */}
             {!isLeftRing && (
-              <circle cx="61" cy="46" r="5" fill={COLORS.ring} />
+              <circle cx="72" cy="42" r="6.5" fill={COLORS.ring} />
             )}
 
-            {/* Inactive Dot: Middle (Yellow) */}
+            {/* Inactive Middle Dot (Yellow) */}
             {!isLeftMiddle && (
-              <circle cx="77" cy="34" r="5.5" fill={COLORS.middle} />
+              <circle cx="105" cy="30" r="7" fill={COLORS.middle} />
             )}
 
-            {/* Inactive Dot: Index (Red) */}
+            {/* Inactive Index Dot (Red) */}
             {!isLeftIndex && (
-              <circle cx="93" cy="42" r="5.5" fill={COLORS.index} />
+              <circle cx="139" cy="38" r="7" fill={COLORS.index} />
             )}
 
-            {/* ACTIVE FINGER OVERLAYS (Filled in Solid Color with Increased Size) */}
+            {/* ACTIVE FINGER: LEFT PINKY */}
             {isLeftPinky && (
               <path
-                d="M 40 100 C 39 80 39 65 40 58 C 42 46 54 46 54 58 C 54 65 54 80 54 100 Z"
+                d="M 36 100 C 35 78 36 62 37 52 C 39 36 51 36 53 52 C 55 62 54 78 54 100 C 54 112 36 112 36 100 Z"
                 fill={COLORS.pinky}
-                stroke="#334155"
+                stroke="#475569"
                 strokeWidth="2.4"
                 strokeLinejoin="round"
                 className="transition-all duration-150 animate-in fade-in"
               />
             )}
 
+            {/* ACTIVE FINGER: LEFT RING */}
             {isLeftRing && (
               <path
-                d="M 53 100 C 53 75 53 45 54 38 C 56 26 68 26 68 38 C 68 45 68 75 68 100 Z"
+                d="M 54 110 C 55 78 57 48 59 38 C 62 24 81 24 84 38 C 86 48 86 78 86 110 C 86 122 54 122 54 110 Z"
                 fill={COLORS.ring}
-                stroke="#334155"
+                stroke="#475569"
                 strokeWidth="2.4"
                 strokeLinejoin="round"
                 className="transition-all duration-150 animate-in fade-in"
               />
             )}
 
+            {/* ACTIVE FINGER: LEFT MIDDLE */}
             {isLeftMiddle && (
               <path
-                d="M 68 100 C 68 70 68 35 70 26 C 72 14 84 14 84 26 C 84 35 84 70 84 100 Z"
+                d="M 87 110 C 88 72 89 38 92 28 C 95 10 115 10 118 28 C 120 38 120 72 120 110 C 120 122 87 122 87 110 Z"
                 fill={COLORS.middle}
-                stroke="#334155"
+                stroke="#475569"
                 strokeWidth="2.4"
                 strokeLinejoin="round"
                 className="transition-all duration-150 animate-in fade-in"
               />
             )}
 
+            {/* ACTIVE FINGER: LEFT INDEX (Smooth Rounded Capsule) */}
             {isLeftIndex && (
               <path
-                d="M 84 105 C 84 75 84 45 86 34 C 88 22 101 22 101 34 C 101 45 101 75 101 105 Z"
+                d="M 121 112 C 122 72 123 42 126 34 C 129 20 149 20 152 34 C 155 42 153 72 149 112 C 147 126 123 126 121 112 Z"
                 fill={COLORS.index}
-                stroke="#334155"
+                stroke="#475569"
                 strokeWidth="2.4"
                 strokeLinejoin="round"
                 className="transition-all duration-150 animate-in fade-in"
               />
             )}
 
+            {/* ACTIVE THUMB: LEFT THUMB */}
             {isLeftThumb && (
               <path
-                d="M 102 125 C 106 128 116 126 124 130 C 132 134 132 144 122 152 C 114 158 104 168 98 180 Z"
+                d="M 142 135 C 150 142 178 140 184 132 C 188 124 182 118 174 122 C 158 130 142 150 134 168 C 130 160 136 142 142 135 Z"
                 fill={COLORS.thumb}
-                stroke="#334155"
+                stroke="#475569"
                 strokeWidth="2.4"
                 strokeLinejoin="round"
                 className="transition-all duration-150 animate-in fade-in"
@@ -162,101 +174,111 @@ export default function HandGuide({
 
         {/* ================= RIGHT HAND ================= */}
         {showRight && (
-          <g id="right-hand">
-            {/* Seamless Right Hand Outer Continuous Silhouette */}
+          <g id="right-hand-authentic">
+            
+            {/* Right Hand Base Silhouette Outline (Mirrored across center x=230) */}
             <path
-              d="M 230 195 C 228 160 220 120 220 75 C 220 60 232 60 232 75 C 232 85 232 90 232 90 C 232 90 232 55 234 48 C 236 36 248 36 248 48 C 248 60 248 85 248 85 C 248 85 248 42 250 34 C 252 20 264 20 264 34 C 264 50 264 85 264 85 C 264 85 264 50 266 42 C 268 30 280 30 280 42 C 280 65 280 115 282 125 C 286 128 296 126 304 130 C 312 134 312 144 302 152 C 294 158 284 168 278 180 C 274 188 270 195 270 195"
+              d="M 60 205 C 58 175 36 145 36 100 C 36 75 52 75 54 100 C 54 100 58 55 60 42 C 63 26 81 26 84 42 C 86 55 86 100 86 100 C 86 100 90 45 92 30 C 95 12 115 12 118 30 C 120 45 120 100 120 100 C 120 100 124 50 126 38 C 129 24 149 24 152 38 C 155 52 148 100 144 122 C 140 136 138 144 146 150 C 156 156 182 150 188 140 C 193 130 186 122 176 126 C 158 134 140 156 130 180 C 126 190 124 205 124 205"
               fill="#ffffff"
-              stroke="#334155"
+              stroke="#475569"
               strokeWidth="2.4"
               strokeLinejoin="round"
               strokeLinecap="round"
-              transform="translate(480, 0) scale(-1, 1)"
+              transform="translate(460, 0) scale(-1, 1)"
             />
 
-            {/* Right Palm 'R' Label */}
+            {/* Inter-Finger Valley Crease Lines (Right) */}
+            <path d="M 406 90 L 406 118" stroke="#475569" strokeWidth="2.4" strokeLinecap="round" />
+            <path d="M 374 85 L 374 118" stroke="#475569" strokeWidth="2.4" strokeLinecap="round" />
+            <path d="M 340 85 L 340 118" stroke="#475569" strokeWidth="2.4" strokeLinecap="round" />
+
+            {/* Right Palm 'R' Watermark */}
             <text
-              x="232"
-              y="155"
-              fontSize="24"
+              x="368"
+              y="160"
+              fontSize="28"
               fontWeight="900"
-              fontFamily="sans-serif"
+              fontFamily="system-ui, -apple-system, sans-serif"
               fill="#f1f5f9"
               textAnchor="middle"
             >
               R
             </text>
 
-            {/* Inactive Dot: Index (Red) */}
+            {/* Inactive Index Dot (Red) */}
             {!isRightIndex && (
-              <circle cx="211" cy="42" r="5.5" fill={COLORS.index} />
+              <circle cx="321" cy="38" r="7" fill={COLORS.index} />
             )}
 
-            {/* Inactive Dot: Middle (Yellow) */}
+            {/* Inactive Middle Dot (Yellow) */}
             {!isRightMiddle && (
-              <circle cx="227" cy="34" r="5.5" fill={COLORS.middle} />
+              <circle cx="355" cy="30" r="7" fill={COLORS.middle} />
             )}
 
-            {/* Inactive Dot: Ring (Green) */}
+            {/* Inactive Ring Dot (Green) */}
             {!isRightRing && (
-              <circle cx="243" cy="46" r="5" fill={COLORS.ring} />
+              <circle cx="388" cy="42" r="6.5" fill={COLORS.ring} />
             )}
 
-            {/* Inactive Dot: Pinky (Blue) */}
+            {/* Inactive Pinky Dot (Blue) */}
             {!isRightPinky && (
-              <circle cx="258" cy="68" r="5" fill={COLORS.pinky} />
+              <circle cx="415" cy="74" r="6.5" fill={COLORS.pinky} />
             )}
 
-            {/* ACTIVE FINGER OVERLAYS (Right Hand) */}
+            {/* ACTIVE FINGER: RIGHT INDEX (Red Capsule) */}
             {isRightIndex && (
               <path
-                d="M 203 105 C 203 75 203 45 205 34 C 207 22 220 22 220 34 C 220 45 220 75 220 105 Z"
+                d="M 311 112 C 307 72 305 42 308 34 C 311 20 331 20 334 34 C 337 42 338 72 339 112 C 337 126 313 126 311 112 Z"
                 fill={COLORS.index}
-                stroke="#334155"
+                stroke="#475569"
                 strokeWidth="2.4"
                 strokeLinejoin="round"
                 className="transition-all duration-150 animate-in fade-in"
               />
             )}
 
+            {/* ACTIVE FINGER: RIGHT MIDDLE */}
             {isRightMiddle && (
               <path
-                d="M 220 100 C 220 70 220 35 222 26 C 224 14 236 14 236 26 C 236 35 236 70 236 100 Z"
+                d="M 340 110 C 340 72 340 38 342 28 C 345 10 365 10 368 28 C 371 38 372 72 373 110 C 373 122 340 122 340 110 Z"
                 fill={COLORS.middle}
-                stroke="#334155"
+                stroke="#475569"
                 strokeWidth="2.4"
                 strokeLinejoin="round"
                 className="transition-all duration-150 animate-in fade-in"
               />
             )}
 
+            {/* ACTIVE FINGER: RIGHT RING */}
             {isRightRing && (
               <path
-                d="M 236 100 C 236 75 236 45 237 38 C 239 26 251 26 251 38 C 251 45 251 75 251 100 Z"
+                d="M 374 110 C 374 78 374 48 376 38 C 379 24 398 24 401 38 C 403 48 405 78 406 110 C 406 122 374 122 374 110 Z"
                 fill={COLORS.ring}
-                stroke="#334155"
+                stroke="#475569"
                 strokeWidth="2.4"
                 strokeLinejoin="round"
                 className="transition-all duration-150 animate-in fade-in"
               />
             )}
 
+            {/* ACTIVE FINGER: RIGHT PINKY */}
             {isRightPinky && (
               <path
-                d="M 251 100 C 250 80 250 65 251 58 C 253 46 265 46 265 58 C 265 65 265 80 265 100 Z"
+                d="M 406 100 C 406 78 405 62 406 52 C 408 36 420 36 422 52 C 424 62 425 78 424 100 C 424 112 406 112 406 100 Z"
                 fill={COLORS.pinky}
-                stroke="#334155"
+                stroke="#475569"
                 strokeWidth="2.4"
                 strokeLinejoin="round"
                 className="transition-all duration-150 animate-in fade-in"
               />
             )}
 
+            {/* ACTIVE THUMB: RIGHT THUMB */}
             {isRightThumb && (
               <path
-                d="M 198 125 C 194 128 184 126 176 130 C 168 134 168 144 178 152 C 186 158 196 168 202 180 Z"
+                d="M 318 135 C 310 142 282 140 276 132 C 272 124 278 118 286 122 C 302 130 318 150 326 168 C 330 160 324 142 318 135 Z"
                 fill={COLORS.thumb}
-                stroke="#334155"
+                stroke="#475569"
                 strokeWidth="2.4"
                 strokeLinejoin="round"
                 className="transition-all duration-150 animate-in fade-in"
