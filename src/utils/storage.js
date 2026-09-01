@@ -65,9 +65,16 @@ export const KEY_FINGER_MAPPING = {
 // Pure, honest empty state for new installations
 export function getDefaultProgress() {
   return {
-    activeCourseId: 'keystroke-foundations',
-    enrolledCourses: ['keystroke-foundations'],
+    activeCourseId: 'retrospeed-odyssey',
+    enrolledCourses: ['retrospeed-odyssey', 'keystroke-foundations'],
     courses: {
+      'retrospeed-odyssey': {
+        unlockedLevel: 1,
+        scores: {},
+        totalPoints: 0,
+        totalStars: 0,
+        totalTimeSeconds: 0
+      },
       'keystroke-foundations': {
         unlockedLevel: 1,
         scores: {},

@@ -51,7 +51,7 @@ function ViewLoadingFallback() {
 
 export default function App() {
   const [userProgress, setUserProgress] = useState(loadProgress());
-  const [activeCourseId, setActiveCourseId] = useState(userProgress.activeCourseId || 'keystroke-foundations');
+  const [activeCourseId, setActiveCourseId] = useState(userProgress.activeCourseId || 'retrospeed-odyssey');
   const [currentView, setCurrentView] = useState('home');
   const [isViewingMap, setIsViewingMap] = useState(false);
   const [shopInitialTab, setShopInitialTab] = useState('themes');
@@ -305,7 +305,7 @@ export default function App() {
   const handleResetAllData = () => {
     const fresh = resetAllProgress();
     setUserProgress(fresh);
-    setActiveCourseId('keystroke-foundations');
+    setActiveCourseId('retrospeed-odyssey');
     setCurrentView('home');
   };
 
