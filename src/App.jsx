@@ -159,8 +159,16 @@ export default function App() {
     setJumpWarningLesson(null);
     setGameLaunchOrigin(origin);
 
-    if (lesson.type === 'video') {
-      setCurrentView('video');
+    const isMotionOrVideo = 
+      lesson.type === 'video' || 
+      lesson.type === 'motion' || 
+      lesson.renderEngine === 'motion' || 
+      /introduction\s+to\s+typing/i.test(lesson.title || '') ||
+      /sit\s+straight/i.test(lesson.title || '') ||
+      /think\s+ideas/i.test(lesson.title || '');
+
+    if (isMotionOrVideo) {
+      setCurrentView('motion');
     } else if (lesson.type === 'game') {
       const gId = (lesson.gameId || lesson.gameApp || lesson.activityApp || '').toLowerCase();
       const title = (lesson.title || '').toLowerCase();

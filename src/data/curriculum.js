@@ -30,14 +30,15 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
         const lessonNumber = l.id || globalIndex;
         const targetKeys = l.keys || [];
         const rawText = l.text || `Practice typing: ${l.title}`;
+        const isMotion = l.type === 'motion' || l.type === 'video' || (l.title && /introduction\s+to\s+typing/i.test(l.title));
         const isGame = l.type === 'game' || !!l.gameId;
-        const renderEngine = isGame ? (l.gameId || 'press-room') : (l.type === 'motion' ? 'motion' : 'normal');
+        const renderEngine = isGame ? (l.gameId || 'press-room') : (isMotion ? 'motion' : 'normal');
 
         playableLessons.push({
           id: lessonNumber,
           rawId: l.id || lessonNumber,
           title: cleanString(l.title),
-          type: isGame ? 'game' : (l.type || 'practice'),
+          type: isGame ? 'game' : (isMotion ? 'motion' : (l.type || 'practice')),
           targetKeys,
           text: rawText,
           goalWpm: l.goalWpm || 20,
@@ -219,9 +220,10 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
       // Determine robust lesson type
       let type = 'practice';
       const isIntroName = /^Keys?\s+[a-z0-9;,./\-=\[\]\\'`~`!@#$%^&*()_+{}|:"<>?]/i.test(name) || /space\s*bar|shift\s*key/i.test(name);
+      const isMotionIntro = item.lessonType === 'video' || item.type === 'video' || item.type === 'motion' || item.videoId || item.activityApp?.includes('video') || /introduction\s+to\s+typing/i.test(name) || /sit\s+straight/i.test(name) || /think\s+ideas/i.test(name);
 
-      if (item.lessonType === 'video' || item.videoId || item.activityApp?.includes('video')) {
-        type = 'video';
+      if (isMotionIntro) {
+        type = 'motion';
       } else if (item.isGame || item.lessonType === 'game' || name.startsWith('Play:') || item.activityApp?.includes('game') || gameEngine !== null) {
         type = 'game';
         if (!gameEngine) {
@@ -235,7 +237,7 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
       const cleanLetters = rawText.replace(/\s+/g, '').split('');
 
       // Auto-detect code formatting if renderEngine is code, or text contains code syntax/newlines/tabs
-      const renderEngine = type === 'game' ? gameEngine : (item.renderEngine || (course.id === 'syntax-forge' || course.id === 'code-typing' || rawText.includes('\n') || rawText.includes('\t') || rawText.includes('{') || rawText.includes(';') ? 'code' : 'normal'));
+      const renderEngine = type === 'game' ? gameEngine : (type === 'motion' ? 'motion' : (item.renderEngine || (course.id === 'syntax-forge' || course.id === 'code-typing' || rawText.includes('\n') || rawText.includes('\t') || rawText.includes('{') || rawText.includes(';') ? 'code' : 'normal')));
       const activityApp = type === 'game' ? (item.activityApp || gameEngine) : item.activityApp;
 
       playableLessons.push({
