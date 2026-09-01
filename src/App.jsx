@@ -11,6 +11,7 @@ import QuickDrillPlayer from './components/QuickDrillPlayer';
 import ShopView from './components/ShopView';
 import UnlockModal from './components/UnlockModal';
 import { getCurriculumForCourse } from './data/curriculum';
+import { SPINE_PARTS } from './data/spineCurriculum';
 import { loadProgress, saveLessonResult, saveProgress, resetAllProgress } from './utils/storage';
 import { sound } from './utils/audio';
 import { isGameUnlocked, isLessonUnlocked } from './utils/license';
@@ -226,12 +227,32 @@ export default function App() {
     setScoreModalStats(null);
     setJumpWarningLesson(null);
     setGameLaunchOrigin('learn');
+    setActiveLesson(spineLesson);
 
     if (spineLesson.isShortcut) {
       setCurrentView('shortcuts');
     } else if (spineLesson.type === 'video' || spineLesson.type === 'motion') {
-      setActiveLesson(spineLesson);
       setCurrentView('video');
+    } else if (spineLesson.type === 'game') {
+      const gId = (spineLesson.gameId || spineLesson.gameApp || '').toLowerCase();
+      const combined = `${gId} ${(spineLesson.title || '').toLowerCase()}`;
+      if (combined.includes('plane') || combined.includes('bubble') || combined.includes('paper')) {
+        setCurrentView('paper-planes');
+      } else if (combined.includes('local') || combined.includes('train') || combined.includes('monster') || combined.includes('line')) {
+        setCurrentView('local-line');
+      } else if (combined.includes('market') || combined.includes('night') || combined.includes('apple') || combined.includes('chit')) {
+        setCurrentView('night-market');
+      } else if (combined.includes('drop') || combined.includes('meteor')) {
+        setCurrentView('drop-chits');
+      } else if (combined.includes('pit') || combined.includes('lane') || combined.includes('racer') || combined.includes('velocity')) {
+        setCurrentView('pit-lane');
+      } else if (combined.includes('fuse') || combined.includes('desk') || combined.includes('bomb')) {
+        setCurrentView('fuse-desk');
+      } else if (combined.includes('patch') || combined.includes('terminal') || combined.includes('syntax') || combined.includes('hacker')) {
+        setCurrentView('patch-terminal');
+      } else {
+        setCurrentView('press-room');
+      }
     } else {
       const adapted = {
         id: spineLesson.id,
@@ -259,7 +280,8 @@ export default function App() {
 
   // Handle lesson / game completion
   const handleComplete = (stats) => {
-    const updatedProgress = saveLessonResult(activeCourseId, activeLesson.id, stats);
+    const courseKey = gameLaunchOrigin === 'learn' ? 'spine' : activeCourseId;
+    const updatedProgress = saveLessonResult(courseKey, activeLesson.id, stats);
     setUserProgress(updatedProgress);
     setScoreModalStats(stats);
   };
@@ -277,30 +299,72 @@ export default function App() {
       durationSeconds: stats.durationSeconds || Math.round((stats.durationMs || 30000) / 1000),
       errors: stats.errors || 0
     };
-    const updatedProgress = saveLessonResult('arcade', gameId, formattedStats);
+    const courseKey = gameLaunchOrigin === 'learn' ? 'spine' : 'arcade';
+    const updatedProgress = saveLessonResult(courseKey, gameId, formattedStats);
     setUserProgress(updatedProgress);
     setScoreModalStats(formattedStats);
   };
 
-  // Move to next lesson
+  // Move to next lesson seamlessly based on launch context
   const handleNextLesson = () => {
-    const nextId = activeLesson.id + 1;
-    const nextLesson = lessons.find(l => l.id === nextId);
-    if (nextLesson) {
-      launchLesson(nextLesson, 'learn');
+    if (gameLaunchOrigin === 'learn') {
+      let currentPartIdx = -1;
+      let currentLessonIdx = -1;
+
+      for (let p = 0; p < SPINE_PARTS.length; p++) {
+        const lIdx = SPINE_PARTS[p].lessons.findIndex(l => l.id === activeLesson?.id);
+        if (lIdx !== -1) {
+          currentPartIdx = p;
+          currentLessonIdx = lIdx;
+          break;
+        }
+      }
+
+      if (currentPartIdx !== -1 && currentLessonIdx !== -1) {
+        const currentPart = SPINE_PARTS[currentPartIdx];
+        if (currentLessonIdx + 1 < currentPart.lessons.length) {
+          const nextLesson = currentPart.lessons[currentLessonIdx + 1];
+          handleStartSpineLesson(currentPart, nextLesson);
+          return;
+        } else if (currentPartIdx + 1 < SPINE_PARTS.length) {
+          const nextPart = SPINE_PARTS[currentPartIdx + 1];
+          if (nextPart.lessons && nextPart.lessons.length > 0) {
+            handleStartSpineLesson(nextPart, nextPart.lessons[0]);
+            return;
+          }
+        }
+      }
+
+      // If completed entire spine or not found, return to Learn Hub
+      setCurrentView('learn');
     } else {
-      setCurrentView('map');
+      // Normal course track lesson progression
+      const currentIdx = lessons.findIndex(l => l.id === activeLesson?.id);
+      if (currentIdx !== -1 && currentIdx + 1 < lessons.length) {
+        const nextLesson = lessons[currentIdx + 1];
+        launchLesson(nextLesson, 'tracks');
+      } else {
+        setCurrentView('map');
+      }
     }
   };
 
   // Retry active lesson
   const handleRetry = () => {
-    launchLesson(activeLesson, gameLaunchOrigin);
+    setScoreModalStats(null);
+    if (gameLaunchOrigin === 'learn') {
+      handleStartSpineLesson(null, activeLesson);
+    } else {
+      launchLesson(activeLesson, gameLaunchOrigin);
+    }
   };
 
   // Exit from game back to origin room
   const handleGameExit = () => {
+    setScoreModalStats(null);
     if (gameLaunchOrigin === 'learn') {
+      setCurrentView('learn');
+    } else if (gameLaunchOrigin === 'tracks') {
       setCurrentView('map');
     } else {
       setCurrentView('play');
@@ -436,10 +500,10 @@ export default function App() {
                   stages={stages}
                   lessons={lessons}
                   userProgress={userProgress}
-                  onSelectLesson={l => launchLesson(l, 'learn')}
+                  onSelectLesson={l => launchLesson(l, 'tracks')}
                   onJumpWarning={lesson => setJumpWarningLesson(lesson)}
                   onNavigate={view => setCurrentView(view)}
-                  onBack={() => setCurrentView('learn')}
+                  onBack={() => setCurrentView('tracks')}
                 />
               )}
 
@@ -452,7 +516,7 @@ export default function App() {
                   programId={course.programId}
                   layout={course.keyboardType || 'qwerty'}
                   onComplete={handleComplete}
-                  onExit={() => setCurrentView('map')}
+                  onExit={handleGameExit}
                 />
               )}
 
@@ -460,8 +524,8 @@ export default function App() {
               {currentView === 'video' && (
                 <VideoPlayer
                   lesson={activeLesson}
-                  onComplete={() => {
-                    handleComplete({
+                  onComplete={stats => {
+                    handleComplete(stats || {
                       wpm: 25,
                       accuracy: 100,
                       stars: 5,
@@ -469,7 +533,7 @@ export default function App() {
                       durationSeconds: 15
                     });
                   }}
-                  onExit={() => setCurrentView('map')}
+                  onExit={handleGameExit}
                 />
               )}
 

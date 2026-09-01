@@ -264,19 +264,19 @@ export default function ScoreModal({
       size="lg"
       showCloseButton={false}
       closeOnOverlayClick={false}
-      className="p-0 text-center relative overflow-hidden bg-white border-2 border-slate-900 rounded-2xl shadow-[8px_8px_0_#0f172a]"
+      className="p-0 text-center relative overflow-hidden bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-2xl shadow-[8px_8px_0px_#2D2319]"
     >
       {/* Window Top Title Strip */}
-      <div className="bg-[#2c3e50] text-white px-3.5 py-1.5 flex items-center justify-between border-b-2 border-slate-900 font-mono text-xs select-none">
+      <div className="bg-[#F6C445] text-[#2D2319] px-3.5 py-1.5 flex items-center justify-between border-b-2 border-[#2D2319] font-mono text-xs select-none">
         <div className="flex items-center space-x-2">
-          <span className="text-amber-400">✦</span>
-          <span className="font-bold tracking-wider">VICTORY_FANFARE.EXE // LEVEL_CLEAR</span>
+          <span className="text-[#2D2319]">✦</span>
+          <span className="font-black tracking-wider">VICTORY_FANFARE.EXE // LEVEL_CLEAR</span>
         </div>
 
         <div className="flex items-center space-x-1">
-          <button className="w-4 h-4 bg-slate-700 border border-slate-900 rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-slate-300">_</button>
-          <button className="w-4 h-4 bg-slate-700 border border-slate-900 rounded-xs flex items-center justify-center text-[8px] font-mono font-bold leading-none text-slate-300">□</button>
-          <button onClick={handleExit} className="w-4 h-4 bg-[#f87171] border border-slate-900 rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-slate-900">✕</button>
+          <button className="w-4 h-4 bg-white border border-[#2D2319] rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-[#2D2319]">_</button>
+          <button className="w-4 h-4 bg-white border border-[#2D2319] rounded-xs flex items-center justify-center text-[8px] font-mono font-bold leading-none text-[#2D2319]">□</button>
+          <button onClick={handleExit} className="w-4 h-4 bg-[#F28B82] border border-[#2D2319] rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-[#2D2319] cursor-pointer">✕</button>
         </div>
       </div>
 
@@ -414,7 +414,7 @@ export default function ScoreModal({
               sound.playKeyClick();
               handleNext();
             }}
-            className="w-full py-3 rounded-xl bg-[#1888ff] hover:bg-[#38bdf8] text-white font-black text-sm border-2 border-slate-900 shadow-[4px_4px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-2 uppercase font-display cursor-pointer"
+            className="w-full py-3 rounded-xl bg-[#1888ff] hover:bg-[#38bdf8] text-white font-black text-sm border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-2 uppercase font-display cursor-pointer"
           >
             <span>Continue to Next Level</span>
             <ArrowRight className="w-4 h-4" />
@@ -427,7 +427,7 @@ export default function ScoreModal({
                 sound.playKeyClick();
                 handleRetry();
               }}
-              className="py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs border-2 border-slate-900 shadow-[2px_2px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+              className="py-2 rounded-xl bg-white hover:bg-slate-100 text-[#2D2319] font-bold text-xs border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-1.5 cursor-pointer font-mono"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Try Again</span>
@@ -439,10 +439,10 @@ export default function ScoreModal({
                 sound.playKeyClick();
                 handleExit();
               }}
-              className="py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs border-2 border-slate-900 shadow-[2px_2px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
+              className="py-2 rounded-xl bg-white hover:bg-slate-100 text-[#2D2319] font-bold text-xs border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center space-x-1.5 cursor-pointer font-mono"
             >
               <Map className="w-3.5 h-3.5" />
-              <span>Lesson Map</span>
+              <span>{String(lesson?.id || '').startsWith('spine-') ? 'Curriculum Hub' : 'Course Map'}</span>
             </button>
           </div>
         </div>

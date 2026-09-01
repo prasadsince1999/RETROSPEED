@@ -37,16 +37,16 @@ export default function StageDrawer({
       aria-label="Table of Contents"
     >
       <div 
-        className="w-full max-w-md bg-[#f8fafc] h-full shadow-[8px_0_0_#0f172a] flex flex-col justify-between animate-in slide-in-from-right duration-200 border-l-4 border-slate-900 font-sans"
+        className="w-full max-w-md bg-[var(--rs-paper)] h-full shadow-[-8px_0px_0px_#2D2319] flex flex-col justify-between animate-in slide-in-from-right duration-200 border-l-4 border-[#2D2319] font-sans text-[#2D2319]"
         onClick={e => e.stopPropagation()}
       >
         
         {/* Retro OS Drawer Window Header Strip */}
-        <div className="bg-[#2c3e50] text-white p-4 border-b-2 border-slate-900 flex items-center justify-between font-mono">
+        <div className="bg-[#C3A6E8] text-[#2D2319] p-4 border-b-2 border-[#2D2319] flex items-center justify-between font-mono">
           <div className="flex items-center space-x-2">
-            <BookOpen className="w-4 h-4 text-amber-300" />
-            <span className="font-bold text-xs tracking-wider">TABLE_OF_CONTENTS.TXT</span>
-            <span className="px-1.5 py-0.2 rounded bg-sky-600 text-white font-bold text-[10px]">
+            <BookOpen className="w-4 h-4 text-[#2D2319]" />
+            <span className="font-black text-xs tracking-wider">TABLE_OF_CONTENTS.TXT</span>
+            <span className="px-2 py-0.5 rounded bg-white text-[#2D2319] font-black text-[10px] border border-[#2D2319]">
               {stages.length} STAGES
             </span>
           </div>
@@ -57,7 +57,7 @@ export default function StageDrawer({
               sound.playKeyClick();
               onClose();
             }}
-            className="w-6 h-6 bg-[#f87171] hover:bg-rose-500 border-2 border-slate-900 rounded-lg flex items-center justify-center font-black text-xs text-slate-900 shadow-[1px_1px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5"
+            className="w-7 h-7 bg-[#F28B82] hover:bg-rose-400 border-2 border-[#2D2319] rounded-lg flex items-center justify-center font-black text-xs text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
             title="Close Drawer"
           >
             ✕
@@ -65,13 +65,13 @@ export default function StageDrawer({
         </div>
 
         {/* Sub-header info bar */}
-        <div className="bg-slate-100 px-4 py-2 border-b-2 border-slate-900 flex items-center justify-between text-xs font-mono font-bold text-slate-700">
+        <div className="bg-[var(--rs-paper-alt)] px-4 py-2 border-b-2 border-[#2D2319] flex items-center justify-between text-xs font-mono font-bold text-[#2D2319]">
           <span>CURRICULUM INDEX</span>
           <span>{totalLessons} TOTAL LEVELS</span>
         </div>
 
         {/* Stages List Body */}
-        <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 bg-[#f0f7fa]">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 bg-[var(--rs-paper)]">
           {stages.map((stage, idx) => {
             const isUnlocked = unlockedLevel >= stage.start;
             const stageLessonsCount = stage.end - stage.start + 1;
@@ -95,59 +95,66 @@ export default function StageDrawer({
                   onSelectStage(stage);
                   onClose();
                 }}
-                className={`p-3.5 rounded-xl border-2 border-slate-900 shadow-[3px_3px_0_#0f172a] transition-all cursor-pointer ${
+                className={`p-3.5 rounded-2xl border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] transition-all cursor-pointer ${
                   isUnlocked
                     ? 'bg-white hover:bg-amber-50 active:translate-x-0.5 active:translate-y-0.5'
-                    : 'bg-slate-200/80 opacity-60'
+                    : 'bg-[#FDF8EE]/50 opacity-60 cursor-not-allowed border-[#2D2319]/40'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center space-x-2.5 min-w-0">
-                    <div className={`w-7 h-7 rounded-lg border-2 border-slate-900 flex items-center justify-center font-mono font-black text-xs shrink-0 shadow-[1px_1px_0_#0f172a] ${
-                      isFinished 
-                        ? 'bg-[#48bb78] text-slate-950' 
-                        : isUnlocked 
-                        ? 'bg-[#1888ff] text-white' 
-                        : 'bg-slate-300 text-slate-600'
+                <div className="flex items-start justify-between gap-3">
+                  
+                  {/* Left info */}
+                  <div className="flex items-start space-x-3">
+                    <div className={`w-9 h-9 rounded-xl border-2 border-[#2D2319] flex items-center justify-center font-mono font-black text-xs shrink-0 shadow-[1px_1px_0px_#2D2319] ${
+                      isFinished
+                        ? 'bg-[#10B981] text-white'
+                        : isUnlocked
+                        ? 'bg-[#F6C445] text-[#2D2319]'
+                        : 'bg-[#FDF8EE] text-[#2D2319]/40'
                     }`}>
-                      {isFinished ? '✓' : idx + 1}
+                      {isFinished ? (
+                        <Check className="w-5 h-5 stroke-[3]" />
+                      ) : isUnlocked ? (
+                        `#${idx + 1}`
+                      ) : (
+                        <Lock className="w-4 h-4 text-[#2D2319]/40" />
+                      )}
                     </div>
 
-                    <div className="min-w-0">
-                      <h4 className="font-black text-xs sm:text-sm text-slate-900 truncate font-display">
+                    <div>
+                      <div className="flex items-center space-x-1.5">
+                        <span className="font-mono text-[10px] font-bold text-[#2D2319]/60">
+                          Levels {stage.start}–{stage.end}
+                        </span>
+                        {stage.goal && (
+                          <span className="text-[10px] font-mono font-bold text-sky-700 bg-sky-100 px-1.5 rounded border border-sky-300">
+                            {stage.goal}
+                          </span>
+                        )}
+                      </div>
+                      <h4 className="font-display font-black text-sm text-[#2D2319] mt-0.5">
                         {stage.title}
                       </h4>
-                      <div className="text-[10px] text-slate-600 font-mono font-bold">
-                        Levels {stage.start}–{stage.end} ({completedInStage}/{stageLessonsCount})
-                      </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-1.5 shrink-0">
-                    <span className={`px-2 py-0.5 rounded-md font-mono text-[10px] font-bold border border-slate-900 ${
-                      isFinished ? 'bg-emerald-200 text-emerald-950' : isUnlocked ? 'bg-sky-200 text-sky-950' : 'bg-slate-300 text-slate-700'
-                    }`}>
+                  {/* Right Progress % */}
+                  <div className="text-right shrink-0">
+                    <span className="font-mono text-xs font-black text-[#2D2319]">
                       {percent}%
                     </span>
-                    <ChevronRight className="w-4 h-4 text-slate-600" />
+                    <ChevronRight className="w-4 h-4 text-[#2D2319]/40 ml-auto mt-1" />
                   </div>
+
                 </div>
 
-                {stage.goal && (
-                  <div className="text-[10px] text-slate-700 font-mono font-bold flex items-center space-x-1 bg-amber-50 px-2 py-0.5 rounded border border-amber-300 mb-2">
-                    <Target className="w-3 h-3 text-amber-600 shrink-0" />
-                    <span className="truncate">{stage.goal}</span>
-                  </div>
-                )}
-
-                {/* Retro Segmented / Striped Progress Bar */}
-                <div className="w-full h-2.5 bg-slate-100 rounded-xs border border-slate-900 overflow-hidden">
+                {/* Progress bar */}
+                <div className="w-full h-2 bg-[var(--rs-paper)] rounded-full border border-[#2D2319] overflow-hidden mt-2.5 p-0.2">
                   <div 
-                    className={`h-full ${isFinished ? 'bg-[#48bb78]' : 'bg-[#1888ff]'}`}
-                    style={{ 
-                      width: `${percent}%`,
-                      backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(0,0,0,0.15) 3px, rgba(0,0,0,0.15) 6px)'
-                    }}
+                    className={`h-full rounded-full transition-all duration-300 ${
+                      isFinished ? 'bg-[#10B981]' : 'bg-[#F6C445]'
+                    }`}
+                    style={{ width: `${percent}%` }}
                   />
                 </div>
               </div>
@@ -156,21 +163,24 @@ export default function StageDrawer({
         </div>
 
         {/* Drawer Footer */}
-        <div className="p-3 sm:p-4 border-t-2 border-slate-900 bg-white flex items-center justify-between font-mono text-xs font-bold">
+        <div className="bg-[var(--rs-paper-alt)] p-4 border-t-2 border-[#2D2319] flex items-center justify-between font-mono text-xs font-bold text-[#2D2319]">
           <div className="flex items-center space-x-2">
-            <span className="px-2.5 py-1 rounded-lg bg-[#1888ff] text-white border-2 border-slate-900 shadow-[2px_2px_0_#0f172a]">
-              Active: Lvl {unlockedLevel} / {totalLessons}
-            </span>
+            <Award className="w-4 h-4 text-amber-500" />
+            <span>Progress: {totalStars} Stars Earned</span>
           </div>
-          
-          <span className="px-2.5 py-1 rounded-lg bg-[#fef08a] text-slate-950 border-2 border-slate-900 shadow-[2px_2px_0_#0f172a] flex items-center space-x-1 font-black">
-            <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-600" />
-            <span>{totalStars} Stars</span>
-          </span>
+          <button
+            type="button"
+            onClick={() => {
+              sound.playKeyClick();
+              onClose();
+            }}
+            className="px-3 py-1 rounded-xl bg-white hover:bg-slate-100 text-[#2D2319] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer font-display"
+          >
+            Close
+          </button>
         </div>
 
       </div>
     </div>
   );
 }
-
