@@ -3,6 +3,7 @@ import DesktopWindowShell from './components/DesktopWindowShell';
 import HomeView from './components/HomeView';
 import PracticeLobby from './components/PracticeLobby';
 import LessonMap from './components/LessonMap';
+import MyLearningsView from './components/MyLearningsView';
 import LessonPlayer from './components/LessonPlayer';
 import VideoPlayer from './components/VideoPlayer';
 import ScoreModal from './components/ScoreModal';
@@ -12,7 +13,7 @@ import ShopView from './components/ShopView';
 import UnlockModal from './components/UnlockModal';
 import { getCurriculumForCourse } from './data/curriculum';
 import { SPINE_PARTS } from './data/spineCurriculum';
-import { loadProgress, saveLessonResult, saveProgress, resetAllProgress } from './utils/storage';
+import { loadProgress, saveLessonResult, saveProgress, resetAllProgress, enrollCourse, unenrollCourse } from './utils/storage';
 import { sound } from './utils/audio';
 import { isGameUnlocked, isLessonUnlocked } from './utils/license';
 import { applyTheme, DEFAULT_THEME_ID } from './theme';
@@ -52,6 +53,8 @@ export default function App() {
   const [userProgress, setUserProgress] = useState(loadProgress());
   const [activeCourseId, setActiveCourseId] = useState(userProgress.activeCourseId || 'keystroke-foundations');
   const [currentView, setCurrentView] = useState('home');
+  const [isViewingMap, setIsViewingMap] = useState(false);
+  const [shopInitialTab, setShopInitialTab] = useState('themes');
   const [gameLaunchOrigin, setGameLaunchOrigin] = useState('play'); // 'learn' | 'play'
   
   // Drill config
@@ -96,24 +99,29 @@ export default function App() {
     }
   }, []);
 
-  // Handle course switching
-  const handleSelectCourse = (courseId, targetLevelId = null) => {
-    setActiveCourseId(courseId);
-    
-    // Enroll if not already enrolled
-    const enrolled = userProgress.enrolledCourses || ['keystroke-foundations'];
-    let updatedEnrolled = [...enrolled];
-    if (!updatedEnrolled.includes(courseId)) {
-      updatedEnrolled.push(courseId);
-    }
-
-    const updated = {
-      ...userProgress,
-      activeCourseId: courseId,
-      enrolledCourses: updatedEnrolled
-    };
+  // Handle enrolling course from Shop into personal workspace
+  const handleEnrollCourse = (courseId) => {
+    const updated = enrollCourse(userProgress, courseId);
     setUserProgress(updated);
-    saveProgress(updated);
+    setActiveCourseId(courseId);
+    setIsViewingMap(false);
+    setCurrentView('learn');
+  };
+
+  // Handle un-enrolling course from personal workspace back to Shop
+  const handleUnenrollCourse = (courseId) => {
+    const updated = unenrollCourse(userProgress, courseId);
+    setUserProgress(updated);
+    if (activeCourseId === courseId) {
+      setActiveCourseId(updated.activeCourseId);
+    }
+  };
+
+  // Handle course opening / level jumping
+  const handleSelectCourse = (courseId, targetLevelId = null) => {
+    const updated = enrollCourse(userProgress, courseId);
+    setUserProgress(updated);
+    setActiveCourseId(courseId);
 
     const newCurriculum = getCurriculumForCourse(courseId);
     if (targetLevelId) {
@@ -121,7 +129,8 @@ export default function App() {
       launchLesson(target, 'learn');
     } else {
       setActiveLesson(newCurriculum.lessons[0]);
-      setCurrentView('map');
+      setIsViewingMap(true);
+      setCurrentView('learn');
     }
   };
 
@@ -467,18 +476,50 @@ export default function App() {
                 />
               )}
 
-              {/* Room 2: Learn (Active Course Lesson Map with Stages & Level Grid) */}
+              {/* Room 2: My Learnings (Personal Space & Active Course Map) */}
               {(currentView === 'learn' || currentView === 'map' || currentView === 'tracks') && (
-                <LessonMap
-                  course={course}
-                  stages={stages}
-                  lessons={lessons}
-                  userProgress={userProgress}
-                  onSelectLesson={l => launchLesson(l, 'learn')}
-                  onJumpWarning={lesson => setJumpWarningLesson(lesson)}
-                  onNavigate={view => setCurrentView(view)}
-                  onBack={() => setCurrentView('home')}
-                />
+                isViewingMap ? (
+                  <LessonMap
+                    course={course}
+                    stages={stages}
+                    lessons={lessons}
+                    userProgress={userProgress}
+                    onSelectLesson={l => launchLesson(l, 'learn')}
+                    onJumpWarning={lesson => setJumpWarningLesson(lesson)}
+                    onNavigate={view => {
+                      if (view === 'learn' || view === 'my-learnings') {
+                        setIsViewingMap(false);
+                      } else if (view === 'shop-courses') {
+                        setShopInitialTab('courses');
+                        setCurrentView('shop');
+                      } else if (view === 'shop') {
+                        setShopInitialTab('courses');
+                        setCurrentView('shop');
+                      } else {
+                        setCurrentView(view);
+                      }
+                    }}
+                    onBack={() => setIsViewingMap(false)}
+                  />
+                ) : (
+                  <MyLearningsView
+                    userProgress={userProgress}
+                    activeCourseId={activeCourseId}
+                    onSelectCourse={courseId => {
+                      setActiveCourseId(courseId);
+                      setIsViewingMap(true);
+                    }}
+                    onUnenrollCourse={handleUnenrollCourse}
+                    onNavigate={view => {
+                      if (view === 'shop-courses') {
+                        setShopInitialTab('courses');
+                        setCurrentView('shop');
+                      } else {
+                        setCurrentView(view);
+                      }
+                    }}
+                  />
+                )
               )}
 
               {/* Computer Skills & Shortcut Chords Lab */}
@@ -638,9 +679,9 @@ export default function App() {
                   userProgress={userProgress}
                   selectedTheme={selectedTheme}
                   activeCourseId={activeCourseId}
+                  initialTab={shopInitialTab}
                   onSelectCourse={courseId => {
-                    handleSelectCourse(courseId);
-                    setCurrentView('learn');
+                    handleEnrollCourse(courseId);
                   }}
                   onSelectTheme={theme => {
                     setSelectedTheme(theme);
@@ -654,7 +695,14 @@ export default function App() {
                       sound.setPack(updated.settings.soundPack);
                     }
                   }}
-                  onNavigate={view => setCurrentView(view)}
+                  onNavigate={view => {
+                    if (view === 'shop-courses') {
+                      setShopInitialTab('courses');
+                    } else {
+                      setShopInitialTab('themes');
+                      setCurrentView(view);
+                    }
+                  }}
                 />
               )}
 

@@ -546,118 +546,129 @@ export default function ShopView({
             </div>
 
             {/* Courses Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {COURSES_CATALOG
-                .filter(course => {
-                  // Category match
-                  if (courseCategory === 'Core Touch Typing' && course.category !== 'Core Touch Typing') return false;
-                  if (courseCategory === 'Programming & Tech' && course.category !== 'Programming & Tech') return false;
-                  if (courseCategory === 'Language & Vocab' && !(course.category === 'Language & Etymology' || course.category === 'Literature & Vocabulary')) return false;
-                  if (courseCategory === 'Stories & Trivia' && !(
-                    course.category === 'Interactive Story' ||
-                    course.category === 'General Knowledge' ||
-                    course.category === 'History & Tech' ||
-                    course.category === 'Science & Nature' ||
-                    course.category === 'Music & Arts'
-                  )) return false;
+            {(() => {
+              const enrolledIds = Array.isArray(userProgress.enrolledCourses) ? userProgress.enrolledCourses : ['keystroke-foundations'];
+              const availableCourses = COURSES_CATALOG.filter(course => {
+                // Hide courses that are already enrolled in My Learnings personal space
+                if (enrolledIds.includes(course.id)) return false;
 
-                  // Search match
-                  if (courseSearch.trim()) {
-                    const query = courseSearch.toLowerCase();
-                    return (
-                      course.title.toLowerCase().includes(query) ||
-                      course.description.toLowerCase().includes(query) ||
-                      course.category.toLowerCase().includes(query)
-                    );
-                  }
-                  return true;
-                })
-                .map(course => {
-                  const isActive = activeCourseId === course.id;
-                  const headerBg = 
-                    course.titleVariant === 'teal' ? 'bg-[#48B89F]' :
-                    course.titleVariant === 'mustard' ? 'bg-[#F6C445]' :
-                    course.titleVariant === 'coral' ? 'bg-[#F28B82]' :
-                    course.titleVariant === 'lilac' ? 'bg-[#C3A6E8]' :
-                    course.titleVariant === 'dark' ? 'bg-[#2D2319] text-white' :
-                    'bg-[#4BA3E3]';
+                // Category match
+                if (courseCategory === 'Core Touch Typing' && course.category !== 'Core Touch Typing') return false;
+                if (courseCategory === 'Programming & Tech' && course.category !== 'Programming & Tech') return false;
+                if (courseCategory === 'Language & Vocab' && !(course.category === 'Language & Etymology' || course.category === 'Literature & Vocabulary')) return false;
+                if (courseCategory === 'Stories & Trivia' && !(
+                  course.category === 'Interactive Story' ||
+                  course.category === 'General Knowledge' ||
+                  course.category === 'History & Tech' ||
+                  course.category === 'Science & Nature' ||
+                  course.category === 'Music & Arts'
+                )) return false;
 
+                // Search match
+                if (courseSearch.trim()) {
+                  const query = courseSearch.toLowerCase();
                   return (
-                    <div
-                      key={course.id}
-                      className={`rounded-2xl border-2 border-[#2D2319] bg-[#FAF3E0] shadow-[4px_4px_0px_#2D2319] flex flex-col justify-between overflow-hidden transition-all ${
-                        isActive ? 'ring-2 ring-[#48B89F]' : 'hover:-translate-y-0.5'
-                      }`}
-                    >
-                      {/* Course Card Titlebar */}
-                      <div>
-                        <div className={`px-3.5 py-2 border-b-2 border-[#2D2319] flex items-center justify-between font-mono text-xs font-bold ${headerBg}`}>
-                          <div className="flex items-center space-x-1.5 truncate">
-                            <BookOpen className="w-3.5 h-3.5 shrink-0" />
-                            <span className="truncate">{course.badge || 'Course'}</span>
-                          </div>
-                          <span className="px-2 py-0.5 rounded bg-white/80 text-[#2D2319] border border-[#2D2319] text-[10px] font-black shrink-0 shadow-[1px_1px_0px_#2D2319]">
-                            {course.lessonsCount} Lessons
-                          </span>
-                        </div>
+                    course.title.toLowerCase().includes(query) ||
+                    course.description.toLowerCase().includes(query) ||
+                    course.category.toLowerCase().includes(query)
+                  );
+                }
+                return true;
+              });
 
-                        {/* Course Card Body */}
-                        <div className="p-4 space-y-2">
-                          <div className="flex items-start justify-between gap-2">
+              if (availableCourses.length === 0) {
+                return (
+                  <div className="bg-[#FAF3E0] p-8 rounded-2xl border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] text-center space-y-3">
+                    <div className="w-12 h-12 rounded-2xl bg-[#48B89F] border-2 border-[#2D2319] text-white flex items-center justify-center mx-auto shadow-[2px_2px_0px_#2D2319]">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <div className="font-display font-black text-base text-[#2D2319]">
+                      All Curricula Enrolled in My Learnings!
+                    </div>
+                    <p className="text-xs text-[#2D2319]/70 font-medium font-serif max-w-sm mx-auto">
+                      All available international touch-typing courses are currently active in your personal space.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        sound.playKeyClick();
+                        if (onNavigate) onNavigate('learn');
+                      }}
+                      className="px-5 py-2.5 bg-[#4BA3E3] hover:bg-[#3d94d3] text-white border-2 border-[#2D2319] rounded-xl font-mono text-xs font-black shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all inline-flex items-center space-x-2 cursor-pointer"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" />
+                      <span>▶ Go to My Learnings Space</span>
+                    </button>
+                  </div>
+                );
+              }
+
+              return (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {availableCourses.map(course => {
+                    const headerBg = 
+                      course.titleVariant === 'teal' ? 'bg-[#48B89F]' :
+                      course.titleVariant === 'mustard' ? 'bg-[#F6C445]' :
+                      course.titleVariant === 'coral' ? 'bg-[#F28B82]' :
+                      course.titleVariant === 'lilac' ? 'bg-[#C3A6E8]' :
+                      course.titleVariant === 'dark' ? 'bg-[#2D2319] text-white' :
+                      'bg-[#4BA3E3]';
+
+                    return (
+                      <div
+                        key={course.id}
+                        className="rounded-2xl border-2 border-[#2D2319] bg-[#FAF3E0] shadow-[4px_4px_0px_#2D2319] flex flex-col justify-between overflow-hidden transition-all hover:-translate-y-0.5"
+                      >
+                        {/* Course Card Titlebar */}
+                        <div>
+                          <div className={`px-3.5 py-2 border-b-2 border-[#2D2319] flex items-center justify-between font-mono text-xs font-bold ${headerBg}`}>
+                            <div className="flex items-center space-x-1.5 truncate">
+                              <BookOpen className="w-3.5 h-3.5 shrink-0" />
+                              <span className="truncate">{course.badge || 'Course'}</span>
+                            </div>
+                            <span className="px-2 py-0.5 rounded bg-white/80 text-[#2D2319] border border-[#2D2319] text-[10px] font-black shrink-0 shadow-[1px_1px_0px_#2D2319]">
+                              {course.lessonsCount} Lessons
+                            </span>
+                          </div>
+
+                          {/* Course Card Body */}
+                          <div className="p-4 space-y-2">
                             <h3 className="font-display font-black text-base text-[#2D2319] leading-tight">
                               {course.title}
                             </h3>
-                            {isActive && (
-                              <span className="px-2 py-0.5 rounded bg-[#C7E8CA] border border-[#2D2319] text-[10px] font-mono font-black text-[#2D2319] shrink-0 shadow-[1px_1px_0px_#2D2319] flex items-center space-x-1">
-                                <CheckCircle2 className="w-3 h-3 text-emerald-700" />
-                                <span>ACTIVE</span>
+
+                            <div className="flex items-center space-x-2 text-[10px] font-mono font-bold text-[#2D2319]/70">
+                              <span className="px-2 py-0.5 rounded bg-white border border-[#2D2319]">
+                                {course.category}
                               </span>
-                            )}
-                          </div>
+                              <span>•</span>
+                              <span>{course.grade}</span>
+                            </div>
 
-                          <div className="flex items-center space-x-2 text-[10px] font-mono font-bold text-[#2D2319]/70">
-                            <span className="px-2 py-0.5 rounded bg-white border border-[#2D2319]">
-                              {course.category}
-                            </span>
-                            <span>•</span>
-                            <span>{course.grade}</span>
+                            <p className="text-xs text-[#2D2319]/80 font-medium leading-relaxed font-serif pt-1">
+                              {course.description}
+                            </p>
                           </div>
-
-                          <p className="text-xs text-[#2D2319]/80 font-medium leading-relaxed font-serif pt-1">
-                            {course.description}
-                          </p>
                         </div>
-                      </div>
 
-                      {/* Course Card Action Footer */}
-                      <div className="p-4 pt-1">
-                        <button
-                          type="button"
-                          onClick={() => handlePickCourse(course.id)}
-                          className={`w-full py-2.5 px-4 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black transition-all flex items-center justify-center space-x-2 cursor-pointer ${
-                            isActive
-                              ? 'bg-[#C7E8CA] hover:bg-[#b2e2b6] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5'
-                              : 'bg-[#F6C445] hover:bg-[#fbd366] text-[#2D2319] shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5'
-                          }`}
-                        >
-                          {isActive ? (
-                            <>
-                              <span>▶ Open in Learn Map</span>
-                              <ArrowRight className="w-3.5 h-3.5" />
-                            </>
-                          ) : (
-                            <>
-                              <span>✦ Add to Learn & Open Course</span>
-                              <ArrowRight className="w-3.5 h-3.5" />
-                            </>
-                          )}
-                        </button>
-                      </div>
+                        {/* Course Card Action Footer */}
+                        <div className="p-4 pt-1">
+                          <button
+                            type="button"
+                            onClick={() => handlePickCourse(course.id)}
+                            className="w-full py-2.5 px-4 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black transition-all flex items-center justify-center space-x-2 cursor-pointer bg-[#F6C445] hover:bg-[#fbd366] text-[#2D2319] shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5"
+                          >
+                            <span>+ Add to My Learnings</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
 
-                    </div>
-                  );
-                })}
-            </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
 
           </div>
         )}

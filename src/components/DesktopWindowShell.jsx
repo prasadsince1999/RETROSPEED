@@ -86,7 +86,7 @@ export default function DesktopWindowShell({
   // 5 Primary Desktop Rooms in Left Sidebar
   const NAV_ITEMS = [
     { id: 'home', label: 'Home', icon: Home, highlight: 'bg-[#C7E8CA]' },
-    { id: 'learn', label: 'Learn', icon: BookOpen, highlight: 'bg-[#C7E8CA]' },
+    { id: 'learn', label: 'My Learnings', icon: BookOpen, highlight: 'bg-[#C7E8CA]' },
     { id: 'play', label: 'Play', icon: Trophy, highlight: 'bg-[#C7E8CA]' },
     { id: 'stats', label: 'Stats', icon: BarChart2, highlight: 'bg-[#C7E8CA]' },
     { id: 'shop', label: 'Shop', icon: ShoppingBag, highlight: 'bg-[#C7E8CA]' }

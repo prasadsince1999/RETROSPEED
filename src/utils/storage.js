@@ -66,7 +66,7 @@ export const KEY_FINGER_MAPPING = {
 export function getDefaultProgress() {
   return {
     activeCourseId: 'keystroke-foundations',
-    enrolledCourses: ['keystroke-foundations', 'retrospeed-odyssey', 'syntax-forge'],
+    enrolledCourses: ['keystroke-foundations'],
     courses: {
       'keystroke-foundations': {
         unlockedLevel: 1,
@@ -148,9 +148,14 @@ export function loadProgress() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
+        const enrolled = Array.isArray(parsed.enrolledCourses) && parsed.enrolledCourses.length > 0
+          ? parsed.enrolledCourses
+          : ['keystroke-foundations'];
+
         return {
           ...getDefaultProgress(),
           ...parsed,
+          enrolledCourses: enrolled,
           courses: parsed.courses || {},
           attemptLogs: parsed.attemptLogs || [],
           keyStats: parsed.keyStats || {},
@@ -166,6 +171,66 @@ export function loadProgress() {
   }
 
   return getDefaultProgress();
+}
+
+/**
+ * Enroll a course into the user's personal My Learnings space
+ */
+export function enrollCourse(userProgress, courseId) {
+  const current = userProgress || getDefaultProgress();
+  const enrolled = Array.isArray(current.enrolledCourses) ? [...current.enrolledCourses] : ['keystroke-foundations'];
+  
+  if (!enrolled.includes(courseId)) {
+    enrolled.push(courseId);
+  }
+
+  const courses = { ...(current.courses || {}) };
+  if (!courses[courseId]) {
+    courses[courseId] = {
+      unlockedLevel: 1,
+      scores: {},
+      totalPoints: 0,
+      totalStars: 0,
+      totalTimeSeconds: 0
+    };
+  }
+
+  const updated = {
+    ...current,
+    enrolledCourses: enrolled,
+    activeCourseId: courseId,
+    courses
+  };
+
+  saveProgress(updated);
+  return updated;
+}
+
+/**
+ * Remove a course from the user's personal My Learnings space
+ */
+export function unenrollCourse(userProgress, courseId) {
+  const current = userProgress || getDefaultProgress();
+  let enrolled = Array.isArray(current.enrolledCourses) ? [...current.enrolledCourses] : ['keystroke-foundations'];
+  
+  enrolled = enrolled.filter(id => id !== courseId);
+  if (enrolled.length === 0) {
+    enrolled = ['keystroke-foundations'];
+  }
+
+  let nextActiveId = current.activeCourseId;
+  if (nextActiveId === courseId) {
+    nextActiveId = enrolled[0];
+  }
+
+  const updated = {
+    ...current,
+    enrolledCourses: enrolled,
+    activeCourseId: nextActiveId
+  };
+
+  saveProgress(updated);
+  return updated;
 }
 
 export function saveProgress(data) {
