@@ -8,9 +8,6 @@ import naturalWorldLessons from './courses/natural_world_248.json';
 import peopleProgressLessons from './courses/people_and_progress_247.json';
 import mysteryLessons from './courses/mystery_detective_255.json';
 import musicLessons from './courses/music_theory_254.json';
-import stateFactsLessons from './courses/us_state_facts_249.json';
-import dvorakLessons from './courses/dvorak_18.json';
-import colemakLessons from './courses/colemak_19.json';
 import vocabNonfictionLessons from './courses/vocab_nonfiction_289.json';
 
 export const COURSES_CATALOG = [
@@ -99,20 +96,6 @@ export const COURSES_CATALOG = [
     data: musicLessons.lessons
   },
   {
-    id: 'atlas-chronicles',
-    programId: 249,
-    title: 'Atlas of 50 States',
-    category: 'Geography & Trivia',
-    grade: 'Speed & Stamina',
-    lessonsCount: 290,
-    description: 'Explore the history, geography, mottoes, landmarks, and facts of all 50 states while honing high-speed touch typing.',
-    badge: 'Geography',
-    color: 'from-red-500 via-sky-600 to-blue-800',
-    titleVariant: 'coral',
-    keyboardType: 'qwerty',
-    data: stateFactsLessons.lessons
-  },
-  {
     id: 'curiosity-vault',
     programId: 246,
     title: 'The Curiosity Vault',
@@ -167,34 +150,6 @@ export const COURSES_CATALOG = [
     titleVariant: 'teal',
     keyboardType: 'qwerty',
     data: vocabNonfictionLessons.lessons
-  },
-  {
-    id: 'ergo-dvorak',
-    programId: 18,
-    title: 'Ergo Dvorak Layout',
-    category: 'Alternative Layouts',
-    grade: 'Ergonomics',
-    lessonsCount: 655,
-    description: 'Master the ergonomic Dvorak keyboard layout with authentic Dvorak finger positioning and dedicated Dvorak visual keymaps.',
-    badge: 'Ergonomic',
-    color: 'from-violet-600 to-purple-800',
-    titleVariant: 'lilac',
-    keyboardType: 'dvorak',
-    data: dvorakLessons.lessons
-  },
-  {
-    id: 'speed-colemak',
-    programId: 19,
-    title: 'Speed Colemak Layout',
-    category: 'Alternative Layouts',
-    grade: 'Ergonomics',
-    lessonsCount: 550,
-    description: 'Master the fast, modern Colemak keyboard layout designed for minimal finger travel and maximum typing efficiency.',
-    badge: 'Ergonomic',
-    color: 'from-fuchsia-600 to-indigo-800',
-    titleVariant: 'lilac',
-    keyboardType: 'colemak',
-    data: colemakLessons.lessons
   }
 ];
 
@@ -207,17 +162,14 @@ const LEGACY_COURSE_ID_MAP = {
   'loanwords': 'global-lexicon',
   'mystery-detective': 'chronicles-of-mystery',
   'music-theory': 'symphony-keys',
-  'us-state-facts': 'atlas-chronicles',
   'fun-facts': 'curiosity-vault',
   'people-progress': 'pioneers-innovators',
   'natural-world': 'wild-kingdom',
-  'vocab-nonfiction': 'literary-heritage',
-  'dvorak': 'ergo-dvorak',
-  'colemak': 'speed-colemak'
+  'vocab-nonfiction': 'literary-heritage'
 };
 
 export function resolveCourseId(courseId) {
-  if (!courseId) return 'keystroke-foundations';
+  if (!courseId) return 'retrospeed-odyssey';
   return LEGACY_COURSE_ID_MAP[courseId] || courseId;
 }
 

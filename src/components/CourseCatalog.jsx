@@ -26,7 +26,6 @@ const CATEGORY_TABS = [
   { id: 'Programming & Tech', label: 'Coding & Tech' },
   { id: 'Trivia & Science', label: 'Stories & Trivia' },
   { id: 'Language & Vocab', label: 'Language & Vocab' },
-  { id: 'Alternative Layouts', label: 'Alternative Layouts' },
 ];
 
 export default function CourseCatalog({ onBack, onSelectCourse, enrolledCourses = [] }) {

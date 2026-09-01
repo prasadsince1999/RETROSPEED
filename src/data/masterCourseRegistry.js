@@ -175,86 +175,6 @@ export const MASTER_COURSES = {
     ]
   },
 
-  // =========================================================================
-  // CATEGORY 6: GEOGRAPHY & TRIVIA
-  // =========================================================================
-
-  "atlas-chronicles": {
-    courseId: "atlas-chronicles",
-    title: "Atlas of 50 States",
-    category: "Geography & Trivia",
-    grade: "Speed & Stamina",
-    description: "Explore the history, geography, mottoes, landmarks, and facts of all 50 states while honing high-speed touch typing.",
-    keyboardType: "qwerty",
-    stages: [
-      {
-        stageNumber: 1,
-        title: "Introduction & Regions",
-        targetWpm: 25,
-        lessons: []
-      }
-    ]
-  },
-
-  // =========================================================================
-  // CATEGORY 7: GENERAL KNOWLEDGE & SCIENCE
-  // =========================================================================
-
-  "curiosity-vault": {
-    courseId: "curiosity-vault",
-    title: "The Curiosity Vault",
-    category: "General Knowledge",
-    grade: "Speed & Stamina",
-    description: "Type and discover world records, famous firsts, and fascinating trivia across 200+ lessons.",
-    keyboardType: "qwerty",
-    stages: [
-      {
-        stageNumber: 1,
-        title: "Number Fun",
-        targetWpm: 25,
-        lessons: []
-      }
-    ]
-  },
-
-  "pioneers-innovators": {
-    courseId: "pioneers-innovators",
-    title: "Pioneers & Innovators",
-    category: "History & Tech",
-    grade: "Speed & Stamina",
-    description: "Discover fascinating facts relating to global inventors, architectural wonders, cultural milestones, and scientific breakthroughs.",
-    keyboardType: "qwerty",
-    stages: [
-      {
-        stageNumber: 1,
-        title: "U.S. History & Pioneers",
-        targetWpm: 25,
-        lessons: []
-      }
-    ]
-  },
-
-  "wild-kingdom": {
-    courseId: "wild-kingdom",
-    title: "Wild Kingdom",
-    category: "Science & Nature",
-    grade: "Speed & Stamina",
-    description: "Type and discover fascinating facts relating to wildlife, dinosaurs, marine ecosystems, outer space, and geological wonders.",
-    keyboardType: "qwerty",
-    stages: [
-      {
-        stageNumber: 1,
-        title: "Amazing Animals",
-        targetWpm: 25,
-        lessons: []
-      }
-    ]
-  },
-
-  // =========================================================================
-  // CATEGORY 8: LITERATURE & VOCABULARY
-  // =========================================================================
-
   "literary-heritage": {
     courseId: "literary-heritage",
     title: "Literary Heritage & Vocabulary",
@@ -267,44 +187,6 @@ export const MASTER_COURSES = {
         stageNumber: 1,
         title: "Narrative of the Life of Frederick Douglass",
         targetWpm: 30,
-        lessons: []
-      }
-    ]
-  },
-
-  // =========================================================================
-  // CATEGORY 9: ERGONOMIC & ALTERNATIVE LAYOUTS
-  // =========================================================================
-
-  "ergo-dvorak": {
-    courseId: "ergo-dvorak",
-    title: "Ergo Dvorak Layout",
-    category: "Alternative Layouts",
-    grade: "Ergonomics",
-    description: "Master the ergonomic Dvorak keyboard layout with authentic Dvorak finger positioning and dedicated visual keymaps.",
-    keyboardType: "dvorak",
-    stages: [
-      {
-        stageNumber: 1,
-        title: "The Home Row (AOEU HTNS)",
-        targetWpm: 15,
-        lessons: []
-      }
-    ]
-  },
-
-  "speed-colemak": {
-    courseId: "speed-colemak",
-    title: "Speed Colemak Layout",
-    category: "Alternative Layouts",
-    grade: "Ergonomics",
-    description: "Master the fast, modern Colemak keyboard layout designed for minimal finger travel and maximum typing efficiency.",
-    keyboardType: "colemak",
-    stages: [
-      {
-        stageNumber: 1,
-        title: "The Home Row (ARST HNEI)",
-        targetWpm: 15,
         lessons: []
       }
     ]
