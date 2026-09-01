@@ -94,7 +94,7 @@ export default function MyLearningsView({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {enrolledCourses.map(course => {
+          {enrolledCourses.map((course, idx) => {
             const isActive = activeCourseId === course.id;
             const courseStats = (userProgress.courses && userProgress.courses[course.id]) || {};
             const scoresObj = courseStats.scores || {};
