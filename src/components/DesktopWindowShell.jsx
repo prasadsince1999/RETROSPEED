@@ -21,12 +21,14 @@ import {
   BookOpen, 
   Layers,
   RotateCcw,
-  Check
+  Check,
+  Palette
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { getPlayerProfile } from '../utils/storage';
 import { getLicenseStatus } from '../utils/license';
 import { COURSES_CATALOG } from '../data/courseCatalog';
+import { RETRO_THEMES } from './ShopView';
 import PlayerProfileModal from './PlayerProfileModal';
 import AboutModal from './AboutModal';
 import UnlockModal from './UnlockModal';
@@ -38,6 +40,8 @@ export default function DesktopWindowShell({
   userProgress = {},
   activeCourseId = 'keystroke-foundations',
   soundEnabled = true,
+  selectedTheme = 'bone',
+  onSelectTheme,
   onNavigate,
   onSelectCourse,
   onToggleSound,
@@ -46,7 +50,7 @@ export default function DesktopWindowShell({
   title = 'RETROSPEED'
 }) {
   const [windowState, setWindowState] = useState('normal'); // 'normal' | 'maximized' | 'minimized'
-  const [activeMenuDropdown, setActiveMenuDropdown] = useState(null); // 'game' | 'tracks' | 'stats' | 'settings' | 'help' | null
+  const [activeMenuDropdown, setActiveMenuDropdown] = useState(null); // 'theme' | 'settings' | 'help' | null
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const [unlockModalOpen, setUnlockModalOpen] = useState(false);
@@ -133,7 +137,7 @@ export default function DesktopWindowShell({
       ) : (
         /* Main Retro OS Window Frame */
         <div 
-          className={`border-2 border-[#2D2319] bg-[#FDF8EE] rounded-2xl shadow-[6px_6px_0px_#2D2319] overflow-hidden flex flex-col z-10 transition-all duration-200 ${
+          className={`border-2 border-[#2D2319] bg-[var(--rs-paper)] rounded-2xl shadow-[6px_6px_0px_var(--rs-shadow)] overflow-hidden flex flex-col z-10 transition-all duration-200 ${
             windowState === 'maximized'
               ? 'w-full h-[98vh] max-w-none'
               : 'w-full max-w-6xl h-[90vh]'
@@ -141,9 +145,9 @@ export default function DesktopWindowShell({
         >
           
           {/* ========================================================
-              TITLEBAR: Solid Lilac (#C3A6E8)
+              TITLEBAR: Dynamic Retro Titlebar
               ======================================================== */}
-          <div className="bg-[#C3A6E8] text-[#2D2319] px-4 py-2 border-b-2 border-[#2D2319] flex items-center justify-between font-mono font-bold text-sm shrink-0">
+          <div className="bg-[var(--rs-titlebar)] text-[#2D2319] px-4 py-2 border-b-2 border-[#2D2319] flex items-center justify-between font-mono font-bold text-sm shrink-0 transition-colors duration-200">
             
             {/* Left: Window Title with Sparkle */}
             <div className="flex items-center space-x-2">
@@ -203,13 +207,63 @@ export default function DesktopWindowShell({
           </div>
 
           {/* ========================================================
-              TOP MENU BAR (Settings, About, Help + Score & Audio)
+              TOP MENU BAR (Theme, Settings, About, Help + Score & Audio)
               ======================================================== */}
-          <div className="bg-[#FAF3E0] px-4 py-1.5 border-b-2 border-[#2D2319] flex flex-wrap items-center justify-between gap-3 text-xs font-mono font-bold text-[#2D2319] shrink-0 relative">
+          <div className="bg-[var(--rs-paper-alt)] px-4 py-1.5 border-b-2 border-[#2D2319] flex flex-wrap items-center justify-between gap-3 text-xs font-mono font-bold text-[#2D2319] shrink-0 relative transition-colors duration-200">
             
             {/* Left: Dropdown Menus */}
             <div className="flex items-center space-x-3 sm:space-x-5">
               
+              {/* Theme ▾ Dropdown */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setActiveMenuDropdown(activeMenuDropdown === 'theme' ? null : 'theme')}
+                  className="hover:underline flex items-center space-x-1 focus:outline-none cursor-pointer"
+                >
+                  <Palette className="w-3.5 h-3.5" />
+                  <span>Theme</span>
+                  <span className="text-[10px]">▾</span>
+                </button>
+
+                {activeMenuDropdown === 'theme' && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setActiveMenuDropdown(null)} />
+                    <div className="absolute left-0 top-full mt-1 w-64 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs dropdown-menu-animate">
+                      <div className="px-3 py-1.5 font-mono text-[10px] font-bold text-[#2D2319]/60 border-b border-[#2D2319]/10">
+                        CHANGE OS PALETTE
+                      </div>
+                      {RETRO_THEMES.map(th => {
+                        const isCurrent = (userProgress?.settings?.theme || selectedTheme || 'bone') === th.id;
+                        return (
+                          <button
+                            key={th.id}
+                            type="button"
+                            onClick={() => {
+                              sound.playKeyClick();
+                              setActiveMenuDropdown(null);
+                              if (onSelectTheme) onSelectTheme(th.id);
+                            }}
+                            className={`w-full text-left px-3 py-2 flex items-center justify-between font-bold cursor-pointer transition-colors ${
+                              isCurrent ? 'bg-[#C7E8CA] text-[#2D2319]' : 'hover:bg-[#FAF3E0] text-[#2D2319]'
+                            }`}
+                          >
+                            <div className="flex items-center space-x-2">
+                              <span className="w-3.5 h-3.5 rounded border border-[#2D2319] shrink-0" style={{ backgroundColor: th.header }} />
+                              <div className="truncate">
+                                <div>{th.name}</div>
+                                <div className="text-[9px] font-normal text-[#2D2319]/60 font-mono">{th.tag}</div>
+                              </div>
+                            </div>
+                            {isCurrent && <Check className="w-3.5 h-3.5 text-[#2D2319] shrink-0" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
+              </div>
+
               {/* Settings ▾ Dropdown */}
               <div className="relative">
                 <button
@@ -224,7 +278,20 @@ export default function DesktopWindowShell({
                 {activeMenuDropdown === 'settings' && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={() => setActiveMenuDropdown(null)} />
-                    <div className="absolute left-0 top-full mt-1 w-56 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs dropdown-menu-animate">
+                    <div className="absolute left-0 top-full mt-1 w-64 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl shadow-[4px_4px_0px_#2D2319] z-50 overflow-hidden py-1 text-xs dropdown-menu-animate">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveMenuDropdown(null);
+                          handleNav('shop');
+                        }}
+                        className="w-full text-left px-3 py-2 hover:bg-[#FAF3E0] text-[#2D2319] flex items-center justify-between font-bold cursor-pointer transition-colors border-b border-[#2D2319]/10"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <ShoppingBag className="w-3.5 h-3.5 text-[#F6C445]" />
+                          <span>Customization Shop...</span>
+                        </div>
+                      </button>
                       <button
                         type="button"
                         onClick={() => {
@@ -340,10 +407,10 @@ export default function DesktopWindowShell({
           {/* ========================================================
               WINDOW BODY (Left Sidebar + Client Content Area)
               ======================================================== */}
-          <div className="flex-1 flex flex-col md:flex-row overflow-hidden bg-[#FDF8EE]">
+          <div className="flex-1 flex flex-col md:flex-row overflow-hidden bg-[var(--rs-paper)] transition-colors duration-200">
             
             {/* Left Sidebar */}
-            <div className="w-full md:w-56 bg-[#FAF3E0] border-b-2 md:border-b-0 md:border-r-2 border-[#2D2319] p-3 sm:p-4 flex flex-col justify-between shrink-0 overflow-y-auto">
+            <div className="w-full md:w-56 bg-[var(--rs-paper-alt)] border-b-2 md:border-b-0 md:border-r-2 border-[#2D2319] p-3 sm:p-4 flex flex-col justify-between shrink-0 overflow-y-auto transition-colors duration-200">
               
               {/* Navigation Items */}
               <div className="space-y-1.5 flex md:flex-col flex-row overflow-x-auto md:overflow-visible gap-1.5 md:gap-0 pb-2 md:pb-0">
@@ -441,7 +508,7 @@ export default function DesktopWindowShell({
             </div>
 
             {/* Right Client Area with Smooth View Transition */}
-            <div key={currentView} className="flex-1 flex flex-col overflow-y-auto bg-[#FDF8EE] view-transition-fade">
+            <div key={currentView} className="flex-1 flex flex-col overflow-y-auto bg-[var(--rs-paper)] view-transition-fade transition-colors duration-200">
               {children}
             </div>
 

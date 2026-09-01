@@ -346,6 +346,12 @@ export default function App() {
               userProgress={userProgress}
               activeCourseId={activeCourseId}
               soundEnabled={soundEnabled}
+              selectedTheme={selectedTheme}
+              onSelectTheme={theme => {
+                setSelectedTheme(theme);
+                applyTheme(theme);
+                updateSettings({ theme });
+              }}
               onNavigate={view => {
                 if (view === 'daily') {
                   handleStartDailyChallenge();

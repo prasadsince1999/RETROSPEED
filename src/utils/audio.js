@@ -39,49 +39,61 @@ class SoundEngine {
   }
 
   // Keycap click with switchable acoustic profiles
-  playKeyClick() {
+  playKeyClick(overridePack = null) {
     if (this.muted) return;
     this.init();
     if (!this.ctx) return;
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
 
     const t = this.ctx.currentTime;
-    const pack = this.soundPack || 'cherry-blue';
+    const pack = overridePack || this.soundPack || 'cherry-blue';
 
     if (pack === 'ibm-model-m') {
-      // Heavy vintage buckling spring (clack + spring reverberation)
-      const osc1 = this.ctx.createOscillator();
-      const osc2 = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
+      // Vintage IBM Model M: Heavy buckling spring impact + metallic ringing resonance
+      const oscImpact = this.ctx.createOscillator();
+      const oscPing = this.ctx.createOscillator();
+      const gainImpact = this.ctx.createGain();
+      const gainPing = this.ctx.createGain();
 
-      osc1.type = 'triangle';
-      osc1.frequency.setValueAtTime(450 + Math.random() * 50, t);
-      osc1.frequency.exponentialRampToValueAtTime(120, t + 0.06);
+      // Heavy steel plate bottom-out impact
+      oscImpact.type = 'triangle';
+      oscImpact.frequency.setValueAtTime(460 + Math.random() * 40, t);
+      oscImpact.frequency.exponentialRampToValueAtTime(110, t + 0.055);
 
-      osc2.type = 'square';
-      osc2.frequency.setValueAtTime(1100 + Math.random() * 100, t);
-      osc2.frequency.exponentialRampToValueAtTime(320, t + 0.03);
+      gainImpact.gain.setValueAtTime(0.4 * this.volume, t);
+      gainImpact.gain.exponentialRampToValueAtTime(0.001, t + 0.055);
 
-      gain.gain.setValueAtTime(0.35 * this.volume, t);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+      oscImpact.connect(gainImpact);
+      gainImpact.connect(this.ctx.destination);
 
-      osc1.connect(gain);
-      osc2.connect(gain);
-      gain.connect(this.ctx.destination);
+      // Buckling spring high metallic ping
+      oscPing.type = 'square';
+      oscPing.frequency.setValueAtTime(1750 + Math.random() * 100, t);
+      oscPing.frequency.exponentialRampToValueAtTime(800, t + 0.04);
 
-      osc1.start(t);
-      osc2.start(t);
-      osc1.stop(t + 0.06);
-      osc2.stop(t + 0.06);
+      gainPing.gain.setValueAtTime(0.25 * this.volume, t);
+      gainPing.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+
+      oscPing.connect(gainPing);
+      gainPing.connect(this.ctx.destination);
+
+      oscImpact.start(t);
+      oscPing.start(t);
+      oscImpact.stop(t + 0.055);
+      oscPing.stop(t + 0.07);
+
     } else if (pack === 'gateron-brown') {
-      // Tactile dampened bump
+      // Tactile dampened bump: Soft rounded pop, gentle low-frequency dampening
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
 
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(550 + Math.random() * 80, t);
+      osc.frequency.setValueAtTime(520 + Math.random() * 50, t);
       osc.frequency.exponentialRampToValueAtTime(140, t + 0.045);
 
-      gain.gain.setValueAtTime(0.22 * this.volume, t);
+      gain.gain.setValueAtTime(0.3 * this.volume, t);
       gain.gain.exponentialRampToValueAtTime(0.001, t + 0.045);
 
       osc.connect(gain);
@@ -89,57 +101,80 @@ class SoundEngine {
 
       osc.start(t);
       osc.stop(t + 0.045);
+
     } else if (pack === 'thocky') {
-      // Deep marbly thock
-      const osc = this.ctx.createOscillator();
+      // Thocky Lubed Linear: Deep, marbly acoustic thock on premium POM stems
+      const oscSub = this.ctx.createOscillator();
+      const oscBody = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
 
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(340 + Math.random() * 40, t);
-      osc.frequency.exponentialRampToValueAtTime(75, t + 0.055);
+      // Deep sub-bass thud
+      oscSub.type = 'sine';
+      oscSub.frequency.setValueAtTime(260 + Math.random() * 30, t);
+      oscSub.frequency.exponentialRampToValueAtTime(55, t + 0.065);
 
-      gain.gain.setValueAtTime(0.3 * this.volume, t);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.055);
+      // Warm marble harmonic
+      oscBody.type = 'triangle';
+      oscBody.frequency.setValueAtTime(180, t);
+      oscBody.frequency.exponentialRampToValueAtTime(70, t + 0.045);
 
-      osc.connect(gain);
+      gain.gain.setValueAtTime(0.48 * this.volume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.065);
+
+      oscSub.connect(gain);
+      oscBody.connect(gain);
       gain.connect(this.ctx.destination);
 
-      osc.start(t);
-      osc.stop(t + 0.055);
+      oscSub.start(t);
+      oscBody.start(t);
+      oscSub.stop(t + 0.065);
+      oscBody.stop(t + 0.065);
+
     } else if (pack === 'chiptune') {
-      // 8-bit arcade arpeggio blip
+      // 8-bit arcade arpeggio blip: Staccato retro square wave jump
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
 
       osc.type = 'square';
-      osc.frequency.setValueAtTime(520, t);
-      osc.frequency.setValueAtTime(880, t + 0.015);
-
-      gain.gain.setValueAtTime(0.12 * this.volume, t);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start(t);
-      osc.stop(t + 0.035);
-    } else {
-      // Default cherry-blue crisp clicky
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(900 + Math.random() * 200, t);
-      osc.frequency.exponentialRampToValueAtTime(180, t + 0.035);
+      osc.frequency.setValueAtTime(523.25, t); // C5
+      osc.frequency.setValueAtTime(1046.5, t + 0.015); // C6
 
       gain.gain.setValueAtTime(0.22 * this.volume, t);
-      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
 
       osc.start(t);
-      osc.stop(t + 0.035);
+      osc.stop(t + 0.04);
+
+    } else {
+      // Default cherry-blue: Crisp dual click (high-frequency tactile snap + bottom-out)
+      const oscSnap = this.ctx.createOscillator();
+      const oscClick = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      // Sharp mechanical snap
+      oscSnap.type = 'triangle';
+      oscSnap.frequency.setValueAtTime(1600 + Math.random() * 150, t);
+      oscSnap.frequency.exponentialRampToValueAtTime(450, t + 0.02);
+
+      // Crisp acoustic click
+      oscClick.type = 'sine';
+      oscClick.frequency.setValueAtTime(850 + Math.random() * 100, t);
+      oscClick.frequency.exponentialRampToValueAtTime(180, t + 0.035);
+
+      gain.gain.setValueAtTime(0.35 * this.volume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
+
+      oscSnap.connect(gain);
+      oscClick.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      oscSnap.start(t);
+      oscClick.start(t);
+      oscSnap.stop(t + 0.02);
+      oscClick.stop(t + 0.035);
     }
   }
 
