@@ -5,16 +5,15 @@ import {
   Check, 
   AlertTriangle, 
   Keyboard, 
-  Code, 
-  LayoutList,
-  Terminal,
-  Clock,
-  Target,
+  Hand,
   Sparkles,
   Volume2,
-  VolumeX
+  VolumeX,
+  Layers,
+  ChevronDown
 } from 'lucide-react';
 import VirtualKeyboard from './VirtualKeyboard';
+import HandGuide from './HandGuide';
 import NewKeyIntro from './NewKeyIntro';
 import CourseContextHeaders from './CourseContextHeaders';
 import { sound } from '../utils/audio';
@@ -52,14 +51,29 @@ export default function LessonPlayer({
   const [liveWpm, setLiveWpm] = useState(0);
   const [liveAccuracy, setLiveAccuracy] = useState(100);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const [keyboardEnabled, setKeyboardEnabled] = useState(initialKeyboard);
-  const [handsEnabled, setHandsEnabled] = useState(initialHands);
+
+  // Settings
+  const [keyboardEnabled, setKeyboardEnabled] = useState(false);
+  const [handsEnabled, setHandsEnabled] = useState(true);
+  const [handFilter, setHandFilter] = useState('both'); // 'both' | 'left' | 'right'
+  const [handMenuOpen, setHandMenuOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [viewMode, setViewMode] = useState('stream');
 
   const containerRef = useRef(null);
   const keyStatsRef = useRef({});
   const typingTimerRef = useRef(null);
+  const handMenuRef = useRef(null);
+
+  // Close hand menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (handMenuRef.current && !handMenuRef.current.contains(e.target)) {
+        setHandMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Initialize lesson
   useEffect(() => {
@@ -90,9 +104,6 @@ export default function LessonPlayer({
     } else {
       setMode('practice');
     }
-
-    const isCodeCourse = courseId === 'syntax-forge' || lesson.renderEngine === 'code';
-    setViewMode(isCodeCourse ? 'code' : 'stream');
   }, [lesson, courseId]);
 
   // Live Timer & WPM
@@ -137,24 +148,20 @@ export default function LessonPlayer({
     if (mode !== 'practice') return;
 
     const handleKeyDown = (e) => {
-      // 1. Let system shortcuts pass through
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
       const key = e.key;
 
-      // 2. Prevent default browser behavior for practice keys
       if (key === ' ' || key === 'Tab' || key === 'Backspace') {
         e.preventDefault();
       }
 
-      // 3. Highlight virtual keyboard keycap
       const keyDef = getKeyForChar(key, layout);
       if (keyDef) {
         setPressedKeyId(keyDef.id);
         setTimeout(() => setPressedKeyId(null), 120);
       }
 
-      // 4. Ignore non-printable modifier & function keys
       const nonPrintableKeys = [
         'Shift', 'Control', 'Alt', 'Meta', 'CapsLock', 
         'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 
@@ -190,7 +197,7 @@ export default function LessonPlayer({
       }
 
       if (isMatch) {
-        sound.playKeyClick();
+        if (soundEnabled) sound.playKeyClick();
         keyStatsRef.current[charKey].hits += 1;
         
         const nextStatuses = [...tokenStatuses];
@@ -233,7 +240,7 @@ export default function LessonPlayer({
           }, 300);
         }
       } else {
-        sound.playErrorBuzz();
+        if (soundEnabled) sound.playErrorBuzz();
         keyStatsRef.current[charKey].misses += 1;
         const nextErrors = errors + 1;
         setErrors(nextErrors);
@@ -249,9 +256,9 @@ export default function LessonPlayer({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mode, currentIndex, tokens, tokenStatuses, hasStarted, startTime, errors, totalKeystrokes, lesson, onComplete, layout]);
+  }, [mode, currentIndex, tokens, tokenStatuses, hasStarted, startTime, errors, totalKeystrokes, lesson, onComplete, layout, soundEnabled]);
 
-  // Target Key for Virtual Keyboard highlighting
+  // Target Key for Virtual Keyboard & Hand highlighting
   const activeChar = mode === 'practice' && currentIndex < tokens.length ? tokens[currentIndex] : 'f';
 
   // Progress percentage
@@ -290,8 +297,8 @@ export default function LessonPlayer({
   return (
     <div className="w-full flex flex-col justify-between py-2 px-2 sm:px-6 max-w-5xl mx-auto font-sans select-none animate-in fade-in duration-200">
       
-      {/* Top Header Bar: Clean & Minimal (Back button, Title, Tools, Stats) */}
-      <div className="flex items-center justify-between border-b border-[#2D2319]/15 pb-2.5 mb-4">
+      {/* Top Header Bar: Clean & Minimal */}
+      <div className="flex items-center justify-between border-b border-[#2D2319]/15 pb-2.5 mb-3">
         
         {/* Left: Back to Map & Title */}
         <div className="flex items-center space-x-3">
@@ -318,7 +325,7 @@ export default function LessonPlayer({
         </div>
 
         {/* Center / Right: Minimalist Tools & Live Stats */}
-        <div className="flex items-center space-x-2.5 font-mono text-xs">
+        <div className="flex items-center space-x-2.5 font-mono text-xs relative">
           
           {/* Target Keys Badge */}
           {lesson.keys && lesson.keys.length > 0 && (
@@ -353,17 +360,117 @@ export default function LessonPlayer({
             <RotateCcw className="w-4 h-4" />
           </button>
 
-          {/* Keyboard Toggle */}
+          {/* Keyboard Toggle Button */}
           <button 
             type="button"
             onClick={() => setKeyboardEnabled(prev => !prev)} 
-            title={keyboardEnabled ? 'Hide Keyboard' : 'Show Keyboard'}
+            title={keyboardEnabled ? 'Hide Virtual Keyboard' : 'Show Virtual Keyboard'}
             className={`p-1.5 rounded-lg border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer ${
               keyboardEnabled ? 'bg-[#C7E8CA] text-[#2D2319]' : 'bg-white text-slate-400'
             }`}
           >
             <Keyboard className="w-4 h-4" />
           </button>
+
+          {/* Hand Guide Dropdown Menu Toggle (Matching Image 1) */}
+          <div className="relative" ref={handMenuRef}>
+            <button 
+              type="button"
+              onClick={() => setHandMenuOpen(prev => !prev)} 
+              title="Hand Guide Options"
+              className={`p-1.5 rounded-lg border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer flex items-center space-x-0.5 ${
+                handsEnabled ? 'bg-[#C7E8CA] text-[#2D2319]' : 'bg-white text-slate-400'
+              }`}
+            >
+              <Hand className="w-4 h-4" />
+              <ChevronDown className="w-3 h-3 text-[#2D2319]/70" />
+            </button>
+
+            {/* Hand Guide Dropdown Popover (Exact match to Image 1) */}
+            {handMenuOpen && (
+              <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] p-3 z-30 font-sans animate-in fade-in zoom-in-95">
+                
+                {/* Switch Row */}
+                <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                  <span className="text-xs font-bold text-[#2D2319]">Hand Guide</span>
+                  <button
+                    type="button"
+                    onClick={() => setHandsEnabled(prev => !prev)}
+                    className={`w-10 h-5 rounded-full p-0.5 transition-colors cursor-pointer ${
+                      handsEnabled ? 'bg-[#1888ff]' : 'bg-slate-300'
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform ${
+                      handsEnabled ? 'translate-x-5' : 'translate-x-0'
+                    }`} />
+                  </button>
+                </div>
+
+                {/* Hand Filter Mode Options */}
+                {handsEnabled && (
+                  <div className="grid grid-cols-3 gap-2 pt-3">
+                    
+                    {/* Both Hands */}
+                    <button
+                      type="button"
+                      onClick={() => setHandFilter('both')}
+                      className={`flex flex-col items-center justify-center p-2 rounded-lg border text-center transition-all cursor-pointer ${
+                        handFilter === 'both'
+                          ? 'border-[#1888ff] bg-sky-50 text-[#1888ff] font-bold shadow-sm'
+                          : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                      }`}
+                    >
+                      <span className="text-base">👐</span>
+                      <span className="text-[10px] mt-1 leading-tight">Both Hands</span>
+                    </button>
+
+                    {/* Left Hand */}
+                    <button
+                      type="button"
+                      onClick={() => setHandFilter('left')}
+                      className={`flex flex-col items-center justify-center p-2 rounded-lg border text-center transition-all cursor-pointer ${
+                        handFilter === 'left'
+                          ? 'border-[#1888ff] bg-sky-50 text-[#1888ff] font-bold shadow-sm'
+                          : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                      }`}
+                    >
+                      <span className="text-base">🤚</span>
+                      <span className="text-[10px] mt-1 leading-tight">Left Hand</span>
+                    </button>
+
+                    {/* Right Hand */}
+                    <button
+                      type="button"
+                      onClick={() => setHandFilter('right')}
+                      className={`flex flex-col items-center justify-center p-2 rounded-lg border text-center transition-all cursor-pointer ${
+                        handFilter === 'right'
+                          ? 'border-[#1888ff] bg-sky-50 text-[#1888ff] font-bold shadow-sm'
+                          : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                      }`}
+                    >
+                      <span className="text-base">✋</span>
+                      <span className="text-[10px] mt-1 leading-tight">Right Hand</span>
+                    </button>
+
+                  </div>
+                )}
+
+              </div>
+            )}
+          </div>
+
+          {/* Sound Toggle Button */}
+          <button 
+            type="button"
+            onClick={() => setSoundEnabled(prev => !prev)} 
+            title={soundEnabled ? 'Mute Sound' : 'Enable Sound'}
+            className={`p-1.5 rounded-lg border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer ${
+              soundEnabled ? 'bg-white text-[#2D2319]' : 'bg-slate-200 text-slate-400'
+            }`}
+          >
+            {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+          </button>
+
         </div>
 
       </div>
@@ -375,10 +482,10 @@ export default function LessonPlayer({
         programId={programId || lesson.programId} 
       />
 
-      {/* CENTER STAGE: CLEAN MULTI-LINE TYPING PRACTICE (Matching Image 5) */}
-      <div className="my-auto py-6 sm:py-8 flex flex-col items-center justify-center max-w-4xl mx-auto w-full">
+      {/* CENTER STAGE: CLEAN MULTI-LINE TYPING PRACTICE WITH GREEN PADS (Matching Images 2, 3, 4) */}
+      <div className="my-auto py-4 sm:py-6 flex flex-col items-center justify-center max-w-4xl mx-auto w-full">
         
-        <div className="w-full bg-white/60 p-6 sm:p-8 rounded-2xl border-2 border-slate-200/80 shadow-sm relative font-mono text-2xl sm:text-3xl leading-loose tracking-widest text-left select-none">
+        <div className="w-full bg-white/70 p-6 sm:p-8 rounded-2xl border-2 border-slate-200/90 shadow-sm relative font-mono text-2xl sm:text-3xl leading-loose tracking-widest text-left select-none">
           
           {lines.map((line, lineIdx) => (
             <div key={lineIdx} className="flex flex-wrap items-center my-1.5 relative">
@@ -386,7 +493,7 @@ export default function LessonPlayer({
                 const isFirstPending = isCurrent && !hasStarted;
 
                 return (
-                  <span key={idx} className="relative inline-block">
+                  <span key={idx} className="relative inline-flex items-center justify-center">
                     
                     {/* Floating Blue "Start Typing" Tooltip Bubble on First Key */}
                     {isFirstPending && (
@@ -396,18 +503,20 @@ export default function LessonPlayer({
                       </div>
                     )}
 
-                    {/* Character Renderer */}
+                    {/* Character Renderer with Green Pad for Correct Keystrokes (Exact match to Images 2, 3, 4) */}
                     <span 
-                      className={`inline-block transition-colors duration-75 relative ${
-                        char === ' ' ? 'w-4 sm:w-5' : ''
-                      } ${
-                        status === 'correct'
-                          ? 'text-slate-800 font-bold'
+                      className={`inline-flex items-center justify-center transition-all duration-75 relative ${
+                        char === ' ' 
+                          ? status === 'correct' 
+                            ? 'w-4 sm:w-5 h-8 sm:h-9 bg-[#dcfce7] rounded-xs mx-[1px]'
+                            : 'w-4 sm:w-5' 
+                          : status === 'correct'
+                          ? 'min-w-[1.25rem] sm:min-w-[1.5rem] h-8 sm:h-9 bg-[#dcfce7] text-[#15803d] font-bold rounded-xs px-0.5 mx-[1px]'
                           : status === 'error'
-                          ? 'text-rose-600 bg-rose-100 rounded px-0.5'
+                          ? 'min-w-[1.25rem] sm:min-w-[1.5rem] h-8 sm:h-9 bg-rose-100 text-rose-700 font-bold rounded-xs px-0.5 mx-[1px]'
                           : isCurrent
                           ? 'text-slate-950 font-black'
-                          : 'text-slate-400'
+                          : 'text-slate-400 font-normal'
                       }`}
                     >
                       {char === '\n' ? '' : char}
@@ -428,23 +537,35 @@ export default function LessonPlayer({
 
       </div>
 
-      {/* VIRTUAL KEYBOARD & HANDS GUIDE */}
+      {/* AUTHENTIC EDCLUB HAND GUIDE (Matching Images 2, 3, 4) */}
+      {handsEnabled && (
+        <div className="w-full max-w-lg mx-auto transition-all duration-300 my-auto py-2">
+          <HandGuide 
+            activeChar={activeChar}
+            layout={layout}
+            handFilter={handFilter}
+            liveWpm={hasStarted ? liveWpm : null}
+            liveAccuracy={hasStarted ? liveAccuracy : null}
+          />
+        </div>
+      )}
+
+      {/* Optional Virtual Keyboard (when keyboard toggle is clicked) */}
       {keyboardEnabled && (
-        <div className="w-full max-w-[680px] mx-auto transition-all duration-300 my-auto">
+        <div className="w-full max-w-[680px] mx-auto transition-all duration-300 my-auto py-2">
           <VirtualKeyboard 
             activeChar={activeChar} 
             pressedKeyId={pressedKeyId} 
             errorKeyId={errorKeyId} 
             layout={layout} 
             theme={theme}
-            showHands={handsEnabled}
-            handFilter={lesson.hand || 'both'}
+            showHands={false}
           />
         </div>
       )}
 
       {/* BOTTOM PROGRESS BAR */}
-      <div className="w-full max-w-xl mx-auto pt-4 pb-2 select-none">
+      <div className="w-full max-w-xl mx-auto pt-3 pb-1 select-none">
         <div className="h-2.5 w-full bg-slate-200 rounded-full overflow-hidden p-0.5 border border-slate-300 shadow-inner">
           <div 
             className="h-full bg-emerald-400 rounded-full transition-all duration-300"
