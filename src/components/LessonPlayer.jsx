@@ -19,6 +19,7 @@ import {
 import { Button, Card, Badge, ProgressBar, MetricTile } from '../ui';
 import VirtualKeyboard from './VirtualKeyboard';
 import HandGuide from './HandGuide';
+import NewKeyIntro from './NewKeyIntro';
 import CourseContextHeaders from './CourseContextHeaders';
 import { SpeedometerGauge, TypingComboMeter, ReactiveMascot } from './animation';
 import { sound } from '../utils/audio';
@@ -105,17 +106,19 @@ export default function LessonPlayer({
     setHasError(false);
     keyStatsRef.current = {};
 
-    const hasCodeStructure = text.includes('\n') || text.includes('\t') || text.includes('{') || text.includes('}') || text.includes(';') || text.length > 55 || lesson.renderEngine === 'code';
+    const hasIntroKeys = (lesson.targetKeys && lesson.targetKeys.filter(k => k !== ' ' && k !== '\n').length > 0) || (lesson.introKeys && lesson.introKeys.length > 0);
+    const isIntroApplicable = lesson.type === 'intro' || lesson.hasIntro || hasIntroKeys;
 
-    if (lesson.type === 'intro' && lesson.targetKeys && lesson.targetKeys.length > 0) {
+    if (isIntroApplicable && !lesson.skipIntro) {
       setMode('intro');
       setIntroStep(0);
       setViewMode('stream');
     } else {
       setMode('practice');
-      setViewMode(hasCodeStructure ? 'code' : 'stream');
+      const isCodeCourse = courseId === 'syntax-forge' || lesson.renderEngine === 'code';
+      setViewMode(isCodeCourse ? 'code' : 'stream');
     }
-  }, [lesson]);
+  }, [lesson, courseId]);
 
   useEffect(() => {
     if (!hasStarted || !startTime) return;
@@ -349,29 +352,28 @@ export default function LessonPlayer({
   });
   if (lineChars.length > 0) codeLines.push({ lineNumber: codeLines.length + 1, startIdx: lineStartIdx, endIdx: tokens.length - 1, chars: lineChars });
 
+  // If in New Key Intro mode, render the authentic EdClub-style Introduction page
+  if (mode === 'intro') {
+    return (
+      <NewKeyIntro
+        lesson={lesson}
+        layout={layout}
+        onFinish={() => {
+          sound.playKeyClick();
+          setMode('practice');
+        }}
+        onExit={onExit}
+      />
+    );
+  }
+
   return (
-    <div className="w-full min-h-[calc(100vh-3.5rem)] flex flex-col justify-between select-none py-3 px-3 sm:px-6 max-w-5xl mx-auto font-sans">
+    <div className="w-full flex flex-col justify-between select-none py-1 px-1 sm:px-4 max-w-5xl mx-auto font-sans">
       
-      {/* Top Retro OS Metrics & Navigation Window Card */}
-      <div className="bg-white border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0_#0f172a] mb-3 overflow-hidden">
+      {/* Top Retro Navigation & Metrics Toolbar */}
+      <div className="w-full bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl shadow-[4px_4px_0px_var(--rs-shadow)] mb-3 p-3 flex flex-wrap items-center justify-between gap-3 transition-colors duration-200">
         
-        {/* Window Top Title Strip */}
-        <div className="bg-[#2c3e50] text-white px-3.5 py-1.5 flex items-center justify-between border-b-2 border-slate-900 font-mono text-xs">
-          <div className="flex items-center space-x-2">
-            <span className="text-amber-400">✦</span>
-            <span className="font-bold tracking-wider">TYPING_ENGINE.EXE // LESSON #{lesson.id}</span>
-          </div>
-
-          <div className="flex items-center space-x-1">
-            <button className="w-4 h-4 bg-slate-700 border border-slate-900 rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-slate-300">_</button>
-            <button className="w-4 h-4 bg-slate-700 border border-slate-900 rounded-xs flex items-center justify-center text-[8px] font-mono font-bold leading-none text-slate-300">□</button>
-            <button onClick={onExit} className="w-4 h-4 bg-[#f87171] border border-slate-900 rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-slate-900">✕</button>
-          </div>
-        </div>
-
-        <div className="p-3 bg-[#f8fafc] flex flex-wrap items-center justify-between gap-3">
-          
-          {/* Left: Back to Map & Lesson Title */}
+        {/* Left: Back to Map & Lesson Title */}
           <div className="flex items-center space-x-3">
             <button 
               type="button"
@@ -379,7 +381,7 @@ export default function LessonPlayer({
                 sound.playKeyClick();
                 onExit();
               }}
-              className="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-900 font-mono text-xs font-bold border-2 border-slate-900 shadow-[2px_2px_0_#0f172a] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1.5"
+              className="px-3 py-1.5 rounded-lg bg-[var(--rs-paper)] hover:bg-white text-[#2D2319] font-mono text-xs font-bold border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1.5 cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Back to Map</span>
@@ -387,14 +389,14 @@ export default function LessonPlayer({
 
             <div>
               <div className="flex items-center space-x-1.5">
-                <span className="px-2 py-0.2 rounded bg-slate-200 text-slate-800 font-mono text-[10px] font-bold border border-slate-400">
+                <span className="px-2 py-0.5 rounded bg-[var(--rs-paper)] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319]">
                   {lesson.stageTitle || lesson.stage || 'STAGE'}
                 </span>
-                <span className="px-2 py-0.2 rounded bg-[#1888ff] text-white font-mono text-[10px] font-bold border border-slate-900">
+                <span className="px-2 py-0.5 rounded bg-[#1888ff] text-white font-mono text-[10px] font-bold border border-[#2D2319]">
                   Lesson {lesson.id}
                 </span>
               </div>
-              <h2 className="text-sm sm:text-base font-black text-slate-900 font-display leading-tight truncate max-w-[200px] sm:max-w-xs md:max-w-md mt-0.5">
+              <h2 className="text-sm sm:text-base font-black text-[#2D2319] font-display leading-tight truncate max-w-[200px] sm:max-w-xs md:max-w-md mt-0.5">
                 {lesson.title}
               </h2>
             </div>
@@ -507,7 +509,6 @@ export default function LessonPlayer({
           </div>
 
         </div>
-      </div>
 
       {/* Dynamic Course Context Headers for Special Courses (Detective, Loanwords, Music, States) */}
       <CourseContextHeaders 
@@ -586,33 +587,30 @@ export default function LessonPlayer({
         {/* Mode B: Retro Code Editor View */}
         {mode === 'practice' && viewMode === 'code' && (
           <div className="w-full my-2 flex flex-col items-center max-w-4xl">
-            <div className="w-full rounded-2xl shadow-[6px_6px_0_#0f172a] border-2 border-slate-900 bg-[#0f172a] text-slate-200 overflow-hidden font-mono">
+            <div className="w-full rounded-2xl shadow-[4px_4px_0px_var(--rs-shadow)] border-2 border-[#2D2319] bg-[var(--rs-paper)] text-[#2D2319] overflow-hidden font-mono transition-colors duration-200">
               
-              {/* Terminal Window Top Bar */}
-              <div className="flex items-center justify-between px-4 py-2 bg-[#1e293b] border-b-2 border-slate-900 select-none">
+              {/* Minimalist Top Indicator Strip */}
+              <div className="flex items-center justify-between px-4 py-2 bg-[var(--rs-paper-alt)] border-b-2 border-[#2D2319]/20 select-none">
                 <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-[#f87171] border border-slate-900" />
-                  <div className="w-3 h-3 rounded-full bg-[#fef08a] border border-slate-900" />
-                  <div className="w-3 h-3 rounded-full bg-[#48bb78] border border-slate-900" />
-                  <span className="text-slate-300 text-xs font-bold ml-2 flex items-center space-x-1.5">
-                    <Terminal className="w-3.5 h-3.5 text-sky-400" />
-                    <span>lesson_{lesson.id}.{lesson.renderEngine === 'code' ? 'src' : 'txt'}</span>
+                  <span className="text-[#2D2319] text-xs font-bold flex items-center space-x-1.5 font-mono">
+                    <Terminal className="w-3.5 h-3.5 text-[#1888ff]" />
+                    <span>Typing Prompt</span>
                   </span>
                 </div>
 
                 <div className="flex items-center space-x-2 text-[11px] font-bold">
                   {tokens[currentIndex] === '\n' && (
-                    <span className="px-2 py-0.5 rounded bg-sky-500 text-white border border-slate-900 shadow-[1px_1px_0_#0f172a] animate-pulse">
+                    <span className="px-2 py-0.5 rounded bg-sky-500 text-white border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] animate-pulse">
                       ↵ Press Enter
                     </span>
                   )}
                   {tokens[currentIndex] === '\t' && (
-                    <span className="px-2 py-0.5 rounded bg-indigo-500 text-white border border-slate-900 shadow-[1px_1px_0_#0f172a] animate-pulse">
+                    <span className="px-2 py-0.5 rounded bg-indigo-500 text-white border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] animate-pulse">
                       ⇥ Press Tab
                     </span>
                   )}
                   {tokens[currentIndex] === ' ' && (
-                    <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">
+                    <span className="px-2 py-0.5 rounded bg-[var(--rs-paper)] text-[#2D2319] border border-[#2D2319]">
                       ␣ Space
                     </span>
                   )}
