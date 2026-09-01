@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { ArrowLeft, Check, ArrowRight, RotateCcw } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { getKeyForChar } from '../data/keyboardLayout';
@@ -20,26 +20,34 @@ export default function NewKeyIntro({
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [hasError, setHasError] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const isTransitioningRef = useRef(false);
 
   // Extract the target keys to introduce (typically 2 keys, or 1 key for Space)
   const targetKeys = useMemo(() => {
+    const title = (lesson.title || '').toLowerCase();
+
+    // Explicit title checks for exact 2-key sequence
+    if (title.includes('space bar')) return [' '];
+    if (title.includes('f & j') || title.includes('j & f')) return ['f', 'j'];
+    if (title.includes('d & k') || title.includes('k & d')) return ['d', 'k'];
+    if (title.includes('s & l') || title.includes('l & s')) return ['s', 'l'];
+    if (title.includes('a & ;') || title.includes('; & a')) return ['a', ';'];
+    if (title.includes('e & i') || title.includes('i & e')) return ['e', 'i'];
+    if (title.includes('r & u') || title.includes('u & r')) return ['r', 'u'];
+    if (title.includes('t & y') || title.includes('y & t')) return ['t', 'y'];
+    if (title.includes('v & m') || title.includes('m & v')) return ['v', 'm'];
+    if (title.includes('c & ,') || title.includes(', & c')) return ['c', ','];
+    if (title.includes('x & .') || title.includes('. & x')) return ['x', '.'];
+    if (title.includes('z & /') || title.includes('/ & z')) return ['z', '/'];
+    if (title.includes('g & h') || title.includes('h & g')) return ['g', 'h'];
+    if (title.includes('b & n') || title.includes('n & b')) return ['b', 'n'];
+    if (title.includes('q & p') || title.includes('p & q')) return ['q', 'p'];
+    if (title.includes('w & o') || title.includes('o & w')) return ['w', 'o'];
+
     const rawKeys = lesson.keys || lesson.targetKeys;
     if (Array.isArray(rawKeys) && rawKeys.length > 0) {
-      return rawKeys.filter(k => k !== '\n');
+      return rawKeys.filter(k => k !== '\n').slice(0, 2);
     }
-
-    const title = (lesson.title || '').toLowerCase();
-    if (title.includes('space bar')) return [' '];
-    if (title.includes('d & k')) return ['d', 'k'];
-    if (title.includes('s & l')) return ['s', 'l'];
-    if (title.includes('a & ;')) return ['a', ';'];
-    if (title.includes('e & i')) return ['e', 'i'];
-    if (title.includes('r & u')) return ['r', 'u'];
-    if (title.includes('t & y')) return ['t', 'y'];
-    if (title.includes('v & m')) return ['v', 'm'];
-    if (title.includes('c & ,')) return ['c', ','];
-    if (title.includes('x & .')) return ['x', '.'];
-    if (title.includes('z & /')) return ['z', '/'];
 
     return ['f', 'j'];
   }, [lesson]);
@@ -95,6 +103,7 @@ export default function NewKeyIntro({
 
     const handleKeyDown = (e) => {
       if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (isTransitioningRef.current) return;
 
       const pressed = e.key;
 
@@ -115,11 +124,19 @@ export default function NewKeyIntro({
 
         const nextStep = currentStepIndex + 1;
         if (nextStep < targetKeys.length) {
-          setCurrentStepIndex(nextStep);
+          isTransitioningRef.current = true;
+          setTimeout(() => {
+            setCurrentStepIndex(nextStep);
+            isTransitioningRef.current = false;
+          }, 120);
         } else {
           // All keys introduced -> trigger celebration screen (Image 3)
+          isTransitioningRef.current = true;
           sound.playSuccessChime();
-          setIsCompleted(true);
+          setTimeout(() => {
+            setIsCompleted(true);
+            isTransitioningRef.current = false;
+          }, 150);
         }
       } else {
         sound.playErrorBuzz();
