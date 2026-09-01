@@ -5,16 +5,60 @@ import Key from './Key';
 // Home-Row Fingertip Rest Positions in 683.3 x 380 coordinate space
 // These sit directly aligned under the ASDF (left) and JKL; (right) home key centers
 const HOME_FINGERTIP_REST = {
-  'left-pinky':  { x: 116, y: 172, homeKey: 'pos-3-1', label: 'Left Pinky' },
-  'left-ring':   { x: 161, y: 164, homeKey: 'pos-3-2', label: 'Left Ring' },
-  'left-middle': { x: 206, y: 158, homeKey: 'pos-3-3', label: 'Left Middle' },
-  'left-index':  { x: 251, y: 164, homeKey: 'pos-3-4', label: 'Left Index' },
-  'thumbs':      { x: 295, y: 228, homeKey: 'space',   label: 'Thumb' },
-  'right-index': { x: 386, y: 164, homeKey: 'pos-3-7', label: 'Right Index' },
-  'right-middle':{ x: 431, y: 158, homeKey: 'pos-3-8', label: 'Right Middle' },
-  'right-ring':  { x: 476, y: 164, homeKey: 'pos-3-9', label: 'Right Ring' },
-  'right-pinky': { x: 521, y: 172, homeKey: 'pos-3-10',label: 'Right Pinky' }
+  'left-pinky':  { x: 120, y: 172, homeKey: 'pos-3-1', label: 'Left Pinky',  color: '#1888ff' },
+  'left-ring':   { x: 165, y: 164, homeKey: 'pos-3-2', label: 'Left Ring',   color: '#70c028' },
+  'left-middle': { x: 210, y: 158, homeKey: 'pos-3-3', label: 'Left Middle', color: '#fab814' },
+  'left-index':  { x: 255, y: 164, homeKey: 'pos-3-4', label: 'Left Index',  color: '#f44336' },
+  'thumbs':      { x: 300, y: 228, homeKey: 'space',   label: 'Thumb',       color: '#94a3b8' },
+  'right-index': { x: 428, y: 164, homeKey: 'pos-3-7', label: 'Right Index', color: '#f44336' },
+  'right-middle':{ x: 473, y: 158, homeKey: 'pos-3-8', label: 'Right Middle',color: '#fab814' },
+  'right-ring':  { x: 518, y: 164, homeKey: 'pos-3-9', label: 'Right Ring',  color: '#70c028' },
+  'right-pinky': { x: 563, y: 172, homeKey: 'pos-3-10',label: 'Right Pinky', color: '#1888ff' }
 };
+
+// Knuckle base anchors on palm
+const KNUCKLES = {
+  'left-pinky':  { x: 122, y: 275 },
+  'left-ring':   { x: 158, y: 268 },
+  'left-middle': { x: 198, y: 265 },
+  'left-index':  { x: 238, y: 268 },
+  'left-thumb':  { x: 252, y: 305 },
+  'right-thumb': { x: 431, y: 305 },
+  'right-index': { x: 445, y: 268 },
+  'right-middle':{ x: 485, y: 265 },
+  'right-ring':  { x: 525, y: 268 },
+  'right-pinky': { x: 561, y: 275 }
+};
+
+/**
+ * Generates a clean, smooth, uniform capsule path from knuckle (kx, ky) to tip (tx, ty)
+ */
+function createFingerPath(kx, ky, tx, ty, width = 18) {
+  const hw = width / 2;
+  const angle = Math.atan2(ty - ky, tx - kx);
+  const perp = angle + Math.PI / 2;
+  
+  const nx = Math.cos(perp) * hw;
+  const ny = Math.sin(perp) * hw;
+  
+  const bLx = kx + nx;
+  const bLy = ky + ny;
+  const bRx = kx - nx;
+  const bRy = ky - ny;
+  
+  const tLx = tx + nx;
+  const tLy = ty + ny;
+  const tRx = tx - nx;
+  const tRy = ty - ny;
+  
+  // Forward vector for rounded tip arc
+  const fx = Math.cos(angle) * hw;
+  const fy = Math.sin(angle) * hw;
+  const tipX = tx + fx;
+  const tipY = ty + fy;
+  
+  return `M ${bLx.toFixed(1)},${bLy.toFixed(1)} L ${tLx.toFixed(1)},${tLy.toFixed(1)} C ${(tLx + fx * 0.8).toFixed(1)},${(tLy + fy * 0.8).toFixed(1)} ${(tipX + nx * 0.5).toFixed(1)},${(tipY + ny * 0.5).toFixed(1)} ${tipX.toFixed(1)},${tipY.toFixed(1)} C ${(tipX - nx * 0.5).toFixed(1)},${(tipY - ny * 0.5).toFixed(1)} ${(tRx + fx * 0.8).toFixed(1)},${(tRy + fy * 0.8).toFixed(1)} ${tRx.toFixed(1)},${tRy.toFixed(1)} L ${bRx.toFixed(1)},${bRy.toFixed(1)} Z`;
+}
 
 export default function VirtualKeyboard({ 
   activeChar, 
@@ -51,17 +95,16 @@ export default function VirtualKeyboard({
   // Compute active fingertip pose: Rest or Reach
   const getFingertipPose = (fingerId) => {
     const base = HOME_FINGERTIP_REST[fingerId];
-    if (!base) return { x: 0, y: 0, isReaching: false };
+    if (!base) return { x: 0, y: 0, isReaching: false, color: '#f44336' };
 
     // If this finger is the active target finger
     if (fingerId === activeFinger && activeKeyDef) {
-      // Calculate delta from home rest position toward target key center
       const dx = activeKeyDef.cx - base.x;
       const dy = activeKeyDef.cy - base.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
 
-      // Reach ~14px toward the key
-      const reachDist = Math.min(18, dist * 0.35);
+      // Smooth reach ~28px toward key
+      const reachDist = Math.min(32, dist * 0.45);
       const ratio = dist > 0 ? reachDist / dist : 0;
       
       const isPressed = pressedKeyId === activeKeyDef.id;
@@ -71,7 +114,8 @@ export default function VirtualKeyboard({
         x: base.x + dx * ratio,
         y: base.y + dy * ratio + pressOffset,
         isReaching: true,
-        isPressed
+        isPressed,
+        color: base.color
       };
     }
 
@@ -80,13 +124,14 @@ export default function VirtualKeyboard({
       const dx = shiftKeyDef.cx - base.x;
       const dy = shiftKeyDef.cy - base.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      const reachDist = Math.min(16, dist * 0.3);
+      const reachDist = Math.min(26, dist * 0.4);
       const ratio = dist > 0 ? reachDist / dist : 0;
       return {
         x: base.x + dx * ratio,
         y: base.y + dy * ratio,
         isReaching: true,
-        isShift: true
+        isShift: true,
+        color: '#8b5cf6'
       };
     }
 
@@ -94,7 +139,8 @@ export default function VirtualKeyboard({
     return {
       x: base.x,
       y: base.y,
-      isReaching: false
+      isReaching: false,
+      color: base.color
     };
   };
 
@@ -108,11 +154,7 @@ export default function VirtualKeyboard({
   const rmPose = getFingertipPose('right-middle');
   const rrPose = getFingertipPose('right-ring');
   const rpPose = getFingertipPose('right-pinky');
-  const rtPose = { x: 350, y: 228, isReaching: activeFinger === 'thumbs' };
-
-  // Active finger tip for the guide curve
-  const activeTip = activeFinger ? getFingertipPose(activeFinger) : null;
-  const shiftTip = shiftFinger ? getFingertipPose(shiftFinger) : null;
+  const rtPose = { x: 383, y: 228, isReaching: activeFinger === 'thumbs', color: '#94a3b8' };
 
   // Theme styling rules
   const isJungle = theme === 'jungle';
@@ -153,205 +195,159 @@ export default function VirtualKeyboard({
             ))}
           </g>
 
-          {/* 2. UNIFIED TACTILE HANDS & GUIDE CURVES LAYER */}
+          {/* 2. AUTHENTIC SEPARATE FINGERS HANDS LAYER */}
           {isHandsVisible && (
             <g id="hands-stage">
               
-              {/* LEFT HAND: Palm, Metacarpals & 5 Articulated Fingers */}
+              {/* LEFT HAND */}
               {showLeftHand && (
                 <g id="left-hand-group" className="transition-all duration-150">
-                  {/* Palm base and wrist */}
+                  {/* Palm Base */}
                   <path
                     d="M 120,380 C 122,340 130,295 145,275 C 160,265 210,265 230,285 C 242,298 248,340 250,380 Z"
-                    fill="var(--rs-paper-alt, #FDF8EE)"
+                    fill="#ffffff"
                     stroke="#2D2319"
-                    strokeWidth="2"
+                    strokeWidth="2.2"
                     strokeLinejoin="round"
                   />
 
                   {/* Left Pinky */}
                   <path
-                    d={`M 102,275 C 102,230 106,195 ${lpPose.x - 9},${lpPose.y} C ${lpPose.x - 9},${lpPose.y - 10} ${lpPose.x + 9},${lpPose.y - 10} ${lpPose.x + 9},${lpPose.y} C 122,195 125,230 125,275 Z`}
-                    fill={lpPose.isReaching ? '#e0f2fe' : 'var(--rs-paper-alt, #FDF8EE)'}
-                    stroke={lpPose.isReaching ? '#1888ff' : '#2D2319'}
-                    strokeWidth={lpPose.isReaching ? 2.5 : 2}
+                    d={createFingerPath(KNUCKLES['left-pinky'].x, KNUCKLES['left-pinky'].y, lpPose.x, lpPose.y, 18)}
+                    fill={lpPose.isReaching ? lpPose.color : '#ffffff'}
+                    stroke="#2D2319"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
+                    className="transition-all duration-150"
                   />
+                  {!lpPose.isReaching && (
+                    <circle cx={lpPose.x} cy={lpPose.y - 2} r="5" fill={HOME_FINGERTIP_REST['left-pinky'].color} />
+                  )}
 
                   {/* Left Ring */}
                   <path
-                    d={`M 147,270 C 147,220 151,185 ${lrPose.x - 10},${lrPose.y} C ${lrPose.x - 10},${lrPose.y - 10} ${lrPose.x + 10},${lrPose.y - 10} ${lrPose.x + 10},${lrPose.y} C 169,185 171,220 171,270 Z`}
-                    fill={lrPose.isReaching ? '#e0f2fe' : 'var(--rs-paper-alt, #FDF8EE)'}
-                    stroke={lrPose.isReaching ? '#1888ff' : '#2D2319'}
-                    strokeWidth={lrPose.isReaching ? 2.5 : 2}
+                    d={createFingerPath(KNUCKLES['left-ring'].x, KNUCKLES['left-ring'].y, lrPose.x, lrPose.y, 19)}
+                    fill={lrPose.isReaching ? lrPose.color : '#ffffff'}
+                    stroke="#2D2319"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
+                    className="transition-all duration-150"
                   />
+                  {!lrPose.isReaching && (
+                    <circle cx={lrPose.x} cy={lrPose.y - 2} r="5" fill={HOME_FINGERTIP_REST['left-ring'].color} />
+                  )}
 
                   {/* Left Middle */}
                   <path
-                    d={`M 192,268 C 192,215 196,178 ${lmPose.x - 10},${lmPose.y} C ${lmPose.x - 10},${lmPose.y - 10} ${lmPose.x + 10},${lmPose.y - 10} ${lmPose.x + 10},${lmPose.y} C 216,178 218,215 218,268 Z`}
-                    fill={lmPose.isReaching ? '#e0f2fe' : 'var(--rs-paper-alt, #FDF8EE)'}
-                    stroke={lmPose.isReaching ? '#1888ff' : '#2D2319'}
-                    strokeWidth={lmPose.isReaching ? 2.5 : 2}
+                    d={createFingerPath(KNUCKLES['left-middle'].x, KNUCKLES['left-middle'].y, lmPose.x, lmPose.y, 20)}
+                    fill={lmPose.isReaching ? lmPose.color : '#ffffff'}
+                    stroke="#2D2319"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
+                    className="transition-all duration-150"
                   />
+                  {!lmPose.isReaching && (
+                    <circle cx={lmPose.x} cy={lmPose.y - 2} r="5.5" fill={HOME_FINGERTIP_REST['left-middle'].color} />
+                  )}
 
                   {/* Left Index */}
                   <path
-                    d={`M 238,272 C 238,220 242,185 ${liPose.x - 10},${liPose.y} C ${liPose.x - 10},${liPose.y - 10} ${liPose.x + 10},${liPose.y - 10} ${liPose.x + 10},${liPose.y} C 260,185 262,220 262,272 Z`}
-                    fill={liPose.isReaching ? '#e0f2fe' : 'var(--rs-paper-alt, #FDF8EE)'}
-                    stroke={liPose.isReaching ? '#1888ff' : '#2D2319'}
-                    strokeWidth={liPose.isReaching ? 2.5 : 2}
+                    d={createFingerPath(KNUCKLES['left-index'].x, KNUCKLES['left-index'].y, liPose.x, liPose.y, 20)}
+                    fill={liPose.isReaching ? liPose.color : '#ffffff'}
+                    stroke="#2D2319"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
+                    className="transition-all duration-150"
                   />
+                  {!liPose.isReaching && (
+                    <circle cx={liPose.x} cy={liPose.y - 2} r="5.5" fill={HOME_FINGERTIP_REST['left-index'].color} />
+                  )}
 
                   {/* Left Thumb */}
                   <path
-                    d={`M 242,305 C 255,275 270,250 ${ltPose.x - 8},${ltPose.y} C ${ltPose.x - 8},${ltPose.y - 8} ${ltPose.x + 8},${ltPose.y - 8} ${ltPose.x + 8},${ltPose.y} C 285,260 270,285 255,325 Z`}
-                    fill={ltPose.isReaching ? '#e0f2fe' : 'var(--rs-paper-alt, #FDF8EE)'}
-                    stroke={ltPose.isReaching ? '#1888ff' : '#2D2319'}
-                    strokeWidth={ltPose.isReaching ? 2.5 : 2}
+                    d={createFingerPath(KNUCKLES['left-thumb'].x, KNUCKLES['left-thumb'].y, ltPose.x, ltPose.y, 18)}
+                    fill={ltPose.isReaching ? ltPose.color : '#ffffff'}
+                    stroke="#2D2319"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
+                    className="transition-all duration-150"
                   />
-
-                  {/* Home Key Fingertip Resting Dots */}
-                  <circle cx={HOME_FINGERTIP_REST['left-pinky'].x} cy={HOME_FINGERTIP_REST['left-pinky'].y - 2} r="2.5" fill="#2D2319" opacity="0.3" />
-                  <circle cx={HOME_FINGERTIP_REST['left-ring'].x} cy={HOME_FINGERTIP_REST['left-ring'].y - 2} r="2.5" fill="#2D2319" opacity="0.3" />
-                  <circle cx={HOME_FINGERTIP_REST['left-middle'].x} cy={HOME_FINGERTIP_REST['left-middle'].y - 2} r="2.5" fill="#2D2319" opacity="0.3" />
-                  <circle cx={HOME_FINGERTIP_REST['left-index'].x} cy={HOME_FINGERTIP_REST['left-index'].y - 2} r="2.5" fill="#2D2319" opacity="0.3" />
                 </g>
               )}
 
-              {/* RIGHT HAND: Palm, Metacarpals & 5 Articulated Fingers */}
+              {/* RIGHT HAND */}
               {showRightHand && (
                 <g id="right-hand-group" className="transition-all duration-150">
-                  {/* Palm base and wrist */}
+                  {/* Palm Base */}
                   <path
                     d="M 433,380 C 435,340 441,298 453,285 C 473,265 523,265 538,275 C 553,295 561,340 563,380 Z"
-                    fill="var(--rs-paper-alt, #FDF8EE)"
+                    fill="#ffffff"
                     stroke="#2D2319"
-                    strokeWidth="2"
+                    strokeWidth="2.2"
                     strokeLinejoin="round"
                   />
 
                   {/* Right Thumb */}
                   <path
-                    d={`M 441,305 C 428,275 413,250 ${rtPose.x + 8},${rtPose.y} C ${rtPose.x + 8},${rtPose.y - 8} ${rtPose.x - 8},${rtPose.y - 8} ${rtPose.x - 8},${rtPose.y} C 398,260 413,285 428,325 Z`}
-                    fill={rtPose.isReaching ? '#e0f2fe' : 'var(--rs-paper-alt, #FDF8EE)'}
-                    stroke={rtPose.isReaching ? '#1888ff' : '#2D2319'}
-                    strokeWidth={rtPose.isReaching ? 2.5 : 2}
+                    d={createFingerPath(KNUCKLES['right-thumb'].x, KNUCKLES['right-thumb'].y, rtPose.x, rtPose.y, 18)}
+                    fill={rtPose.isReaching ? rtPose.color : '#ffffff'}
+                    stroke="#2D2319"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
+                    className="transition-all duration-150"
                   />
 
                   {/* Right Index */}
                   <path
-                    d={`M 421,272 C 421,220 423,185 ${riPose.x - 10},${riPose.y} C ${riPose.x - 10},${riPose.y - 10} ${riPose.x + 10},${riPose.y - 10} ${riPose.x + 10},${riPose.y} C 445,185 445,220 445,272 Z`}
-                    fill={riPose.isReaching ? '#e0f2fe' : 'var(--rs-paper-alt, #FDF8EE)'}
-                    stroke={riPose.isReaching ? '#1888ff' : '#2D2319'}
-                    strokeWidth={riPose.isReaching ? 2.5 : 2}
+                    d={createFingerPath(KNUCKLES['right-index'].x, KNUCKLES['right-index'].y, riPose.x, riPose.y, 20)}
+                    fill={riPose.isReaching ? riPose.color : '#ffffff'}
+                    stroke="#2D2319"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
+                    className="transition-all duration-150"
                   />
+                  {!riPose.isReaching && (
+                    <circle cx={riPose.x} cy={riPose.y - 2} r="5.5" fill={HOME_FINGERTIP_REST['right-index'].color} />
+                  )}
 
                   {/* Right Middle */}
                   <path
-                    d={`M 465,268 C 465,215 467,178 ${rmPose.x - 10},${rmPose.y} C ${rmPose.x - 10},${rmPose.y - 10} ${rmPose.x + 10},${rmPose.y - 10} ${rmPose.x + 10},${rmPose.y} C 491,178 491,215 491,268 Z`}
-                    fill={rmPose.isReaching ? '#e0f2fe' : 'var(--rs-paper-alt, #FDF8EE)'}
-                    stroke={rmPose.isReaching ? '#1888ff' : '#2D2319'}
-                    strokeWidth={rmPose.isReaching ? 2.5 : 2}
+                    d={createFingerPath(KNUCKLES['right-middle'].x, KNUCKLES['right-middle'].y, rmPose.x, rmPose.y, 20)}
+                    fill={rmPose.isReaching ? rmPose.color : '#ffffff'}
+                    stroke="#2D2319"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
+                    className="transition-all duration-150"
                   />
+                  {!rmPose.isReaching && (
+                    <circle cx={rmPose.x} cy={rmPose.y - 2} r="5.5" fill={HOME_FINGERTIP_REST['right-middle'].color} />
+                  )}
 
                   {/* Right Ring */}
                   <path
-                    d={`M 512,270 C 512,220 514,185 ${rrPose.x - 10},${rrPose.y} C ${rrPose.x - 10},${rrPose.y - 10} ${rrPose.x + 10},${rrPose.y - 10} ${rrPose.x + 10},${rrPose.y} C 536,185 536,220 536,270 Z`}
-                    fill={rrPose.isReaching ? '#e0f2fe' : 'var(--rs-paper-alt, #FDF8EE)'}
-                    stroke={rrPose.isReaching ? '#1888ff' : '#2D2319'}
-                    strokeWidth={rrPose.isReaching ? 2.5 : 2}
+                    d={createFingerPath(KNUCKLES['right-ring'].x, KNUCKLES['right-ring'].y, rrPose.x, rrPose.y, 19)}
+                    fill={rrPose.isReaching ? rrPose.color : '#ffffff'}
+                    stroke="#2D2319"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
+                    className="transition-all duration-150"
                   />
+                  {!rrPose.isReaching && (
+                    <circle cx={rrPose.x} cy={rrPose.y - 2} r="5" fill={HOME_FINGERTIP_REST['right-ring'].color} />
+                  )}
 
                   {/* Right Pinky */}
                   <path
-                    d={`M 558,275 C 558,230 558,195 ${rpPose.x - 9},${rpPose.y} C ${rpPose.x - 9},${rpPose.y - 10} ${rpPose.x + 9},${rpPose.y - 10} ${rpPose.x + 9},${rpPose.y} C 581,195 581,230 581,275 Z`}
-                    fill={rpPose.isReaching ? (rpPose.isShift ? '#f3e8ff' : '#e0f2fe') : 'var(--rs-paper-alt, #FDF8EE)'}
-                    stroke={rpPose.isReaching ? (rpPose.isShift ? '#8b5cf6' : '#1888ff') : '#2D2319'}
-                    strokeWidth={rpPose.isReaching ? 2.5 : 2}
+                    d={createFingerPath(KNUCKLES['right-pinky'].x, KNUCKLES['right-pinky'].y, rpPose.x, rpPose.y, 18)}
+                    fill={rpPose.isReaching ? (rpPose.isShift ? '#8b5cf6' : rpPose.color) : '#ffffff'}
+                    stroke="#2D2319"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
+                    className="transition-all duration-150"
                   />
-
-                  {/* Home Key Fingertip Resting Dots */}
-                  <circle cx={HOME_FINGERTIP_REST['right-index'].x} cy={HOME_FINGERTIP_REST['right-index'].y - 2} r="2.5" fill="#2D2319" opacity="0.3" />
-                  <circle cx={HOME_FINGERTIP_REST['right-middle'].x} cy={HOME_FINGERTIP_REST['right-middle'].y - 2} r="2.5" fill="#2D2319" opacity="0.3" />
-                  <circle cx={HOME_FINGERTIP_REST['right-ring'].x} cy={HOME_FINGERTIP_REST['right-ring'].y - 2} r="2.5" fill="#2D2319" opacity="0.3" />
-                  <circle cx={HOME_FINGERTIP_REST['right-pinky'].x} cy={HOME_FINGERTIP_REST['right-pinky'].y - 2} r="2.5" fill="#2D2319" opacity="0.3" />
-                </g>
-              )}
-
-              {/* 3. DYNAMIC GUIDANCE: Starts at Active Fingertip -> Curves UP to Target Keycap Center */}
-              {activeKeyDef && activeTip && ((activeHand === 'left' && showLeftHand) || (activeHand === 'right' && showRightHand) || (activeFinger === 'thumbs' && (showLeftHand || showRightHand))) && (
-                <g id="active-finger-guide">
-                  {/* Dynamic upward curve from active fingertip pad to target key center */}
-                  <path
-                    d={`M ${activeTip.x},${activeTip.y - 8} Q ${(activeTip.x + activeKeyDef.cx) / 2},${(activeTip.y + activeKeyDef.cy) / 2} ${activeKeyDef.cx},${activeKeyDef.cy + 6}`}
-                    fill="none"
-                    stroke="#1888ff"
-                    strokeWidth="3"
-                    strokeDasharray="5 3"
-                    strokeLinecap="round"
-                    className="animate-pulse"
-                    style={{ filter: 'drop-shadow(0 0 6px rgba(24, 136, 255, 0.7))' }}
-                  />
-
-                  {/* Pulsating Glowing Beacon ON THE FINGERTIP */}
-                  <circle
-                    cx={activeTip.x}
-                    cy={activeTip.y - 8}
-                    r="9"
-                    fill="#1888ff"
-                    opacity="0.3"
-                    className="animate-ping"
-                  />
-                  <circle
-                    cx={activeTip.x}
-                    cy={activeTip.y - 8}
-                    r="5.5"
-                    fill="#1888ff"
-                    stroke="#ffffff"
-                    strokeWidth="2"
-                  />
-
-                  {/* Target Keycap Receiving Dot */}
-                  <circle
-                    cx={activeKeyDef.cx}
-                    cy={activeKeyDef.cy + 6}
-                    r="4"
-                    fill="#1888ff"
-                    stroke="#ffffff"
-                    strokeWidth="1.5"
-                  />
-                </g>
-              )}
-
-              {/* 4. SHIFT GUIDANCE: Starts at Opposite Pinky Fingertip -> Curves to Shift Keycap */}
-              {shiftKeyDef && shiftTip && ((shiftHand === 'left' && showLeftHand) || (shiftHand === 'right' && showRightHand)) && (
-                <g id="shift-finger-guide">
-                  <path
-                    d={`M ${shiftTip.x},${shiftTip.y - 8} Q ${(shiftTip.x + shiftKeyDef.cx) / 2},${(shiftTip.y + shiftKeyDef.cy) / 2} ${shiftKeyDef.cx},${shiftKeyDef.cy + 6}`}
-                    fill="none"
-                    stroke="#8b5cf6"
-                    strokeWidth="2.5"
-                    strokeDasharray="4 2"
-                    strokeLinecap="round"
-                    className="animate-pulse"
-                    style={{ filter: 'drop-shadow(0 0 5px rgba(139, 92, 246, 0.7))' }}
-                  />
-                  {/* Purple Beacon ON THE SHIFT PINKY FINGERTIP */}
-                  <circle
-                    cx={shiftTip.x}
-                    cy={shiftTip.y - 8}
-                    r="8"
-                    fill="#8b5cf6"
-                    opacity="0.3"
-                    className="animate-ping"
-                  />
-                  <circle
-                    cx={shiftTip.x}
-                    cy={shiftTip.y - 8}
-                    r="5"
-                    fill="#8b5cf6"
-                    stroke="#ffffff"
-                    strokeWidth="1.8"
-                  />
+                  {!rpPose.isReaching && (
+                    <circle cx={rpPose.x} cy={rpPose.y - 2} r="5" fill={HOME_FINGERTIP_REST['right-pinky'].color} />
+                  )}
                 </g>
               )}
 
@@ -362,4 +358,3 @@ export default function VirtualKeyboard({
     </div>
   );
 }
-
