@@ -140,7 +140,8 @@
           "text": "Practice typing: Play: fjkd",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "press-room",
+          "renderEngine": "press-room"
         },
         {
           "id": 9,
@@ -255,7 +256,8 @@
           "text": "Practice typing: Play: First 8 Keys",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "paper-planes"
+          "gameId": "paper-planes",
+          "renderEngine": "paper-planes"
         },
         {
           "id": 16,
@@ -384,7 +386,8 @@
           "text": "Practice typing: Play Home Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "paper-planes"
+          "gameId": "local-line",
+          "renderEngine": "local-line"
         }
       ]
     },
@@ -567,7 +570,8 @@
           "text": "Practice typing: Play: ruei",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "night-market",
+          "renderEngine": "night-market"
         },
         {
           "id": 35,
@@ -628,7 +632,8 @@
           "text": "Practice typing: Play: Top 6 Keys",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "drop-chits"
+          "gameId": "drop-chits",
+          "renderEngine": "drop-chits"
         },
         {
           "id": 39,
@@ -737,7 +742,8 @@
           "text": "Practice typing: Play: Top Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "local-line"
+          "gameId": "pit-lane",
+          "renderEngine": "pit-lane"
         },
         {
           "id": 46,
@@ -818,7 +824,8 @@
           "text": "Practice typing: Play: Top Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "local-line"
+          "gameId": "fuse-desk",
+          "renderEngine": "fuse-desk"
         },
         {
           "id": 51,
@@ -831,7 +838,8 @@
           "text": "Practice typing: Play: Top Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "local-line"
+          "gameId": "patch-terminal",
+          "renderEngine": "patch-terminal"
         }
       ]
     },
@@ -998,7 +1006,8 @@
           "text": "Practice typing: Play: vmc,",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "press-room",
+          "renderEngine": "press-room"
         },
         {
           "id": 63,
@@ -1172,7 +1181,8 @@
           "text": "Practice typing: Play: Bottom Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "pit-lane"
+          "gameId": "paper-planes",
+          "renderEngine": "paper-planes"
         },
         {
           "id": 75,
@@ -1309,7 +1319,8 @@
           "text": "Practice typing: Play: Bottom Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "pit-lane"
+          "gameId": "local-line",
+          "renderEngine": "local-line"
         },
         {
           "id": 83,
@@ -1322,7 +1333,8 @@
           "text": "Practice typing: Play: Bottom Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "pit-lane"
+          "gameId": "night-market",
+          "renderEngine": "night-market"
         },
         {
           "id": 84,
@@ -1393,7 +1405,7 @@
     },
     {
       "stageNumber": 4,
-      "title": "Basic Level 1Basic Keys (Goal 21 WPM)",
+      "title": "Basic Level 1: Basic Keys (Goal 21 WPM)",
       "lessons": [
         {
           "id": 89,
@@ -1471,7 +1483,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "drop-chits",
+          "renderEngine": "drop-chits"
         },
         {
           "id": 95,
@@ -1549,7 +1562,8 @@
           "text": "Practice typing: Play: Numbers",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "drop-chits"
+          "gameId": "pit-lane",
+          "renderEngine": "pit-lane"
         },
         {
           "id": 101,
@@ -1627,7 +1641,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "fuse-desk",
+          "renderEngine": "fuse-desk"
         },
         {
           "id": 107,
@@ -1705,7 +1720,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "patch-terminal",
+          "renderEngine": "patch-terminal"
         },
         {
           "id": 113,
@@ -1783,7 +1799,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "press-room",
+          "renderEngine": "press-room"
         },
         {
           "id": 119,
@@ -1861,7 +1878,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "paper-planes",
+          "renderEngine": "paper-planes"
         },
         {
           "id": 125,
@@ -2042,7 +2060,7 @@
     },
     {
       "stageNumber": 6,
-      "title": "Shift KeyIntroduce using the shift keys with other keys",
+      "title": "The Shift Key: Introduce using the shift keys with other keys",
       "lessons": [
         {
           "id": 138,
@@ -2148,7 +2166,8 @@
           "text": "Practice typing: Play: FJDK",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "local-line"
+          "gameId": "local-line",
+          "renderEngine": "local-line"
         },
         {
           "id": 146,
@@ -2240,7 +2259,8 @@
           "text": "Practice typing: Play: SLA:",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "night-market",
+          "renderEngine": "night-market"
         },
         {
           "id": 153,
@@ -2333,7 +2353,8 @@
           "text": "Practice typing: Play: GHTY",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "drop-chits"
+          "gameId": "drop-chits",
+          "renderEngine": "drop-chits"
         },
         {
           "id": 160,
@@ -2426,7 +2447,8 @@
           "text": "Practice typing: Play: RUEI",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "fuse-desk"
+          "gameId": "pit-lane",
+          "renderEngine": "pit-lane"
         },
         {
           "id": 167,
@@ -2519,7 +2541,8 @@
           "text": "Practice typing: Play: WOQP",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "pit-lane"
+          "gameId": "fuse-desk",
+          "renderEngine": "fuse-desk"
         },
         {
           "id": 174,
@@ -2624,7 +2647,8 @@
           "text": "Practice typing: Play: VMC?",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "patch-terminal"
+          "gameId": "patch-terminal",
+          "renderEngine": "patch-terminal"
         },
         {
           "id": 182,
@@ -2911,7 +2935,7 @@
     },
     {
       "stageNumber": 8,
-      "title": "Basic Level 2Basic Keys (Goal 30 WPM)",
+      "title": "Basic Level 2: Basic Keys (Goal 30 WPM)",
       "lessons": [
         {
           "id": 203,
@@ -2976,7 +3000,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "press-room",
+          "renderEngine": "press-room"
         },
         {
           "id": 208,
@@ -3041,7 +3066,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "paper-planes",
+          "renderEngine": "paper-planes"
         },
         {
           "id": 213,
@@ -3106,7 +3132,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "local-line",
+          "renderEngine": "local-line"
         },
         {
           "id": 218,
@@ -3171,7 +3198,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "night-market",
+          "renderEngine": "night-market"
         },
         {
           "id": 223,
@@ -3236,7 +3264,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "drop-chits",
+          "renderEngine": "drop-chits"
         },
         {
           "id": 228,
@@ -3301,7 +3330,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "pit-lane",
+          "renderEngine": "pit-lane"
         },
         {
           "id": 233,
@@ -3469,7 +3499,7 @@
     },
     {
       "stageNumber": 10,
-      "title": "NumbersIntroduce how to type numbers",
+      "title": "Numbers: Introduce how to type numbers",
       "lessons": [
         {
           "id": 245,
@@ -3722,7 +3752,8 @@
           "text": "Practice typing: Play: All Numbers",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "drop-chits"
+          "gameId": "fuse-desk",
+          "renderEngine": "fuse-desk"
         },
         {
           "id": 261,
@@ -3904,7 +3935,8 @@
           "text": "Practice typing: Play: Numbers",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "drop-chits"
+          "gameId": "patch-terminal",
+          "renderEngine": "patch-terminal"
         }
       ]
     },
@@ -4059,7 +4091,7 @@
     },
     {
       "stageNumber": 12,
-      "title": "Basic Level 3Basic Keys (Goal 30 WPM)",
+      "title": "Basic Level 3: Basic Keys (Goal 30 WPM)",
       "lessons": [
         {
           "id": 286,
@@ -4124,7 +4156,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "press-room",
+          "renderEngine": "press-room"
         },
         {
           "id": 291,
@@ -4189,7 +4222,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "paper-planes",
+          "renderEngine": "paper-planes"
         },
         {
           "id": 296,
@@ -4254,7 +4288,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "local-line",
+          "renderEngine": "local-line"
         },
         {
           "id": 301,
@@ -4319,7 +4354,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "night-market",
+          "renderEngine": "night-market"
         },
         {
           "id": 306,
@@ -4384,7 +4420,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "drop-chits",
+          "renderEngine": "drop-chits"
         },
         {
           "id": 311,
@@ -4449,7 +4486,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "pit-lane",
+          "renderEngine": "pit-lane"
         },
         {
           "id": 316,
@@ -4468,7 +4506,7 @@
     },
     {
       "stageNumber": 13,
-      "title": "SymbolsIntroducing Symbols",
+      "title": "Symbols: Introducing Symbols",
       "lessons": [
         {
           "id": 317,
@@ -4721,7 +4759,8 @@
           "text": "Practice typing: Play: All Symbols",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "fuse-desk"
+          "gameId": "fuse-desk",
+          "renderEngine": "fuse-desk"
         },
         {
           "id": 333,
@@ -5058,7 +5097,7 @@
     },
     {
       "stageNumber": 15,
-      "title": "Advanced Level 1Speed Goal 45 WPM",
+      "title": "Advanced Level 1: Speed Goal 45 WPM",
       "lessons": [
         {
           "id": 358,
@@ -5123,7 +5162,8 @@
           "text": "Practice typing: Play: Bottom Row",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "pit-lane"
+          "gameId": "patch-terminal",
+          "renderEngine": "patch-terminal"
         },
         {
           "id": 363,
@@ -5188,7 +5228,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "press-room",
+          "renderEngine": "press-room"
         },
         {
           "id": 368,
@@ -5253,7 +5294,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "paper-planes",
+          "renderEngine": "paper-planes"
         },
         {
           "id": 373,
@@ -5318,7 +5360,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "local-line",
+          "renderEngine": "local-line"
         },
         {
           "id": 378,
@@ -5383,7 +5426,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "night-market",
+          "renderEngine": "night-market"
         },
         {
           "id": 383,
@@ -5448,7 +5492,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "drop-chits",
+          "renderEngine": "drop-chits"
         },
         {
           "id": 388,
@@ -5864,7 +5909,8 @@
           "text": "Practice typing: Play: Symbols",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "fuse-desk"
+          "gameId": "pit-lane",
+          "renderEngine": "pit-lane"
         },
         {
           "id": 414,
@@ -6084,7 +6130,7 @@
     },
     {
       "stageNumber": 18,
-      "title": "Advanced Level 2Speed Goal 50 WPM",
+      "title": "Advanced Level 2: Speed Goal 50 WPM",
       "lessons": [
         {
           "id": 430,
@@ -6149,7 +6195,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "fuse-desk",
+          "renderEngine": "fuse-desk"
         },
         {
           "id": 435,
@@ -6214,7 +6261,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "patch-terminal",
+          "renderEngine": "patch-terminal"
         },
         {
           "id": 440,
@@ -6279,7 +6327,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "press-room",
+          "renderEngine": "press-room"
         },
         {
           "id": 445,
@@ -6344,7 +6393,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "paper-planes",
+          "renderEngine": "paper-planes"
         },
         {
           "id": 450,
@@ -6409,7 +6459,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "local-line",
+          "renderEngine": "local-line"
         },
         {
           "id": 455,
@@ -6474,7 +6525,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "night-market",
+          "renderEngine": "night-market"
         },
         {
           "id": 460,
@@ -6493,7 +6545,7 @@
     },
     {
       "stageNumber": 19,
-      "title": "Advanced Level 3Speed Goal 55 WPM",
+      "title": "Advanced Level 3: Speed Goal 55 WPM",
       "lessons": [
         {
           "id": 461,
@@ -6558,7 +6610,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "drop-chits",
+          "renderEngine": "drop-chits"
         },
         {
           "id": 466,
@@ -6753,7 +6806,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "pit-lane",
+          "renderEngine": "pit-lane"
         },
         {
           "id": 481,
@@ -6818,7 +6872,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "fuse-desk",
+          "renderEngine": "fuse-desk"
         },
         {
           "id": 486,
@@ -6883,7 +6938,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "patch-terminal",
+          "renderEngine": "patch-terminal"
         },
         {
           "id": 491,
@@ -6902,7 +6958,7 @@
     },
     {
       "stageNumber": 20,
-      "title": "Advanced Level 4Speed Goal 60 WPM",
+      "title": "Advanced Level 4: Speed Goal 60 WPM",
       "lessons": [
         {
           "id": 492,
@@ -7110,7 +7166,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "press-room",
+          "renderEngine": "press-room"
         },
         {
           "id": 508,
@@ -7318,7 +7375,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "paper-planes",
+          "renderEngine": "paper-planes"
         },
         {
           "id": 524,
@@ -7337,7 +7395,7 @@
     },
     {
       "stageNumber": 21,
-      "title": "Advanced Level 5Speed Goal 63 WPM",
+      "title": "Advanced Level 5: Speed Goal 63 WPM",
       "lessons": [
         {
           "id": 525,
@@ -7545,7 +7603,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "local-line",
+          "renderEngine": "local-line"
         },
         {
           "id": 541,
@@ -7753,7 +7812,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "night-market",
+          "renderEngine": "night-market"
         },
         {
           "id": 557,
@@ -7772,7 +7832,7 @@
     },
     {
       "stageNumber": 22,
-      "title": "Advanced Level 6Speed Goal 66 WPM",
+      "title": "Advanced Level 6: Speed Goal 66 WPM",
       "lessons": [
         {
           "id": 558,
@@ -7980,7 +8040,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "drop-chits",
+          "renderEngine": "drop-chits"
         },
         {
           "id": 574,
@@ -8188,7 +8249,8 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "night-market"
+          "gameId": "pit-lane",
+          "renderEngine": "pit-lane"
         },
         {
           "id": 590,
@@ -8207,7 +8269,7 @@
     },
     {
       "stageNumber": 23,
-      "title": "Advanced Level 7Speed Goal 69 WPM",
+      "title": "Advanced Level 7: Speed Goal 69 WPM",
       "lessons": [
         {
           "id": 591,
@@ -8616,7 +8678,7 @@
     },
     {
       "stageNumber": 24,
-      "title": "Advanced Level 8Speed Goal 72 WPM",
+      "title": "Advanced Level 8: Speed Goal 72 WPM",
       "lessons": [
         {
           "id": 622,
@@ -9025,7 +9087,7 @@
     },
     {
       "stageNumber": 25,
-      "title": "Advanced Level 9Speed Goal 75 WPM",
+      "title": "Advanced Level 9: Speed Goal 75 WPM",
       "lessons": [
         {
           "id": 653,
