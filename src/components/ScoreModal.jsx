@@ -266,20 +266,6 @@ export default function ScoreModal({
       closeOnOverlayClick={false}
       className="p-0 text-center relative overflow-hidden bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-2xl shadow-[8px_8px_0px_#2D2319]"
     >
-      {/* Window Top Title Strip */}
-      <div className="bg-[#F6C445] text-[#2D2319] px-3.5 py-1.5 flex items-center justify-between border-b-2 border-[#2D2319] font-mono text-xs select-none">
-        <div className="flex items-center space-x-2">
-          <span className="text-[#2D2319]">✦</span>
-          <span className="font-black tracking-wider">VICTORY_FANFARE.EXE // LEVEL_CLEAR</span>
-        </div>
-
-        <div className="flex items-center space-x-1">
-          <button className="w-4 h-4 bg-white border border-[#2D2319] rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-[#2D2319]">_</button>
-          <button className="w-4 h-4 bg-white border border-[#2D2319] rounded-xs flex items-center justify-center text-[8px] font-mono font-bold leading-none text-[#2D2319]">□</button>
-          <button onClick={handleExit} className="w-4 h-4 bg-[#F28B82] border border-[#2D2319] rounded-xs flex items-center justify-center text-[9px] font-mono font-bold leading-none text-[#2D2319] cursor-pointer">✕</button>
-        </div>
-      </div>
-
       <div className="p-6 sm:p-7 select-none">
         {/* Top Victory Fanfare Banner Header */}
         <div className="flex flex-col items-center animate-banner-drop">
