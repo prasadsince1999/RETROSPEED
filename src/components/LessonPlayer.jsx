@@ -24,6 +24,7 @@ import CourseContextHeaders from './CourseContextHeaders';
 import { SpeedometerGauge, TypingComboMeter, ReactiveMascot } from './animation';
 import { sound } from '../utils/audio';
 import { getKeyForChar } from '../data/keyboardLayout';
+import { calculateStarsFromAttempt } from '../utils/storage';
 
 function getSyntaxClass(char) {
   if (char === '{' || char === '}') return 'curly';
@@ -106,10 +107,11 @@ export default function LessonPlayer({
     setHasError(false);
     keyStatsRef.current = {};
 
-    const hasIntroKeys = (lesson.targetKeys && lesson.targetKeys.filter(k => k !== ' ' && k !== '\n').length > 0) || (lesson.introKeys && lesson.introKeys.length > 0);
-    const isIntroApplicable = lesson.type === 'intro' || lesson.hasIntro || hasIntroKeys;
+    const rawKeys = lesson.keys || lesson.targetKeys || lesson.introKeys || [];
+    const hasIntroKeys = rawKeys.filter(k => k && k !== ' ' && k !== '\n').length > 0;
+    const isIntroApplicable = lesson.type === 'keys' || lesson.type === 'intro' || lesson.hasIntro;
 
-    if (isIntroApplicable && !lesson.skipIntro) {
+    if (isIntroApplicable && hasIntroKeys && !lesson.skipIntro) {
       setMode('intro');
       setIntroStep(0);
       setViewMode('stream');
@@ -291,13 +293,15 @@ export default function LessonPlayer({
           const duration = Math.max(1, (Date.now() - (startTime || Date.now())) / 1000);
           const rawWpm = Math.round((tokens.length / 5) / (duration / 60));
           const accuracy = Math.round(((tokens.length - errors) / Math.max(1, totalKeystrokes + 1)) * 100);
-          let stars = 3;
-          if (accuracy >= 98 && rawWpm >= (lesson.goalWpm || 20)) stars = 5;
-          else if (accuracy >= 95) stars = 4;
-          else if (accuracy < 85) stars = 2;
+          const stars = calculateStarsFromAttempt({
+            wpm: rawWpm,
+            accuracy,
+            goalWpm: lesson.goalWpm || 20,
+            minAccuracy: lesson.minAccuracy || 90
+          });
           setTimeout(() => onComplete({ 
-            wpm: Math.max(15, rawWpm), 
-            accuracy: Math.max(70, accuracy), 
+            wpm: Math.max(10, rawWpm), 
+            accuracy: Math.max(50, accuracy), 
             stars, 
             points: 500 + stars * 100 + Math.max(0, (30 - Math.round(duration))) * 5, 
             time: Math.round(duration), 
@@ -837,11 +841,17 @@ export default function LessonPlayer({
               if (mode === 'intro') { 
                 setMode('practice'); 
               } else { 
+                const fallbackStars = calculateStarsFromAttempt({
+                  wpm: liveWpm || lesson.goalWpm || 20,
+                  accuracy: liveAccuracy || 95,
+                  goalWpm: lesson.goalWpm || 20,
+                  minAccuracy: lesson.minAccuracy || 90
+                });
                 onComplete({ 
-                  wpm: Math.max(25, liveWpm || 25), 
-                  accuracy: Math.max(90, liveAccuracy || 98), 
-                  stars: 5, 
-                  points: 560, 
+                  wpm: Math.max(15, liveWpm || lesson.goalWpm || 20), 
+                  accuracy: Math.max(80, liveAccuracy || 95), 
+                  stars: fallbackStars, 
+                  points: 500 + fallbackStars * 100, 
                   time: elapsedSeconds || 14, 
                   durationSeconds: elapsedSeconds || 14,
                   errors: errors || 0,

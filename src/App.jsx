@@ -33,6 +33,7 @@ const PitLaneGame = lazy(() => import('./components/games/PitLaneGame'));
 const FuseDeskGame = lazy(() => import('./components/games/FuseDeskGame'));
 const PatchTerminalGame = lazy(() => import('./components/games/PatchTerminalGame'));
 const ShortcutPlayer = lazy(() => import('./components/ShortcutPlayer'));
+const MotionLessonPlayer = lazy(() => import('./components/motion/MotionLessonPlayer'));
 
 function ViewLoadingFallback() {
   return (
@@ -231,30 +232,42 @@ export default function App() {
 
     if (spineLesson.isShortcut || spineLesson.type === 'chord') {
       setCurrentView('shortcuts');
-    } else if (spineLesson.type === 'video' || spineLesson.type === 'motion') {
+    } else if (spineLesson.type === 'motion') {
+      setCurrentView('motion');
+    } else if (spineLesson.type === 'video') {
       setCurrentView('video');
     } else if (spineLesson.type === 'play' || spineLesson.type === 'game') {
-      const gId = (spineLesson.gameId || spineLesson.gameApp || '').toLowerCase();
-      const combined = `${gId} ${(spineLesson.title || '').toLowerCase()}`;
-      if (combined.includes('plane') || combined.includes('paper')) {
-        setCurrentView('paper-planes');
-      } else if (combined.includes('local') || combined.includes('line')) {
-        setCurrentView('local-line');
-      } else if (combined.includes('market') || combined.includes('night')) {
-        setCurrentView('night-market');
-      } else if (combined.includes('drop') || combined.includes('chit') || combined.includes('slip')) {
-        setCurrentView('drop-chits');
-      } else if (combined.includes('pit') || combined.includes('lane') || combined.includes('racer')) {
-        setCurrentView('pit-lane');
-      } else if (combined.includes('fuse') || combined.includes('desk') || combined.includes('bomb')) {
-        setCurrentView('fuse-desk');
-      } else if (combined.includes('patch') || combined.includes('terminal')) {
-        setCurrentView('patch-terminal');
-      } else {
-        setCurrentView('press-room');
+      switch (spineLesson.gameId) {
+        case 'paper-planes':
+          setCurrentView('paper-planes');
+          break;
+        case 'local-line':
+          setCurrentView('local-line');
+          break;
+        case 'night-market':
+          setCurrentView('night-market');
+          break;
+        case 'drop-chits':
+          setCurrentView('drop-chits');
+          break;
+        case 'pit-lane':
+          setCurrentView('pit-lane');
+          break;
+        case 'fuse-box':
+        case 'fuse-desk':
+          setCurrentView('fuse-box');
+          break;
+        case 'patch-terminal':
+          setCurrentView('patch-terminal');
+          break;
+        case 'press-room':
+        default:
+          setCurrentView('press-room');
+          break;
       }
     } else {
       const adapted = {
+        ...spineLesson,
         id: spineLesson.id,
         number: spineLesson.index || spineLesson.lessonNumber,
         title: spineLesson.title,
@@ -521,6 +534,23 @@ export default function App() {
                 />
               )}
 
+              {/* Scripted Timed Graphic Motion Player */}
+              {currentView === 'motion' && (
+                <MotionLessonPlayer
+                  lesson={activeLesson}
+                  onComplete={stats => {
+                    handleComplete(stats || {
+                      wpm: activeLesson?.goalWpm || 20,
+                      accuracy: 100,
+                      stars: 5,
+                      points: 500,
+                      durationSeconds: 30
+                    });
+                  }}
+                  onExit={handleGameExit}
+                />
+              )}
+
               {/* Video Player inside Desktop Window */}
               {currentView === 'video' && (
                 <VideoPlayer
@@ -666,28 +696,44 @@ export default function App() {
 
               {currentView === 'drop-chits' && (
                 <DropChitsGame
-                  onComplete={stats => handleArcadeComplete('drop-chits', stats)}
+                  lesson={activeLesson}
+                  onComplete={stats => {
+                    if (gameLaunchOrigin === 'learn') handleComplete(stats);
+                    else handleArcadeComplete('drop-chits', stats);
+                  }}
                   onExit={handleGameExit}
                 />
               )}
 
               {currentView === 'pit-lane' && (
                 <PitLaneGame
-                  onComplete={stats => handleArcadeComplete('pit-lane', stats)}
+                  lesson={activeLesson}
+                  onComplete={stats => {
+                    if (gameLaunchOrigin === 'learn') handleComplete(stats);
+                    else handleArcadeComplete('pit-lane', stats);
+                  }}
                   onExit={handleGameExit}
                 />
               )}
 
-              {currentView === 'fuse-desk' && (
+              {(currentView === 'fuse-box' || currentView === 'fuse-desk') && (
                 <FuseDeskGame
-                  onComplete={stats => handleArcadeComplete('fuse-desk', stats)}
+                  lesson={activeLesson}
+                  onComplete={stats => {
+                    if (gameLaunchOrigin === 'learn') handleComplete(stats);
+                    else handleArcadeComplete('fuse-box', stats);
+                  }}
                   onExit={handleGameExit}
                 />
               )}
 
               {currentView === 'patch-terminal' && (
                 <PatchTerminalGame
-                  onComplete={stats => handleArcadeComplete('patch-terminal', stats)}
+                  lesson={activeLesson}
+                  onComplete={stats => {
+                    if (gameLaunchOrigin === 'learn') handleComplete(stats);
+                    else handleArcadeComplete('patch-terminal', stats);
+                  }}
                   onExit={handleGameExit}
                 />
               )}

@@ -838,9 +838,9 @@ export const SPINE_PARTS = [
         part: 4,
         index: 65,
         type: "play",
-        title: "Play: Fuse Desk Boss (Words)",
+        title: "Play: Fuse Box Boss (Words)",
         description: "Unit 4 Boss: defuse ticking word bombs before timers expire.",
-        gameId: "fuse-desk",
+        gameId: "fuse-box",
         keys: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "],
         goalWpm: 24,
         minAccuracy: 90,
@@ -1200,8 +1200,8 @@ export const SPINE_PARTS = [
         part: 7,
         index: 91,
         type: "play",
-        title: "Play: Shortcut Kitchen Boss",
-        description: "Unit 7 Boss: execute fast-paced recipe shortcut orders against the clock.",
+        title: "Play: Shortcut Chords Boss",
+        description: "Unit 7 Boss: stamp incoming clipboard and navigation shortcut orders against the clock.",
         gameId: "press-room",
         keys: ["Ctrl", "C", "V", "X", "Z", "A", "S", " "],
         goalWpm: 25,
@@ -1321,7 +1321,13 @@ export function getNextSpineLesson(userProgressOrCurrentId) {
         }
       }
     }
-    return { part: SPINE_PARTS[0], lesson: SPINE_PARTS[0].lessons[0], partTitle: SPINE_PARTS[0].title };
+    // All 97 lessons completed -> Graduation state (do not loop to Part 1)
+    return { 
+      isGraduated: true, 
+      part: SPINE_PARTS[7], 
+      lesson: SPINE_PARTS[7].lessons[SPINE_PARTS[7].lessons.length - 1], 
+      partTitle: 'Graduation Certification' 
+    };
   }
 
   let foundCurrent = false;

@@ -11,6 +11,7 @@ const WORD_BANK = [
 ];
 
 export default function LocalLineGame({
+  lesson = null,
   onComplete,
   onExit
 }) {
@@ -29,7 +30,23 @@ export default function LocalLineGame({
   const canvasRef = useRef(null);
   const targetGoalDistance = 600;
 
-  const currentWord = WORD_BANK[wordIndex % WORD_BANK.length];
+  // Filter word bank to only keys taught in this lesson
+  const rawKeys = lesson?.keys || [];
+  const cleanKeys = rawKeys.filter(k => k && k !== ' ');
+
+  const activeWordBank = React.useMemo(() => {
+    if (cleanKeys.length === 0) return WORD_BANK;
+    const matching = WORD_BANK.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
+    if (matching.length >= 4) return matching;
+
+    const fallbackWords = ['write', 'type', 'power', 'quiet', 'report', 'route', 'water', 'tower', 'speed', 'true', 'spark', 'today', 'press', 'track', 'swift', 'order', 'yield', 'great', 'light', 'ready', 'train', 'coach', 'wheel'];
+    const validFallback = fallbackWords.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
+    if (validFallback.length >= 3) return validFallback;
+
+    return WORD_BANK;
+  }, [cleanKeys]);
+
+  const currentWord = activeWordBank[wordIndex % activeWordBank.length];
 
   const handleKeyDown = useCallback((e) => {
     if (isPaused || lives <= 0) return;

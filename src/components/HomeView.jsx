@@ -113,8 +113,38 @@ export default function HomeView({
         </div>
       </div>
 
-      {/* ZERO-TO-HERO HERO CARD */}
-      {nextSpine?.lesson && (
+      {/* ZERO-TO-HERO HERO CARD / GRADUATION STATE */}
+      {nextSpine?.isGraduated ? (
+        <div className="bg-[#F6C445] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors duration-200">
+          <div className="space-y-1">
+            <div className="flex items-center space-x-2">
+              <span className="px-2 py-0.5 rounded bg-white text-[#2D2319] font-mono text-[10px] font-black border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
+                🏆 CURRICULUM CONQUERED
+              </span>
+              <span className="text-xs font-mono font-bold text-[#2D2319]/80">
+                — All 97 Lessons Mastered!
+              </span>
+            </div>
+            <h2 className="text-lg sm:text-xl font-black text-[#2D2319] font-display">
+              Touch Typing Certification Complete
+            </h2>
+            <p className="text-xs text-[#2D2319]/90 font-mono">
+              Your fingers race like a pro. Replay path games in Play or explore Specialty Tracks.
+            </p>
+          </div>
+
+          <div className="flex items-center space-x-3 shrink-0">
+            <button
+              onClick={() => onNavigate && onNavigate('play')}
+              className="px-5 py-2.5 rounded-xl bg-white hover:bg-[#C7E8CA] border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] font-mono text-xs font-black uppercase text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-2 cursor-pointer"
+            >
+              <Gamepad2 className="w-4 h-4 text-[#2D2319]" />
+              <span>Free Play Arcade</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      ) : nextSpine?.lesson ? (
         <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors duration-200">
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
@@ -144,7 +174,7 @@ export default function HomeView({
             </button>
           </div>
         </div>
-      )}
+      ) : null}
 
       {/* Quick Play & Practice Drills Window Card */}
       <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] space-y-4 transition-colors duration-200">

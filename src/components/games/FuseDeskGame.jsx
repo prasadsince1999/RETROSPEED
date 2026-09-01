@@ -1,4 +1,4 @@
-// Fuse Desk Workshop Game
+// Fuse Box Game
 // Manila envelope on cream desk with ticking red fuse bar: Type words containing the target root.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameShell from './common/GameShell';
@@ -9,6 +9,7 @@ const ROOT_PROMPTS = [
 ];
 
 export default function FuseDeskGame({
+  lesson = null,
   onComplete,
   onExit
 }) {
@@ -22,7 +23,17 @@ export default function FuseDeskGame({
   const [isPaused, setIsPaused] = useState(false);
   const [usedWords, setUsedWords] = useState(new Set());
 
-  const currentRoot = ROOT_PROMPTS[rootIndex % ROOT_PROMPTS.length];
+  // Derive roots based on taught keys
+  const rawKeys = lesson?.keys || [];
+  const cleanKeys = rawKeys.filter(k => k && k !== ' ').map(k => k.toUpperCase());
+
+  const activeRoots = React.useMemo(() => {
+    if (cleanKeys.length === 0) return ROOT_PROMPTS;
+    const matching = ROOT_PROMPTS.filter(r => r.split('').every(ch => cleanKeys.includes(ch)));
+    return matching.length >= 3 ? matching : ROOT_PROMPTS;
+  }, [cleanKeys]);
+
+  const currentRoot = activeRoots[rootIndex % activeRoots.length];
   const totalGoal = 12;
 
   // Fuse Countdown Loop

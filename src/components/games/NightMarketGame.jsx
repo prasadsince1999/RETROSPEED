@@ -11,6 +11,7 @@ const CHIT_ITEMS = [
 ];
 
 export default function NightMarketGame({
+  lesson = null,
   onComplete,
   onExit
 }) {
@@ -28,8 +29,24 @@ export default function NightMarketGame({
   const lastSpawnRef = useRef(0);
   const totalGoal = 20;
 
+  // Filter items to lesson keys
+  const rawKeys = lesson?.keys || [];
+  const cleanKeys = rawKeys.filter(k => k && k !== ' ');
+
+  const activeItemsPool = React.useMemo(() => {
+    if (cleanKeys.length === 0) return CHIT_ITEMS;
+    const matching = CHIT_ITEMS.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
+    if (matching.length >= 4) return matching;
+
+    const fallbackItems = ['chai', 'samosa', 'mango', 'clove', 'pepper', 'roti', 'halwa', 'ladoo', 'dosa', 'idli', 'rice', 'tea', 'bread', 'card', 'box'];
+    const validFallback = fallbackItems.filter(w => w.split('').every(ch => cleanKeys.includes(ch)));
+    if (validFallback.length >= 3) return validFallback;
+
+    return CHIT_ITEMS;
+  }, [cleanKeys]);
+
   const spawnChit = useCallback(() => {
-    const item = CHIT_ITEMS[Math.floor(Math.random() * CHIT_ITEMS.length)];
+    const item = activeItemsPool[Math.floor(Math.random() * activeItemsPool.length)];
     const newChit = {
       id: Date.now() + Math.random(),
       item,
@@ -40,7 +57,7 @@ export default function NightMarketGame({
       isPacked: false
     };
     chitsRef.current.push(newChit);
-  }, [ordersPacked]);
+  }, [activeItemsPool, ordersPacked]);
 
   const handleKeyDown = useCallback((e) => {
     if (isPaused || lives <= 0) return;

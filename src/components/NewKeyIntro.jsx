@@ -3,11 +3,11 @@ import { sound } from '../utils/audio';
 import { getKeysForLayout, getKeyForChar } from '../data/keyboardLayout';
 
 /**
- * Authentic New Key Introduction Component
- * Matches the official EdClub / TypingClub introductory screen:
+ * RETROSPEED New Key Introduction Component
+ * Step-by-step finger placement onboarding on the paper desk:
  * - Subtitle: "NEW KEY INTRODUCTION"
  * - Title: "Type the [ f ] key using your left index finger."
- * - Center: Keyboard with hands overlay, ripple radar circles on active key, and blue contour lines on the active finger.
+ * - Center: Keyboard with hands overlay and tactile finger guidance.
  * - Bottom: [ Previous ]  --- [ Progress Bar ] ---  [ Skip ]
  */
 export default function NewKeyIntro({
@@ -18,15 +18,9 @@ export default function NewKeyIntro({
 }) {
   // Determine the sequence of keys to introduce for this lesson
   const introKeys = useMemo(() => {
-    if (lesson.introKeys && Array.isArray(lesson.introKeys) && lesson.introKeys.length > 0) {
-      return lesson.introKeys;
-    }
-    if (lesson.targetKeys && Array.isArray(lesson.targetKeys) && lesson.targetKeys.length > 0) {
-      // Filter out spaces and newlines, take up to 3 distinct new keys
-      const filtered = lesson.targetKeys.filter(k => k !== ' ' && k !== '\n' && k !== '\t');
-      return filtered.length > 0 ? filtered.slice(0, 3) : ['f', 'j'];
-    }
-    return ['f', 'j'];
+    const raw = lesson.keys || lesson.introKeys || lesson.targetKeys || [];
+    const filtered = raw.filter(k => k && k !== ' ' && k !== '\n' && k !== '\t');
+    return filtered.length > 0 ? filtered.slice(0, 3) : ['f', 'j'];
   }, [lesson]);
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0);

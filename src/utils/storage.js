@@ -179,6 +179,32 @@ export function saveProgress(data) {
 }
 
 /**
+ * Deterministic 1-5 Star Grading Math matching Touch Typing Pedagogy.
+ * Evaluates WPM speed benchmarks against minimum and goal requirements.
+ */
+export function calculateStarsFromAttempt({ wpm = 0, accuracy = 100, goalWpm = 20, minAccuracy = 90 }) {
+  const acc = Math.round(accuracy);
+  const speed = Math.round(wpm);
+
+  // Severe accuracy drop (< 75%) -> 1 star
+  if (acc < 75) return 1;
+
+  // 5 Stars (Platinum / Flawless): Acc >= 98% and (Speed >= goalWpm or 100% acc)
+  if (acc >= 98 && (speed >= goalWpm || acc === 100)) return 5;
+
+  // 4 Stars: Acc >= 95% and Speed >= 80% of goalWpm
+  if (acc >= 95 && speed >= Math.round(goalWpm * 0.8)) return 4;
+
+  // 3 Stars (Pass Standard): Acc >= minAccuracy (default 90%)
+  if (acc >= minAccuracy) return 3;
+
+  // 2 Stars: Acc >= 80%
+  if (acc >= 80) return 2;
+
+  return 1;
+}
+
+/**
  * Universal Game and Lesson Session Result Saver.
  * Persists attempts, records per-key accuracy, and increments streaks.
  */
@@ -193,12 +219,21 @@ export function saveLessonResult(courseId, lessonId, result) {
   const courseData = current.courses[cId];
   const existing = courseData.scores[lessonId] || { stars: 0, points: 0, time: 0, wpm: 0, accuracy: 0 };
   
-  const stars = Math.max(existing.stars || 0, Number(result.stars) || 1);
+  const accuracy = Math.min(100, Math.max(0, Math.round(result.accuracy ?? 100)));
+  const wpm = Math.max(0, Math.round(result.wpm || 0));
+  const earnedStars = result.stars !== undefined 
+    ? Number(result.stars) 
+    : calculateStarsFromAttempt({
+        wpm,
+        accuracy,
+        goalWpm: result.goalWpm || 20,
+        minAccuracy: result.minAccuracy || 90
+      });
+
+  const stars = Math.max(existing.stars || 0, Math.min(5, Math.max(1, earnedStars)));
   const points = Math.max(existing.points || 0, Number(result.score || result.points) || 100);
   const durationSeconds = Math.max(1, Math.round(Number(result.durationSeconds ?? (result.durationMs ? result.durationMs / 1000 : result.time)) || 10));
   const timestamp = result.timestamp || Date.now();
-  const accuracy = Math.min(100, Math.max(0, Math.round(result.accuracy ?? 100)));
-  const wpm = Math.max(0, Math.round(result.wpm || 0));
 
   courseData.scores[lessonId] = {
     stars,

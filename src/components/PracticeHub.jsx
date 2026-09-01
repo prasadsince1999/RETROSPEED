@@ -230,7 +230,7 @@ export default function PracticeHub({
           <span>4-BOX CYCLE: INTRO → REVIEW → PRACTICE → PLAY</span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 pt-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3.5 pt-2">
           {selectedPart.lessons.map((lesson) => {
             const score = courseScores[lesson.id];
             const isCompleted = Boolean(score && score.completed);
@@ -263,7 +263,7 @@ export default function PracticeHub({
                 <div className="flex-1 flex flex-col items-center justify-center my-1 text-center">
                   {lesson.type === 'play' ? (
                     <div className="w-10 h-10 rounded-xl bg-white border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-lg">
-                      {lesson.gameId === 'drop-chits' ? '🪂' : lesson.gameId === 'paper-planes' ? '✈️' : lesson.gameId === 'local-line' ? '🚂' : lesson.gameId === 'fuse-desk' ? '💣' : lesson.gameId === 'patch-terminal' ? '💻' : lesson.gameId === 'pit-lane' ? '🏎️' : '📰'}
+                      {lesson.gameId === 'drop-chits' ? '🪂' : lesson.gameId === 'paper-planes' ? '✈️' : lesson.gameId === 'local-line' ? '🚂' : (lesson.gameId === 'fuse-box' || lesson.gameId === 'fuse-desk') ? '💣' : lesson.gameId === 'patch-terminal' ? '💻' : lesson.gameId === 'pit-lane' ? '🏎️' : '📰'}
                     </div>
                   ) : lesson.type === 'motion' ? (
                     <div className="w-10 h-10 rounded-xl bg-white border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-[#2D2319]">
@@ -277,8 +277,8 @@ export default function PracticeHub({
                 </div>
 
                 {/* Bottom: Title & Stars / Lock */}
-                <div className="border-t border-[#2D2319]/20 pt-1 flex items-center justify-between">
-                  <span className="text-[10px] font-black text-[#2D2319] truncate block max-w-[80px]">
+                <div className="border-t border-[#2D2319]/20 pt-1 flex items-center justify-between gap-1">
+                  <span className="text-[10px] font-black text-[#2D2319] truncate block max-w-[110px]" title={lesson.title}>
                     {lesson.title.replace('Keys ', '').replace('Review: ', '').replace('Practice: ', '').replace('Play: ', '')}
                   </span>
 
