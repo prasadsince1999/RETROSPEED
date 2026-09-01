@@ -202,7 +202,7 @@
           "text": "Practice typing: Play: First 8 Keys",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "paper-planes"
         },
         {
           "id": 16,
@@ -306,7 +306,7 @@
           "text": "Practice typing: Play Home Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "paper-planes"
         }
       ]
     },
@@ -455,7 +455,7 @@
           "text": "Practice typing: Play: ruei",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 35,
@@ -507,7 +507,7 @@
           "text": "Practice typing: Play: Top 6 Keys",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "drop-chits"
         },
         {
           "id": 39,
@@ -598,7 +598,7 @@
           "text": "Practice typing: Play: Top Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "local-line"
         },
         {
           "id": 46,
@@ -663,7 +663,7 @@
           "text": "Practice typing: Play: Top Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "local-line"
         },
         {
           "id": 51,
@@ -676,7 +676,7 @@
           "text": "Practice typing: Play: Top Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "local-line"
         }
       ]
     },
@@ -981,7 +981,7 @@
           "text": "Practice typing: Play: Bottom Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "pit-lane"
         },
         {
           "id": 75,
@@ -1085,7 +1085,7 @@
           "text": "Practice typing: Play: Bottom Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "pit-lane"
         },
         {
           "id": 83,
@@ -1098,7 +1098,7 @@
           "text": "Practice typing: Play: Bottom Row",
           "goalWpm": 15,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "pit-lane"
         },
         {
           "id": 84,
@@ -1247,7 +1247,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 95,
@@ -1325,7 +1325,7 @@
           "text": "Practice typing: Play: Numbers",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "drop-chits"
         },
         {
           "id": 101,
@@ -1403,7 +1403,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 107,
@@ -1481,7 +1481,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 113,
@@ -1559,7 +1559,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 119,
@@ -1637,7 +1637,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 125,
@@ -1924,7 +1924,7 @@
           "text": "Practice typing: Play: FJDK",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "local-line"
         },
         {
           "id": 146,
@@ -2016,7 +2016,7 @@
           "text": "Practice typing: Play: SLA:",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 153,
@@ -2109,7 +2109,7 @@
           "text": "Practice typing: Play: GHTY",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "drop-chits"
         },
         {
           "id": 160,
@@ -2202,7 +2202,7 @@
           "text": "Practice typing: Play: RUEI",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "fuse-desk"
         },
         {
           "id": 167,
@@ -2295,7 +2295,7 @@
           "text": "Practice typing: Play: WOQP",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "pit-lane"
         },
         {
           "id": 174,
@@ -2400,7 +2400,7 @@
           "text": "Practice typing: Play: VMC?",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "patch-terminal"
         },
         {
           "id": 182,
@@ -2752,7 +2752,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 208,
@@ -2817,7 +2817,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 213,
@@ -2882,7 +2882,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 218,
@@ -2947,7 +2947,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 223,
@@ -3012,7 +3012,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 228,
@@ -3077,7 +3077,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 25,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 233,
@@ -3453,7 +3453,7 @@
           "text": "Practice typing: Play: All Numbers",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "drop-chits"
         },
         {
           "id": 261,
@@ -3635,7 +3635,7 @@
           "text": "Practice typing: Play: Numbers",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "drop-chits"
         }
       ]
     },
@@ -3855,7 +3855,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 291,
@@ -3920,7 +3920,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 296,
@@ -3985,7 +3985,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 301,
@@ -4050,7 +4050,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 306,
@@ -4115,7 +4115,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 311,
@@ -4180,7 +4180,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 316,
@@ -4407,7 +4407,7 @@
           "text": "Practice typing: Play: All Symbols",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "fuse-desk"
         },
         {
           "id": 333,
@@ -4809,7 +4809,7 @@
           "text": "Practice typing: Play: Bottom Row",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "pit-lane"
         },
         {
           "id": 363,
@@ -4874,7 +4874,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 368,
@@ -4939,7 +4939,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 373,
@@ -5004,7 +5004,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 378,
@@ -5069,7 +5069,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 383,
@@ -5134,7 +5134,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 40,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 388,
@@ -5478,7 +5478,7 @@
           "text": "Practice typing: Play: Symbols",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "fuse-desk"
         },
         {
           "id": 414,
@@ -5763,7 +5763,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 435,
@@ -5828,7 +5828,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 440,
@@ -5893,7 +5893,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 445,
@@ -5958,7 +5958,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 450,
@@ -6023,7 +6023,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 455,
@@ -6088,7 +6088,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 460,
@@ -6172,7 +6172,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 466,
@@ -6367,7 +6367,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 481,
@@ -6432,7 +6432,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 486,
@@ -6497,7 +6497,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 491,
@@ -6724,7 +6724,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 508,
@@ -6932,7 +6932,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 524,
@@ -7159,7 +7159,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 541,
@@ -7367,7 +7367,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 557,
@@ -7594,7 +7594,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 574,
@@ -7802,7 +7802,7 @@
           "text": "Practice typing: Play: Words",
           "goalWpm": 60,
           "minAccuracy": 90,
-          "gameId": "press-room"
+          "gameId": "night-market"
         },
         {
           "id": 590,

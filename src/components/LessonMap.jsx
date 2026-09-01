@@ -216,16 +216,21 @@ export default function LessonMap({
   // Render card illustration stamp based on lesson type
   const renderCardIllustration = (lesson, isCompleted) => {
     if (lesson.type === 'game') {
-      const gTitle = (lesson.title || '').toLowerCase();
-      const isApple = gTitle.includes('apple') || gTitle.includes('market');
-      const isTemple = gTitle.includes('temple') || gTitle.includes('bash');
-      const isBubble = gTitle.includes('bubble') || gTitle.includes('plane');
-      const isMonster = gTitle.includes('monster') || gTitle.includes('alien');
+      const gTitle = `${lesson.title || ''} ${lesson.gameId || ''}`.toLowerCase();
+      const isPlane = gTitle.includes('plane') || gTitle.includes('paper');
+      const isTrain = gTitle.includes('line') || gTitle.includes('train') || gTitle.includes('local');
+      const isMarket = gTitle.includes('market') || gTitle.includes('night');
+      const isChits = gTitle.includes('chit') || gTitle.includes('drop');
+      const isFuse = gTitle.includes('fuse') || gTitle.includes('desk') || gTitle.includes('circuit');
+      const isPit = gTitle.includes('pit') || gTitle.includes('lane') || gTitle.includes('racer');
+      const isPatch = gTitle.includes('patch') || gTitle.includes('terminal');
+
+      const emoji = isPlane ? '✈️' : isTrain ? '🚂' : isMarket ? '🏮' : isChits ? '📜' : isFuse ? '⚡' : isPit ? '🏎️' : isPatch ? '🔌' : '🖨️';
 
       return (
         <div className="relative flex flex-col items-center justify-center">
           <div className="w-10 h-10 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-[#2D2319] font-black text-lg bg-[#F6C445]">
-            {isApple ? '🍎' : isTemple ? '🏛️' : isBubble ? '🫧' : isMonster ? '👾' : '🎈'}
+            {emoji}
           </div>
         </div>
       );
