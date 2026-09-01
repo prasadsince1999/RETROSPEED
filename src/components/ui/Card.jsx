@@ -16,22 +16,22 @@ export const titleBarVariants = {
   rose: 'bg-[#F28B82] text-[#2D2319]',
   emerald: 'bg-[#48B89F] text-[#2D2319]',
   purple: 'bg-[#C3A6E8] text-[#2D2319]',
-  default: 'bg-[#4BA3E3] text-[#2D2319]'
+  default: 'bg-[var(--rs-titlebar)] text-[#2D2319]'
 };
 
 // Retro Card Container Variants
 const cardVariants = {
-  default: 'bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] text-[#2D2319]',
-  flat: 'bg-[#FBF6EA] border-2 border-[#2D2319] text-[#2D2319]',
-  bordered: 'bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] text-[#2D2319]',
-  elevated: 'bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[6px_6px_0px_#2D2319] text-[#2D2319]',
-  interactive: 'bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] text-[#2D2319] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#2D2319] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#2D2319] cursor-pointer transition-all duration-150',
-  hoverable: 'bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] text-[#2D2319] hover:-translate-y-1 hover:shadow-[6px_6px_0px_#2D2319] cursor-pointer transition-all duration-150 overflow-hidden',
-  dark: 'bg-[#2D2319] border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] text-[#FDF8EE]',
-  indigo: 'bg-[#4BA3E3] border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] text-[#2D2319]',
-  glass: 'bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] text-[#2D2319]',
-  darkGlass: 'bg-[#2D2319] border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] text-[#FDF8EE]',
-  glow: 'bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] text-[#2D2319]'
+  default: 'bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[4px_4px_0px_var(--rs-shadow)] text-[#2D2319] transition-colors duration-200',
+  flat: 'bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] text-[#2D2319] transition-colors duration-200',
+  bordered: 'bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[2px_2px_0px_var(--rs-shadow)] text-[#2D2319] transition-colors duration-200',
+  elevated: 'bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[6px_6px_0px_var(--rs-shadow)] text-[#2D2319] transition-colors duration-200',
+  interactive: 'bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[4px_4px_0px_var(--rs-shadow)] text-[#2D2319] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--rs-shadow)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_var(--rs-shadow)] cursor-pointer transition-all duration-150',
+  hoverable: 'bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[4px_4px_0px_var(--rs-shadow)] text-[#2D2319] hover:-translate-y-1 hover:shadow-[6px_6px_0px_var(--rs-shadow)] cursor-pointer transition-all duration-150 overflow-hidden',
+  dark: 'bg-[#2D2319] border-2 border-[#2D2319] shadow-[4px_4px_0px_var(--rs-shadow)] text-[#FDF8EE]',
+  indigo: 'bg-[#4BA3E3] border-2 border-[#2D2319] shadow-[4px_4px_0px_var(--rs-shadow)] text-[#2D2319]',
+  glass: 'bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[4px_4px_0px_var(--rs-shadow)] text-[#2D2319] transition-colors duration-200',
+  darkGlass: 'bg-[#2D2319] border-2 border-[#2D2319] shadow-[4px_4px_0px_var(--rs-shadow)] text-[#FDF8EE]',
+  glow: 'bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[4px_4px_0px_var(--rs-shadow)] text-[#2D2319] transition-colors duration-200'
 };
 
 const paddingSizes = {

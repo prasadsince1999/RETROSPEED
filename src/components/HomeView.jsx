@@ -84,7 +84,7 @@ export default function HomeView({
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[#FDF8EE] p-4 sm:p-6 overflow-y-auto space-y-5">
+    <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[var(--rs-paper)] p-4 sm:p-6 overflow-y-auto space-y-5 transition-colors duration-200">
       
       {/* Hero Header Section */}
       <div className="space-y-1 text-center sm:text-left">
@@ -92,7 +92,7 @@ export default function HomeView({
           <span className="text-[#2D2319] font-mono font-bold text-sm tracking-tighter select-none">══</span>
           
           {/* Keycap [ ⚡ ] Icon */}
-          <div className="w-8 h-8 rounded-lg bg-[#FAF3E0] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center font-mono font-black text-sm text-[#2D2319] shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center font-mono font-black text-sm text-[#2D2319] shrink-0">
             ⚡
           </div>
 
@@ -114,7 +114,7 @@ export default function HomeView({
       </div>
 
       {/* ZERO-TO-HERO HERO CARD */}
-      <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors duration-200">
         <div className="space-y-1">
           <div className="flex items-center space-x-2">
             <span className="px-2 py-0.5 rounded bg-[#4BA3E3] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
@@ -135,7 +135,7 @@ export default function HomeView({
         <div className="flex items-center space-x-3 shrink-0">
           <button
             onClick={handleContinueSpine}
-            className="px-5 py-2.5 rounded-xl bg-[#F6C445] hover:bg-[#F28B82] border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] font-mono text-xs font-black uppercase text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-2"
+            className="px-5 py-2.5 rounded-xl bg-[#F6C445] hover:bg-[#F28B82] border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] font-mono text-xs font-black uppercase text-[#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-2 cursor-pointer"
           >
             <Play className="w-4 h-4 fill-[#2D2319]" />
             <span>Continue Journey</span>
@@ -145,7 +145,7 @@ export default function HomeView({
       </div>
 
       {/* Quick Play & Practice Drills Window Card */}
-      <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] space-y-4">
+      <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] space-y-4 transition-colors duration-200">
         
         {/* Card Title */}
         <div className="flex items-center space-x-2 border-b-2 border-[#2D2319]/20 pb-2">
@@ -183,7 +183,7 @@ export default function HomeView({
                       className={`p-2 sm:p-2.5 rounded-xl border-2 border-[#2D2319] text-left transition-all cursor-pointer min-h-[64px] flex flex-col justify-between ${
                         isSelected
                           ? 'bg-[#C7E8CA] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] -translate-y-0.5 font-black'
-                          : 'bg-[#FDF8EE] hover:bg-[#FBF6EA] text-[#2D2319] shadow-[1px_1px_0px_#2D2319]'
+                          : 'bg-[var(--rs-paper)] hover:bg-white text-[#2D2319] shadow-[1px_1px_0px_#2D2319]'
                       }`}
                     >
                       <div className="flex items-start space-x-1.5 text-[11px] sm:text-xs font-bold font-display leading-tight">
@@ -204,30 +204,26 @@ export default function HomeView({
               
               {/* Difficulty */}
               <div className="space-y-1">
-                <span className="text-[10px] font-mono font-bold text-[#2D2319]/70 uppercase block">
+                <span className="text-[11px] font-mono font-bold text-[#2D2319]/80 uppercase tracking-wider block">
                   Difficulty:
                 </span>
-                <div className="flex gap-1.5">
-                  {[
-                    { id: 'easy', label: 'Easy' },
-                    { id: 'medium', label: 'Medium' },
-                    { id: 'hard', label: 'Hard' }
-                  ].map((diff) => (
+                <div className="flex space-x-1">
+                  {['easy', 'medium', 'hard'].map((diff) => (
                     <button
-                      key={diff.id}
+                      key={diff}
                       type="button"
                       onClick={() => {
                         sound.playKeyClick();
-                        setSelectedDifficulty(diff.id);
+                        setSelectedDifficulty(diff);
                         setDrillMode('custom');
                       }}
-                      className={`px-3 py-1 rounded-lg border-2 border-[#2D2319] font-mono text-xs font-bold transition-all ${
-                        selectedDifficulty === diff.id
-                          ? 'bg-[#F6C445] text-[#2D2319] shadow-[1px_1px_0px_#2D2319] font-black'
-                          : 'bg-[#FDF8EE] hover:bg-[#FBF6EA] text-[#2D2319]'
+                      className={`px-3 py-1 rounded-lg border-2 border-[#2D2319] text-xs font-mono font-bold capitalize transition-all ${
+                        selectedDifficulty === diff
+                          ? 'bg-[#F6C445] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] -translate-y-0.5'
+                          : 'bg-[var(--rs-paper)] hover:bg-white text-[#2D2319] shadow-[1px_1px_0px_#2D2319]'
                       }`}
                     >
-                      {diff.label}
+                      {diff}
                     </button>
                   ))}
                 </div>
@@ -235,21 +231,21 @@ export default function HomeView({
 
               {/* Time Limit */}
               <div className="space-y-1">
-                <span className="text-[10px] font-mono font-bold text-[#2D2319]/70 uppercase block">
+                <span className="text-[11px] font-mono font-bold text-[#2D2319]/80 uppercase tracking-wider block">
                   Time Limit:
                 </span>
                 <div className="relative inline-block w-36">
                   <button
                     type="button"
                     onClick={() => setTimeDropdownOpen(!timeDropdownOpen)}
-                    className="w-full flex items-center justify-between px-3 py-1 rounded-lg bg-[#FDF8EE] hover:bg-[#FBF6EA] border-2 border-[#2D2319] text-xs font-mono font-bold text-[#2D2319] shadow-[1px_1px_0px_#2D2319]"
+                    className="w-full flex items-center justify-between px-3 py-1 rounded-lg bg-[var(--rs-paper)] hover:bg-white border-2 border-[#2D2319] text-xs font-mono font-bold text-[#2D2319] shadow-[1px_1px_0px_#2D2319]"
                   >
                     <span>{timeLimit}s</span>
                     <ChevronDown className="w-3.5 h-3.5 text-[#2D2319]" />
                   </button>
 
                   {timeDropdownOpen && (
-                    <div className="absolute top-full left-0 mt-1 w-full bg-[#FDF8EE] border-2 border-[#2D2319] rounded-lg shadow-[4px_4px_0px_#2D2319] z-20 overflow-hidden">
+                    <div className="absolute top-full left-0 mt-1 w-full bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-lg shadow-[4px_4px_0px_#2D2319] z-20 overflow-hidden">
                       {[30, 60, 90, 120].map((t) => (
                         <button
                           key={t}
@@ -289,7 +285,7 @@ export default function HomeView({
           </div>
 
           {/* Right Performance Stats Summary Card */}
-          <div className="lg:col-span-5 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl p-3.5 shadow-[3px_3px_0px_#2D2319] space-y-2.5">
+          <div className="lg:col-span-5 bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-xl p-3.5 shadow-[3px_3px_0px_#2D2319] space-y-2.5 transition-colors duration-200">
             <span className="text-[11px] font-mono font-black uppercase tracking-wider text-[#2D2319] border-b border-[#2D2319]/20 pb-1 block">
               Performance Summary
             </span>
@@ -322,7 +318,7 @@ export default function HomeView({
       </div>
 
       {/* Daily Challenge Window Card */}
-      <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] space-y-3">
+      <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] space-y-3 transition-colors duration-200">
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           
@@ -362,7 +358,7 @@ export default function HomeView({
             <span>{dailyState.todayWordsCount || 0} / 25 Keywords</span>
           </div>
 
-          <div className="w-full bg-[#FDF8EE] border-2 border-[#2D2319] rounded-lg h-3.5 p-0.5 shadow-[1px_1px_0px_#2D2319] overflow-hidden">
+          <div className="w-full bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-lg h-3.5 p-0.5 shadow-[1px_1px_0px_#2D2319] overflow-hidden">
             <div 
               className="h-full bg-[#48B89F] border border-[#2D2319] rounded-[4px] transition-all duration-300"
               style={{ width: `${Math.min(100, Math.round(((dailyState.todayWordsCount || 0) / 25) * 100))}%` }}

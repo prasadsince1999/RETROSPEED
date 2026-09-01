@@ -60,10 +60,10 @@ export default function PracticeHub({
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[#FDF8EE] p-4 sm:p-6 overflow-y-auto space-y-6">
+    <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[var(--rs-paper)] p-4 sm:p-6 overflow-y-auto space-y-6 transition-colors duration-200">
       
       {/* HEADER BANNER */}
-      <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors duration-200">
         <div>
           <div className="flex items-center space-x-2">
             <span className="px-2 py-0.5 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
@@ -88,7 +88,7 @@ export default function PracticeHub({
             className={`px-4 py-2 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-bold transition-all ${
               activeTab === 'spine'
                 ? 'bg-[#C7E8CA] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
-                : 'bg-[#FDF8EE] hover:bg-[#FBF6EA] text-[#2D2319] shadow-[2px_2px_0px_#2D2319]'
+                : 'bg-[var(--rs-paper)] hover:bg-white text-[#2D2319] shadow-[2px_2px_0px_#2D2319]'
             }`}
           >
             🗺️ Zero-to-Hero Spine (8 Parts)
@@ -102,7 +102,7 @@ export default function PracticeHub({
             className={`px-4 py-2 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-bold transition-all ${
               activeTab === 'specialty'
                 ? 'bg-[#C3A6E8] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
-                : 'bg-[#FDF8EE] hover:bg-[#FBF6EA] text-[#2D2319] shadow-[2px_2px_0px_#2D2319]'
+                : 'bg-[var(--rs-paper)] hover:bg-white text-[#2D2319] shadow-[2px_2px_0px_#2D2319]'
             }`}
           >
             📚 Specialty Tracks
@@ -132,7 +132,7 @@ export default function PracticeHub({
                   className={`p-2.5 rounded-xl border-2 border-[#2D2319] text-left flex flex-col justify-between transition-all cursor-pointer min-h-[82px] ${
                     isSelected
                       ? 'bg-[#F6C445] shadow-[3px_3px_0px_#2D2319] translate-x-0.5 translate-y-0.5 font-bold'
-                      : 'bg-[#FAF3E0] hover:bg-[#FDF8EE] shadow-[2px_2px_0px_#2D2319]'
+                      : 'bg-[var(--rs-paper-alt)] hover:bg-[var(--rs-paper)] shadow-[2px_2px_0px_#2D2319]'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -153,7 +153,7 @@ export default function PracticeHub({
           </div>
 
           {/* ACTIVE PART DETAIL CARD */}
-          <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-5 sm:p-6 shadow-[4px_4px_0px_#2D2319] space-y-5">
+          <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-5 sm:p-6 shadow-[4px_4px_0px_var(--rs-shadow)] space-y-5 transition-colors duration-200">
             
             {/* PART HEADER */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-[#2D2319]/15 pb-4">
@@ -176,11 +176,11 @@ export default function PracticeHub({
 
               {/* TARGET SPEED & ACCURACY BADGE */}
               <div className="flex items-center gap-2">
-                <div className="px-3 py-2 rounded-xl bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] text-center">
+                <div className="px-3 py-2 rounded-xl bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] text-center">
                   <span className="text-[10px] font-mono font-bold text-[#2D2319]/70 block">PASS TARGET</span>
                   <span className="font-mono text-xs font-black text-[#2D2319]">{selectedPart.targetSpeed}</span>
                 </div>
-                <div className="px-3 py-2 rounded-xl bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] text-center">
+                <div className="px-3 py-2 rounded-xl bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] text-center">
                   <span className="text-[10px] font-mono font-bold text-[#2D2319]/70 block">PRECISION</span>
                   <span className="font-mono text-xs font-black text-[#10B981]">{selectedPart.passAccuracy}% Acc</span>
                 </div>
@@ -199,12 +199,12 @@ export default function PracticeHub({
 
                   return (
                     <div 
-                      key={lesson.id}
-                      className="bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl p-3.5 shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between"
+                      key={lesson.id} 
+                      className="bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-xl p-3.5 shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between transition-colors duration-200"
                     >
                       <div>
                         <div className="flex items-center justify-between mb-1">
-                          <span className="px-1.5 py-0.2 rounded bg-[#FAF3E0] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319]">
+                          <span className="px-1.5 py-0.2 rounded bg-[var(--rs-paper-alt)] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319]">
                             Lesson {lesson.lessonNumber}
                           </span>
                           {isDone ? (
@@ -234,7 +234,7 @@ export default function PracticeHub({
                           className={`px-3 py-1 rounded-lg border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] font-mono text-xs font-bold active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1 cursor-pointer ${
                             isLessonUnlocked(lesson, userProgress)
                               ? 'bg-[#F6C445] hover:bg-[#F28B82] text-[#2D2319]'
-                              : 'bg-[#FAF3E0] hover:bg-[#F28B82] text-[#2D2319]/80'
+                              : 'bg-[var(--rs-paper-alt)] hover:bg-[#F28B82] text-[#2D2319]/80'
                           }`}
                         >
                           {isLessonUnlocked(lesson, userProgress) ? (
@@ -258,7 +258,7 @@ export default function PracticeHub({
 
             {/* PART GAME BREAK PROMPT */}
             {selectedPart.gameBreak && (
-              <div className="bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl p-4 shadow-[3px_3px_0px_#2D2319] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-xl p-4 shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors duration-200">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 rounded-xl bg-[#C3A6E8] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-[#2D2319] shrink-0">
                     <Gamepad2 className="w-5 h-5" />
@@ -302,11 +302,11 @@ export default function PracticeHub({
             {COURSES_CATALOG.map((course) => (
               <div
                 key={course.id}
-                className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[4px_4px_0px_#2D2319] flex flex-col justify-between"
+                className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col justify-between transition-colors duration-200"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="px-2 py-0.5 rounded bg-[#FDF8EE] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319]">
+                    <span className="px-2 py-0.5 rounded bg-[var(--rs-paper)] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319]">
                       {course.category}
                     </span>
                     <span className="text-xs font-mono font-bold text-[#2D2319]/70">

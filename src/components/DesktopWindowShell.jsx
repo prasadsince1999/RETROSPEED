@@ -104,7 +104,7 @@ export default function DesktopWindowShell({
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-1rem)] bg-[#B9D2E8] p-2 sm:p-4 md:p-6 flex items-center justify-center font-sans select-none overflow-hidden">
+    <div className="relative min-h-[calc(100vh-1rem)] bg-[var(--rs-wallpaper)] p-2 sm:p-4 md:p-6 flex items-center justify-center font-sans select-none overflow-hidden transition-colors duration-200">
       
       {/* Decorative Dark Brown 4-Point Sparkle Stars (✦) in canvas corners */}
       <span className="absolute top-4 left-6 text-2xl sm:text-3xl text-[#2D2319] font-black opacity-80 pointer-events-none select-none">✦</span>

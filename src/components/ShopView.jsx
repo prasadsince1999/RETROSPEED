@@ -32,7 +32,7 @@ export const RETRO_THEMES = [
     name: 'Macintosh Classic Paper',
     subtitle: 'Soft sandstone parchment with sky denim highlights',
     bg: '#C5D8E6',
-    surface: '#FAF3E0',
+    surface: '#F7F1E1',
     header: '#4BA3E3',
     accent: '#48B89F',
     tag: 'Vintage'
@@ -42,7 +42,7 @@ export const RETRO_THEMES = [
     name: 'Neo Mint & Lavender',
     subtitle: 'Pastel mint green surfaces with lavender titlebars',
     bg: '#D4E8DC',
-    surface: '#FDF8EE',
+    surface: '#F1FAF5',
     header: '#48B89F',
     accent: '#C3A6E8',
     tag: 'Modern Retro'
@@ -52,7 +52,7 @@ export const RETRO_THEMES = [
     name: 'Pastel Dreamscape',
     subtitle: 'Solid lilac headers with warm coral accents',
     bg: '#E3D7F4',
-    surface: '#FDF8EE',
+    surface: '#FAF5FE',
     header: '#C3A6E8',
     accent: '#F28B82',
     tag: 'Pastel'
@@ -62,9 +62,9 @@ export const RETRO_THEMES = [
     name: 'Terminal Amber',
     subtitle: 'Golden mustard titlebars with high contrast ink cards',
     bg: '#E8DEC4',
-    surface: '#FDF8EE',
+    surface: '#FDF8EC',
     header: '#F6C445',
-    accent: '#2D2319',
+    accent: '#F6C445',
     tag: 'Hacker CRT'
   }
 ];

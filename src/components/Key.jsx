@@ -80,12 +80,12 @@ export default function Key({
       {/* Physical Home Key Bumps */}
       {keyDef.isHomeKey && (
         <line
-          x1={keyDef.cx - 5}
-          y1={keyDef.cy + 10}
-          x2={keyDef.cx + 5}
-          y2={keyDef.cy + 10}
+          x1={keyDef.cx - 4.5}
+          y1={keyDef.cy + 12.5}
+          x2={keyDef.cx + 4.5}
+          y2={keyDef.cy + 12.5}
           stroke={isActive ? '#ffffff' : textFill}
-          strokeWidth="1.8"
+          strokeWidth="1.6"
           strokeLinecap="round"
         />
       )}
@@ -93,9 +93,9 @@ export default function Key({
       {/* Key Label Text */}
       <text
         x={keyDef.cx}
-        y={keyDef.cy + (keyDef.id === 'space' ? 4 : 5)}
+        y={keyDef.id === 'space' ? keyDef.cy + 1 : keyDef.cy - 1}
         textAnchor="middle"
-        dominantBaseline="middle"
+        dominantBaseline="central"
         fontSize={keyDef.id === 'space' || keyDef.id === 'shift-left' || keyDef.id === 'shift-right' || keyDef.id === 'capslock' || keyDef.id === 'tab' || keyDef.id === 'enter' || keyDef.id === 'backspace' ? "12" : "15"}
         fontWeight={isActive || isShiftGuide || keyDef.isHomeKey ? "700" : "500"}
         fontFamily="Rubik, system-ui, sans-serif"

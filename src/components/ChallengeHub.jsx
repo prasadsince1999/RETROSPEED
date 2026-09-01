@@ -163,10 +163,10 @@ export default function ChallengeHub({
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[#FDF8EE] p-4 sm:p-6 overflow-y-auto space-y-6">
+    <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[var(--rs-paper)] p-4 sm:p-6 overflow-y-auto space-y-6 transition-colors duration-200">
       
       {/* HEADER BANNER */}
-      <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors duration-200">
         <div>
           <div className="flex items-center space-x-2">
             <span className="px-2 py-0.5 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
@@ -181,7 +181,7 @@ export default function ChallengeHub({
           </h1>
         </div>
 
-        <div className="px-3 py-1.5 rounded-xl bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-bold text-[#2D2319]">
+        <div className="px-3 py-1.5 rounded-xl bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-bold text-[#2D2319]">
           ★ 8 Active Games
         </div>
       </div>
@@ -201,7 +201,7 @@ export default function ChallengeHub({
             return (
               <div
                 key={trial.id}
-                className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-xl p-4 shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between"
+                className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-xl p-4 shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between transition-colors duration-200"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
@@ -227,7 +227,7 @@ export default function ChallengeHub({
 
                 <div className="mt-4 pt-3 border-t border-[#2D2319]/15 flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold text-[#2D2319]/70">
-                    {trial.target}
+                    Goal: {trial.target}
                   </span>
                   <button
                     onClick={() => handleTrial(trial.id)}
@@ -259,7 +259,7 @@ export default function ChallengeHub({
             return (
               <div
                 key={game.id}
-                className="bg-[#FAF3E0] hover:bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[4px_4px_0px_#2D2319] flex flex-col justify-between transition-all group"
+                className="bg-[var(--rs-paper-alt)] hover:bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col justify-between transition-all group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
@@ -272,7 +272,7 @@ export default function ChallengeHub({
                   </div>
 
                   <div className="flex items-center space-x-2.5 mt-1">
-                    <div className="w-8 h-8 rounded-lg bg-[#FDF8EE] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center justify-center text-[#2D2319] shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-[var(--rs-paper)] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center justify-center text-[#2D2319] shrink-0">
                       <Icon className="w-4 h-4" />
                     </div>
                     <h3 className="font-black text-base text-[#2D2319] font-display">
@@ -294,7 +294,7 @@ export default function ChallengeHub({
                     className={`px-3.5 py-1.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-bold active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1 cursor-pointer ${
                       isGameUnlocked(game.id, userProgress)
                         ? 'bg-[#F6C445] hover:bg-[#48B89F] text-[#2D2319]'
-                        : 'bg-[#FAF3E0] hover:bg-[#F28B82] text-[#2D2319]/80'
+                        : 'bg-[var(--rs-paper-alt)] hover:bg-[#F28B82] text-[#2D2319]/80'
                     }`}
                   >
                     {isGameUnlocked(game.id, userProgress) ? (

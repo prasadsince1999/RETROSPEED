@@ -147,10 +147,10 @@ export default function StatsDashboard({
   }, [keyAccuracyMap]);
 
   return (
-    <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[#FDF8EE] p-4 sm:p-6 overflow-y-auto space-y-5">
+    <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[var(--rs-paper)] p-4 sm:p-6 overflow-y-auto space-y-5 transition-colors duration-200">
       
       {/* ROOM LEVEL TAB SELECTOR */}
-      <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-2.5 sm:p-3 shadow-[4px_4px_0px_#2D2319] flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-2.5 sm:p-3 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-wrap items-center justify-between gap-3 transition-colors duration-200">
         <div className="flex items-center space-x-2">
           <button
             type="button"
@@ -161,7 +161,7 @@ export default function StatsDashboard({
             className={`px-3.5 py-1.5 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black transition-all flex items-center space-x-2 cursor-pointer ${
               activeTab === 'telemetry'
                 ? 'bg-[#F6C445] shadow-[3px_3px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
-                : 'bg-[#FDF8EE] hover:bg-white shadow-[2px_2px_0px_#2D2319]'
+                : 'bg-[var(--rs-paper)] hover:bg-white shadow-[2px_2px_0px_#2D2319]'
             }`}
           >
             <BarChart2 className="w-4 h-4" />
@@ -177,7 +177,7 @@ export default function StatsDashboard({
             className={`px-3.5 py-1.5 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black transition-all flex items-center space-x-2 cursor-pointer ${
               activeTab === 'trophies'
                 ? 'bg-[#F6C445] shadow-[3px_3px_0px_#2D2319] translate-x-0.5 translate-y-0.5'
-                : 'bg-[#FDF8EE] hover:bg-white shadow-[2px_2px_0px_#2D2319]'
+                : 'bg-[var(--rs-paper)] hover:bg-white shadow-[2px_2px_0px_#2D2319]'
             }`}
           >
             <Award className="w-4 h-4 text-[#2D2319]" />
@@ -201,7 +201,7 @@ export default function StatsDashboard({
         ) : (
           <div className="space-y-5">
             {/* SUB-HEADER & FILTER CONTROLS BAR */}
-            <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0px_var(--rs-shadow)] flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors duration-200">
             
             {/* Left: Title & Subtitle */}
             <div>
@@ -339,7 +339,7 @@ export default function StatsDashboard({
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
               
               {/* 1. Average Speed (WPM) */}
-              <div className="bg-[#FDF8EE] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between select-none">
+              <div className="bg-[var(--rs-paper)] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between select-none transition-colors duration-200">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono font-bold text-[#2D2319]/80 uppercase">AVG SPEED</span>
                   <span className="w-7 h-7 rounded-lg bg-[#F6C445] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center justify-center text-[#2D2319]">
@@ -356,7 +356,7 @@ export default function StatsDashboard({
               </div>
 
               {/* 2. Typing Accuracy (%) */}
-              <div className="bg-[#FDF8EE] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between select-none">
+              <div className="bg-[var(--rs-paper)] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between select-none transition-colors duration-200">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono font-bold text-[#2D2319]/80 uppercase">ACCURACY</span>
                   <span className="w-7 h-7 rounded-lg bg-[#10B981] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center justify-center text-[#2D2319]">
@@ -373,7 +373,7 @@ export default function StatsDashboard({
               </div>
 
               {/* 3. Keyboard Coverage (%) */}
-              <div className="bg-[#FDF8EE] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between select-none">
+              <div className="bg-[var(--rs-paper)] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between select-none transition-colors duration-200">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono font-bold text-[#2D2319]/80 uppercase">COVERAGE</span>
                   <span className="w-7 h-7 rounded-lg bg-[#4BA3E3] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center justify-center text-[#2D2319]">
@@ -390,7 +390,7 @@ export default function StatsDashboard({
               </div>
 
               {/* 4. Total Practice Time */}
-              <div className="bg-[#FDF8EE] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between select-none">
+              <div className="bg-[var(--rs-paper)] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between select-none transition-colors duration-200">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono font-bold text-[#2D2319]/80 uppercase">PRACTICE</span>
                   <span className="w-7 h-7 rounded-lg bg-[#C3A6E8] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center justify-center text-[#2D2319]">
@@ -407,7 +407,7 @@ export default function StatsDashboard({
               </div>
 
               {/* 5. Total Lessons Passed */}
-              <div className="bg-[#FDF8EE] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between select-none">
+              <div className="bg-[var(--rs-paper)] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between select-none transition-colors duration-200">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono font-bold text-[#2D2319]/80 uppercase">PASSED</span>
                   <span className="w-7 h-7 rounded-lg bg-[#10B981] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center justify-center text-[#2D2319]">
@@ -424,7 +424,7 @@ export default function StatsDashboard({
               </div>
 
               {/* 6. Total Stars Earned */}
-              <div className="bg-[#FDF8EE] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between select-none">
+              <div className="bg-[var(--rs-paper)] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between select-none transition-colors duration-200">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-mono font-bold text-[#2D2319]/80 uppercase">STARS</span>
                   <span className="w-7 h-7 rounded-lg bg-[#F6C445] border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center justify-center text-[#2D2319]">
@@ -446,7 +446,7 @@ export default function StatsDashboard({
 
           {/* SECTION 3: Performance Chart (Pure SVG High-Contrast Bar Chart, NO Gradients) */}
           <section>
-            <div className="border-2 border-[#2D2319] bg-[#FDF8EE] rounded-xl shadow-[4px_4px_0px_#2D2319] p-5 sm:p-6 text-[#2D2319] overflow-hidden">
+            <div className="border-2 border-[#2D2319] bg-[var(--rs-paper)] rounded-xl shadow-[4px_4px_0px_var(--rs-shadow)] p-5 sm:p-6 text-[#2D2319] overflow-hidden transition-colors duration-200">
               
               {/* Chart Header & Solid Legend */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-[#2D2319]/15 pb-4 mb-4">
@@ -750,7 +750,7 @@ export default function StatsDashboard({
             
             {/* 4A: Time Breakdown (5 cols) */}
             <div className="lg:col-span-5 flex flex-col">
-              <div className="border-2 border-[#2D2319] bg-[#FDF8EE] rounded-xl shadow-[4px_4px_0px_#2D2319] p-5 sm:p-6 flex-1 flex flex-col justify-between text-[#2D2319]">
+              <div className="border-2 border-[#2D2319] bg-[var(--rs-paper)] rounded-xl shadow-[4px_4px_0px_var(--rs-shadow)] p-5 sm:p-6 flex-1 flex flex-col justify-between text-[#2D2319] transition-colors duration-200">
                 <div>
                   <div className="flex items-center justify-between pb-4 mb-4 border-b-2 border-[#2D2319]/15">
                     <div className="flex items-center space-x-2">
@@ -764,7 +764,7 @@ export default function StatsDashboard({
                         <p className="text-[11px] text-[#2D2319]/70 font-mono">Duration by attempt result status</p>
                       </div>
                     </div>
-                    <span className="px-2 py-0.5 rounded bg-[#FBF6EA] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
+                    <span className="px-2 py-0.5 rounded bg-[var(--rs-paper-alt)] text-[#2D2319] font-mono text-[10px] font-bold border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
                       {attemptBreakdown.totalAttempts} total logs
                     </span>
                   </div>
@@ -773,7 +773,7 @@ export default function StatsDashboard({
                   <div className="space-y-4">
                     
                     {/* Passed Attempts */}
-                    <div className="bg-[#FBF6EA] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
+                    <div className="bg-[var(--rs-paper-alt)] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] transition-colors duration-200">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center space-x-2">
                           <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0" />
@@ -786,7 +786,7 @@ export default function StatsDashboard({
                           {attemptBreakdown.passed.durationFormatted} ({attemptBreakdown.passed.percentage}%)
                         </span>
                       </div>
-                      <div className="w-full bg-[#FDF8EE] border-2 border-[#2D2319] rounded-lg h-3 p-0.5 shadow-[1px_1px_0px_#2D2319] overflow-hidden">
+                      <div className="w-full bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-lg h-3 p-0.5 shadow-[1px_1px_0px_#2D2319] overflow-hidden">
                         <div 
                           className="h-full bg-[#10B981] border border-[#2D2319] rounded-[3px] transition-all duration-300"
                           style={{ width: `${attemptBreakdown.passed.percentage}%` }}
@@ -795,7 +795,7 @@ export default function StatsDashboard({
                     </div>
 
                     {/* Partial Attempts */}
-                    <div className="bg-[#FBF6EA] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
+                    <div className="bg-[var(--rs-paper-alt)] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] transition-colors duration-200">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center space-x-2">
                           <AlertTriangle className="w-4 h-4 text-[#F59E0B] shrink-0" />
@@ -808,7 +808,7 @@ export default function StatsDashboard({
                           {attemptBreakdown.partial.durationFormatted} ({attemptBreakdown.partial.percentage}%)
                         </span>
                       </div>
-                      <div className="w-full bg-[#FDF8EE] border-2 border-[#2D2319] rounded-lg h-3 p-0.5 shadow-[1px_1px_0px_#2D2319] overflow-hidden">
+                      <div className="w-full bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-lg h-3 p-0.5 shadow-[1px_1px_0px_#2D2319] overflow-hidden">
                         <div 
                           className="h-full bg-[#F59E0B] border border-[#2D2319] rounded-[3px] transition-all duration-300"
                           style={{ width: `${attemptBreakdown.partial.percentage}%` }}
@@ -817,7 +817,7 @@ export default function StatsDashboard({
                     </div>
 
                     {/* Failed Attempts */}
-                    <div className="bg-[#FBF6EA] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
+                    <div className="bg-[var(--rs-paper-alt)] p-3.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] transition-colors duration-200">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center space-x-2">
                           <XCircle className="w-4 h-4 text-[#EF4444] shrink-0" />
@@ -830,7 +830,7 @@ export default function StatsDashboard({
                           {attemptBreakdown.failed.durationFormatted} ({attemptBreakdown.failed.percentage}%)
                         </span>
                       </div>
-                      <div className="w-full bg-[#FDF8EE] border-2 border-[#2D2319] rounded-lg h-3 p-0.5 shadow-[1px_1px_0px_#2D2319] overflow-hidden">
+                      <div className="w-full bg-[var(--rs-paper)] border-2 border-[#2D2319] rounded-lg h-3 p-0.5 shadow-[1px_1px_0px_#2D2319] overflow-hidden">
                         <div 
                           className="h-full bg-[#EF4444] border border-[#2D2319] rounded-[3px] transition-all duration-300"
                           style={{ width: `${attemptBreakdown.failed.percentage}%` }}
@@ -854,7 +854,7 @@ export default function StatsDashboard({
 
             {/* 4B: Comparative Benchmark Bars (7 cols - Solid Comparison Bars) */}
             <div className="lg:col-span-7 flex flex-col">
-              <div className="border-2 border-[#2D2319] bg-[#FDF8EE] rounded-xl shadow-[4px_4px_0px_#2D2319] p-5 sm:p-6 flex-1 flex flex-col justify-between text-[#2D2319]">
+              <div className="border-2 border-[#2D2319] bg-[var(--rs-paper)] rounded-xl shadow-[4px_4px_0px_var(--rs-shadow)] p-5 sm:p-6 flex-1 flex flex-col justify-between text-[#2D2319] transition-colors duration-200">
                 <div>
                   <div className="flex items-center justify-between pb-4 mb-4 border-b-2 border-[#2D2319]/15">
                     <div className="flex items-center space-x-2">
@@ -884,7 +884,7 @@ export default function StatsDashboard({
                       return (
                         <>
                           {/* Bar 1: Student ("You") - Solid Cyan (#4BA3E3) */}
-                          <div className="bg-[#FBF6EA] p-3 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
+                          <div className="bg-[var(--rs-paper-alt)] p-3 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] transition-colors duration-200">
                             <div className="flex items-center justify-between text-xs font-black mb-1.5">
                               <span className="flex items-center space-x-1.5 text-[#2D2319]">
                                 <Sparkles className="w-4 h-4 text-[#F6C445]" />
@@ -894,7 +894,7 @@ export default function StatsDashboard({
                                 {averageWpm} WPM
                               </span>
                             </div>
-                            <div className="w-full bg-[#FDF8EE] rounded-xl h-6 p-0.5 border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] overflow-hidden">
+                            <div className="w-full bg-[var(--rs-paper)] rounded-xl h-6 p-0.5 border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] overflow-hidden">
                               <div 
                                 className="h-full rounded-lg bg-[#4BA3E3] border border-[#2D2319] flex items-center justify-end px-2 text-[10px] text-[#2D2319] font-black font-mono transition-all duration-300"
                                 style={{ width: `${studentPct}%` }}
@@ -905,14 +905,14 @@ export default function StatsDashboard({
                           </div>
 
                           {/* Bar 2: Average Benchmark (24 WPM) - Solid Slate (#E2E8F0) */}
-                          <div className="bg-[#FBF6EA] p-3 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
+                          <div className="bg-[var(--rs-paper-alt)] p-3 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] transition-colors duration-200">
                             <div className="flex items-center justify-between text-xs font-bold mb-1.5 text-[#2D2319]">
                               <span>Average Elementary / Middle School Standard</span>
                               <span className="font-mono font-black text-[#2D2319] bg-[#E2E8F0] px-2 py-0.2 rounded border border-[#2D2319]">
                                 24 WPM
                               </span>
                             </div>
-                            <div className="w-full bg-[#FDF8EE] rounded-xl h-5 p-0.5 border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] overflow-hidden">
+                            <div className="w-full bg-[var(--rs-paper)] rounded-xl h-5 p-0.5 border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] overflow-hidden">
                               <div 
                                 className="h-full rounded-lg bg-[#E2E8F0] border border-[#2D2319] flex items-center justify-end px-2 text-[10px] text-[#2D2319] font-black font-mono transition-all duration-300"
                                 style={{ width: `${avgPct}%` }}
@@ -923,7 +923,7 @@ export default function StatsDashboard({
                           </div>
 
                           {/* Bar 3: Pro Target (50 WPM) - Solid Mustard (#F6C445) */}
-                          <div className="bg-[#FBF6EA] p-3 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
+                          <div className="bg-[var(--rs-paper-alt)] p-3 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] transition-colors duration-200">
                             <div className="flex items-center justify-between text-xs font-bold mb-1.5 text-[#2D2319]">
                               <span className="flex items-center space-x-1">
                                 <Award className="w-3.5 h-3.5 text-[#F6C445]" />
@@ -933,7 +933,7 @@ export default function StatsDashboard({
                                 50 WPM
                               </span>
                             </div>
-                            <div className="w-full bg-[#FDF8EE] rounded-xl h-5 p-0.5 border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] overflow-hidden">
+                            <div className="w-full bg-[var(--rs-paper)] rounded-xl h-5 p-0.5 border-2 border-[#2D2319] shadow-[1px_1px_0px_#2D2319] overflow-hidden">
                               <div 
                                 className="h-full rounded-lg bg-[#F6C445] border border-[#2D2319] flex items-center justify-end px-2 text-[10px] text-[#2D2319] font-black font-mono transition-all duration-300"
                                 style={{ width: `${proPct}%` }}
@@ -950,7 +950,7 @@ export default function StatsDashboard({
                 </div>
 
                 {/* Motivational Solid Callout */}
-                <div className="mt-4 p-3.5 rounded-xl bg-[#FBF6EA] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center space-x-3 text-xs text-[#2D2319] font-bold">
+                <div className="mt-4 p-3.5 rounded-xl bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center space-x-3 text-xs text-[#2D2319] font-bold transition-colors duration-200">
                   <Sparkles className="w-5 h-5 text-[#F6C445] shrink-0" />
                   <span>
                     {averageWpm > 24 
@@ -968,7 +968,7 @@ export default function StatsDashboard({
 
           {/* SECTION 5: Keyboard Heatmap (Solid Color Keys: Emerald #10B981, Amber #F59E0B, Rose #EF4444, Slate #E2E8F0) */}
           <section>
-            <div className="border-2 border-[#2D2319] bg-[#FDF8EE] rounded-xl shadow-[4px_4px_0px_#2D2319] p-5 sm:p-6 text-[#2D2319]">
+            <div className="border-2 border-[#2D2319] bg-[var(--rs-paper)] rounded-xl shadow-[4px_4px_0px_var(--rs-shadow)] p-5 sm:p-6 text-[#2D2319] transition-colors duration-200">
               
               {/* Section Header with Solid Tiers Legend */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-[#2D2319]/15 pb-4 mb-4">
@@ -1008,10 +1008,10 @@ export default function StatsDashboard({
               </div>
 
               {/* Heatmap Interactive Keyboard + Key Diagnostic Panel */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
                 
-                {/* Keyboard SVG Canvas Chassis (9 cols) */}
-                <div className="lg:col-span-9 bg-[#2D2319] p-4 sm:p-5 rounded-2xl border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319]">
+                {/* Keyboard SVG Canvas Chassis (8 cols) */}
+                <div className="lg:col-span-8 bg-[#2D2319] p-4 sm:p-5 rounded-2xl border-2 border-[#2D2319] shadow-[4px_4px_0px_var(--rs-shadow)] flex items-center justify-center">
                   <svg 
                     viewBox="0 0 683.3 254" 
                     xmlns="http://www.w3.org/2000/svg"
@@ -1083,12 +1083,12 @@ export default function StatsDashboard({
                             {/* Tactile Home Row Bumps (F and J) */}
                             {key.isHomeKey && (
                               <line
-                                x1={key.cx - 6}
-                                y1={key.cy + 10}
-                                x2={key.cx + 6}
-                                y2={key.cy + 10}
+                                x1={key.cx - 4.5}
+                                y1={key.cy + 12.5}
+                                x2={key.cx + 4.5}
+                                y2={key.cy + 12.5}
                                 stroke="#2D2319"
-                                strokeWidth="2"
+                                strokeWidth="1.6"
                                 strokeLinecap="round"
                               />
                             )}
@@ -1096,9 +1096,9 @@ export default function StatsDashboard({
                             {/* Key Label Text */}
                             <text
                               x={key.cx}
-                              y={key.cy + (key.id === 'space' ? 4 : 5)}
+                              y={key.id === 'space' ? key.cy + 1 : key.cy - 1}
                               textAnchor="middle"
-                              dominantBaseline="middle"
+                              dominantBaseline="central"
                               fontSize={key.id === 'space' || key.id === 'shift-left' || key.id === 'shift-right' || key.id === 'capslock' || key.id === 'tab' || key.id === 'enter' || key.id === 'backspace' ? "10" : "13"}
                               fontWeight="900"
                               fontFamily="monospace"
@@ -1114,22 +1114,22 @@ export default function StatsDashboard({
                   </svg>
                 </div>
 
-                {/* Key Diagnostic Inspector Panel (3 cols) */}
-                <div className="lg:col-span-3 h-full">
-                  <div className="border-2 border-[#2D2319] bg-[#FBF6EA] rounded-xl p-5 shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between h-full text-[#2D2319]">
+                {/* Key Diagnostic Inspector Panel (4 cols) */}
+                <div className="lg:col-span-4 h-full flex flex-col">
+                  <div className="border-2 border-[#2D2319] bg-[var(--rs-paper-alt)] rounded-xl p-4 sm:p-5 shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between h-full text-[#2D2319] transition-colors duration-200">
                     <div>
-                      <div className="flex items-center justify-between border-b-2 border-[#2D2319]/15 pb-3 mb-3">
-                        <span className="px-2 py-0.5 rounded bg-[#4BA3E3] text-[#2D2319] font-mono text-[10px] font-black border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
+                      <div className="flex items-center justify-between gap-2 border-b-2 border-[#2D2319]/15 pb-2.5 mb-3">
+                        <span className="px-2.5 py-1 rounded-md bg-[#4BA3E3] text-[#2D2319] font-mono text-[11px] font-black border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] whitespace-nowrap shrink-0">
                           Key Diagnostic
                         </span>
-                        <span className="text-[10px] uppercase font-bold text-[#2D2319] font-mono">
+                        <span className="text-[11px] uppercase font-black text-[#2D2319] font-mono whitespace-nowrap">
                           {activeKeyFinger.hand} Hand
                         </span>
                       </div>
 
                       {/* Key Preview Box with Solid Tier Background */}
                       <div className="flex items-center space-x-3 mb-4">
-                        <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-black font-mono border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] text-[#2D2319] ${
+                        <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-black font-mono border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] text-[#2D2319] shrink-0 ${
                           activeKeyData.status === 'emerald'
                             ? 'bg-[#10B981]'
                             : activeKeyData.status === 'amber'
@@ -1141,35 +1141,35 @@ export default function StatsDashboard({
                           {selectedKey === ' ' ? '␣' : selectedKey.toUpperCase()}
                         </div>
 
-                        <div>
-                          <div className="text-xl font-black text-[#2D2319] font-display">
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xl font-black text-[#2D2319] font-display truncate">
                             Key "{selectedKey === ' ' ? 'Space' : selectedKey.toUpperCase()}"
                           </div>
-                          <div className="text-xs font-bold text-[#2D2319]/70 font-mono mt-0.5">
+                          <div className="text-xs font-bold text-[#2D2319]/70 font-mono mt-0.5 truncate">
                             {activeKeyFinger.finger}
                           </div>
                         </div>
                       </div>
 
                       {/* Metrics Breakdown in Solid Boxes */}
-                      <div className="space-y-2 text-xs font-bold font-mono">
-                        <div className="flex items-center justify-between p-2 rounded-lg bg-[#FDF8EE] border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-                          <span className="text-[#2D2319]/80">Accuracy:</span>
-                          <span className="font-black text-[#2D2319]">
+                      <div className="space-y-2.5 text-xs font-bold font-mono">
+                        <div className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-[var(--rs-paper)] border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] transition-colors duration-200">
+                          <span className="text-[#2D2319]/80 shrink-0">Accuracy:</span>
+                          <span className="font-black text-[#2D2319] whitespace-nowrap text-right">
                             {activeKeyData.total > 0 ? `${activeKeyData.accuracy}%` : 'Unpracticed'}
                           </span>
                         </div>
 
-                        <div className="flex items-center justify-between p-2 rounded-lg bg-[#FDF8EE] border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-                          <span className="text-[#2D2319]/80">Correct Hits:</span>
-                          <span className="font-black text-[#10B981]">
+                        <div className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-[var(--rs-paper)] border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] transition-colors duration-200">
+                          <span className="text-[#2D2319]/80 shrink-0">Correct Hits:</span>
+                          <span className="font-black text-[#10B981] whitespace-nowrap text-right">
                             {activeKeyData.hits} hits
                           </span>
                         </div>
 
-                        <div className="flex items-center justify-between p-2 rounded-lg bg-[#FDF8EE] border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-                          <span className="text-[#2D2319]/80">Errors / Typos:</span>
-                          <span className={`font-black ${activeKeyData.misses > 0 ? 'text-[#EF4444]' : 'text-[#2D2319]/50'}`}>
+                        <div className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-[var(--rs-paper)] border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] transition-colors duration-200">
+                          <span className="text-[#2D2319]/80 shrink-0">Errors / Typos:</span>
+                          <span className={`font-black whitespace-nowrap text-right ${activeKeyData.misses > 0 ? 'text-[#EF4444]' : 'text-[#2D2319]/50'}`}>
                             {activeKeyData.misses} misses
                           </span>
                         </div>
@@ -1178,16 +1178,14 @@ export default function StatsDashboard({
 
                     {/* Direct Practice Key Button */}
                     <div className="mt-5 pt-3 border-t-2 border-[#2D2319]/15">
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        fullWidth
+                      <button
+                        type="button"
                         onClick={() => handlePracticeKeyClick(selectedKey)}
-                        rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
-                        className="font-black"
+                        className="w-full py-2.5 px-3 bg-[#4BA3E3] hover:bg-[#3894d8] active:translate-x-0.5 active:translate-y-0.5 border-2 border-[#2D2319] rounded-xl font-display font-black text-xs text-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center space-x-2 transition-all cursor-pointer"
                       >
-                        Practice Key "{selectedKey === ' ' ? 'Space' : selectedKey.toUpperCase()}"
-                      </Button>
+                        <span className="whitespace-nowrap">Practice Key "{selectedKey === ' ' ? 'Space' : selectedKey.toUpperCase()}"</span>
+                        <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1214,7 +1212,7 @@ export default function StatsDashboard({
                 problemKeys.map((item, idx) => (
                   <div 
                     key={item.key} 
-                    className="border-2 border-[#2D2319] bg-[#FDF8EE] hover:bg-[#FBF6EA] rounded-xl p-5 shadow-[3px_3px_0px_#2D2319] flex flex-col justify-between transition-all duration-150 cursor-pointer text-[#2D2319]"
+                    className="border-2 border-[#2D2319] bg-[var(--rs-paper)] hover:bg-[var(--rs-paper-alt)] rounded-xl p-5 shadow-[3px_3px_0px_var(--rs-shadow)] flex flex-col justify-between transition-all duration-150 cursor-pointer text-[#2D2319]"
                     onClick={() => {
                       if (sound && typeof sound.playKeyClick === 'function') sound.playKeyClick();
                       setSelectedKey(item.key);
@@ -1256,7 +1254,7 @@ export default function StatsDashboard({
                           </span>
                         </div>
 
-                        <div className="w-full bg-[#FBF6EA] border-2 border-[#2D2319] rounded-lg h-2.5 p-0.5 shadow-[1px_1px_0px_#2D2319] overflow-hidden">
+                        <div className="w-full bg-[var(--rs-paper-alt)] border-2 border-[#2D2319] rounded-lg h-2.5 p-0.5 shadow-[1px_1px_0px_#2D2319] overflow-hidden">
                           <div
                             className="h-full bg-[#EF4444] border border-[#2D2319] rounded-[2px]"
                             style={{ width: `${Math.min(100, Math.max(10, item.errorRate * 3))}%` }}
@@ -1281,7 +1279,7 @@ export default function StatsDashboard({
                   </div>
                 ))
               ) : (
-                <div className="col-span-full py-8 text-center bg-[#FDF8EE] rounded-2xl border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] text-[#2D2319]">
+                <div className="col-span-full py-8 text-center bg-[var(--rs-paper)] rounded-2xl border-2 border-[#2D2319] shadow-[3px_3px_0px_var(--rs-shadow)] text-[#2D2319]">
                   <CheckCircle2 className="w-8 h-8 text-[#10B981] mx-auto mb-2" />
                   <p className="text-sm font-black text-[#2D2319]">No major problem keys detected!</p>
                   <p className="text-xs text-[#2D2319]/70 font-mono mt-0.5">Your accuracy across all keys is above standard thresholds.</p>
@@ -1292,10 +1290,10 @@ export default function StatsDashboard({
 
           {/* SECTION 7: Recent Attempt Log Table with Solid Status Stamps */}
           <section>
-            <div className="border-2 border-[#2D2319] bg-[#FDF8EE] rounded-xl shadow-[4px_4px_0px_#2D2319] overflow-hidden text-[#2D2319]">
+            <div className="border-2 border-[#2D2319] bg-[var(--rs-paper)] rounded-xl shadow-[4px_4px_0px_var(--rs-shadow)] overflow-hidden text-[#2D2319] transition-colors duration-200">
               
               {/* Table Header & Search Controls */}
-              <div className="p-4 sm:p-6 border-b-2 border-[#2D2319] bg-[#FBF6EA] flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="p-4 sm:p-6 border-b-2 border-[#2D2319] bg-[var(--rs-paper-alt)] flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors duration-200">
                 <div>
                   <div className="flex items-center space-x-2">
                     <h3 className="text-base sm:text-lg font-black text-[#2D2319] tracking-tight font-display">
@@ -1322,7 +1320,7 @@ export default function StatsDashboard({
                     />
                   </div>
 
-                  <div className="bg-[#FDF8EE] p-1 rounded-lg border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center text-xs font-mono font-bold space-x-1">
+                  <div className="bg-[var(--rs-paper)] p-1 rounded-lg border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center text-xs font-mono font-bold space-x-1">
                     {['all', 'passed', 'partial', 'failed'].map(st => (
                       <button
                         key={st}
