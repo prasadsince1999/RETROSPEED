@@ -20,6 +20,18 @@ export const SPINE_PARTS = [
     },
     lessons: [
       {
+        id: 'spine-1-0',
+        partNumber: 1,
+        lessonNumber: 0,
+        type: 'video',
+        motionId: 'motion.home-row',
+        title: 'Home Row Desk & Tactile Bumps',
+        description: 'Interactive motion coach: learn the anchor bumps on F and J, home row curvature, and the eyes-on-the-page rule.',
+        targetKeys: ['f', 'j', 'u', ' '],
+        goalWpm: 10,
+        minAccuracy: 90
+      },
+      {
         id: 'spine-1-1',
         partNumber: 1,
         lessonNumber: 1,

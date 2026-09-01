@@ -229,6 +229,9 @@ export default function App() {
 
     if (spineLesson.isShortcut) {
       setCurrentView('shortcuts');
+    } else if (spineLesson.type === 'video' || spineLesson.type === 'motion') {
+      setActiveLesson(spineLesson);
+      setCurrentView('video');
     } else {
       const adapted = {
         id: spineLesson.id,

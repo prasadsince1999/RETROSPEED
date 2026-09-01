@@ -1,0 +1,125 @@
+{
+  "id": "motion.home-row",
+  "title": "The Home Row Desk",
+  "subtitle": "Paper Desk & Tactile Bumps",
+  "audio": "/voice/home-row.neerja.mp3",
+  "durationMs": 66000,
+  "beats": [
+    {
+      "id": 1,
+      "at": 0,
+      "duration": 7500,
+      "scene": 1,
+      "action": "title_slam",
+      "banner": "TYPE LIKE A PRO",
+      "highlight": "none",
+      "coach": "open",
+      "line": "You want to type with your eyes on the page. Good. We start with the hands."
+    },
+    {
+      "id": 2,
+      "at": 7500,
+      "duration": 7800,
+      "scene": 2,
+      "action": "key_pop",
+      "banner": "THE ANCHOR BUMPS",
+      "highlight": "FJ",
+      "coach": "open",
+      "line": "Find F and J. Those two keys have a small bump. That bump is home."
+    },
+    {
+      "id": 3,
+      "at": 15395,
+      "duration": 8600,
+      "scene": 3,
+      "action": "gate_fj",
+      "banner": "FEEL THE BUMPS",
+      "highlight": "FJ",
+      "coach": "closed",
+      "requires": "fj",
+      "gatePrompt": "Close your eyes! Press [ F ] and [ J ] together to continue.",
+      "line": "Close your eyes. Index fingers only. Find the bumps. Don't peek."
+    },
+    {
+      "id": 4,
+      "at": 24065,
+      "duration": 5800,
+      "scene": 4,
+      "action": "home_row_light",
+      "banner": "HOME ROW ANCHORS",
+      "highlight": "FJ",
+      "coach": "open",
+      "line": "Left index stays on F. Right index stays on J. That is the home row."
+    },
+    {
+      "id": 5,
+      "at": 29930,
+      "duration": 7900,
+      "scene": 4,
+      "action": "finger_curve",
+      "banner": "HOME ROW & SPACE",
+      "highlight": "homerow_space",
+      "coach": "open",
+      "line": "Curve the other fingers onto A S D and K L semicolon. Thumbs rest on space."
+    },
+    {
+      "id": 6,
+      "at": 37909,
+      "duration": 6300,
+      "scene": 5,
+      "action": "reach_return",
+      "banner": "REACH AND RETURN",
+      "highlight": "U",
+      "coach": "open",
+      "requires": "uj",
+      "gatePrompt": "Reach right index up to [ U ], then walk straight back to [ J ].",
+      "line": "To type U, the right index steps up one key, then walks straight back to J."
+    },
+    {
+      "id": 7,
+      "at": 44252,
+      "duration": 5200,
+      "scene": 6,
+      "action": "rule_slam",
+      "banner": "EYES ON THE PAGE",
+      "highlight": "none",
+      "coach": "focused",
+      "line": "One rule. Never look down at the keys while you type."
+    },
+    {
+      "id": 8,
+      "at": 49518,
+      "duration": 5100,
+      "scene": 7,
+      "action": "screen_holds",
+      "banner": "HOLD YOUR GAZE",
+      "highlight": "FJ",
+      "coach": "open",
+      "line": "The bumps bring you home. The screen holds your eyes."
+    },
+    {
+      "id": 9,
+      "at": 54690,
+      "duration": 5000,
+      "scene": 7,
+      "action": "flow_state",
+      "banner": "MUSCLE MEMORY",
+      "highlight": "flow",
+      "coach": "relaxed",
+      "line": "After a few days the hands move and the mind stays on the words."
+    },
+    {
+      "id": 10,
+      "at": 59651,
+      "duration": 6000,
+      "scene": 8,
+      "action": "ready_go",
+      "banner": "LET'S GET STARTED",
+      "highlight": "none",
+      "coach": "celebrate",
+      "cta": "start-drill",
+      "drillId": "spine-1-1",
+      "line": "Ready. First drill is the home row. Let's go."
+    }
+  ]
+}
