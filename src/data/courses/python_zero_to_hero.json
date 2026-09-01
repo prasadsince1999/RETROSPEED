@@ -4,7 +4,7 @@
   "title": "Python Zero to Hero | 13-Hour Mastery",
   "category": "Programming & Tech",
   "grade": "Developers & Data Analysts",
-  "lessonsCount": 36,
+  "lessonsCount": 48,
   "description": "Master Python from fundamentals to advanced functions and data analysis. Featuring interactive code typing, simulated live terminal execution, and behind-the-scenes memory sketches.",
   "badge": "Python 3.12",
   "color": "from-amber-500 via-sky-600 to-indigo-900",
@@ -15,21 +15,22 @@
       "chapterNumber": 1,
       "title": "Python Fundamentals",
       "timestamp": "00:00 - 01:46:54",
-      "description": "Learn how Python works behind the scenes, interpreter execution, comments, print formatting, variable memory storage, input, and data types.",
+      "description": "How computers think, interpreter vs bytecode, comments (#), print() megaphone, variables as labeled boxes in RAM, input() microphone, and dynamic data types.",
       "lessons": [
         {
           "id": "py-101",
           "chapter": 1,
           "section": "1.1",
-          "title": "Welcome & Python Architecture",
-          "type": "code",
-          "concept": "Python is an interpreted, high-level language. When you run a script, the Python Interpreter reads your source code, compiles it into bytecode (.pyc), and executes it inside the Python Virtual Machine (PVM).",
-          "visualTopic": "Interpreter & Bytecode Pipeline (Source Code -> Bytecode -> PVM -> CPU)",
-          "code": "# Python 3.12 Architecture\nprint('Hello, Future Python Developer!')\nprint('Python translates code into bytecode behind the scenes.')",
-          "expectedOutput": "Hello, Future Python Developer!\nPython translates code into bytecode behind the scenes.",
+          "title": "Why Python & How Computers Think",
+          "type": "concept",
+          "analogy": "Human Language vs Binary (0s & 1s)",
+          "concept": "If you tell your computer 'Hey computer, calculate 5 + 5', it won't understand English. Computers only understand electrical pulses (0s and 1s). Python is the bridge: a high-level human-readable language that Python translates into machine code.",
+          "visualTopic": "Human Thought -> Python Code -> Machine Binary (010101)",
+          "code": "# Lesson 1: Our First Python Instruction\nprint('Hello, Python Developer!')",
+          "expectedOutput": "Hello, Python Developer!",
           "variables": {
-            "status": "ready",
-            "version": "3.12.0"
+            "language": "'Python'",
+            "level": "'Zero to Hero'"
           },
           "goalWpm": 25,
           "minAccuracy": 95
@@ -38,15 +39,15 @@
           "id": "py-102",
           "chapter": 1,
           "section": "1.2",
-          "title": "Comments & print() Deep Dive",
-          "type": "code",
-          "concept": "Comments (#) are ignored by the interpreter. The print() function outputs text to stdout. You can use 'sep' to customize separators and 'end' to control trailing newlines.",
-          "visualTopic": "Standard Output Stream (stdout) & Argument Separation",
-          "code": "# Using print() with custom separator and end character\nprint('Data', 'Science', 'Python', sep=' -> ')\nprint('Line 1', end=' | ')\nprint('Line 2')",
-          "expectedOutput": "Data -> Science -> Python\nLine 1 | Line 2",
+          "title": "Behind the Scenes: The Interpreter Pipeline",
+          "type": "concept",
+          "analogy": "The Chef Recipe Analogy",
+          "concept": "When you run a .py file, the Python Interpreter translates your source code line-by-line into Bytecode (.pyc instructions). The Python Virtual Machine (PVM) then executes this bytecode on your CPU hardware.",
+          "visualTopic": "Source Code (.py) -> Interpreter -> Bytecode (.pyc) -> PVM -> CPU Output",
+          "code": "# Python translates this script behind the scenes\nprint('Source Code (.py)')\nprint('Bytecode (.pyc)')\nprint('Execution (PVM)')",
+          "expectedOutput": "Source Code (.py)\nBytecode (.pyc)\nExecution (PVM)",
           "variables": {
-            "sep": "' -> '",
-            "end": "' | '"
+            "pipeline": "'Source -> Bytecode -> PVM'"
           },
           "goalWpm": 28,
           "minAccuracy": 95
@@ -55,35 +56,29 @@
           "id": "py-103",
           "chapter": 1,
           "section": "1.3",
-          "title": "Variables & Memory Storage",
-          "type": "code",
-          "concept": "Variables in Python are reference tags pointing to objects in computer memory (heap). When you assign x = 10, Python creates integer object 10 in memory and binds label 'x' to it.",
-          "visualTopic": "Memory Box & Object Reference Pointer (Label -> Memory Address)",
-          "code": "# Variable assignment and memory reference\nuser_name = 'Baraa'\nage = 32\nis_developer = True\n\nprint('User:', user_name, '| Age:', age)",
-          "expectedOutput": "User: Baraa | Age: 32",
-          "variables": {
-            "user_name": "'Baraa'",
-            "age": 32,
-            "is_developer": true
-          },
-          "goalWpm": 30,
+          "title": "The Sticky Note: Comments (#)",
+          "type": "symbol",
+          "analogy": "Sticky Notes for Humans",
+          "concept": "A comment starts with the hash symbol (#). It is a note written for humans. When Python runs your code, it completely skips and ignores every comment line.",
+          "visualTopic": "Interpreter skipping # comments during execution",
+          "code": "# This is a comment - Python ignores this line\n# Comments explain what the code does\nprint('Comments are invisible to Python!')",
+          "expectedOutput": "Comments are invisible to Python!",
+          "variables": {},
+          "goalWpm": 28,
           "minAccuracy": 95
         },
         {
           "id": "py-104",
           "chapter": 1,
           "section": "1.4",
-          "title": "User input() & Type Casting",
-          "type": "code",
-          "concept": "The input() function always returns a string (str). To perform mathematical operations, you must explicitly cast strings using int() or float().",
-          "visualTopic": "User Input Stream & Type Casting Pipeline (str -> int)",
-          "code": "# Type conversion for user input\nbirth_year_str = '2000'\nbirth_year = int(birth_year_str)\ncurrent_year = 2026\nuser_age = current_year - birth_year\n\nprint('Calculated Age:', user_age)",
-          "expectedOutput": "Calculated Age: 26",
-          "variables": {
-            "birth_year_str": "'2000'",
-            "birth_year": 2000,
-            "user_age": 26
-          },
+          "title": "The Megaphone: The print() Function",
+          "type": "drill",
+          "analogy": "The Megaphone Output",
+          "concept": "print() is your program's megaphone: it sends text out to the console screen. Inside the parentheses (), you put the message wrapped in quotes (' ' or \" \").",
+          "visualTopic": "print() Megaphone broadcasting to Terminal Screen",
+          "code": "print('Welcome to Python!')\nprint('Line 1: Code is executed top to bottom.')\nprint('Line 2: Each print starts on a new line.')",
+          "expectedOutput": "Welcome to Python!\nLine 1: Code is executed top to bottom.\nLine 2: Each print starts on a new line.",
+          "variables": {},
           "goalWpm": 30,
           "minAccuracy": 95
         },
@@ -91,18 +86,107 @@
           "id": "py-105",
           "chapter": 1,
           "section": "1.5",
-          "title": "Python Data Types & type()",
-          "type": "code",
-          "concept": "Python has built-in dynamic types: int, float, bool, str, and NoneType. Use type() to inspect object type at runtime.",
-          "visualTopic": "Dynamic Type Hierarchy & Type Inspection",
-          "code": "price = 19.99\nquantity = 5\nitem = 'Mechanical Keyboard'\n\nprint(type(price))\nprint(type(quantity))\nprint(type(item))",
-          "expectedOutput": "<class 'float'>\n<class 'int'>\n<class 'str'>",
+          "title": "Custom print(): Separators (sep) & Endlines (end)",
+          "type": "drill",
+          "analogy": "The Printing Press Formatting",
+          "concept": "print() accepts multiple values separated by commas. Use sep=' ' to customize the delimiter between items, and end='' to change what happens at the end of the line instead of a newline.",
+          "visualTopic": "print() argument stream with custom delimiter tickets",
+          "code": "print('Python', 'Data', 'Science', sep=' -> ')\nprint('Loading', end='... ')\nprint('Complete!')",
+          "expectedOutput": "Python -> Data -> Science\nLoading... Complete!",
           "variables": {
-            "price": 19.99,
-            "quantity": 5,
-            "item": "'Mechanical Keyboard'"
+            "sep": "' -> '",
+            "end": "'... '"
           },
           "goalWpm": 30,
+          "minAccuracy": 95
+        },
+        {
+          "id": "py-106",
+          "chapter": 1,
+          "section": "1.6",
+          "title": "Variables: Labeled Boxes in Computer RAM",
+          "type": "concept",
+          "analogy": "The Labeled Storage Box in Warehouse",
+          "concept": "Think of computer memory (RAM) as a giant warehouse full of storage boxes. A variable is a label tag you slap on the box. When you write age = 25, Python stores 25 in a box and labels it 'age'.",
+          "visualTopic": "Memory Box [Label: age] containing [Value: 25]",
+          "code": "# Creating labeled boxes in memory\nuser_name = 'Alex'\nuser_age = 25\n\nprint('User:', user_name)\nprint('Age:', user_age)",
+          "expectedOutput": "User: Alex\nAge: 25",
+          "variables": {
+            "user_name": "'Alex'",
+            "user_age": 25
+          },
+          "goalWpm": 30,
+          "minAccuracy": 95
+        },
+        {
+          "id": "py-107",
+          "chapter": 1,
+          "section": "1.7",
+          "title": "Reassigning Variables: Moving the Pointer",
+          "type": "drill",
+          "analogy": "Replacing Box Contents",
+          "concept": "Variables can change over time. When you assign a new value to an existing variable, Python points the label to the new value in memory.",
+          "visualTopic": "Label tag moving from Old Value Box to New Value Box",
+          "code": "speed = 40\nprint('Initial Speed:', speed)\n\nspeed = 65\nprint('Accelerated Speed:', speed)",
+          "expectedOutput": "Initial Speed: 40\nAccelerated Speed: 65",
+          "variables": {
+            "speed": 65
+          },
+          "goalWpm": 30,
+          "minAccuracy": 95
+        },
+        {
+          "id": "py-108",
+          "chapter": 1,
+          "section": "1.8",
+          "title": "The Microphone: The input() Function",
+          "type": "concept",
+          "analogy": "The Microphone Listening for User",
+          "concept": "While print() is a megaphone talking out, input() is a microphone listening in. It pauses your program and waits for the user to type something on their keyboard and press Enter.",
+          "visualTopic": "Program paused awaiting input() keyboard signal",
+          "code": "# input() listens and captures user text\n# Simulated input: 'Sarah'\nplayer_name = 'Sarah'\nprint('Welcome aboard, ' + player_name + '!')",
+          "expectedOutput": "Welcome aboard, Sarah!",
+          "variables": {
+            "player_name": "'Sarah'"
+          },
+          "goalWpm": 30,
+          "minAccuracy": 95
+        },
+        {
+          "id": "py-109",
+          "chapter": 1,
+          "section": "1.9",
+          "title": "Why Data Types Matter: 5 + 5 vs '5' + '5'",
+          "type": "concept",
+          "analogy": "Math Addition vs Text Sticking",
+          "concept": "Numbers and text behave differently. 5 + 5 gives 10 (arithmetic math). But '5' + '5' gives '55' (string concatenation)! Python needs to know the type of each value.",
+          "visualTopic": "Number Addition (5 + 5 = 10) vs String Concatenation ('5' + '5' = '55')",
+          "code": "number_result = 5 + 5\nstring_result = '5' + '5'\n\nprint('Number Math:', number_result)\nprint('String Text:', string_result)",
+          "expectedOutput": "Number Math: 10\nString Text: 55",
+          "variables": {
+            "number_result": 10,
+            "string_result": "'55'"
+          },
+          "goalWpm": 30,
+          "minAccuracy": 95
+        },
+        {
+          "id": "py-110",
+          "chapter": 1,
+          "section": "1.10",
+          "title": "Type Casting: int(), float(), str(), type()",
+          "type": "drill",
+          "analogy": "The Type Conversion Machine",
+          "concept": "Because input() always returns text (str), you must convert it using int() for whole numbers or float() for decimals before doing math.",
+          "visualTopic": "Type Converter Box: '2000' (str) -> 2000 (int)",
+          "code": "year_text = '2000'\nyear_num = int(year_text)\nage = 2026 - year_num\n\nprint('Birth Year:', year_num, '| Type:', type(year_num))\nprint('Current Age:', age)",
+          "expectedOutput": "Birth Year: 2000 | Type: <class 'int'>\nCurrent Age: 26",
+          "variables": {
+            "year_text": "'2000'",
+            "year_num": 2000,
+            "age": 26
+          },
+          "goalWpm": 32,
           "minAccuracy": 95
         }
       ]
@@ -111,40 +195,40 @@
       "chapterNumber": 2,
       "title": "Python Strings",
       "timestamp": "01:46:54 - 02:59:31",
-      "description": "Master string manipulation, escape sequences, zero-based indexing, slicing [start:stop:step], and built-in string methods.",
+      "description": "Character train anatomy, modern f-strings, zero-based indexing [0], slicing windows [start:stop:step], string immutability, and search/transformation methods.",
       "lessons": [
         {
           "id": "py-201",
           "chapter": 2,
           "section": "2.1",
-          "title": "String Basics & f-Strings",
-          "type": "code",
-          "concept": "f-strings (formatted string literals) allow inline variable interpolation and expression evaluation with {expression}.",
-          "visualTopic": "f-string Interpolation & Template Formatting",
-          "code": "course = 'Python'\nduration_hours = 13\nlevel = 'Zero to Hero'\n\nmessage = f'Course: {course} ({duration_hours} Hours) - {level}'\nprint(message)",
-          "expectedOutput": "Course: Python (13 Hours) - Zero to Hero",
+          "title": "Strings as Character Trains & Escape Codes",
+          "type": "concept",
+          "analogy": "Connected Train Compartments & Special Signals",
+          "concept": "A string is a sequence of characters linked like train cars. Special escape characters like \\n (newline) and \\t (tab) allow formatting inside strings.",
+          "visualTopic": "Character Train: ['P']['y']['t']['h']['o']['n']",
+          "code": "message = 'Python\\nProgramming\\t3.12'\nprint(message)",
+          "expectedOutput": "Python\nProgramming\t3.12",
           "variables": {
-            "course": "'Python'",
-            "duration_hours": 13,
-            "level": "'Zero to Hero'"
+            "message": "'Python\\nProgramming\\t3.12'"
           },
-          "goalWpm": 32,
+          "goalWpm": 30,
           "minAccuracy": 95
         },
         {
           "id": "py-202",
           "chapter": 2,
           "section": "2.2",
-          "title": "String Indexing & Slicing",
-          "type": "code",
-          "concept": "Strings are ordered character sequences. Indexing text[0] accesses first character, text[-1] last. Slicing text[start:stop:step] extracts a sub-string.",
-          "visualTopic": "Zero-Based Index Array & Slice Window [0:6:1]",
-          "code": "language = 'Python Programming'\n\nfirst_word = language[0:6]\nlast_char = language[-1]\nreversed_str = language[::-1]\n\nprint(first_word, '|', last_char)",
-          "expectedOutput": "Python | g",
+          "title": "Modern f-Strings: Variable Injection",
+          "type": "drill",
+          "analogy": "The Dynamic Template Window",
+          "concept": "Prefix a string with 'f' to create an f-string. Put variable names inside curly braces {var} to dynamically inject values directly into text.",
+          "visualTopic": "f-string template inserting variables into {placeholders}",
+          "code": "course = 'Python'\nhours = 13\nlevel = 'Zero to Hero'\n\nsummary = f'{course} Mastery ({hours} Hours) - {level}'\nprint(summary)",
+          "expectedOutput": "Python Mastery (13 Hours) - Zero to Hero",
           "variables": {
-            "language": "'Python Programming'",
-            "first_word": "'Python'",
-            "last_char": "'g'"
+            "course": "'Python'",
+            "hours": 13,
+            "summary": "'Python Mastery (13 Hours) - Zero to Hero'"
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -153,15 +237,52 @@
           "id": "py-203",
           "chapter": 2,
           "section": "2.3",
-          "title": "Search, Replace & Case Conversion",
-          "type": "code",
-          "concept": "Strings are immutable. Methods like .strip(), .lower(), .upper(), and .replace() return brand-new transformed string objects.",
-          "visualTopic": "String Immutability & Transform Pipeline",
-          "code": "raw_input = '  python developer  '\nclean_text = raw_input.strip().title()\nreplaced = clean_text.replace('Developer', 'Engineer')\n\nprint(clean_text)\nprint(replaced)",
-          "expectedOutput": "Python Developer\nPython Engineer",
+          "title": "Zero-Based Indexing: The Character Ruler",
+          "type": "concept",
+          "analogy": "The Ruler Starting at Index 0",
+          "concept": "In computer science, counting starts at 0! text[0] gets the very first letter. Negative indices count backward: text[-1] gets the very last letter.",
+          "visualTopic": "Zero-based index ruler: 0:P, 1:y, 2:t, 3:h, 4:o, 5:n | -1:n",
+          "code": "word = 'PYTHON'\nfirst_letter = word[0]\nsecond_letter = word[1]\nlast_letter = word[-1]\n\nprint('First:', first_letter, '| Last:', last_letter)",
+          "expectedOutput": "First: P | Last: N",
           "variables": {
-            "clean_text": "'Python Developer'",
-            "replaced": "'Python Engineer'"
+            "word": "'PYTHON'",
+            "first_letter": "'P'",
+            "last_letter": "'N'"
+          },
+          "goalWpm": 32,
+          "minAccuracy": 95
+        },
+        {
+          "id": "py-204",
+          "chapter": 2,
+          "section": "2.4",
+          "title": "String Slicing: [start:stop:step]",
+          "type": "drill",
+          "analogy": "The Slicing Window",
+          "concept": "Slicing extracts a sub-section: text[start:stop:step]. Remember: the stop index is excluded! Using [::-1] steps backwards and reverses the whole string.",
+          "visualTopic": "Slice window selecting indices 0 to 6 from string",
+          "code": "phrase = 'Python Programming'\nlanguage = phrase[0:6]\nreversed_phrase = phrase[::-1]\n\nprint('Extracted:', language)\nprint('Reversed:', reversed_phrase)",
+          "expectedOutput": "Extracted: Python\nReversed: gnimmargorP nohtyP",
+          "variables": {
+            "language": "'Python'"
+          },
+          "goalWpm": 32,
+          "minAccuracy": 95
+        },
+        {
+          "id": "py-205",
+          "chapter": 2,
+          "section": "2.5",
+          "title": "String Immutability & Transformation Methods",
+          "type": "drill",
+          "analogy": "The Photocopy Transformer",
+          "concept": "Strings are immutable (cannot be altered in place). Methods like .strip(), .lower(), .upper(), and .replace() make a brand-new modified copy without changing the original.",
+          "visualTopic": "Original string intact -> Method creates clean transformed new string",
+          "code": "raw_text = '  data engineer  '\nclean_text = raw_text.strip().title()\nupgraded = clean_text.replace('Engineer', 'Architect')\n\nprint(clean_text)\nprint(upgraded)",
+          "expectedOutput": "Data Engineer\nData Architect",
+          "variables": {
+            "clean_text": "'Data Engineer'",
+            "upgraded": "'Data Architect'"
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -172,22 +293,23 @@
       "chapterNumber": 3,
       "title": "Python Numbers & Math",
       "timestamp": "02:59:31 - 03:28:04",
-      "description": "Understand integer precision, floating-point math, operator precedence (PEMDAS), math module, and random generators.",
+      "description": "Integers vs floats, arithmetic math, floor division //, modulo %, math module functions, and random generators.",
       "lessons": [
         {
           "id": "py-301",
           "chapter": 3,
           "section": "3.1",
-          "title": "Arithmetic Operators & Floor Division",
-          "type": "code",
-          "concept": "Python supports standard math (+, -, *, /) plus integer floor division (//), modulo remainder (%), and exponentiation (**).",
-          "visualTopic": "Arithmetic Pipeline & Remainder Division",
-          "code": "total_seconds = 3675\nhours = total_seconds // 3600\nremaining_seconds = total_seconds % 3600\nminutes = remaining_seconds // 60\n\nprint(f'{hours}h {minutes}m {remaining_seconds % 60}s')",
+          "title": "Integers, Floats & Floor Division (// vs /)",
+          "type": "concept",
+          "analogy": "Exact Decimals vs Whole Integer Chunks",
+          "concept": "A single slash / always produces a decimal float (10 / 2 = 5.0). Double slash // performs floor division, cutting off the decimal remainder into a clean integer (10 // 3 = 3).",
+          "visualTopic": "10 / 3 = 3.333 vs 10 // 3 = 3",
+          "code": "total_seconds = 3675\nhours = total_seconds // 3600\nremaining = total_seconds % 3600\nminutes = remaining // 60\nseconds = remaining % 60\n\nprint(f'{hours}h {minutes}m {seconds}s')",
           "expectedOutput": "1h 1m 15s",
           "variables": {
-            "total_seconds": 3675,
             "hours": 1,
-            "minutes": 1
+            "minutes": 1,
+            "seconds": 15
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -196,17 +318,17 @@
           "id": "py-302",
           "chapter": 3,
           "section": "3.2",
-          "title": "Rounding & math Module",
-          "type": "code",
-          "concept": "The built-in round(val, ndigits) uses round-half-to-even. Import math provides math.ceil(), math.floor(), and math.sqrt().",
-          "visualTopic": "Ceiling vs Floor vs Round Number Line",
-          "code": "import math\n\nscore = 87.645\nrounded = round(score, 2)\nceil_val = math.ceil(score)\nfloor_val = math.floor(score)\n\nprint(rounded, ceil_val, floor_val)",
-          "expectedOutput": "87.65 88 87",
+          "title": "The math & random Modules",
+          "type": "drill",
+          "analogy": "The Specialist Toolbox",
+          "concept": "Python includes pre-built toolboxes called modules. 'import math' gives rounding tools (ceil, floor, sqrt). 'import random' generates random numbers.",
+          "visualTopic": "Toolbox import unpacking math.ceil and math.floor",
+          "code": "import math\n\naccuracy = 97.645\nrounded = round(accuracy, 2)\nceil_val = math.ceil(accuracy)\nfloor_val = math.floor(accuracy)\n\nprint(f'Round: {rounded} | Ceil: {ceil_val} | Floor: {floor_val}')",
+          "expectedOutput": "Round: 97.65 | Ceil: 98 | Floor: 97",
           "variables": {
-            "score": 87.645,
-            "rounded": 87.65,
-            "ceil_val": 88,
-            "floor_val": 87
+            "rounded": 97.65,
+            "ceil_val": 98,
+            "floor_val": 97
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -217,22 +339,22 @@
       "chapterNumber": 4,
       "title": "Python Logic & Operators",
       "timestamp": "03:28:04 - 04:19:19",
-      "description": "Evaluate booleans, truthy and falsy values, comparison operators, logical and/or/not, and identity (is) vs equality (==).",
+      "description": "Booleans, truth tables, comparisons, logical gates (and, or, not), membership (in), and identity (is vs ==).",
       "lessons": [
         {
           "id": "py-401",
           "chapter": 4,
           "section": "4.1",
           "title": "Booleans & Comparison Operators",
-          "type": "code",
-          "concept": "Comparisons evaluate to boolean True or False. Logical 'and' requires both conditions true; 'or' requires at least one.",
-          "visualTopic": "Boolean Logic Gate & Truth Tables",
-          "code": "speed = 65\naccuracy = 98\n\nis_fast = speed >= 60\nis_accurate = accuracy >= 95\nis_master = is_fast and is_accurate\n\nprint('Speed Met:', is_fast)\nprint('Master Typist:', is_master)",
-          "expectedOutput": "Speed Met: True\nMaster Typist: True",
+          "type": "concept",
+          "analogy": "The True/False Light Switch",
+          "concept": "A boolean has only two states: True or False. Comparison operators (==, !=, <, >, <=, >=) test relationships between values and return a boolean answer.",
+          "visualTopic": "Comparison scales returning True / False boolean signal",
+          "code": "speed = 72\ntarget = 60\n\nis_passing = speed >= target\nis_perfect = speed == 100\n\nprint('Passed Speed Goal:', is_passing)\nprint('Perfect Score:', is_perfect)",
+          "expectedOutput": "Passed Speed Goal: True\nPerfect Score: False",
           "variables": {
-            "is_fast": true,
-            "is_accurate": true,
-            "is_master": true
+            "is_passing": true,
+            "is_perfect": false
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -241,15 +363,16 @@
           "id": "py-402",
           "chapter": 4,
           "section": "4.2",
-          "title": "Membership (in) & Identity (is)",
-          "type": "code",
-          "concept": "'in' checks value containment in a sequence. '==' checks equality of values. 'is' checks memory identity (id(a) == id(b)).",
-          "visualTopic": "Value Equality vs Memory Object Identity",
-          "code": "allowed_roles = ['admin', 'editor', 'student']\nuser_role = 'editor'\n\nhas_access = user_role in allowed_roles\nprint('Access Granted:', has_access)",
-          "expectedOutput": "Access Granted: True",
+          "title": "Logical Gates: and, or, not & Membership (in)",
+          "type": "drill",
+          "analogy": "The Security Guard Checkpoint",
+          "concept": "'and' requires BOTH criteria to pass. 'or' requires AT LEAST ONE. 'in' checks if an element exists inside a list or collection.",
+          "visualTopic": "Dual Security Gate (Speed Check AND Accuracy Check)",
+          "code": "wpm = 65\naccuracy = 98\nallowed_users = ['Baraa', 'Alex', 'Sarah']\nuser = 'Alex'\n\nis_pro = (wpm >= 60) and (accuracy >= 95)\nis_member = user in allowed_users\n\nprint('Pro Typist Qualified:', is_pro)\nprint('Member Authenticated:', is_member)",
+          "expectedOutput": "Pro Typist Qualified: True\nMember Authenticated: True",
           "variables": {
-            "user_role": "'editor'",
-            "has_access": true
+            "is_pro": true,
+            "is_member": true
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -260,21 +383,22 @@
       "chapterNumber": 5,
       "title": "Conditional Statements",
       "timestamp": "04:19:19 - 05:24:56",
-      "description": "Master decision-making with if, elif, else, nested condition trees, inline ternary statements, and match-case structural pattern matching.",
+      "description": "Making decisions with if, elif, else, colon syntax (:), 4-space indentation blocks, ternary expressions, and match-case patterns.",
       "lessons": [
         {
           "id": "py-501",
           "chapter": 5,
           "section": "5.1",
-          "title": "If, Elif, Else Branching",
-          "type": "code",
-          "concept": "Conditionals branch execution flow based on boolean expressions. Indentation (4 spaces) defines the code block.",
-          "visualTopic": "Decision Flowchart Tree (Diamond Condition -> Branches)",
-          "code": "score = 85\n\nif score >= 90:\n    grade = 'A'\nelif score >= 80:\n    grade = 'B'\nelif score >= 70:\n    grade = 'C'\nelse:\n    grade = 'F'\n\nprint('Final Grade:', grade)",
-          "expectedOutput": "Final Grade: B",
+          "title": "Fork in the Road: if, elif, else & Indentation",
+          "type": "concept",
+          "analogy": "The Fork in the Road & 4-Space Block",
+          "concept": "Conditionals let code make decisions. The colon (:) tells Python a code block is beginning. Indentation (4 spaces) defines what code belongs inside the condition.",
+          "visualTopic": "Decision Diamond branching into True/False execution paths",
+          "code": "score = 88\n\nif score >= 90:\n    rank = 'Grandmaster'\nelif score >= 80:\n    rank = 'Master'\nelif score >= 70:\n    rank = 'Skilled'\nelse:\n    rank = 'Novice'\n\nprint('Achieved Rank:', rank)",
+          "expectedOutput": "Achieved Rank: Master",
           "variables": {
-            "score": 85,
-            "grade": "'B'"
+            "score": 88,
+            "rank": "'Master'"
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -283,32 +407,16 @@
           "id": "py-502",
           "chapter": 5,
           "section": "5.2",
-          "title": "Inline If (Ternary Operator)",
-          "type": "code",
-          "concept": "Ternary expressions write concise single-line conditional assignments: value_if_true if condition else value_if_false.",
-          "visualTopic": "Inline Ternary Value Selector",
-          "code": "wpm = 72\nstatus = 'Expert' if wpm >= 70 else 'Intermediate'\n\nprint('Typist Status:', status)",
-          "expectedOutput": "Typist Status: Expert",
+          "title": "Inline If (Ternary) & Pattern Match-Case",
+          "type": "drill",
+          "analogy": "The Switchboard Router",
+          "concept": "Ternary expressions write concise 1-line conditions. Python 3.10+ match-case provides structural pattern matching with clean routing cases.",
+          "visualTopic": "Match-Case routing code directly to matching case",
+          "code": "status_code = 200\n\nmatch status_code:\n    case 200:\n        result = 'OK - Success'\n    case 404:\n        result = 'Not Found'\n    case _:\n        result = 'Unknown Code'\n\nprint('Server Response:', result)",
+          "expectedOutput": "Server Response: OK - Success",
           "variables": {
-            "wpm": 72,
-            "status": "'Expert'"
-          },
-          "goalWpm": 32,
-          "minAccuracy": 95
-        },
-        {
-          "id": "py-503",
-          "chapter": 5,
-          "section": "5.3",
-          "title": "Match-Case Pattern Matching",
-          "type": "code",
-          "concept": "Python 3.10+ match-case provides structural pattern matching with clean case statements and wildcards (_).",
-          "visualTopic": "Match-Case Routing Switchboard",
-          "code": "http_code = 404\n\nmatch http_code:\n    case 200:\n        status = 'OK'\n    case 404:\n        status = 'Not Found'\n    case 500:\n        status = 'Server Error'\n    case _:\n        status = 'Unknown'\n\nprint('Status:', status)",
-          "expectedOutput": "Status: Not Found",
-          "variables": {
-            "http_code": 404,
-            "status": "'Not Found'"
+            "status_code": 200,
+            "result": "'OK - Success'"
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -319,21 +427,22 @@
       "chapterNumber": 6,
       "title": "Python Loops",
       "timestamp": "05:24:56 - 07:10:04",
-      "description": "Automate repetitive tasks using for loops, range(), while loops, break early termination, continue skip, and for-else clauses.",
+      "description": "Automation with for loops, range(), emergency break, continue skip, for-else clauses, and condition-driven while loops.",
       "lessons": [
         {
           "id": "py-601",
           "chapter": 6,
           "section": "6.1",
-          "title": "For Loops & range()",
-          "type": "code",
-          "concept": "for loops iterate over any iterable. range(start, stop, step) generates integer sequences on demand.",
-          "visualTopic": "Loop Iterator Pointer & Sequence Step",
-          "code": "total = 0\nfor i in range(1, 6):\n    total += i\n    print(f'Step {i}: Total = {total}')",
-          "expectedOutput": "Step 1: Total = 1\nStep 2: Total = 3\nStep 3: Total = 6\nStep 4: Total = 10\nStep 5: Total = 15",
+          "title": "The Conveyor Belt: for Loops & range()",
+          "type": "concept",
+          "analogy": "The Factory Conveyor Belt",
+          "concept": "A for loop iterates over items one-by-one. range(start, stop, step) produces a sequence of numbers on demand without storing them all in RAM at once.",
+          "visualTopic": "Conveyor Belt moving items through loop execution block",
+          "code": "total_points = 0\nfor round_num in range(1, 6):\n    points = round_num * 100\n    total_points += points\n    print(f'Round {round_num}: +{points} XP (Total: {total_points})')",
+          "expectedOutput": "Round 1: +100 XP (Total: 100)\nRound 2: +200 XP (Total: 300)\nRound 3: +300 XP (Total: 600)\nRound 4: +400 XP (Total: 1000)\nRound 5: +500 XP (Total: 1500)",
           "variables": {
-            "total": 15,
-            "i": 5
+            "total_points": 1500,
+            "round_num": 5
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -342,28 +451,13 @@
           "id": "py-602",
           "chapter": 6,
           "section": "6.2",
-          "title": "Break, Continue & Pass",
-          "type": "code",
-          "concept": "'break' terminates the loop immediately. 'continue' skips the rest of the current iteration. 'pass' is a syntactic placeholder.",
-          "visualTopic": "Loop Interruption: Break (Exit) vs Continue (Skip)",
-          "code": "numbers = [10, 25, -5, 40, 99]\n\nfor num in numbers:\n    if num < 0:\n        print('Negative encountered, skipping!')\n        continue\n    if num > 50:\n        print('Threshold reached, stopping!')\n        break\n    print('Processing:', num)",
-          "expectedOutput": "Processing: 10\nProcessing: 25\nNegative encountered, skipping!\nProcessing: 40\nThreshold reached, stopping!",
-          "variables": {
-            "num": 99
-          },
-          "goalWpm": 32,
-          "minAccuracy": 95
-        },
-        {
-          "id": "py-603",
-          "chapter": 6,
-          "section": "6.3",
-          "title": "While Loops & Accumulators",
-          "type": "code",
-          "concept": "while loops execute as long as their condition remains True. Ensure loop variable increments to prevent infinite loops.",
-          "visualTopic": "While Loop Condition Check & Counter Accumulator",
-          "code": "countdown = 5\nwhile countdown > 0:\n    print(f'T-minus {countdown}...')\n    countdown -= 1\n\nprint('Liftoff! 🚀')",
-          "expectedOutput": "T-minus 5...\nT-minus 4...\nT-minus 3...\nT-minus 2...\nT-minus 1...\nLiftoff! 🚀",
+          "title": "Loop Control: break, continue & while Loops",
+          "type": "drill",
+          "analogy": "Emergency Exit & Fast-Forward Skip",
+          "concept": "'break' immediately stops the loop. 'continue' skips to the next iteration. while loops run as long as a condition holds true.",
+          "visualTopic": "Break exiting loop vs Continue looping back to top",
+          "code": "countdown = 5\nwhile countdown > 0:\n    print(f'T-minus {countdown}...')\n    countdown -= 1\n\nprint('Rocket Launched! 🚀')",
+          "expectedOutput": "T-minus 5...\nT-minus 4...\nT-minus 3...\nT-minus 2...\nT-minus 1...\nRocket Launched! 🚀",
           "variables": {
             "countdown": 0
           },
@@ -376,20 +470,21 @@
       "chapterNumber": 7,
       "title": "Python Data Structures",
       "timestamp": "07:10:04 - 11:09:45",
-      "description": "Master lists, list comprehensions, tuples, sets, dictionaries, nested data structures, and functional lambda filters.",
+      "description": "Lists as dynamic arrays, list comprehensions, immutable tuples, unique sets, and fast key-value dictionaries.",
       "lessons": [
         {
           "id": "py-701",
           "chapter": 7,
           "section": "7.1",
-          "title": "Lists: Creation, Mutation & Methods",
-          "type": "code",
-          "concept": "Lists are mutable, ordered sequences. Use .append() to add to the end, .insert() at an index, and .pop() to remove and return.",
-          "visualTopic": "Contiguous List Memory Array with Dynamic Growth",
-          "code": "skills = ['Python', 'SQL']\nskills.append('Pandas')\nskills.insert(1, 'Git')\n\nprint('Total Skills:', len(skills))\nprint('Skills List:', skills)",
-          "expectedOutput": "Total Skills: 4\nSkills List: ['Python', 'Git', 'SQL', 'Pandas']",
+          "title": "Lists: Creating, Appending & Mutating",
+          "type": "concept",
+          "analogy": "The Expandable Train Cars",
+          "concept": "Lists are ordered, mutable sequences inside square brackets []. Use .append() to add to the end, .insert() at an index, and .pop() to remove an item.",
+          "visualTopic": "Dynamic List array growing in memory with .append()",
+          "code": "languages = ['Python', 'SQL']\nlanguages.append('Rust')\nlanguages.insert(1, 'TypeScript')\n\nprint('Language Count:', len(languages))\nprint('Active Stack:', languages)",
+          "expectedOutput": "Language Count: 4\nActive Stack: ['Python', 'TypeScript', 'SQL', 'Rust']",
           "variables": {
-            "skills": "['Python', 'Git', 'SQL', 'Pandas']"
+            "languages": "['Python', 'TypeScript', 'SQL', 'Rust']"
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -398,15 +493,16 @@
           "id": "py-702",
           "chapter": 7,
           "section": "7.2",
-          "title": "List Comprehensions & Lambda",
-          "type": "code",
-          "concept": "List comprehensions create transformed lists with concise syntax: [expression for item in iterable if condition].",
-          "visualTopic": "List Comprehension Pipeline (Filter -> Map -> Collect)",
-          "code": "numbers = [1, 2, 3, 4, 5, 6, 7, 8]\neven_squares = [n ** 2 for n in numbers if n % 2 == 0]\n\nprint('Even Squares:', even_squares)",
-          "expectedOutput": "Even Squares: [4, 16, 36, 64]",
+          "title": "List Comprehensions: The Python Superpower",
+          "type": "drill",
+          "analogy": "The Compact Transformation Pipeline",
+          "concept": "List comprehensions create transformed lists in one clean line: [expression for item in iterable if condition]. Faster and more Pythonic than standard loops.",
+          "visualTopic": "Comprehension Pipeline: Filter Evens -> Square Values -> Output List",
+          "code": "scores = [45, 60, 75, 80, 95]\nhigh_scores = [s for s in scores if s >= 70]\nbonus_scores = [s + 10 for s in high_scores]\n\nprint('Qualified:', high_scores)\nprint('With Bonus:', bonus_scores)",
+          "expectedOutput": "Qualified: [75, 80, 95]\nWith Bonus: [85, 90, 105]",
           "variables": {
-            "numbers": "[1..8]",
-            "even_squares": "[4, 16, 36, 64]"
+            "high_scores": "[75, 80, 95]",
+            "bonus_scores": "[85, 90, 105]"
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -415,30 +511,15 @@
           "id": "py-703",
           "chapter": 7,
           "section": "7.3",
-          "title": "Tuples & Sets",
-          "type": "code",
-          "concept": "Tuples are immutable sequences (). Sets are unordered collections of unique elements {} supporting union (|) and intersection (&).",
-          "visualTopic": "Set Venn Diagram (Union & Intersection)",
-          "code": "frontend = {'HTML', 'CSS', 'JavaScript'}\nbackend = {'Python', 'SQL', 'JavaScript'}\n\ncommon_skills = frontend & backend\nall_skills = frontend | backend\n\nprint('Common:', common_skills)",
-          "expectedOutput": "Common: {'JavaScript'}",
+          "title": "Dictionaries: Fast Key-Value Lookups",
+          "type": "drill",
+          "analogy": "The High-Speed Phonebook (Hash Map)",
+          "concept": "Dictionaries store key: value pairs inside curly braces {}. Looking up a key student['name'] takes O(1) instant time using hash algorithms.",
+          "visualTopic": "Key -> Hash Algorithm -> Direct Memory Bucket -> Value",
+          "code": "player = {\n    'username': 'CyberNinja',\n    'wpm': 84,\n    'accuracy': 99.1,\n    'badges': ['Speed Master', 'Zero Typo']\n}\n\nprint('Player:', player['username'])\nprint('Speed:', player.get('wpm'), 'WPM')",
+          "expectedOutput": "Player: CyberNinja\nSpeed: 84 WPM",
           "variables": {
-            "common_skills": "{'JavaScript'}"
-          },
-          "goalWpm": 32,
-          "minAccuracy": 95
-        },
-        {
-          "id": "py-704",
-          "chapter": 7,
-          "section": "7.4",
-          "title": "Dictionaries: Hash Maps & Key-Value",
-          "type": "code",
-          "concept": "Dictionaries store key-value pairs with O(1) hash lookup. Use .get() to safely access keys with fallback defaults.",
-          "visualTopic": "Hash Map Buckets & Key-Value Lookup (Key -> Hash -> Value)",
-          "code": "student = {\n    'name': 'Alex',\n    'wpm': 78,\n    'accuracy': 99.2,\n    'courses': ['Python', 'SQL']\n}\n\nprint('Student:', student['name'])\nprint('WPM:', student.get('wpm', 0))",
-          "expectedOutput": "Student: Alex\nWPM: 78",
-          "variables": {
-            "student": "{'name': 'Alex', 'wpm': 78, 'accuracy': 99.2}"
+            "player": "{'username': 'CyberNinja', 'wpm': 84}"
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -447,24 +528,25 @@
     },
     {
       "chapterNumber": 8,
-      "title": "Python Functions",
+      "title": "Python Functions & Clean Code",
       "timestamp": "11:09:45 - 13:15:00",
-      "description": "Write clean, reusable modular code using def, parameters, return statements, *args, **kwargs, type hinting, and scope rules.",
+      "description": "Functions as modular machinery, def, return values, *args & **kwargs, variable scope, type annotations, and clean Pythonic architecture.",
       "lessons": [
         {
           "id": "py-801",
           "chapter": 8,
           "section": "8.1",
-          "title": "Function Definition & Return Values",
-          "type": "code",
-          "concept": "Functions encapsulate reusable logic. The 'return' keyword passes computed results back to the caller and exits the function.",
-          "visualTopic": "Function Execution Frame & Stack (Inputs -> Process -> Return)",
-          "code": "def calculate_wpm(characters: int, time_seconds: float) -> int:\n    words = characters / 5\n    minutes = time_seconds / 60\n    return round(words / minutes)\n\nscore = calculate_wpm(300, 60)\nprint('Calculated Speed:', score, 'WPM')",
-          "expectedOutput": "Calculated Speed: 60 WPM",
+          "title": "Functions: The Reusable Black-Box Machine",
+          "type": "concept",
+          "analogy": "The Input -> Process -> Output Machine",
+          "concept": "Functions package reusable logic. 'def' defines the function name and parameters. 'return' outputs the computed result back to the caller.",
+          "visualTopic": "Black Box: Parameters In -> Internal Computation -> Return Value Out",
+          "code": "def calculate_net_wpm(raw_wpm: int, accuracy: float) -> int:\n    \"\"\"Calculate effective typing speed based on accuracy.\"\"\"\n    return round(raw_wpm * (accuracy / 100))\n\nresult = calculate_net_wpm(80, 95.0)\nprint('Effective Speed:', result, 'WPM')",
+          "expectedOutput": "Effective Speed: 76 WPM",
           "variables": {
-            "characters": 300,
-            "time_seconds": 60,
-            "score": 60
+            "raw_wpm": 80,
+            "accuracy": 95.0,
+            "result": 76
           },
           "goalWpm": 32,
           "minAccuracy": 95
@@ -473,48 +555,15 @@
           "id": "py-802",
           "chapter": 8,
           "section": "8.2",
-          "title": "Default Parameters & Keyword Arguments",
-          "type": "code",
-          "concept": "Parameters can have default values. Callers can override defaults or pass arguments by parameter name for readability.",
-          "visualTopic": "Positional vs Named Keyword Argument Binding",
-          "code": "def create_profile(name: str, role: str = 'Developer', level: int = 1):\n    return f'[{level}] {name} - {role}'\n\nuser1 = create_profile('Sarah')\nuser2 = create_profile('David', role='Data Scientist', level=5)\n\nprint(user1)\nprint(user2)",
-          "expectedOutput": "[1] Sarah - Developer\n[5] David - Data Scientist",
+          "title": "Flexible Functions: *args and **kwargs",
+          "type": "drill",
+          "analogy": "The Variable Sized Package",
+          "concept": "*args captures any number of positional arguments into a tuple. **kwargs captures any number of named keyword arguments into a dictionary.",
+          "visualTopic": "*args Tuple Packing & **kwargs Dictionary Packing",
+          "code": "def record_session(student_name, *scores, **tags):\n    avg_score = sum(scores) / len(scores)\n    mode = tags.get('mode', 'Practice')\n    return f'[{mode}] {student_name} Average: {round(avg_score)} WPM'\n\nreport = record_session('Baraa', 60, 75, 80, 85, mode='Championship')\nprint(report)",
+          "expectedOutput": "[Championship] Baraa Average: 75 WPM",
           "variables": {
-            "user1": "'[1] Sarah - Developer'",
-            "user2": "'[5] David - Data Scientist'"
-          },
-          "goalWpm": 32,
-          "minAccuracy": 95
-        },
-        {
-          "id": "py-803",
-          "chapter": 8,
-          "section": "8.3",
-          "title": "Arbitrary Arguments: *args & **kwargs",
-          "type": "code",
-          "concept": "*args packs excess positional arguments into a tuple. **kwargs packs excess keyword arguments into a dictionary.",
-          "visualTopic": "*args Tuple Packing & **kwargs Dict Packing",
-          "code": "def calculate_stats(*speeds, **metadata):\n    avg_speed = sum(speeds) / len(speeds)\n    user = metadata.get('user', 'Anonymous')\n    return f'{user} Average: {round(avg_speed)} WPM'\n\nresult = calculate_stats(55, 62, 70, 65, user='Baraa')\nprint(result)",
-          "expectedOutput": "Baraa Average: 63 WPM",
-          "variables": {
-            "result": "'Baraa Average: 63 WPM'"
-          },
-          "goalWpm": 32,
-          "minAccuracy": 95
-        },
-        {
-          "id": "py-804",
-          "chapter": 8,
-          "section": "8.4",
-          "title": "Writing Clean & Pythonic Functions",
-          "type": "code",
-          "concept": "Clean functions have single responsibility, clear descriptive names, explicit docstrings, type annotations, and no hidden side effects.",
-          "visualTopic": "Pure Function Flow (Deterministic Input -> Isolated Output)",
-          "code": "def filter_active_users(users: list[dict]) -> list[str]:\n    \"\"\"Extract names of active users sorted alphabetically.\"\"\"\n    return sorted([\n        u['name'] for u in users if u.get('is_active', False)\n    ])\n\ndata = [\n    {'name': 'Charlie', 'is_active': True},\n    {'name': 'Alice', 'is_active': True},\n    {'name': 'Bob', 'is_active': False}\n]\n\nprint('Active Users:', filter_active_users(data))",
-          "expectedOutput": "Active Users: ['Alice', 'Charlie']",
-          "variables": {
-            "data": "[...]",
-            "active": "['Alice', 'Charlie']"
+            "report": "'[Championship] Baraa Average: 75 WPM'"
           },
           "goalWpm": 32,
           "minAccuracy": 95

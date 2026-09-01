@@ -15,7 +15,13 @@ import {
   Keyboard,
   Zap,
   Flame,
-  ArrowRight
+  ArrowRight,
+  Box,
+  Megaphone,
+  Mic,
+  GitFork,
+  Repeat,
+  Binary
 } from 'lucide-react';
 import VirtualKeyboard from '../VirtualKeyboard';
 import { sound } from '../../utils/audio';
@@ -32,6 +38,7 @@ export default function PythonCodeStudio({
   const variables = lesson?.variables || {};
   const concept = lesson?.concept || "Python translates code into bytecode behind the scenes.";
   const visualTopic = lesson?.visualTopic || "Python Memory & Execution Model";
+  const analogy = lesson?.analogy || "The Python Mental Model";
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [typedChars, setTypedChars] = useState([]);
@@ -182,7 +189,7 @@ export default function PythonCodeStudio({
                 PYTHON 3.12 STUDIO
               </span>
               <span className="text-xs font-mono font-bold text-[#2D2319]/70">
-                Chapter {lesson?.chapter || 1}: {lesson?.section || '1.0'}
+                Chapter {lesson?.chapter || 1} · Section {lesson?.section || '1.0'}
               </span>
             </div>
             <h2 className="text-sm sm:text-base font-black text-[#2D2319] font-display mt-0.5">
@@ -212,28 +219,33 @@ export default function PythonCodeStudio({
         </div>
       </div>
 
-      {/* 2. TOP CONCEPT & VISUAL SKETCH CONTAINER */}
+      {/* 2. TOP CONCEPT & ANALOGY STORY CONTAINER */}
       <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[4px_4px_0px_#2D2319] space-y-3">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 pb-2.5 border-b border-[#2D2319]/15">
           <div className="flex items-center space-x-2">
             <Cpu className="w-4 h-4 text-[#F6C445]" />
             <h3 className="font-mono font-black text-xs uppercase tracking-wider text-[#2D2319]">
-              Behind the Scenes Concept
+              How Python Works Behind The Scenes
             </h3>
           </div>
-          <span className="text-[10px] font-mono font-bold bg-[#FDF8EE] px-2.5 py-0.5 rounded-full border border-[#2D2319] text-[#2D2319]/80">
-            Topic: {visualTopic}
+          <span className="text-[10px] font-mono font-bold bg-[#F6C445] px-2.5 py-0.5 rounded-full border border-[#2D2319] text-[#2D2319]">
+            💡 Mental Model: {analogy}
           </span>
         </div>
 
-        <p className="text-xs sm:text-sm font-mono text-[#2D2319]/90 leading-relaxed">
+        <p className="text-xs sm:text-sm font-mono text-[#2D2319]/90 leading-relaxed font-medium">
           {concept}
         </p>
 
         {/* Responsive Graphic Sketch Slot (Ready for diagrams) */}
-        <div className="w-full bg-[#FDF8EE] border-2 border-dashed border-[#2D2319]/40 rounded-xl p-3 flex items-center justify-center space-x-3 text-[#2D2319]/70 font-mono text-xs shadow-inner">
-          <Layers className="w-4 h-4 text-[#4BA3E3]" />
-          <span>🎨 <strong>Visual Memory Sketch:</strong> {visualTopic}</span>
+        <div className="w-full bg-[#FDF8EE] border-2 border-dashed border-[#2D2319]/40 rounded-xl p-3 flex items-center justify-between text-[#2D2319]/80 font-mono text-xs shadow-inner">
+          <div className="flex items-center space-x-2.5">
+            <Layers className="w-4 h-4 text-[#4BA3E3]" />
+            <span>🎨 <strong>Visual Concept Sketch:</strong> {visualTopic}</span>
+          </div>
+          <span className="text-[10px] bg-[#C3A6E8] px-2 py-0.5 rounded border border-[#2D2319] text-[#2D2319] font-bold">
+            Interactive Slot
+          </span>
         </div>
       </div>
 
@@ -248,7 +260,7 @@ export default function PythonCodeStudio({
             <div className="flex items-center space-x-2">
               <Code2 className="w-3.5 h-3.5 text-[#F6C445]" />
               <span className="font-bold text-[#FDF8EE]">main.py</span>
-              <span className="text-[10px] text-[#FDF8EE]/50">UTF-8</span>
+              <span className="text-[10px] text-[#FDF8EE]/50">UTF-8 · Python 3.12</span>
             </div>
             <div className="text-[10px] text-[#FDF8EE]/60 font-mono">
               Ln {codeLines.findIndex(l => l.chars.some(c => c.globalIdx === currentIndex)) + 1 || 1}, Col {currentIndex + 1}
@@ -294,7 +306,7 @@ export default function PythonCodeStudio({
 
           {/* Editor Footer Status */}
           <div className="bg-[#211A13] px-4 py-1.5 border-t border-[#FDF8EE]/20 flex items-center justify-between text-[10px] font-mono text-[#FDF8EE]/70">
-            <span>Type characters exactly as shown (including colons & indentations)</span>
+            <span>Type syntax characters exactly as shown (including colons & indentations)</span>
             <span className="text-[#F6C445] font-bold">● Live Interactive Buffer</span>
           </div>
         </div>
@@ -333,20 +345,29 @@ export default function PythonCodeStudio({
             </div>
           </div>
 
-          {/* Variable State Inspector */}
+          {/* Animated Memory Box Visualizer (RAM Warehouse) */}
           <div className="p-3 bg-[#FAF3E0] border-t-2 border-[#2D2319] space-y-2 font-mono">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-black uppercase text-[#2D2319]/70">Memory Inspector (Heap)</span>
-              <span className="text-[9px] text-[#2D2319]/50">Active Bindings</span>
+              <span className="text-[10px] font-black uppercase text-[#2D2319] flex items-center space-x-1">
+                <Box className="w-3 h-3 text-[#4BA3E3]" />
+                <span>Memory Inspector (RAM Boxes)</span>
+              </span>
+              <span className="text-[9px] text-[#2D2319]/60 font-bold">Active Heap Tags</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-[80px] overflow-y-auto">
-              {Object.entries(variables).map(([k, v]) => (
-                <div key={k} className="bg-[#FDF8EE] border border-[#2D2319]/40 rounded px-2 py-1 flex items-center justify-between text-[10px]">
-                  <span className="font-bold text-[#2D2319]">{k}</span>
-                  <span className="text-[#4BA3E3] font-bold truncate max-w-[100px]">{String(v)}</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-[85px] overflow-y-auto">
+              {Object.entries(variables).length > 0 ? (
+                Object.entries(variables).map(([k, v]) => (
+                  <div key={k} className="bg-[#FDF8EE] border border-[#2D2319] rounded-lg px-2.5 py-1 flex items-center justify-between text-[10px] shadow-[1px_1px_0px_#2D2319]">
+                    <span className="font-black text-[#2D2319] bg-[#C3A6E8]/30 px-1 rounded border border-[#2D2319]/30">{k}</span>
+                    <span className="text-[#4BA3E3] font-bold truncate max-w-[100px]">{String(v)}</span>
+                  </div>
+                ))
+              ) : (
+                <div className="text-[10px] text-[#2D2319]/50 italic col-span-2 text-center py-1">
+                  No variables allocated in this frame
                 </div>
-              ))}
+              )}
             </div>
           </div>
 
