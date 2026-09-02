@@ -221,13 +221,13 @@ export default function PythonCodeStudio({
       )}
 
       {phase === 'type' && (
-        <div className="flex-1 min-h-0 flex flex-col gap-3 overflow-hidden">
-          {/* Main Top Row: Spacious Code Editor (8 cols) & Live Terminal (4 cols) */}
-          <div className="flex-1 min-h-[220px] grid grid-cols-1 lg:grid-cols-12 gap-3 overflow-hidden">
+        <div className="flex-1 min-h-0 flex flex-col gap-2.5 overflow-hidden">
+          {/* Main Top Row: Flexible Code Editor (8 cols) & Live Terminal (4 cols) */}
+          <div className="flex-1 min-h-[160px] grid grid-cols-1 lg:grid-cols-12 gap-2.5 overflow-hidden">
             
             {/* Left: Code Stream Editor */}
             <div className="lg:col-span-8 bg-[#2D2319] text-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl shadow-[4px_4px_0px_#2D2319] overflow-hidden flex flex-col min-h-0">
-              <div className="bg-[#211A13] px-4 py-2 border-b border-[#FDF8EE]/20 flex items-center justify-between text-xs font-mono shrink-0">
+              <div className="bg-[#211A13] px-3.5 py-1.5 border-b border-[#FDF8EE]/20 flex items-center justify-between text-xs font-mono shrink-0">
                 <div className="flex items-center space-x-2">
                   <Code2 className="w-3.5 h-3.5 text-[#F6C445]" />
                   <span className="font-bold">main.py</span>
@@ -238,7 +238,7 @@ export default function PythonCodeStudio({
                   <span>UTF-8</span>
                 </div>
               </div>
-              <div className="p-4 sm:p-5 font-mono text-sm sm:text-base leading-relaxed overflow-y-auto flex-1 min-h-0">
+              <div className="p-3.5 sm:p-4 font-mono text-sm sm:text-base leading-relaxed overflow-y-auto flex-1 min-h-0">
                 {codeLines.map((line) => (
                   <div key={line.lineNum} className="flex items-baseline space-x-3 py-0.5">
                     <span className="text-[11px] font-mono text-[#FDF8EE]/30 select-none w-6 text-right shrink-0">
@@ -261,15 +261,15 @@ export default function PythonCodeStudio({
 
             {/* Right: Live Standby Terminal */}
             <div className="lg:col-span-4 bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl shadow-[4px_4px_0px_#2D2319] overflow-hidden flex flex-col min-h-0">
-              <div className="bg-[#2D2319] text-[#FDF8EE] px-4 py-2 flex items-center justify-between text-xs font-mono shrink-0">
+              <div className="bg-[#2D2319] text-[#FDF8EE] px-3.5 py-1.5 flex items-center justify-between text-xs font-mono shrink-0">
                 <div className="flex items-center space-x-2">
                   <TerminalIcon className="w-3.5 h-3.5 text-[#48B89F]" />
                   <span className="font-bold">Terminal</span>
                 </div>
                 <span className="text-[10px] text-[#48B89F] font-bold">Standby</span>
               </div>
-              <div className="p-4 bg-[#1F1912] text-[#FDF8EE] font-mono text-xs flex-1 flex flex-col justify-between overflow-y-auto">
-                <div className="space-y-2">
+              <div className="p-3 sm:p-3.5 bg-[#1F1912] text-[#FDF8EE] font-mono text-xs flex-1 flex flex-col justify-between overflow-y-auto min-h-0">
+                <div className="space-y-1.5">
                   <div className="text-[#F6C445] text-xs font-bold">$ python -u main.py</div>
                   <div className="text-[#FDF8EE]/40 text-xs">
                     Terminal waiting for execution...
@@ -281,7 +281,7 @@ export default function PythonCodeStudio({
                     </div>
                   )}
                 </div>
-                <div className="pt-3 border-t border-[#FDF8EE]/10 text-[10px] text-[#FDF8EE]/50 flex items-center justify-between shrink-0">
+                <div className="pt-2 border-t border-[#FDF8EE]/10 text-[10px] text-[#FDF8EE]/50 flex items-center justify-between shrink-0">
                   <span>Python 3.12 Engine</span>
                   <span className="text-[#48B89F]">Ready</span>
                 </div>
@@ -289,9 +289,9 @@ export default function PythonCodeStudio({
             </div>
           </div>
 
-          {/* Bottom Row: Compact Virtual Keyboard */}
+          {/* Bottom Row: Full Unclipped Virtual Keyboard */}
           {showKeyboard ? (
-            <div className="shrink-0 bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-2 shadow-[3px_3px_0px_#2D2319] max-w-[680px] mx-auto w-full">
+            <div className="shrink-0 bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-2 sm:p-2.5 shadow-[3px_3px_0px_#2D2319] max-w-[660px] mx-auto w-full">
               <div className="flex items-center justify-between mb-1 px-1">
                 <span className="text-[10px] font-mono font-bold text-[#2D2319]/70 flex items-center gap-1.5">
                   <Keyboard className="w-3.5 h-3.5" />
@@ -300,19 +300,19 @@ export default function PythonCodeStudio({
                 <div className="flex items-center space-x-3 text-[10px] font-mono font-bold">
                   <button 
                     onClick={() => setShowHands((p) => !p)} 
-                    className="underline hover:text-[#1888ff] transition-colors"
+                    className="underline hover:text-[#1888ff] transition-colors cursor-pointer"
                   >
                     {showHands ? 'Hide hands' : 'Show hands'}
                   </button>
                   <button 
                     onClick={() => setShowKeyboard(false)} 
-                    className="text-[#2D2319]/60 hover:text-[#2D2319]"
+                    className="text-[#2D2319]/60 hover:text-[#2D2319] cursor-pointer"
                   >
                     Hide keyboard ×
                   </button>
                 </div>
               </div>
-              <div className={`w-full flex justify-center ${showHands ? 'max-h-[220px]' : 'max-h-[140px]'} overflow-hidden transition-all duration-200`}>
+              <div className="w-full flex justify-center">
                 <VirtualKeyboard activeChar={targetChar} layout="qwerty" showHands={showHands} frameless={true} />
               </div>
             </div>
