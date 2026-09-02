@@ -22,9 +22,9 @@ export default function HandGuide({
   let activeHand = activeKeyDef ? activeKeyDef.hand : null;
   let activeFinger = activeKeyDef ? activeKeyDef.finger : null;
 
-  // Space bar activation -> Thumbs
+  // Space bar activation -> Right Thumb (Standard touch-typing)
   if (activeChar === ' ' || activeKeyDef?.id === 'space') {
-    activeHand = 'both';
+    activeHand = 'right';
     activeFinger = 'thumbs';
   }
 
@@ -253,7 +253,7 @@ export default function HandGuide({
             {/* ACTIVE THUMB: RIGHT THUMB */}
             {isRightThumb && (
               <path
-                d="M 140 98 C 137 110 138 118 145 124 C 154 130 174 125 178 116 C 182 106 172 98 160 104 C 144 112 126 132 116 150 C 116 140 132 115 140 98 Z"
+                d="M 140 96 C 138 108 142 118 150 122 C 158 126 168 126 174 130 C 180 134 180 144 172 148 C 160 154 136 150 116 152 C 116 140 132 115 140 96 Z"
                 fill={COLORS.thumb}
                 stroke="#4b5563"
                 strokeWidth="2.6"
