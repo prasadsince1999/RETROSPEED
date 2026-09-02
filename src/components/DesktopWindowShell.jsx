@@ -102,14 +102,14 @@ export default function DesktopWindowShell({
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-1rem)] bg-[var(--rs-wallpaper)] p-2 sm:p-4 md:p-6 flex items-center justify-center font-sans select-none overflow-hidden transition-colors duration-200">
+    <div className="relative min-h-screen h-screen bg-[var(--rs-wallpaper)] p-1.5 sm:p-2.5 md:p-3 flex items-center justify-center font-sans select-none overflow-hidden transition-colors duration-200">
       
       {/* Decorative Dark Brown 4-Point Sparkle Stars (✦) in canvas corners */}
-      <span className="absolute top-4 left-6 text-2xl sm:text-3xl text-[#2D2319] font-black opacity-80 pointer-events-none select-none">✦</span>
-      <span className="absolute top-12 left-1/4 text-lg text-[#2D2319] font-black opacity-40 pointer-events-none select-none">✦</span>
-      <span className="absolute top-6 right-8 text-2xl sm:text-3xl text-[#2D2319] font-black opacity-80 pointer-events-none select-none">✦</span>
-      <span className="absolute bottom-6 left-8 text-2xl sm:text-3xl text-[#2D2319] font-black opacity-80 pointer-events-none select-none">✦</span>
-      <span className="absolute bottom-8 right-6 text-2xl sm:text-3xl text-[#2D2319] font-black opacity-80 pointer-events-none select-none">✦</span>
+      <span className="absolute top-3 left-5 text-2xl sm:text-3xl text-[#2D2319] font-black opacity-80 pointer-events-none select-none">✦</span>
+      <span className="absolute top-10 left-1/4 text-lg text-[#2D2319] font-black opacity-40 pointer-events-none select-none">✦</span>
+      <span className="absolute top-5 right-6 text-2xl sm:text-3xl text-[#2D2319] font-black opacity-80 pointer-events-none select-none">✦</span>
+      <span className="absolute bottom-5 left-6 text-2xl sm:text-3xl text-[#2D2319] font-black opacity-80 pointer-events-none select-none">✦</span>
+      <span className="absolute bottom-6 right-5 text-2xl sm:text-3xl text-[#2D2319] font-black opacity-80 pointer-events-none select-none">✦</span>
 
       {/* When Minimized: Floating Taskbar Dock */}
       {windowState === 'minimized' ? (
@@ -137,8 +137,8 @@ export default function DesktopWindowShell({
         <div 
           className={`border-2 border-[#2D2319] bg-[var(--rs-paper)] rounded-2xl shadow-[6px_6px_0px_var(--rs-shadow)] overflow-hidden flex flex-col z-10 transition-all duration-200 ${
             windowState === 'maximized'
-              ? 'w-full h-[98vh] max-w-none'
-              : 'w-full max-w-6xl h-[90vh]'
+              ? 'w-full h-[99vh] max-w-none'
+              : 'w-full max-w-[1640px] h-[96vh]'
           }`}
         >
           
