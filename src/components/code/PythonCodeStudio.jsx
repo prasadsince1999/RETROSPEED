@@ -207,7 +207,7 @@ export default function PythonCodeStudio({
             <span className="text-[10px] font-mono font-bold bg-[#F6C445] px-2.5 py-0.5 rounded-full border border-[#2D2319] text-[#2D2319]">{analogy}</span>
           </div>
           <p className="text-sm font-mono text-[#2D2319]/90 leading-relaxed font-medium py-3 shrink-0">{concept}</p>
-          <div className="flex-1 min-h-0 overflow-y-auto">{getVisualComponentForLesson(lesson?.id, lesson?.chapter)}</div>
+          <div className="flex-1 min-h-0 overflow-y-auto">{getVisualComponentForLesson(lesson?.rawId || lesson?.codeId || lesson?.id, lesson?.chapter)}</div>
           <div className="shrink-0 pt-3 flex items-center justify-between border-t border-[#2D2319]/15">
             <span className="text-[11px] font-mono text-[#2D2319]/60">Enter or Space also continues</span>
             <button

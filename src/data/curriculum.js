@@ -18,30 +18,44 @@ function cleanString(str) {
 export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
   const course = getCourseById(courseId);
 
-  // 1. Structured Stage Course Data (e.g. RETROSPEED Odyssey with 685 lessons)
+  // 1. Structured Stage Course Data (e.g. RETROSPEED Odyssey with 685 lessons or Python with 197 lessons)
   if (course.data && Array.isArray(course.data.stages)) {
+    const isPythonCourse = courseId === 'python-zero-to-hero' || courseId === 'python-forge' || course.data?.alias === 'python-forge';
     const stages = [];
     const playableLessons = [];
     let globalIndex = 1;
 
     course.data.stages.forEach((stage, sIdx) => {
       const start = globalIndex;
-      stage.lessons.forEach((l) => {
+      stage.lessons.forEach((l, lIdx) => {
         const lessonNumber = l.id || globalIndex;
-        const targetKeys = l.keys || [];
-        const rawText = l.text || `Practice typing: ${l.title}`;
+        const targetKeys = l.keys || l.targetKeys || [];
+        const rawText = l.text || l.code || `Practice typing: ${l.title}`;
         const isMotion = l.type === 'motion' || l.type === 'video' || (l.title && /introduction\s+to\s+typing/i.test(l.title));
-        const isGame = l.type === 'game' || !!l.gameId;
-        const renderEngine = isGame ? (l.gameId || 'press-room') : (isMotion ? 'motion' : 'normal');
+        const isGame = l.type === 'game' || l.type === 'play' || !!l.gameId;
+        const renderEngine = isGame 
+          ? (l.gameId || 'press-room') 
+          : (isPythonCourse ? 'python-studio' : (isMotion ? 'motion' : 'normal'));
 
         playableLessons.push({
           id: lessonNumber,
-          rawId: l.id || lessonNumber,
+          rawId: l.rawId || l.id || `l-${lessonNumber}`,
+          codeId: l.codeId || l.rawId || `l-${lessonNumber}`,
+          number: lessonNumber,
+          section: l.section || `${sIdx + 1}.${lIdx + 1}`,
           title: cleanString(l.title),
-          type: isGame ? 'game' : (isMotion ? 'motion' : (l.type || 'practice')),
+          type: isGame ? 'game' : (isMotion ? 'motion' : (l.type || (isPythonCourse ? 'code' : 'practice'))),
+          stageId: `stage-${sIdx + 1}`,
+          stageNumber: stage.stageNumber || (sIdx + 1),
+          chapter: stage.stageNumber || (sIdx + 1),
           targetKeys,
           text: rawText,
-          goalWpm: l.goalWpm || 20,
+          code: l.code || rawText,
+          expectedOutput: l.expectedOutput || '',
+          concept: l.concept || '',
+          analogy: l.analogy || '',
+          variables: l.variables || {},
+          goalWpm: l.goalWpm || stage.targetWpm || 20,
           minAccuracy: l.minAccuracy || 80,
           gameId: l.gameId || null,
           renderEngine,
@@ -52,10 +66,11 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
       const end = globalIndex - 1;
       stages.push({
         id: `stage-${sIdx + 1}`,
+        stageNumber: stage.stageNumber || (sIdx + 1),
         title: cleanString(stage.title),
         start,
         end,
-        goal: `${stage.targetWpm || 25} WPM`
+        goal: stage.goal || `${stage.targetWpm || 25} WPM`
       });
     });
 
