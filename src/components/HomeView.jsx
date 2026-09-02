@@ -22,7 +22,7 @@ import { getNextSpineLesson, SPINE_PARTS, TOTAL_SPINE_LESSONS } from '../data/sp
 
 export default function HomeView({
   userProgress = {},
-  activeCourseId = 'keystroke-foundations',
+  activeCourseId = 'retrospeed-odyssey',
   onStartQuickDrill,
   onStartDailyChallenge,
   onStartSpineLesson,

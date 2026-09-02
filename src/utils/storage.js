@@ -62,20 +62,13 @@ export const KEY_FINGER_MAPPING = {
   ' ': { finger: 'Thumb', hand: 'Both' }
 };
 
-// Pure, honest empty state for new installations
+// Pure, honest empty state for new installations (RETROSPEED Odyssey is the flagship curriculum)
 export function getDefaultProgress() {
   return {
     activeCourseId: 'retrospeed-odyssey',
-    enrolledCourses: ['retrospeed-odyssey', 'keystroke-foundations'],
+    enrolledCourses: ['retrospeed-odyssey'],
     courses: {
       'retrospeed-odyssey': {
-        unlockedLevel: 1,
-        scores: {},
-        totalPoints: 0,
-        totalStars: 0,
-        totalTimeSeconds: 0
-      },
-      'keystroke-foundations': {
         unlockedLevel: 1,
         scores: {},
         totalPoints: 0,
@@ -155,13 +148,27 @@ export function loadProgress() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        const enrolled = Array.isArray(parsed.enrolledCourses) && parsed.enrolledCourses.length > 0
+        
+        // Ensure retrospeed-odyssey is default and keystroke-foundations is only present if user specifically enrolled
+        let enrolled = Array.isArray(parsed.enrolledCourses) && parsed.enrolledCourses.length > 0
           ? parsed.enrolledCourses
-          : ['keystroke-foundations'];
+          : ['retrospeed-odyssey'];
+
+        // Clean up legacy auto-seeded keystroke-foundations if unplayed
+        const kfScores = parsed.courses?.['keystroke-foundations']?.scores || {};
+        if (enrolled.includes('keystroke-foundations') && Object.keys(kfScores).length === 0) {
+          enrolled = enrolled.filter(id => id !== 'keystroke-foundations');
+          if (enrolled.length === 0) enrolled = ['retrospeed-odyssey'];
+        }
+
+        const activeCourse = (parsed.activeCourseId && parsed.activeCourseId !== 'keystroke-foundations')
+          ? parsed.activeCourseId
+          : (enrolled[0] || 'retrospeed-odyssey');
 
         return {
           ...getDefaultProgress(),
           ...parsed,
+          activeCourseId: activeCourse,
           enrolledCourses: enrolled,
           courses: parsed.courses || {},
           attemptLogs: parsed.attemptLogs || [],

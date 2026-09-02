@@ -287,7 +287,19 @@ export default function LessonPlayer({
         layout={layout}
         onFinish={() => {
           sound.playKeyClick();
-          setMode('practice');
+          onComplete({
+            isIntro: true,
+            wpm: lesson.goalWpm || 20,
+            grossWpm: lesson.goalWpm || 20,
+            accuracy: 100,
+            stars: 5,
+            points: 250,
+            time: 25,
+            durationSeconds: 25,
+            errors: 0,
+            lessonTitle: lesson.title,
+            keyStats: { ...keyStatsRef.current }
+          });
         }}
         onExit={onExit}
       />

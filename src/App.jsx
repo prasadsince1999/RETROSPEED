@@ -321,9 +321,31 @@ export default function App() {
 
   // Handle lesson / game completion
   const handleComplete = (stats) => {
+    const isIntroLesson = 
+      activeLesson?.type === 'intro' || 
+      activeLesson?.type === 'keys' || 
+      activeLesson?.type === 'motion' ||
+      activeLesson?.type === 'video' ||
+      stats?.isIntro;
+
     const updatedProgress = saveLessonResult(activeCourseId, activeLesson.id, stats);
     setUserProgress(updatedProgress);
-    setScoreModalStats(stats);
+
+    if (isIntroLesson) {
+      setScoreModalStats(null); // No ScoreModal for intro / tutorial lessons!
+      
+      // Advance directly to next lesson!
+      const currentIdx = lessons.findIndex(l => l.id === activeLesson?.id || l.rawId === activeLesson?.id);
+      if (currentIdx !== -1 && currentIdx + 1 < lessons.length) {
+        const nextLesson = lessons[currentIdx + 1];
+        launchLesson(nextLesson, gameLaunchOrigin || 'learn');
+      } else {
+        setIsViewingMap(true);
+        setCurrentView('learn');
+      }
+    } else {
+      setScoreModalStats(stats);
+    }
   };
 
   // Handle video / motion intro completion (or "Start Drill" skip)

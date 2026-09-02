@@ -16,14 +16,14 @@ import { sound } from '../utils/audio';
 
 export default function MyLearningsView({
   userProgress = {},
-  activeCourseId = 'keystroke-foundations',
+  activeCourseId = 'retrospeed-odyssey',
   onSelectCourse,
   onUnenrollCourse,
   onNavigate
 }) {
   const rawEnrolledIds = Array.isArray(userProgress.enrolledCourses) && userProgress.enrolledCourses.length > 0
     ? userProgress.enrolledCourses
-    : ['keystroke-foundations'];
+    : ['retrospeed-odyssey'];
 
   const enrolledCourseIds = Array.from(new Set(rawEnrolledIds));
 
