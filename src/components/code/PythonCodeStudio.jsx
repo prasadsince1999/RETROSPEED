@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import VirtualKeyboard from '../VirtualKeyboard';
 import { sound } from '../../utils/audio';
+import { getVisualComponentForLesson } from './visuals';
 
 export default function PythonCodeStudio({
   lesson,
@@ -237,16 +238,8 @@ export default function PythonCodeStudio({
           {concept}
         </p>
 
-        {/* Responsive Graphic Sketch Slot (Ready for diagrams) */}
-        <div className="w-full bg-[#FDF8EE] border-2 border-dashed border-[#2D2319]/40 rounded-xl p-3 flex items-center justify-between text-[#2D2319]/80 font-mono text-xs shadow-inner">
-          <div className="flex items-center space-x-2.5">
-            <Layers className="w-4 h-4 text-[#4BA3E3]" />
-            <span>🎨 <strong>Visual Concept Sketch:</strong> {visualTopic}</span>
-          </div>
-          <span className="text-[10px] bg-[#C3A6E8] px-2 py-0.5 rounded border border-[#2D2319] text-[#2D2319] font-bold">
-            Interactive Slot
-          </span>
-        </div>
+        {/* Dynamic Multi-Frame Visual Storyboard synced with topic */}
+        {getVisualComponentForLesson(lesson?.id, lesson?.chapter)}
       </div>
 
       {/* 3. DUAL-PANE IDE WORKSPACE (EDITOR + FAKE COMPILER TERMINAL) */}

@@ -38,4 +38,6 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
-Thumbs.db
+# Scratch and temporary files
+scratch/
+*.pdf

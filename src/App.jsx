@@ -192,6 +192,13 @@ export default function App() {
       } else {
         setCurrentView('press-room');
       }
+    } else if (
+      lesson.renderEngine === 'python-studio' || 
+      lesson.type === 'code' || 
+      activeCourseId === 'python-zero-to-hero' ||
+      activeCourseId === 'syntax-forge'
+    ) {
+      setCurrentView('python-studio');
     } else {
       setCurrentView('lesson');
     }

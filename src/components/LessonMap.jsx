@@ -173,11 +173,16 @@ export default function LessonMap({
     if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase().trim();
     const matchesTitle = stage.title.toLowerCase().includes(q);
-    const stageLessons = lessons.filter(l => l.id >= stage.start && l.id <= stage.end);
+    const stageLessons = lessons.filter(l => {
+      const lNum = typeof l.number === 'number' ? l.number : (typeof l.id === 'number' ? l.id : parseInt(String(l.id).replace(/\D/g, ''), 10));
+      return (l.stageId && stage.id) ? l.stageId === stage.id : (lNum >= stage.start && lNum <= stage.end);
+    });
     const matchesLesson = stageLessons.some(l => 
       l.title.toLowerCase().includes(q) || 
-      String(l.id) === q || 
-      String(l.id).startsWith(q)
+      String(l.id).toLowerCase().includes(q) || 
+      String(l.number || l.id) === q ||
+      (l.rawId && String(l.rawId).toLowerCase().includes(q)) ||
+      (l.section && String(l.section).toLowerCase().includes(q))
     );
     return matchesTitle || matchesLesson;
   });
@@ -249,14 +254,80 @@ export default function LessonMap({
       );
     }
 
-    // Default typing exercise key stamp
-    const letters = (lesson.newKeys || lesson.title || '⌨').slice(0, 4);
+    if (lesson.type === 'code' || lesson.renderEngine === 'python-studio' || course.id === 'python-zero-to-hero') {
+      const titleLower = (lesson.title || '').toLowerCase();
+      let iconText = '</>';
+      let bgTheme = 'bg-[#F6C445]';
+
+      if (titleLower.includes('why') || titleLower.includes('behind') || titleLower.includes('think') || titleLower.includes('concept')) {
+        iconText = '💡';
+        bgTheme = 'bg-[#C3A6E8]';
+      } else if (titleLower.includes('comment') || titleLower.includes('sticky')) {
+        iconText = '#';
+        bgTheme = 'bg-[#48B89F]';
+      } else if (titleLower.includes('print') || titleLower.includes('megaphone')) {
+        iconText = '📢';
+        bgTheme = 'bg-[#F6C445]';
+      } else if (titleLower.includes('variable') || titleLower.includes('box') || titleLower.includes('ram')) {
+        iconText = '📦';
+        bgTheme = 'bg-[#4BA3E3]';
+      } else if (titleLower.includes('input') || titleLower.includes('micro')) {
+        iconText = '🎙️';
+        bgTheme = 'bg-[#F28B82]';
+      } else if (titleLower.includes('type') || titleLower.includes('cast')) {
+        iconText = 'str';
+        bgTheme = 'bg-[#C7E8CA]';
+      } else if (titleLower.includes('string') || titleLower.includes('f-string')) {
+        iconText = '“ ”';
+        bgTheme = 'bg-[#F6C445]';
+      } else if (titleLower.includes('slic') || titleLower.includes('index')) {
+        iconText = '[ : ]';
+        bgTheme = 'bg-[#4BA3E3]';
+      } else if (titleLower.includes('number') || titleLower.includes('math') || titleLower.includes('int')) {
+        iconText = '123';
+        bgTheme = 'bg-[#48B89F]';
+      } else if (titleLower.includes('bool') || titleLower.includes('logic')) {
+        iconText = 'T/F';
+        bgTheme = 'bg-[#C3A6E8]';
+      } else if (titleLower.includes('if') || titleLower.includes('fork') || titleLower.includes('condition')) {
+        iconText = '🔀';
+        bgTheme = 'bg-[#F28B82]';
+      } else if (titleLower.includes('loop') || titleLower.includes('conveyor') || titleLower.includes('for') || titleLower.includes('while')) {
+        iconText = '🔁';
+        bgTheme = 'bg-[#F6C445]';
+      } else if (titleLower.includes('list') || titleLower.includes('array')) {
+        iconText = '[ ]';
+        bgTheme = 'bg-[#4BA3E3]';
+      } else if (titleLower.includes('dict')) {
+        iconText = '{ }';
+        bgTheme = 'bg-[#48B89F]';
+      } else if (titleLower.includes('func') || titleLower.includes('machine') || titleLower.includes('parameter')) {
+        iconText = 'def';
+        bgTheme = 'bg-[#C3A6E8]';
+      }
+
+      return (
+        <div className="relative flex items-center justify-center">
+          <div className={`w-12 h-9 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center font-mono font-black text-xs ${
+            isCompleted ? 'bg-[#C7E8CA] text-[#2D2319]' : `${bgTheme} text-[#2D2319]`
+          }`}>
+            {iconText}
+          </div>
+        </div>
+      );
+    }
+
+    // Default typing exercise key stamp: show target keys or clean icon
+    const targetKeyText = Array.isArray(lesson.targetKeys) && lesson.targetKeys.length > 0
+      ? lesson.targetKeys.slice(0, 4).join(' ')
+      : (lesson.newKeys ? lesson.newKeys.slice(0, 4) : '⌨');
+
     return (
       <div className="relative flex items-center justify-center">
         <div className={`w-12 h-9 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center font-mono font-black text-xs ${
           isCompleted ? 'bg-[#C7E8CA] text-[#2D2319]' : 'bg-white text-[#2D2319]'
         }`}>
-          {letters}
+          {targetKeyText}
         </div>
       </div>
     );
@@ -483,17 +554,29 @@ export default function LessonMap({
           <div className="space-y-12 mt-4">
             {filteredStages.map((stage, stageIndex) => {
               const stageLessons = lessons.filter(l => {
-                if (l.id < stage.start || l.id > stage.end) return false;
+                const lNum = typeof l.number === 'number' ? l.number : (typeof l.id === 'number' ? l.id : parseInt(String(l.id).replace(/\D/g, ''), 10));
+                const inRange = (l.stageId && stage.id) ? l.stageId === stage.id : (lNum >= stage.start && lNum <= stage.end);
+                if (!inRange) return false;
                 if (!searchQuery.trim()) return true;
                 const q = searchQuery.toLowerCase().trim();
-                return l.title.toLowerCase().includes(q) || String(l.id) === q || String(l.id).startsWith(q);
+                return (
+                  l.title.toLowerCase().includes(q) || 
+                  String(l.id).toLowerCase().includes(q) || 
+                  String(l.number || l.id) === q ||
+                  (l.rawId && String(l.rawId).toLowerCase().includes(q)) ||
+                  (l.section && String(l.section).toLowerCase().includes(q))
+                );
               });
 
               if (stageLessons.length === 0) return null;
 
               // Milestone Gate Calculations
               const nextStage = filteredStages[stageIndex + 1];
-              const completedInThisStage = lessons.filter(l => l.id >= stage.start && l.id <= stage.end && courseScores[l.id]?.completed).length;
+              const completedInThisStage = lessons.filter(l => {
+                const lNum = typeof l.number === 'number' ? l.number : (typeof l.id === 'number' ? l.id : parseInt(String(l.id).replace(/\D/g, ''), 10));
+                const inRange = (l.stageId && stage.id) ? l.stageId === stage.id : (lNum >= stage.start && lNum <= stage.end);
+                return inRange && courseScores[l.id]?.completed;
+              }).length;
               const totalInThisStage = stage.end - stage.start + 1;
               const isStageGateUnlocked = completedInThisStage >= totalInThisStage || unlockedLevel > stage.end;
 
@@ -552,14 +635,21 @@ export default function LessonMap({
                             >
                               {/* Top: Lesson Number Badge & Lock / Stars */}
                               <div className="flex items-center justify-between">
-                                <span className={`text-base font-black font-mono ${isNextActive ? 'text-[#2D2319]' : 'text-[#2D2319]'}`}>
-                                  #{lesson.id}
-                                </span>
+                                <div className="flex items-center space-x-1 min-w-0">
+                                  <span className={`text-sm sm:text-base font-black font-mono ${isNextActive ? 'text-[#2D2319]' : 'text-[#2D2319]'}`}>
+                                    #{lesson.number || lesson.id}
+                                  </span>
+                                  {lesson.section && (
+                                    <span className="text-[9px] font-mono font-bold text-[#2D2319]/60">
+                                      ({lesson.section})
+                                    </span>
+                                  )}
+                                </div>
                                 {!isUnlocked && (
-                                  <Lock className="w-3.5 h-3.5 text-[#2D2319]/50" />
+                                  <Lock className="w-3.5 h-3.5 text-[#2D2319]/50 shrink-0 ml-1" />
                                 )}
                                 {isCompleted && (
-                                  <span className="px-1.5 py-0.2 rounded bg-amber-200 text-amber-950 font-mono text-[10px] font-black border border-[#2D2319]">
+                                  <span className="px-1.5 py-0.2 rounded bg-amber-200 text-amber-950 font-mono text-[10px] font-black border border-[#2D2319] shrink-0 ml-1">
                                     ★ {score.stars || 5}
                                   </span>
                                 )}

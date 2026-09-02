@@ -574,7 +574,8 @@ export default function StatsDashboard({
                       const x = 45 + idx * slotWidth + (slotWidth - barWidth) / 2;
                       
                       // Practice time mapped to max 30 minutes
-                      const barHeight = Math.min(160, Math.max(4, (item.practiceTimeMinutes / 30) * 160));
+                      const practiceMins = Number(item.practiceTimeMinutes) || 0;
+                      const barHeight = Math.min(160, Math.max(4, (practiceMins / 30) * 160));
                       const y = 200 - barHeight;
                       const isHovered = hoveredChartIndex === idx;
 
@@ -608,8 +609,9 @@ export default function StatsDashboard({
                       
                       const points = chartData.map((d, i) => {
                         const x = 45 + i * slotWidth + slotWidth / 2;
-                        const y = 200 - Math.min(160, Math.max(0, (d.wpm / 100) * 160));
-                        return { x, y, val: d.wpm };
+                        const wpmVal = Number(d.wpm) || 0;
+                        const y = 200 - Math.min(160, Math.max(0, (wpmVal / 100) * 160));
+                        return { x, y, val: wpmVal };
                       });
 
                       // Build smooth SVG path
@@ -658,8 +660,9 @@ export default function StatsDashboard({
                       
                       const points = chartData.map((d, i) => {
                         const x = 45 + i * slotWidth + slotWidth / 2;
-                        const y = 200 - Math.min(160, Math.max(0, (d.accuracy / 100) * 160));
-                        return { x, y, val: d.accuracy };
+                        const accVal = Number(d.accuracy) || 0;
+                        const y = 200 - Math.min(160, Math.max(0, (accVal / 100) * 160));
+                        return { x, y, val: accVal };
                       });
 
                       let pathD = `M ${points[0].x} ${points[0].y}`;

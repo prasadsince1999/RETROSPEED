@@ -77,16 +77,20 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
 
     course.data.chapters.forEach((chapter, cIdx) => {
       const start = globalIndex;
-      chapter.lessons.forEach((l) => {
+      chapter.lessons.forEach((l, lIdx) => {
         const lessonNumber = globalIndex;
         playableLessons.push({
-          id: l.id || `py-${lessonNumber}`,
+          id: lessonNumber,
           rawId: l.id || `py-${lessonNumber}`,
+          codeId: l.id || `py-${lessonNumber}`,
+          number: lessonNumber,
+          chapterLessonNumber: lIdx + 1,
+          section: l.section || `${chapter.chapterNumber}.${lIdx + 1}`,
           title: cleanString(l.title),
           type: 'code',
           chapter: chapter.chapterNumber,
           chapterTitle: cleanString(chapter.title),
-          section: l.section || `${chapter.chapterNumber}.${globalIndex}`,
+          stageId: `chapter-${chapter.chapterNumber}`,
           concept: l.concept || '',
           visualTopic: l.visualTopic || '',
           code: l.code || '',
@@ -103,6 +107,7 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
       const end = globalIndex - 1;
       stages.push({
         id: `chapter-${chapter.chapterNumber}`,
+        chapterNumber: chapter.chapterNumber,
         title: `Chapter ${chapter.chapterNumber}: ${cleanString(chapter.title)}`,
         start,
         end,

@@ -124,20 +124,22 @@ export default function PressRoomGame({
         slipsRef.current = slipsRef.current.filter(slip => {
           if (slip.x > canvas.width && !slip.isStamped) {
             setLives(prev => {
-              const next = prev - 1;
-              if (next <= 0 && onComplete) {
-                onComplete({
-                  modeId: 'press-room',
-                  wpm: 20,
-                  accuracy: 80,
-                  chars: hits,
-                  errors: misses + 1,
-                  durationSeconds: 30,
-                  score,
-                  stars: 2
-                });
+              const next = Math.max(0, prev - 1);
+              if (next === 0 && onComplete) {
+                setTimeout(() => {
+                  onComplete({
+                    modeId: 'press-room',
+                    wpm: 20,
+                    accuracy: 80,
+                    chars: hits,
+                    errors: misses + 1,
+                    durationSeconds: 30,
+                    score,
+                    stars: 2
+                  });
+                }, 100);
               }
-              return Math.max(0, next);
+              return next;
             });
             sound.playErrorBuzz();
             return false;
