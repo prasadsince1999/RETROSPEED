@@ -505,25 +505,27 @@ export default function LessonPlayer({
 
                     {/* Character Renderer with Green Pad for Correct Keystrokes (Exact match to Images 2, 3, 4) */}
                     <span 
-                      className={`inline-flex items-center justify-center transition-all duration-75 relative ${
+                      className={`inline-flex items-center justify-center transition-all duration-75 relative h-8 sm:h-9 ${
                         char === ' ' 
                           ? status === 'correct' 
-                            ? 'w-4 sm:w-5 h-8 sm:h-9 bg-[#dcfce7] rounded-xs mx-[1px]'
-                            : 'w-4 sm:w-5' 
+                            ? 'w-4 sm:w-5 bg-[#dcfce7] rounded-xs mx-[1px]'
+                            : status === 'error'
+                            ? 'w-4 sm:w-5 bg-rose-100 rounded-xs mx-[1px]'
+                            : 'w-4 sm:w-5 mx-[1px]' 
                           : status === 'correct'
-                          ? 'min-w-[1.25rem] sm:min-w-[1.5rem] h-8 sm:h-9 bg-[#dcfce7] text-[#15803d] font-bold rounded-xs px-0.5 mx-[1px]'
+                          ? 'min-w-[1.25rem] sm:min-w-[1.5rem] bg-[#dcfce7] text-[#15803d] font-bold rounded-xs px-0.5 mx-[1px]'
                           : status === 'error'
-                          ? 'min-w-[1.25rem] sm:min-w-[1.5rem] h-8 sm:h-9 bg-rose-100 text-rose-700 font-bold rounded-xs px-0.5 mx-[1px]'
+                          ? 'min-w-[1.25rem] sm:min-w-[1.5rem] bg-rose-100 text-rose-700 font-bold rounded-xs px-0.5 mx-[1px]'
                           : isCurrent
-                          ? 'text-slate-950 font-black'
-                          : 'text-slate-400 font-normal'
+                          ? 'min-w-[1.25rem] sm:min-w-[1.5rem] text-slate-950 font-black px-0.5 mx-[1px]'
+                          : 'min-w-[1.25rem] sm:min-w-[1.5rem] text-slate-400 font-normal px-0.5 mx-[1px]'
                       }`}
                     >
                       {char === '\n' ? '' : char}
 
-                      {/* Solid Blue Underline Cursor */}
+                      {/* Solid Blue Underline Cursor (Always aligned to baseline) */}
                       {isCurrent && (
-                        <span className="absolute -bottom-1 left-0 right-0 h-1 bg-[#1888ff] rounded-full animate-pulse" />
+                        <span className="absolute bottom-0 left-0 right-0 h-1 bg-[#1888ff] rounded-full animate-pulse pointer-events-none" />
                       )}
                     </span>
 
