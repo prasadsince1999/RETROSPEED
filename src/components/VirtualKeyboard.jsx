@@ -67,7 +67,9 @@ export default function VirtualKeyboard({
   layout = 'qwerty',
   theme = 'bone',
   showHands = true,
-  handFilter = 'both' // 'both' | 'left' | 'right' | 'off'
+  handFilter = 'both', // 'both' | 'left' | 'right' | 'off'
+  frameless = false,
+  className = ''
 }) {
   const keys = getKeysForLayout(layout);
   const activeKeyDef = getKeyForChar(activeChar, layout);
@@ -167,10 +169,14 @@ export default function VirtualKeyboard({
   const textDefaultFill = isCyber ? '#94a3b8' : isJungle ? '#a7f3d0' : '#2D2319';
 
   return (
-    <div className="w-full flex flex-col items-center justify-center select-none py-1">
+    <div className={`w-full flex flex-col items-center justify-center select-none ${className}`}>
       <div 
-        className="w-full max-w-[760px] p-3 sm:p-4 rounded-2xl shadow-[4px_4px_0px_#2D2319] border-2 border-[#2D2319] transition-colors duration-200"
-        style={{ backgroundColor: boardBg, borderColor: boardBorder }}
+        className={`w-full max-w-[760px] ${
+          frameless 
+            ? 'p-0.5' 
+            : 'p-3 sm:p-4 rounded-2xl shadow-[4px_4px_0px_#2D2319] border-2 border-[#2D2319]'
+        } transition-colors duration-200`}
+        style={frameless ? {} : { backgroundColor: boardBg, borderColor: boardBorder }}
       >
         <svg 
           viewBox={isHandsVisible ? "0 0 683.3 380" : "0 0 683.3 254"} 
