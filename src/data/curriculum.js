@@ -33,9 +33,18 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
         const rawText = l.text || l.code || `Practice typing: ${l.title}`;
         const isMotion = l.type === 'motion' || l.type === 'video' || (l.title && /introduction\s+to\s+typing/i.test(l.title));
         const isGame = l.type === 'game' || l.type === 'play' || !!l.gameId;
+        const isIntro = l.type === 'intro' || l.type === 'keys' || l.renderEngine === 'boxed' || /^(?:Keys?|Space\s*Bar|The\s*Shift\s*Key)/i.test(l.title || '');
+        const hand = l.renderEngine === 'left-anchor' || (l.title && /L Hand|Left Hand/i.test(l.title))
+          ? 'left'
+          : (l.renderEngine === 'right-anchor' || (l.title && /R Hand|Right Hand/i.test(l.title)) ? 'right' : 'both');
+
         const renderEngine = isGame 
           ? (l.gameId || 'press-room') 
-          : (isPythonCourse ? 'python-studio' : (isMotion ? 'motion' : 'normal'));
+          : (isPythonCourse ? 'python-studio' : (isMotion ? 'motion' : (isIntro ? 'boxed' : (l.renderEngine || 'normal'))));
+
+        const lessonType = isGame 
+          ? 'game' 
+          : (isMotion ? 'motion' : (isIntro ? 'intro' : (l.type || (isPythonCourse ? 'code' : 'practice'))));
 
         playableLessons.push({
           id: lessonNumber,
@@ -44,7 +53,7 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
           number: lessonNumber,
           section: l.section || `${sIdx + 1}.${lIdx + 1}`,
           title: cleanString(l.title),
-          type: isGame ? 'game' : (isMotion ? 'motion' : (l.type || (isPythonCourse ? 'code' : 'practice'))),
+          type: lessonType,
           stageId: `stage-${sIdx + 1}`,
           stageNumber: stage.stageNumber || (sIdx + 1),
           chapter: stage.stageNumber || (sIdx + 1),
@@ -59,6 +68,7 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
           minAccuracy: l.minAccuracy || 80,
           gameId: l.gameId || null,
           renderEngine,
+          hand,
           stageTitle: cleanString(stage.title)
         });
         globalIndex++;
