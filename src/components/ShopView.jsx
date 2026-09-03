@@ -4,109 +4,21 @@ import {
   Palette, 
   Volume2, 
   Sparkles, 
-  Check, 
-  Award, 
-  Shield, 
-  Star, 
-  Radio, 
-  Zap,
-  Headphones,
-  Keyboard,
-  BookOpen,
-  Search,
-  ArrowRight,
-  Layers,
-  CheckCircle2
+  BookOpen, 
+  Star 
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { PLAYER_AVATARS, getPlayerProfile, updatePlayerProfile } from '../utils/storage';
-import { COURSES_CATALOG } from '../data/courseCatalog';
+import {
+  RETRO_THEMES,
+  KEYCAP_SOUND_PACKS,
+  ThemeSelector,
+  SoundPackSelector,
+  AvatarSelector,
+  CourseUnlockGrid
+} from './shop';
 
-export const RETRO_THEMES = [
-  {
-    id: 'bone',
-    name: 'Vintage 90s OS (Default)',
-    subtitle: 'Warm cream canvas with solid mustard & lilac accents',
-    bg: '#B9D2E8',
-    surface: '#FDF8EE',
-    header: '#C3A6E8',
-    accent: '#F6C445',
-    tag: 'Classic'
-  },
-  {
-    id: 'vintage',
-    name: 'Macintosh Classic Paper',
-    subtitle: 'Soft sandstone parchment with sky denim highlights',
-    bg: '#C5D8E6',
-    surface: '#F7F1E1',
-    header: '#4BA3E3',
-    accent: '#48B89F',
-    tag: 'Vintage'
-  },
-  {
-    id: 'cyber-mint',
-    name: 'Neo Mint & Lavender',
-    subtitle: 'Pastel mint green surfaces with lavender titlebars',
-    bg: '#D4E8DC',
-    surface: '#F1FAF5',
-    header: '#48B89F',
-    accent: '#C3A6E8',
-    tag: 'Modern Retro'
-  },
-  {
-    id: 'lavender',
-    name: 'Pastel Dreamscape',
-    subtitle: 'Solid lilac headers with warm coral accents',
-    bg: '#E3D7F4',
-    surface: '#FAF5FE',
-    header: '#C3A6E8',
-    accent: '#F28B82',
-    tag: 'Pastel'
-  },
-  {
-    id: 'terminal',
-    name: 'Terminal Amber',
-    subtitle: 'Golden mustard titlebars with high contrast ink cards',
-    bg: '#E8DEC4',
-    surface: '#FDF8EC',
-    header: '#F6C445',
-    accent: '#F6C445',
-    tag: 'Hacker CRT'
-  }
-];
-
-export const KEYCAP_SOUND_PACKS = [
-  {
-    id: 'cherry-blue',
-    name: 'Cherry MX Blue (Clicky)',
-    description: 'Crisp, tactile, satisfying acoustic snap with instant key actuation feedback.',
-    tag: 'Mechanical'
-  },
-  {
-    id: 'gateron-brown',
-    name: 'Gateron Brown (Tactile)',
-    description: 'Smooth tactile bump with dampened low-frequency bottom-out acoustic profile.',
-    tag: 'Silent Tactile'
-  },
-  {
-    id: 'ibm-model-m',
-    name: 'Vintage IBM Model M',
-    description: 'Legendary heavy buckling spring clack from the 1980s computing era.',
-    tag: 'Vintage Spring'
-  },
-  {
-    id: 'thocky',
-    name: 'Thocky Lubed Linear',
-    description: 'Deep, marbly acoustic thock on premium POM stem switches.',
-    tag: 'Custom Keyboard'
-  },
-  {
-    id: 'chiptune',
-    name: '8-Bit Chiptune Arcade',
-    description: 'Retro 8-bit blips and synthesized frequency chirps for nostalgic gaming.',
-    tag: 'Arcade Synth'
-  }
-];
+export { RETRO_THEMES, KEYCAP_SOUND_PACKS };
 
 export default function ShopView({
   userProgress = {},
@@ -120,24 +32,14 @@ export default function ShopView({
 }) {
   const profile = getPlayerProfile(userProgress);
   
-  const [activeTab, setActiveTab] = useState(initialTab); // 'themes' | 'audio' | 'avatars' | 'courses'
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [currentSoundPack, setCurrentSoundPack] = useState(userProgress.settings?.soundPack || 'cherry-blue');
   const [selectedAvatarId, setSelectedAvatarId] = useState(profile.avatarId);
-  const [courseCategory, setCourseCategory] = useState('All');
-  const [courseSearch, setCourseSearch] = useState('');
   const [notification, setNotification] = useState('');
-  const [pressedKey, setPressedKey] = useState(null);
-  const [testInput, setTestInput] = useState('');
 
   const showNotification = (msg) => {
     setNotification(msg);
     setTimeout(() => setNotification(''), 2500);
-  };
-
-  const triggerTestSound = (packId = currentSoundPack, keyName = 'Key') => {
-    sound.playKeyClick(packId);
-    setPressedKey(keyName);
-    setTimeout(() => setPressedKey(null), 150);
   };
 
   const handlePickTheme = (themeId) => {
@@ -175,22 +77,10 @@ export default function ShopView({
     showNotification(`Active Avatar: ${PLAYER_AVATARS.find(a => a.id === avatarId)?.name}`);
   };
 
-  const handlePickCourse = (courseId) => {
-    sound.playKeyClick();
-    if (onSelectCourse) {
-      onSelectCourse(courseId);
-    }
-    if (onNavigate) {
-      onNavigate('learn');
-    }
-  };
-
   return (
     <div className="w-full h-full flex flex-col justify-between font-sans select-none bg-[#FDF8EE] p-4 sm:p-6 overflow-y-auto">
-      
       {/* Header Banner */}
       <div className="space-y-4">
-        
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-[#2D2319]/20 pb-3">
           <div>
             <div className="flex items-center space-x-2">
@@ -204,14 +94,13 @@ export default function ShopView({
             </p>
           </div>
 
-          {/* Player Points Pill */}
           <div className="bg-[#FAF3E0] px-3 py-1.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center space-x-2 text-xs font-mono font-bold text-[#2D2319] self-start sm:self-auto">
             <Star className="w-4 h-4 text-[#F6C445] fill-[#F6C445]" />
             <span>{profile.totalXp.toLocaleString()} Lifetime XP Points</span>
           </div>
         </div>
 
-        {/* Tab Pills: Themes | Audio Sound Packs | Avatars | Course Library */}
+        {/* Tab Selector Pills */}
         <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
           {[
             { id: 'themes', label: 'Palette Themes', icon: Palette },
@@ -241,438 +130,25 @@ export default function ShopView({
             );
           })}
         </div>
-
       </div>
 
-      {/* Main Tab Content with Smooth Tab Transition */}
+      {/* Main Tab Content */}
       <div key={activeTab} className="my-5 flex-1 tab-content-animate">
-        
-        {/* 1. Themes Tab */}
         {activeTab === 'themes' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {RETRO_THEMES.map(th => {
-              const isActive = selectedTheme === th.id;
-              return (
-                <div
-                  key={th.id}
-                  onClick={() => handlePickTheme(th.id)}
-                  className={`p-4 rounded-2xl border-2 border-[#2D2319] cursor-pointer transition-all ${
-                    isActive 
-                      ? 'bg-[#FAF3E0] shadow-[4px_4px_0px_#2D2319] ring-2 ring-[#48B89F]' 
-                      : 'bg-[#FDF8EE] hover:bg-[#FAF3E0] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <div 
-                        className="w-5 h-5 rounded-md border border-[#2D2319]"
-                        style={{ backgroundColor: th.header }}
-                      />
-                      <span className="font-display font-black text-sm text-[#2D2319]">{th.name}</span>
-                    </div>
-
-                    <span className="px-2 py-0.5 rounded bg-[#FDF8EE] border border-[#2D2319] text-[10px] font-mono font-bold text-[#2D2319]">
-                      {th.tag}
-                    </span>
-                  </div>
-
-                  <p className="text-xs text-[#2D2319]/70 mt-2 font-medium">
-                    {th.subtitle}
-                  </p>
-
-                  {/* Swatch Previews */}
-                  <div className="flex items-center space-x-2 mt-3 pt-2 border-t border-[#2D2319]/10">
-                    <span className="text-[10px] font-mono text-[#2D2319]/60">Palette:</span>
-                    <span className="w-4 h-4 rounded border border-[#2D2319]" style={{ backgroundColor: th.bg }} title="Canvas Wallpaper" />
-                    <span className="w-4 h-4 rounded border border-[#2D2319]" style={{ backgroundColor: th.surface }} title="Card Surface" />
-                    <span className="w-4 h-4 rounded border border-[#2D2319]" style={{ backgroundColor: th.header }} title="Titlebar Header" />
-                    <span className="w-4 h-4 rounded border border-[#2D2319]" style={{ backgroundColor: th.accent }} title="Accent Color" />
-                    
-                    {isActive && (
-                      <span className="ml-auto text-xs font-mono font-black text-[#48B89F] flex items-center space-x-1">
-                        <Check className="w-3.5 h-3.5" />
-                        <span>ACTIVE</span>
-                      </span>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <ThemeSelector selectedTheme={selectedTheme} onSelectTheme={handlePickTheme} />
         )}
 
-        {/* 2. Keycap Audio Sound Packs Tab */}
         {activeTab === 'audio' && (
-          <div className="space-y-4">
-            
-            {/* Live Keyboard Audio Audition Desk */}
-            <div className="p-4 sm:p-5 rounded-2xl border-2 border-[#2D2319] bg-[#FAF3E0] shadow-[4px_4px_0px_#2D2319] space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-[#2D2319]/15 pb-3">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#F6C445] border-2 border-[#2D2319] flex items-center justify-center text-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
-                    <Headphones className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h3 className="font-display font-black text-sm text-[#2D2319]">Keycap Audio Audition Desk</h3>
-                    <p className="text-[11px] font-mono text-[#2D2319]/70">
-                      Type on your keyboard or tap the test keycaps below to audition switch acoustics
-                    </p>
-                  </div>
-                </div>
-
-                {/* Active Switch Indicator */}
-                <div className="flex items-center space-x-2 shrink-0">
-                  <span className="text-[10px] font-mono text-[#2D2319]/60 font-bold">ACTIVE SWITCH:</span>
-                  <span className="px-2.5 py-1 bg-[#C7E8CA] border-2 border-[#2D2319] rounded-lg text-xs font-mono font-black text-[#2D2319] shadow-[1px_1px_0px_#2D2319] flex items-center space-x-1.5">
-                    <Volume2 className="w-3.5 h-3.5" />
-                    <span>{KEYCAP_SOUND_PACKS.find(p => p.id === currentSoundPack)?.name}</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* Quick Switch Audition Selector Pills */}
-              <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                <span className="text-[10px] font-mono font-bold text-[#2D2319]/60 mr-1">SWITCH:</span>
-                {KEYCAP_SOUND_PACKS.map(pack => {
-                  const isCur = currentSoundPack === pack.id;
-                  return (
-                    <button
-                      key={pack.id}
-                      type="button"
-                      onClick={() => handlePickSoundPack(pack.id)}
-                      className={`px-2.5 py-1 rounded-lg border-2 border-[#2D2319] text-xs font-mono font-bold transition-all flex items-center space-x-1.5 cursor-pointer ${
-                        isCur 
-                          ? 'bg-[#F6C445] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] -translate-y-0.5' 
-                          : 'bg-[#FDF8EE] hover:bg-white text-[#2D2319] shadow-[1px_1px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5'
-                      }`}
-                    >
-                      <span>{pack.name.split(' (')[0]}</span>
-                      {isCur && <span className="w-1.5 h-1.5 rounded-full bg-[#2D2319]" />}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Interactive Typewriter Testing Input */}
-              <div className="space-y-2 pt-1">
-                <div className="relative">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#2D2319]/40 pointer-events-none">
-                    <Keyboard className="w-4 h-4" />
-                  </div>
-                  <input
-                    type="text"
-                    value={testInput}
-                    onChange={(e) => setTestInput(e.target.value)}
-                    onKeyDown={(e) => {
-                      triggerTestSound(currentSoundPack, e.key.toUpperCase());
-                    }}
-                    placeholder="Click here and press keys on your physical keyboard to listen..."
-                    className="w-full pl-9 pr-4 py-2.5 bg-[#FDF8EE] border-2 border-[#2D2319] rounded-xl text-xs font-mono font-bold text-[#2D2319] shadow-[2px_2px_0px_#2D2319] placeholder:text-[#2D2319]/40 focus:outline-none focus:bg-white focus:shadow-[3px_3px_0px_#2D2319]"
-                  />
-                </div>
-
-                {/* Tactile Keycap Buttons for instant click test */}
-                <div className="flex flex-wrap items-center gap-2 pt-1">
-                  <span className="text-[10px] font-mono font-bold text-[#2D2319]/60">TRY TAPPING:</span>
-                  {['A', 'S', 'D', 'F', 'SPACE', 'ENTER'].map(k => {
-                    const isDown = pressedKey === k;
-                    return (
-                      <button
-                        key={k}
-                        type="button"
-                        onClick={() => triggerTestSound(currentSoundPack, k)}
-                        className={`px-3 py-1.5 rounded-lg border-2 border-[#2D2319] font-mono font-black text-xs transition-all cursor-pointer ${
-                          isDown 
-                            ? 'bg-[#F6C445] text-[#2D2319] translate-x-0.5 translate-y-0.5 shadow-none' 
-                            : 'bg-[#FDF8EE] hover:bg-white text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none'
-                        }`}
-                      >
-                        [ {k} ]
-                      </button>
-                    );
-                  })}
-                  {testInput && (
-                    <button
-                      type="button"
-                      onClick={() => setTestInput('')}
-                      className="ml-auto text-[10px] font-mono text-[#F28B82] hover:underline cursor-pointer"
-                    >
-                      Clear text
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Sound Pack Catalog Cards */}
-            <div className="space-y-3">
-              {KEYCAP_SOUND_PACKS.map(pack => {
-                const isActive = currentSoundPack === pack.id;
-                return (
-                  <div
-                    key={pack.id}
-                    onClick={() => handlePickSoundPack(pack.id)}
-                    className={`p-4 rounded-2xl border-2 border-[#2D2319] cursor-pointer transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                      isActive 
-                        ? 'bg-[#C7E8CA] shadow-[4px_4px_0px_#2D2319]' 
-                        : 'bg-[#FAF3E0] hover:bg-white shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5'
-                    }`}
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <Volume2 className="w-4 h-4 text-[#2D2319]" />
-                        <span className="font-display font-black text-sm text-[#2D2319]">{pack.name}</span>
-                        <span className="px-2 py-0.2 rounded bg-[#FDF8EE] border border-[#2D2319] text-[10px] font-mono font-bold text-[#2D2319]">
-                          {pack.tag}
-                        </span>
-                      </div>
-                      <p className="text-xs text-[#2D2319]/80 font-medium max-w-xl">
-                        {pack.description}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center space-x-2 shrink-0">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          triggerTestSound(pack.id, pack.name);
-                        }}
-                        className="px-3.5 py-1.5 bg-[#FDF8EE] hover:bg-white border-2 border-[#2D2319] rounded-xl text-xs font-mono font-black text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer flex items-center space-x-1"
-                        title={`Listen to ${pack.name}`}
-                      >
-                        <span>🔊</span>
-                        <span>Listen Sample</span>
-                      </button>
-                      {isActive && (
-                        <span className="px-3 py-1.5 bg-[#48B89F] text-white border-2 border-[#2D2319] rounded-xl text-xs font-display font-black shadow-[1px_1px_0px_#2D2319]">
-                          EQUIPPED
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-          </div>
+          <SoundPackSelector currentSoundPack={currentSoundPack} onSelectSoundPack={handlePickSoundPack} />
         )}
 
-        {/* 3. Avatars Tab */}
         {activeTab === 'avatars' && (
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-            {PLAYER_AVATARS.map(av => {
-              const isSelected = selectedAvatarId === av.id;
-              return (
-                <div
-                  key={av.id}
-                  onClick={() => handlePickAvatar(av.id)}
-                  className={`p-4 rounded-2xl border-2 border-[#2D2319] flex flex-col items-center justify-center space-y-2 cursor-pointer transition-all ${
-                    isSelected 
-                      ? 'bg-[#F6C445] shadow-[4px_4px_0px_#2D2319] -translate-y-0.5' 
-                      : 'bg-[#FAF3E0] hover:bg-white shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5'
-                  }`}
-                >
-                  <div 
-                    className="w-14 h-14 rounded-2xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-3xl"
-                    style={{ backgroundColor: av.bg }}
-                  >
-                    {av.icon}
-                  </div>
-                  <div className="text-center">
-                    <div className="font-display font-black text-xs text-[#2D2319] truncate">{av.name}</div>
-                    <div className="text-[10px] font-mono text-[#2D2319]/70">Retro Persona</div>
-                  </div>
-                  {isSelected && (
-                    <span className="px-2 py-0.5 bg-[#2D2319] text-white text-[9px] font-mono font-bold rounded-md">
-                      ACTIVE
-                    </span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <AvatarSelector selectedAvatarId={selectedAvatarId} onSelectAvatar={handlePickAvatar} />
         )}
 
-        {/* 4. Course Library Tab */}
         {activeTab === 'courses' && (
-          <div className="space-y-4">
-            
-            {/* Filter Pills & Search Bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#FAF3E0] p-3 rounded-2xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
-              
-              {/* Category Filter Pills */}
-              <div className="flex flex-wrap items-center gap-1.5 font-mono text-xs">
-                {[
-                  { id: 'All', label: 'All Curricula (10)' },
-                  { id: 'Core Touch Typing', label: 'Core Typing (2)' },
-                  { id: 'Programming & Tech', label: 'Coding & Tech (1)' },
-                  { id: 'Stories & Trivia', label: 'Stories & Trivia (5)' },
-                  { id: 'Language & Vocab', label: 'Language & Vocab (2)' }
-                ].map(cat => {
-                  const isSel = courseCategory === cat.id;
-                  return (
-                    <button
-                      key={cat.id}
-                      type="button"
-                      onClick={() => {
-                        sound.playKeyClick();
-                        setCourseCategory(cat.id);
-                      }}
-                      className={`px-3 py-1 rounded-xl border border-[#2D2319] font-bold text-[11px] transition-all ${
-                        isSel 
-                          ? 'bg-[#F6C445] text-[#2D2319] shadow-[1px_1px_0px_#2D2319] font-black' 
-                          : 'bg-white hover:bg-[#FDF8EE] text-[#2D2319]/80 shadow-[1px_1px_0px_#2D2319]'
-                      }`}
-                    >
-                      {cat.label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Search Bar */}
-              <div className="relative flex-1 sm:max-w-xs">
-                <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-[#2D2319]/50" />
-                <input
-                  type="text"
-                  value={courseSearch}
-                  onChange={e => setCourseSearch(e.target.value)}
-                  placeholder="Search course library..."
-                  className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-[#2D2319] bg-white text-xs font-mono font-bold placeholder-[#2D2319]/40 focus:outline-none focus:ring-2 focus:ring-[#48B89F] shadow-[1px_1px_0px_#2D2319]"
-                />
-              </div>
-
-            </div>
-
-            {/* Courses Grid */}
-            {(() => {
-              const enrolledIds = Array.isArray(userProgress.enrolledCourses) ? userProgress.enrolledCourses : ['keystroke-foundations'];
-              const availableCourses = COURSES_CATALOG.filter(course => {
-                // Hide courses that are already enrolled in My Learnings personal space
-                if (enrolledIds.includes(course.id)) return false;
-
-                // Category match
-                if (courseCategory === 'Core Touch Typing' && course.category !== 'Core Touch Typing') return false;
-                if (courseCategory === 'Programming & Tech' && course.category !== 'Programming & Tech') return false;
-                if (courseCategory === 'Language & Vocab' && !(course.category === 'Language & Etymology' || course.category === 'Literature & Vocabulary')) return false;
-                if (courseCategory === 'Stories & Trivia' && !(
-                  course.category === 'Interactive Story' ||
-                  course.category === 'General Knowledge' ||
-                  course.category === 'History & Tech' ||
-                  course.category === 'Science & Nature' ||
-                  course.category === 'Music & Arts'
-                )) return false;
-
-                // Search match
-                if (courseSearch.trim()) {
-                  const query = courseSearch.toLowerCase();
-                  return (
-                    course.title.toLowerCase().includes(query) ||
-                    course.description.toLowerCase().includes(query) ||
-                    course.category.toLowerCase().includes(query)
-                  );
-                }
-                return true;
-              });
-
-              if (availableCourses.length === 0) {
-                return (
-                  <div className="bg-[#FAF3E0] p-8 rounded-2xl border-2 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] text-center space-y-3">
-                    <div className="w-12 h-12 rounded-2xl bg-[#48B89F] border-2 border-[#2D2319] text-white flex items-center justify-center mx-auto shadow-[2px_2px_0px_#2D2319]">
-                      <CheckCircle2 className="w-6 h-6" />
-                    </div>
-                    <div className="font-display font-black text-base text-[#2D2319]">
-                      All Curricula Enrolled in My Learnings!
-                    </div>
-                    <p className="text-xs text-[#2D2319]/70 font-medium font-serif max-w-sm mx-auto">
-                      All available international touch-typing courses are currently active in your personal space.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        sound.playKeyClick();
-                        if (onNavigate) onNavigate('learn');
-                      }}
-                      className="px-5 py-2.5 bg-[#4BA3E3] hover:bg-[#3d94d3] text-white border-2 border-[#2D2319] rounded-xl font-mono text-xs font-black shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all inline-flex items-center space-x-2 cursor-pointer"
-                    >
-                      <BookOpen className="w-3.5 h-3.5" />
-                      <span>▶ Go to My Learnings Space</span>
-                    </button>
-                  </div>
-                );
-              }
-
-              return (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {availableCourses.map(course => {
-                    const headerBg = 
-                      course.titleVariant === 'teal' ? 'bg-[#48B89F]' :
-                      course.titleVariant === 'mustard' ? 'bg-[#F6C445]' :
-                      course.titleVariant === 'coral' ? 'bg-[#F28B82]' :
-                      course.titleVariant === 'lilac' ? 'bg-[#C3A6E8]' :
-                      course.titleVariant === 'dark' ? 'bg-[#2D2319] text-white' :
-                      'bg-[#4BA3E3]';
-
-                    return (
-                      <div
-                        key={course.id}
-                        className="rounded-2xl border-2 border-[#2D2319] bg-[#FAF3E0] shadow-[4px_4px_0px_#2D2319] flex flex-col justify-between overflow-hidden transition-all hover:-translate-y-0.5"
-                      >
-                        {/* Course Card Titlebar */}
-                        <div>
-                          <div className={`px-3.5 py-2 border-b-2 border-[#2D2319] flex items-center justify-between font-mono text-xs font-bold ${headerBg}`}>
-                            <div className="flex items-center space-x-1.5 truncate">
-                              <BookOpen className="w-3.5 h-3.5 shrink-0" />
-                              <span className="truncate">{course.badge || 'Course'}</span>
-                            </div>
-                            <span className="px-2 py-0.5 rounded bg-white/80 text-[#2D2319] border border-[#2D2319] text-[10px] font-black shrink-0 shadow-[1px_1px_0px_#2D2319]">
-                              {course.lessonsCount} Lessons
-                            </span>
-                          </div>
-
-                          {/* Course Card Body */}
-                          <div className="p-4 space-y-2">
-                            <h3 className="font-display font-black text-base text-[#2D2319] leading-tight">
-                              {course.title}
-                            </h3>
-
-                            <div className="flex items-center space-x-2 text-[10px] font-mono font-bold text-[#2D2319]/70">
-                              <span className="px-2 py-0.5 rounded bg-white border border-[#2D2319]">
-                                {course.category}
-                              </span>
-                              <span>•</span>
-                              <span>{course.grade}</span>
-                            </div>
-
-                            <p className="text-xs text-[#2D2319]/80 font-medium leading-relaxed font-serif pt-1">
-                              {course.description}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Course Card Action Footer */}
-                        <div className="p-4 pt-1">
-                          <button
-                            type="button"
-                            onClick={() => handlePickCourse(course.id)}
-                            className="w-full py-2.5 px-4 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black transition-all flex items-center justify-center space-x-2 cursor-pointer bg-[#F6C445] hover:bg-[#fbd366] text-[#2D2319] shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5"
-                          >
-                            <span>+ Add to My Learnings</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })()}
-
-          </div>
+          <CourseUnlockGrid userProgress={userProgress} onSelectCourse={onSelectCourse} onNavigate={onNavigate} />
         )}
-
       </div>
 
       {/* Footer / Notification Bar */}
@@ -692,7 +168,6 @@ export default function ShopView({
           Return to Home
         </button>
       </div>
-
     </div>
   );
 }

@@ -83,6 +83,14 @@ RETROSPEED ships with an 8-Part Zero-to-Hero Spine and 12 structured specialty t
 12. **Ergo Dvorak Layout**: Complete transition curriculum from standard QWERTY to Dvorak ergonomic layout.
 13. **Speed Colemak Layout**: Transition curriculum to the Colemak high-velocity layout.
 
+### 🎯 Pedagogical Invariants & Special Learning Environments
+
+- **The 4-Box Lesson Progression**: Every curriculum stage follows the battle-tested EdClub pedagogical cycle: `1. NEW KEYS` (Finger placement) $\to$ `2. REVIEW` (Rhythm blending) $\to$ `3. PRACTICE` (Timed speed assessment) $\to$ `4. PLAY` (High-stakes paper-arcade defense).
+- **Unskippable 4-Round Guided Drills**: Single-key introduction overviews can be skipped directly into Round 1, but the 4-round drill itself features strictly zero skip and zero previous buttons. Students must type all 4 progressive rounds (Repetitions $\to$ Alternations $\to$ Combinations $\to$ Rhythm check) to guarantee sub-cortical muscle memory.
+- **Python Code Studio (`python-studio`)**: Real coding syntax workbench with syntax highlighting, indentation brackets, token matching, and simulated compiler/terminal execution.
+- **Graphic Motion Player (`motion`)**: Scripted timed visual coaching for ergonomic posture, finger curvature, and eyes-on-the-screen discipline.
+- **Shortcut & Chord Lab (`shortcuts`)**: Native OS hotkey muscle-memory training (Ctrl+C/V/Z/S/A/T/W, Alt+Tab) without touching the mouse.
+
 ---
 
 ## 🏗️ System & Codebase Architecture
@@ -98,37 +106,47 @@ RETROSPEED/
 │   │   ├── HomeView.jsx           # Main Hub: Quick Play, Daily Challenge, & KPI Summary
 │   │   ├── PracticeHub.jsx        # Curriculum directory dividing 13 tracks into 5 distinct categories
 │   │   ├── ChallengeHub.jsx       # Skill trials, Live Arcade Launchers, & Keyword Battle Suite
-│   │   ├── StatsDashboard.jsx     # Telemetry diagnostics, WPM charts, heatmaps & problem keys
-│   │   ├── BadgesDashboard.jsx    # 24 unlockable achievement trophies across 5 categories
-│   │   ├── QuickDrillPlayer.jsx   # 30s/60s/90s/120s standalone speed & accuracy sprint engine
 │   │   ├── LessonPlayer.jsx       # Stream typing window, hands guide & real-time metric HUD
-│   │   ├── LessonMap.jsx          # Journey map with stone milestone archways & stage drawer
-│   │   ├── ShopView.jsx           # Theme customizer & player profile customization
+│   │   ├── QuickDrillPlayer.jsx   # 30s/60s/90s/120s standalone speed & accuracy sprint engine
+│   │   ├── ShortcutPlayer.jsx     # Computer skills & OS hotkey chord training engine
 │   │   ├── VideoPlayer.jsx        # Educational typing video player with synchronized transcripts
 │   │   ├── ScoreModal.jsx         # 5-star pop-in victory modal with confetti and XP counter
-│   │   ├── games/                 # 9 Canvas-rendered arcade defense game engines
-│   │   │   ├── BalloonNinjaGame.jsx
-│   │   │   ├── MonsterAttackGame.jsx
-│   │   │   ├── TempleBashGame.jsx
-│   │   │   ├── FloatingBubblesGame.jsx
-│   │   │   ├── AppleThievesGame.jsx
-│   │   │   ├── FallingWordsDefenseGame.jsx
-│   │   │   ├── TypingRacerGame.jsx
-│   │   │   ├── WordBombGame.jsx
-│   │   │   └── SyntaxHackerGame.jsx
+│   │   ├── UnlockModal.jsx        # License management and workshop access modal
+│   │   ├── stats/                 # Deep Analytics: KPI Cards, Timeline Chart, Heatmap, Problem Keys
+│   │   ├── shop/                  # Customizer: Themes, Keycap Audio Packs, Avatars, Course Library
+│   │   ├── map/                   # Journey Map: Interactive Avatar Pawn, Milestone Gates, Node Tiles
+│   │   ├── badges/icons/          # Vector SVG trophy badges across Speed, Accuracy, Streaks & Mastery
+│   │   ├── courseHeaders/         # Context Dossiers: Atlas, Loanwords, Detective, Music, Syntax
+│   │   ├── motion/                # MotionLessonPlayer: Scripted posture & reaching coach
+│   │   ├── code/                  # PythonCodeStudio: Code token typing & live terminal compiler
+│   │   ├── games/                 # The 8 Paper-Arcade Defense Games
+│   │   │   ├── PressRoomGame.jsx      # Conveyor belt rubber stamp factory
+│   │   │   ├── PaperPlanesGame.jsx    # Airmail origami glide dispatch
+│   │   │   ├── LocalLineGame.jsx      # Twin commuter railway velocity duel
+│   │   │   ├── NightMarketGame.jsx    # Kitchen ticket order counter
+│   │   │   ├── DropChitsGame.jsx      # Sorting rail drop chits vault
+│   │   │   ├── FuseDeskGame.jsx       # Manila envelope ticking fuse pressure
+│   │   │   ├── PitLaneGame.jsx        # 60s WPM Grand Prix typewriter racer
+│   │   │   └── PatchTerminalGame.jsx  # Real code token terminal defender
 │   │   ├── animation/             # Rive runtime, Tachometer Speedometer, Combo Flame & Mascot
 │   │   └── ui/                    # Reusable Neo-Brutalist primitives (Button, Card, Modal, Badge, etc.)
+│   ├── hooks/
+│   │   ├── useUserProgress.js     # State hook for progress, enrollments, themes, and audio
+│   │   └── useLessonSession.js    # State hook for active drills, completions, and game lifecycles
+│   ├── routes/
+│   │   └── AppRouter.jsx          # Route coordinator with code-split lazy view loaders
 │   ├── data/
 │   │   ├── curriculum.js          # Course registry and level loader
 │   │   ├── courseCatalog.js       # Metadata for all 13 official courses
-│   │   ├── achievementsData.js    # 24 achievements with progression evaluators
+│   │   ├── achievements/          # Modular badge criteria & real-time unlock evaluators
+│   │   ├── keyboardLayout.js      # Layout definitions (QWERTY, Dvorak, Colemak)
 │   │   └── courses/*.json         # Lesson definitions with target keys and exercise text
 │   └── utils/
+│       ├── storage/               # Migrations, progress persistence, stats math, and profiles
+│       ├── audio/                 # SoundEngine, procedural keycap packs, arcade & UI sound FX
 │       ├── telemetryEngine.js     # High-resolution IKI, HT, FT, FI, and FLB calculator
 │       ├── ddaEngine.js           # Dynamic Difficulty Adjustment differential update loop
-│       ├── lexiconTrie.js         # Prefix Trie with 5,000+ words and Zipf frequency rankings
-│       ├── storage.js             # Local-first persistence engine (v2 storage schema)
-│       └── audio.js               # Web Audio API procedural synthesizer and sound FX
+│       └── lexiconTrie.js         # Prefix Trie with 5,000+ words and Zipf frequency rankings
 ├── microsoft-store-config.yaml    # Microsoft Store Partner Center publishing configuration
 ├── PRIVACY.md                     # Certified offline local-first privacy policy
 ├── tailwind.config.js             # Solid Retro Neo-Brutalist color tokens & hard offset shadows
@@ -147,8 +165,10 @@ RETROSPEED/
 | **Styling & Theme** | Tailwind CSS 3 | Solid Retro Neo-Brutalist design tokens (0% gradients) |
 | **Game Physics** | HTML5 Canvas 2D Physics Engine | 60 FPS particle systems, missile trajectories, collision detection |
 | **Animation Systems** | Rive Canvas (`@rive-app/react-canvas`), `canvas-confetti` | High-fidelity vector state machine animations |
+| **Keycap Acoustics** | Web Audio API Procedural Synthesizer | Cherry MX Blue, Gateron Brown, IBM Model M, Thocky Linear & Chiptune |
 | **Icons** | `lucide-react` | Clean, crisp interface iconography |
-| **Audio Synthesizer** | Web Audio API | Procedural sound generation without heavy MP3 asset bloat |
+| **Unit Testing** | Vitest 3 | Fast, deterministic test runner for telemetry, storage & mechanics |
+| **Code Modularity** | Deep Module Architecture | Strict `< 600 lines` file size mandate across all application code |
 | **CI / CD** | GitHub Actions | Automated Windows executable & Microsoft Store AppX release builds |
 
 ---
@@ -188,6 +208,15 @@ npm run dev
 
 # Run in Electron desktop window
 npm run electron:dev
+```
+
+### Verification & Automated Testing
+```bash
+# Run Vitest test suites (deterministic math, storage migrations, engine sims)
+npm run test
+
+# Run tests in interactive watch mode
+npm run test:watch
 ```
 
 ### Production Build & Packaging

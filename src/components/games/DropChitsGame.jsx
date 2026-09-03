@@ -55,7 +55,10 @@ export default function DropChitsGame({
   }, [cleanKeys]);
 
   const spawnChit = useCallback(() => {
-    const word = activeWordsBank[Math.floor(Math.random() * activeWordsBank.length)];
+    const activeFirstChars = chitsRef.current.filter(c => !c.isCleared).map(c => c.word[0]);
+    const availableWords = activeWordsBank.filter(w => !activeFirstChars.includes(w[0]));
+    const bank = availableWords.length > 0 ? availableWords : activeWordsBank;
+    const word = bank[Math.floor(Math.random() * bank.length)];
     const newChit = {
       id: Date.now() + Math.random(),
       word,

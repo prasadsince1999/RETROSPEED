@@ -36,7 +36,10 @@ export default function PaperPlanesGame({
   }, [lesson]);
 
   const spawnPlane = useCallback(() => {
-    const word = activeWordsPool[Math.floor(Math.random() * activeWordsPool.length)];
+    const activeFirstChars = planesRef.current.filter(p => !p.isLaunched).map(p => p.word[0]);
+    const availableWords = activeWordsPool.filter(w => !activeFirstChars.includes(w[0]));
+    const pool = availableWords.length > 0 ? availableWords : activeWordsPool;
+    const word = pool[Math.floor(Math.random() * pool.length)];
     const newPlane = {
       id: Date.now() + Math.random(),
       word,
