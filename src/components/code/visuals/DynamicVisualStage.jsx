@@ -647,7 +647,7 @@ function ForkVisual({ lesson, animKey }) {
         <div className="flex flex-col space-y-3 w-48">
           {/* True Branch */}
           <div
-            className={`border-2 border-[#2D2319] p-2.5 rounded-xl transition-all ${
+            className={`border-2 border-[#2D2319] p-2.5 rounded-xl transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               isTrue
                 ? 'bg-[#C7E8CA] shadow-[4px_4px_0px_#2D2319] scale-105 font-black'
                 : 'bg-[#FAF3E0]/60 opacity-40 shadow-none'
@@ -662,7 +662,7 @@ function ForkVisual({ lesson, animKey }) {
 
           {/* False Branch */}
           <div
-            className={`border-2 border-[#2D2319] p-2.5 rounded-xl transition-all ${
+            className={`border-2 border-[#2D2319] p-2.5 rounded-xl transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${
               !isTrue
                 ? 'bg-[#F28B82]/30 shadow-[4px_4px_0px_#2D2319] scale-105 font-black'
                 : 'bg-[#FAF3E0]/60 opacity-40 shadow-none'
@@ -683,7 +683,7 @@ function ForkVisual({ lesson, animKey }) {
             sound?.playKeyClick?.();
             setIsTrue(p => !p);
           }}
-          className="text-xs font-mono font-bold px-3 py-1 rounded-lg bg-[#F6C445] border border-[#2D2319] shadow-[2px_2px_0px_#2D2319] cursor-pointer"
+          className="text-xs font-mono font-bold px-3 py-1 rounded-lg bg-[#F6C445] border border-[#2D2319] shadow-[2px_2px_0px_#2D2319] hover:shadow-[3px_3px_0px_#2D2319] active:scale-95 active:translate-y-0.5 transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer"
         >
           Toggle Condition: <strong>{isTrue ? 'True ➔ True Branch' : 'False ➔ Else Branch'}</strong>
         </button>
@@ -740,10 +740,10 @@ function ConveyorVisual({ lesson, animKey }) {
                   sound?.playKeyClick?.();
                   setActiveItemIdx(idx);
                 }}
-                className={`px-3 py-2 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black transition-all cursor-pointer ${
+                className={`px-3 py-2 rounded-xl border-2 border-[#2D2319] font-mono text-xs font-black transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 cursor-pointer ${
                   isScanned
                     ? 'bg-[#48B89F] text-white shadow-[3px_3px_0px_#2D2319] scale-110 -translate-y-1'
-                    : 'bg-[#FAF3E0] text-[#2D2319] opacity-70'
+                    : 'bg-[#FAF3E0] text-[#2D2319] opacity-70 hover:opacity-100 hover:shadow-[2px_2px_0px_#2D2319]'
                 }`}
               >
                 📦 {item}
@@ -772,19 +772,33 @@ function ConveyorVisual({ lesson, animKey }) {
 // ============================================================================
 function MachineVisual({ lesson, animKey }) {
   const [steam, setSteam] = useState(false);
+  const [paramIdx, setParamIdx] = useState(0);
+  const paramValues = useMemo(() => [5, 8, 12, 20], []);
+  const currentX = paramValues[paramIdx];
+  const returnVal = currentX * 2;
 
   useEffect(() => {
     setSteam(true);
     const t = setTimeout(() => setSteam(false), 800);
     return () => clearTimeout(t);
-  }, [animKey]);
+  }, [animKey, paramIdx]);
+
+  const cycleParam = () => {
+    sound?.playKeyClick?.();
+    setParamIdx(prev => (prev + 1) % paramValues.length);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center p-3 w-full max-w-md select-none">
       {/* Top Input Hopper */}
-      <div className="flex flex-col items-center">
-        <div className="bg-[#C3A6E8] border-2 border-[#2D2319] px-3 py-1 rounded-xl shadow-[2px_2px_0px_#2D2319] text-xs font-mono font-black">
-          Input Parameters: x = 5
+      <div
+        onClick={cycleParam}
+        className="flex flex-col items-center cursor-pointer group"
+        title="Click to cycle input parameter"
+      >
+        <div className="bg-[#C3A6E8] border-2 border-[#2D2319] px-3.5 py-1.5 rounded-xl shadow-[2px_2px_0px_#2D2319] hover:shadow-[3px_3px_0px_#2D2319] active:scale-95 active:translate-y-0.5 transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] text-xs font-mono font-black flex items-center gap-1.5">
+          <span>Input Parameter: x = {currentX}</span>
+          <span className="text-[10px] text-[#2D2319]/60">↻</span>
         </div>
         <div className="w-12 h-4 border-x-2 border-[#2D2319] bg-[#E0D7C5]" />
       </div>
@@ -804,7 +818,7 @@ function MachineVisual({ lesson, animKey }) {
           </div>
           <div className="font-mono text-center">
             <span className="text-[10px] text-[#2D2319]/70 font-bold block uppercase">INTERNAL LOGIC</span>
-            <span className="text-xs font-black text-[#2D2319]">result = x * 2</span>
+            <span className="text-xs font-black text-[#2D2319]">result = {currentX} * 2</span>
           </div>
           <div className="w-8 h-8 rounded-full border-2 border-[#2D2319] bg-[#48B89F] flex items-center justify-center animate-spin">
             <CogIcon className="w-5 h-5 text-white" />
@@ -821,10 +835,19 @@ function MachineVisual({ lesson, animKey }) {
       {/* Delivery Chute & Return Output */}
       <div className="flex flex-col items-center mt-0.5">
         <div className="w-12 h-4 border-x-2 border-[#2D2319] bg-[#E0D7C5]" />
-        <div className="bg-[#48B89F] text-white border-2 border-[#2D2319] px-3.5 py-1.5 rounded-xl shadow-[3px_3px_0px_#2D2319] text-xs font-mono font-black flex items-center gap-1.5 animate-bounce">
-          <span>return: 10</span>
+        <div className="bg-[#48B89F] text-white border-2 border-[#2D2319] px-3.5 py-1.5 rounded-xl shadow-[3px_3px_0px_#2D2319] text-xs font-mono font-black flex items-center gap-1.5 animate-bounce transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]">
+          <span>return: {returnVal}</span>
           <Sparkles className="w-3.5 h-3.5" />
         </div>
+      </div>
+
+      <div className="mt-2 text-center">
+        <button
+          onClick={cycleParam}
+          className="text-xs font-mono font-bold px-3 py-1 rounded-lg bg-[#F6C445] border border-[#2D2319] shadow-[2px_2px_0px_#2D2319] hover:shadow-[3px_3px_0px_#2D2319] active:scale-95 active:translate-y-0.5 transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer"
+        >
+          ⚙ Cycle Parameter: <strong>x = {currentX} ➔ return {returnVal}</strong>
+        </button>
       </div>
 
       <p className="text-[11px] font-mono text-[#2D2319]/70 mt-2 text-center">
@@ -876,10 +899,10 @@ function TrayVisual({ lesson, animKey }) {
                 sound?.playKeyClick?.();
                 setActiveSlot(i);
               }}
-              className={`bg-[#FAF3E0] border-2 border-[#2D2319] rounded-xl p-2.5 text-center cursor-pointer transition-all ${
+              className={`bg-[#FAF3E0] border-2 border-[#2D2319] rounded-xl p-2.5 text-center cursor-pointer transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 ${
                 isSelected
                   ? 'ring-2 ring-[#48B89F] shadow-[3px_3px_0px_#2D2319] scale-105 bg-[#FDF8EE]'
-                  : 'shadow-[1px_1px_0px_#2D2319] opacity-80'
+                  : 'shadow-[1px_1px_0px_#2D2319] opacity-80 hover:opacity-100 hover:shadow-[2px_2px_0px_#2D2319]'
               }`}
             >
               <span className="text-[10px] font-mono font-black text-[#2D2319]/70 block border-b border-[#2D2319]/20 pb-0.5">

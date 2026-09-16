@@ -1024,10 +1024,10 @@ const s5Lessons = [
     }),
 
   makeLesson(5, "5.5", "code", "Theme Selector Inline Ternary",
-    "is_dark_mode = True\nbg_color = '#2D2319' if is_dark_mode else '#FDF8EE'\nprint('Background:', bg_color)",
+    "is_dark_mode = True\nbg_color = '#2D2319' if is_dark_mode else '#FDF8EE'\nprint(f'Background: {bg_color}')",
     "Select UI palette tokens using inline ternary statements.",
     "Inline Theme Switch",
-    "is_dark_mode = True\nbg_color = '#2D2319' if is_dark_mode else '#FDF8EE'\nprint('Background:', bg_color)", "Background: #2D2319", 26, 92, {
+    "is_dark_mode = True\nbg_color = '#2D2319' if is_dark_mode else '#FDF8EE'\nprint(f'Background: {bg_color}')", "Background: #2D2319", 26, 92, {
       analogyType: "fork"
     }),
 
@@ -1040,10 +1040,10 @@ const s5Lessons = [
     }),
 
   makeLesson(5, "5.6", "code", "HTTP Status Router with match-case",
-    "status_code = 200\nmatch status_code:\n    case 200:\n        msg = 'OK'\n    case 404:\n        msg = 'Not Found'\n    case _:\n        msg = 'Error'\nprint('HTTP Response:', msg)",
+    "status_code = 200\nmatch status_code:\n    case 200:\n        msg = 'OK'\n    case 404:\n        msg = 'Not Found'\n    case _:\n        msg = 'Error'\nprint(f'HTTP Response: {msg}')",
     "Route HTTP status codes cleanly using match-case blocks.",
     "Status Code Router",
-    "status_code = 200\nmatch status_code:\n    case 200:\n        msg = 'OK'\n    case 404:\n        msg = 'Not Found'\n    case _:\n        msg = 'Error'\nprint('HTTP Response:', msg)", "HTTP Response: OK", 28, 92, {
+    "status_code = 200\nmatch status_code:\n    case 200:\n        msg = 'OK'\n    case 404:\n        msg = 'Not Found'\n    case _:\n        msg = 'Error'\nprint(f'HTTP Response: {msg}')", "HTTP Response: OK", 28, 92, {
       analogyType: "fork"
     }),
 
@@ -1072,10 +1072,10 @@ const s5Lessons = [
     }),
 
   makeLesson(5, "5.8", "drill", "Speed Trap Alert Logic Drill",
-    "speed = 65\nlimit = 55\nif speed > limit + 10:\n    penalty = 'Ticket'\nelif speed > limit:\n    penalty = 'Warning'\nelse:\n    penalty = 'OK'\nprint('Status:', penalty)",
+    "speed = 65\nlimit = 55\nif speed > limit + 10:\n    penalty = 'Ticket'\nelif speed > limit:\n    penalty = 'Warning'\nelse:\n    penalty = 'OK'\nprint(f'Status: {penalty}')",
     "Calculate driving infraction severity based on speed radar limits.",
     "Speed Radar Dispatcher",
-    "speed = 65\nlimit = 55\nif speed > limit + 10:\n    penalty = 'Ticket'\nelif speed > limit:\n    penalty = 'Warning'\nelse:\n    penalty = 'OK'\nprint('Status:', penalty)", "Status: Warning", 28, 92, {
+    "speed = 65\nlimit = 55\nif speed > limit + 10:\n    penalty = 'Ticket'\nelif speed > limit:\n    penalty = 'Warning'\nelse:\n    penalty = 'OK'\nprint(f'Status: {penalty}')", "Status: Warning", 28, 92, {
       analogyType: "fork"
     }),
 
@@ -1123,7 +1123,7 @@ const s6Lessons = [
     "A for loop iterates over each item in a sequence (string, list, range). The loop variable updates automatically each iteration.",
     "for loops process collections item by item until exhausted.",
     "The Conveyor Belt",
-    "for char in 'ABC':\n    print('Key:', char)", "Key: A\nKey: B\nKey: C", 26, 90, {
+    "for char in 'ABC':\n    print(f'Key: {char}')", "Key: A\nKey: B\nKey: C", 26, 90, {
       analogyType: "conveyor"
     }),
 
@@ -1147,15 +1147,15 @@ const s6Lessons = [
     "range(stop) counts from 0 up to stop - 1. range(start, stop, step) customizes start offset and stride.",
     "range generates numbers in memory on demand without allocating large lists.",
     "The Number Generator",
-    "for i in range(1, 4):\n    print('Lap', i)", "Lap 1\nLap 2\nLap 3", 26, 90, {
+    "for i in range(1, 4):\n    print(f'Lap {i}')", "Lap 1\nLap 2\nLap 3", 26, 90, {
       analogyType: "conveyor"
     }),
 
   makeLesson(6, "6.2", "code", "Range Stepping & Even Summation",
-    "total = 0\nfor n in range(2, 11, 2):\n    total += n\nprint('Sum of evens:', total)",
+    "total = 0\nfor n in range(2, 11, 2):\n    total += n\nprint(f'Sum of evens: {total}')",
     "Use range step to iterate over even numbers and accumulate sums.",
     "Even Step Stride",
-    "total = 0\nfor n in range(2, 11, 2):\n    total += n\nprint('Sum of evens:', total)", "Sum of evens: 30", 28, 92, {
+    "total = 0\nfor n in range(2, 11, 2):\n    total += n\nprint(f'Sum of evens: {total}')", "Sum of evens: 30", 28, 92, {
       analogyType: "conveyor"
     }),
 
@@ -1168,10 +1168,10 @@ const s6Lessons = [
     }),
 
   makeLesson(6, "6.3", "code", "The Accumulator Loop Pattern",
-    "total = 0\nfor x in range(1, 6):\n    total += x\nprint('Sum 1-5:', total)",
+    "total = 0\nfor x in range(1, 6):\n    total += x\nprint(f'Sum 1-5: {total}')",
     "Initialize an accumulator variable before the loop and increment it inside.",
     "Rolling Total Hopper",
-    "total = 0\nfor x in range(1, 6):\n    total += x\nprint('Sum 1-5:', total)", "Sum 1-5: 15", 28, 92, {
+    "total = 0\nfor x in range(1, 6):\n    total += x\nprint(f'Sum 1-5: {total}')", "Sum 1-5: 15", 28, 92, {
       analogyType: "conveyor"
     }),
 
@@ -1195,7 +1195,7 @@ const s6Lessons = [
     "zip() pairs up corresponding elements from multiple lists simultaneously: for name, score in zip(names, scores):.",
     "zip combines multiple iterables into tuples of grouped elements.",
     "The Zipper Mechanism",
-    "users = ['A', 'B']\nwpm = [80, 95]\nfor u, w in zip(users, wpm):\n    print(u, w)", "A 80\nB 95", 26, 90, {
+    "users = ['A', 'B']\nwpm = [80, 95]\nfor u, w in zip(users, wpm):\n    print(f'{u} {w}')", "A 80\nB 95", 26, 90, {
       analogyType: "conveyor"
     }),
 
@@ -1256,10 +1256,10 @@ const s6Lessons = [
     }),
 
   makeLesson(6, "6.7", "code", "Filtering Tokens with continue",
-    "tokens = ['valid', '', 'clean']\nfor t in tokens:\n    if not t:\n        continue\n    print('Token:', t)",
+    "tokens = ['valid', '', 'clean']\nfor t in tokens:\n    if not t:\n        continue\n    print(f'Token: {t}')",
     "Skip empty string tokens using continue guards.",
     "Dirty Token Filter",
-    "tokens = ['valid', '', 'clean']\nfor t in tokens:\n    if not t:\n        continue\n    print('Token:', t)", "Token: valid\nToken: clean", 28, 92, {
+    "tokens = ['valid', '', 'clean']\nfor t in tokens:\n    if not t:\n        continue\n    print(f'Token: {t}')", "Token: valid\nToken: clean", 28, 92, {
       analogyType: "conveyor"
     }),
 
@@ -1304,10 +1304,10 @@ const s6Lessons = [
     }),
 
   makeLesson(6, "6.10", "checkpoint", "Stage 6 Loops Checkpoint",
-    "total = sum(x for x in range(10) if x % 3 == 0)\nprint('Total multiples of 3:', total)\nprint('STAGE 6 LOOPS MASTERED')",
+    "total = sum(x for x in range(10) if x % 3 == 0)\nprint(f'Total multiples of 3: {total}')\nprint('STAGE 6 LOOPS MASTERED')",
     "Stage 6 milestone verifying for loops, while loops, range, and iteration.",
     "Stage 6 Milestone Gate",
-    "total = sum(x for x in range(10) if x % 3 == 0)\nprint('Total multiples of 3:', total)\nprint('STAGE 6 LOOPS MASTERED')", "Total multiples of 3: 18\nSTAGE 6 LOOPS MASTERED", 28, 94, {
+    "total = sum(x for x in range(10) if x % 3 == 0)\nprint(f'Total multiples of 3: {total}')\nprint('STAGE 6 LOOPS MASTERED')", "Total multiples of 3: 18\nSTAGE 6 LOOPS MASTERED", 28, 94, {
       analogyType: "conveyor"
     })
 ];
@@ -1329,15 +1329,15 @@ const s7Lessons = [
     "Lists are mutable sequences written with square brackets: [1, 2, 3]. Elements can be changed, added, or removed after creation.",
     "Lists provide dynamic array storage in Python with index-based access.",
     "The Expandable Shelf",
-    "items = ['apple', 'berry']\nprint('First item:', items[0])", "First item: apple", 28, 90, {
+    "items = ['apple', 'berry']\nprint(f'First item: {items[0]}')", "First item: apple", 28, 90, {
       analogyType: "tray"
     }),
 
   makeLesson(7, "7.1", "code", "Creating and Indexing Lists",
-    "languages = ['Python', 'Rust', 'TypeScript']\nprint('First:', languages[0])\nprint('Last:', languages[-1])",
+    "languages = ['Python', 'Rust', 'TypeScript']\nprint(f'First: {languages[0]}')\nprint(f'Last: {languages[-1]}')",
     "Access list elements by forward 0-based and backward -1 indices.",
     "Numbered Slot Access",
-    "languages = ['Python', 'Rust', 'TypeScript']\nprint('First:', languages[0])\nprint('Last:', languages[-1])", "First: Python\nLast: TypeScript", 28, 92, {
+    "languages = ['Python', 'Rust', 'TypeScript']\nprint(f'First: {languages[0]}')\nprint(f'Last: {languages[-1]}')", "First: Python\nLast: TypeScript", 28, 92, {
       analogyType: "tray"
     }),
 
@@ -1345,23 +1345,23 @@ const s7Lessons = [
     ".append(x) adds x to the tail in O(1) time. It mutates the list in place and returns None.",
     "Dynamic list growth through in-place append operations.",
     "Adding Items to Conveyor",
-    "cart = []\ncart.append('Switch')\ncart.append('Keycap')\nprint('Cart:', cart)", "Cart: ['Switch', 'Keycap']", 28, 90, {
+    "cart = []\ncart.append('Switch')\ncart.append('Keycap')\nprint(f'Cart: {cart}')", "Cart: ['Switch', 'Keycap']", 28, 90, {
       analogyType: "tray"
     }),
 
   makeLesson(7, "7.2", "code", "Dynamic Shopping Cart Appending",
-    "cart = ['Switch']\ncart.append('Lube')\nprint('Cart length:', len(cart))\nprint('Items:', cart)",
+    "cart = ['Switch']\ncart.append('Lube')\nprint(f'Cart length: {len(cart)}')\nprint(f'Items: {cart}')",
     "Grow inventory arrays dynamically with sequential append calls.",
     "Cart Item Accumulator",
-    "cart = ['Switch']\ncart.append('Lube')\nprint('Cart length:', len(cart))\nprint('Items:', cart)", "Cart length: 2\nItems: ['Switch', 'Lube']", 28, 92, {
+    "cart = ['Switch']\ncart.append('Lube')\nprint(f'Cart length: {len(cart)}')\nprint(f'Items: {cart}')", "Cart length: 2\nItems: ['Switch', 'Lube']", 28, 92, {
       analogyType: "tray"
     }),
 
   makeLesson(7, "7.2", "code", "Inserting at Specific Index with .insert()",
-    "nums = [1, 3]\nnums.insert(1, 2)\nprint('Inserted list:', nums)",
+    "nums = [1, 3]\nnums.insert(1, 2)\nprint(f'Inserted list: {nums}')",
     "Use .insert(index, value) to inject elements at arbitrary list positions.",
     "Slot Inserter",
-    "nums = [1, 3]\nnums.insert(1, 2)\nprint('Inserted list:', nums)", "Inserted list: [1, 2, 3]", 28, 92, {
+    "nums = [1, 3]\nnums.insert(1, 2)\nprint(f'Inserted list: {nums}')", "Inserted list: [1, 2, 3]", 28, 92, {
       analogyType: "tray"
     }),
 
@@ -1369,15 +1369,15 @@ const s7Lessons = [
     ".pop() removes and returns the last element. .pop(i) removes at index i. .remove(x) searches and deletes the first match of value x.",
     "List item deletion methods supporting LIFO stacks and value-based removal.",
     "Popping Items off Stack",
-    "stack = ['a', 'b', 'c']\ntop = stack.pop()\nprint('Popped:', top, 'Remaining:', stack)", "Popped: c Remaining: ['a', 'b']", 28, 90, {
+    "stack = ['a', 'b', 'c']\ntop = stack.pop()\nprint(f'Popped: {top} | Remaining: {stack}')", "Popped: c | Remaining: ['a', 'b']", 28, 90, {
       analogyType: "tray"
     }),
 
   makeLesson(7, "7.3", "code", "Stack LIFO Execution with .pop()",
-    "tasks = ['read', 'type', 'compile']\nactive = tasks.pop()\nprint('Executing:', active)\nprint('Pending:', tasks)",
+    "tasks = ['read', 'type', 'compile']\nactive = tasks.pop()\nprint(f'Executing: {active}')\nprint(f'Pending: {tasks}')",
     "Implement Last-In First-Out execution queues with list.pop().",
     "Stack Task Dispatcher",
-    "tasks = ['read', 'type', 'compile']\nactive = tasks.pop()\nprint('Executing:', active)\nprint('Pending:', tasks)", "Executing: compile\nPending: ['read', 'type']", 28, 92, {
+    "tasks = ['read', 'type', 'compile']\nactive = tasks.pop()\nprint(f'Executing: {active}')\nprint(f'Pending: {tasks}')", "Executing: compile\nPending: ['read', 'type']", 28, 92, {
       analogyType: "tray"
     }),
 
@@ -1398,10 +1398,10 @@ const s7Lessons = [
     }),
 
   makeLesson(7, "7.4", "code", "Sorting Lists with .sort() vs sorted()",
-    "nums = [5, 2, 8, 1]\nnums.sort()\nprint('Sorted in-place:', nums)",
+    "nums = [5, 2, 8, 1]\nnums.sort()\nprint(f'Sorted in-place: {nums}')",
     ".sort() mutates the list in place; sorted() returns a brand new sorted list.",
     "Data Reorganizer",
-    "nums = [5, 2, 8, 1]\nnums.sort()\nprint('Sorted in-place:', nums)", "Sorted in-place: [1, 2, 5, 8]", 28, 92, {
+    "nums = [5, 2, 8, 1]\nnums.sort()\nprint(f'Sorted in-place: {nums}')", "Sorted in-place: [1, 2, 5, 8]", 28, 92, {
       analogyType: "tray"
     }),
 
@@ -1409,7 +1409,7 @@ const s7Lessons = [
     "Tuples are immutable sequences defined with parentheses: (10, 20). Once created, their items cannot be modified, added, or removed.",
     "Tuples provide read-only data integrity and can serve as dictionary keys.",
     "The Sealed Capsule",
-    "point = (1920, 1080)\nprint('Width:', point[0], 'Height:', point[1])", "Width: 1920 Height: 1080", 28, 90, {
+    "point = (1920, 1080)\nprint(f'Width: {point[0]} Height: {point[1]}')", "Width: 1920 Height: 1080", 28, 90, {
       analogyType: "box"
     }),
 
@@ -1422,10 +1422,10 @@ const s7Lessons = [
     }),
 
   makeLesson(7, "7.5", "code", "Extended Unpacking with Rest (*)",
-    "scores = [99, 85, 82, 70]\ntop, *others = scores\nprint('Top:', top, 'Others:', others)",
+    "scores = [99, 85, 82, 70]\ntop, *others = scores\nprint(f'Top: {top} Others: {others}')",
     "Use an asterisk (*) during unpacking to capture remaining elements into a list.",
     "Head and Tail Collector",
-    "scores = [99, 85, 82, 70]\ntop, *others = scores\nprint('Top:', top, 'Others:', others)", "Top: 99 Others: [85, 82, 70]", 28, 92, {
+    "scores = [99, 85, 82, 70]\ntop, *others = scores\nprint(f'Top: {top} Others: {others}')", "Top: 99 Others: [85, 82, 70]", 28, 92, {
       analogyType: "box"
     }),
 
@@ -1441,7 +1441,7 @@ const s7Lessons = [
     "Dictionaries store key-value pairs inside curly braces: {'user': 'Alex', 'wpm': 80}. Keys must be immutable objects.",
     "Dictionaries provide average O(1) key lookup and retrieval.",
     "The Keyed Locker System",
-    "user = {'name': 'Alex', 'score': 100}\nprint(user['name'], user['score'])", "Alex 100", 28, 90, {
+    "user = {'name': 'Alex', 'score': 100}\nprint(f\"{user['name']} {user['score']}\")", "Alex 100", 28, 90, {
       analogyType: "tray"
     }),
 
@@ -1454,10 +1454,10 @@ const s7Lessons = [
     }),
 
   makeLesson(7, "7.6", "code", "Dictionary Mutation and Key Insertion",
-    "hero = {'name': 'Knight', 'hp': 100}\nhero['hp'] = 90\nhero['level'] = 2\nprint('Hero:', hero)",
+    "hero = {'name': 'Knight', 'hp': 100}\nhero['hp'] = 90\nhero['level'] = 2\nprint(f'Hero: {hero}')",
     "Mutate dictionary values and assign new key-value pairs dynamically.",
     "Player Stats Updater",
-    "hero = {'name': 'Knight', 'hp': 100}\nhero['hp'] = 90\nhero['level'] = 2\nprint('Hero:', hero)", "Hero: {'name': 'Knight', 'hp': 90, 'level': 2}", 28, 92, {
+    "hero = {'name': 'Knight', 'hp': 100}\nhero['hp'] = 90\nhero['level'] = 2\nprint(f'Hero: {hero}')", "Hero: {'name': 'Knight', 'hp': 90, 'level': 2}", 28, 92, {
       analogyType: "tray"
     }),
 
@@ -1465,15 +1465,15 @@ const s7Lessons = [
     "Direct lookup d['missing'] raises KeyError. Use d.get('key', default) to safely return default if the key is missing.",
     "Safe dictionary lookup with default fallbacks.",
     "The Safe Drawer",
-    "profile = {'name': 'Maya'}\nage = profile.get('age', 18)\nprint('Age:', age)", "Age: 18", 28, 90, {
+    "profile = {'name': 'Maya'}\nage = profile.get('age', 18)\nprint(f'Age: {age}')", "Age: 18", 28, 90, {
       analogyType: "tray"
     }),
 
   makeLesson(7, "7.7", "code", "Config Reader with Fallback Defaults",
-    "config = {'theme': 'dark'}\nport = config.get('port', 8080)\nprint('Connected on port:', port)",
+    "config = {'theme': 'dark'}\nport = config.get('port', 8080)\nprint(f'Connected on port: {port}')",
     "Prevent KeyErrors when reading user and environment configurations.",
     "Fallback Config Reader",
-    "config = {'theme': 'dark'}\nport = config.get('port', 8080)\nprint('Connected on port:', port)", "Connected on port: 8080", 28, 92, {
+    "config = {'theme': 'dark'}\nport = config.get('port', 8080)\nprint(f'Connected on port: {port}')", "Connected on port: 8080", 28, 92, {
       analogyType: "tray"
     }),
 
@@ -1481,7 +1481,7 @@ const s7Lessons = [
     "Iterate keys with for k in d, or iterate key-value pairs simultaneously with for key, val in d.items():.",
     "Dictionary view iteration methods (.keys, .values, .items).",
     "Key-Value Reader",
-    "scores = {'A': 95, 'B': 88}\nfor k, v in scores.items():\n    print(k, '->', v)", "A -> 95\nB -> 88", 28, 90, {
+    "scores = {'A': 95, 'B': 88}\nfor k, v in scores.items():\n    print(f'{k} -> {v}')", "A -> 95\nB -> 88", 28, 90, {
       analogyType: "tray"
     }),
 
@@ -1502,10 +1502,10 @@ const s7Lessons = [
     }),
 
   makeLesson(7, "7.8", "code", "Deduplicating Lists with set()",
-    "raw_keys = ['a', 'b', 'a', 'c', 'b']\nunique_keys = sorted(set(raw_keys))\nprint('Unique keys:', unique_keys)",
+    "raw_keys = ['a', 'b', 'a', 'c', 'b']\nunique_keys = sorted(set(raw_keys))\nprint(f'Unique keys: {unique_keys}')",
     "Clean dirty datasets containing duplicate items using set conversion.",
     "Duplicate Remover",
-    "raw_keys = ['a', 'b', 'a', 'c', 'b']\nunique_keys = sorted(set(raw_keys))\nprint('Unique keys:', unique_keys)", "Unique keys: ['a', 'b', 'c']", 28, 92, {
+    "raw_keys = ['a', 'b', 'a', 'c', 'b']\nunique_keys = sorted(set(raw_keys))\nprint(f'Unique keys: {unique_keys}')", "Unique keys: ['a', 'b', 'c']", 28, 92, {
       analogyType: "tray"
     }),
 
@@ -1513,15 +1513,15 @@ const s7Lessons = [
     "Sets support Venn diagram operations: | (union), & (intersection), - (difference), and ^ (symmetric difference).",
     "Mathematical set theory operations in Python.",
     "Venn Diagram Math",
-    "a = {1, 2, 3}\nb = {2, 3, 4}\nprint('Common:', a & b)\nprint('Union:', a | b)", "Common: {2, 3}\nUnion: {1, 2, 3, 4}", 28, 90, {
+    "a = {1, 2, 3}\nb = {2, 3, 4}\nprint(f'Common: {a & b}')\nprint(f'Union: {a | b}')", "Common: {2, 3}\nUnion: {1, 2, 3, 4}", 28, 90, {
       analogyType: "tray"
     }),
 
   makeLesson(7, "7.8", "code", "Permission Intersection with Sets",
-    "admin_perms = {'read', 'write', 'delete'}\nuser_perms = {'read', 'comment'}\nshared = admin_perms & user_perms\nprint('Shared:', shared)",
+    "admin_perms = {'read', 'write', 'delete'}\nuser_perms = {'read', 'comment'}\nshared = admin_perms & user_perms\nprint(f'Shared: {shared}')",
     "Find overlapping access privileges using set intersection &.",
     "Shared Permission Filter",
-    "admin_perms = {'read', 'write', 'delete'}\nuser_perms = {'read', 'comment'}\nshared = admin_perms & user_perms\nprint('Shared:', shared)", "Shared: {'read'}", 28, 92, {
+    "admin_perms = {'read', 'write', 'delete'}\nuser_perms = {'read', 'comment'}\nshared = admin_perms & user_perms\nprint(f'Shared: {shared}')", "Shared: {'read'}", 28, 92, {
       analogyType: "tray"
     }),
 
@@ -1529,23 +1529,23 @@ const s7Lessons = [
     "Writing b = a does NOT copy a list; it creates a second reference pointing to the very same memory list. Mutating b also changes a.",
     "Reference assignment vs deep object duplication in memory.",
     "Two Labels on One Box",
-    "a = [1, 2]\nb = a\nb.append(3)\nprint('a is now:', a)", "a is now: [1, 2, 3]", 28, 90, {
+    "a = [1, 2]\nb = a\nb.append(3)\nprint(f'a is now: {a}')", "a is now: [1, 2, 3]", 28, 90, {
       analogyType: "box"
     }),
 
   makeLesson(7, "7.9", "code", "Demonstrating Reference Aliasing Mutation",
-    "original = ['a', 'b']\nalias = original\nalias.append('c')\nprint('Original modified:', original)",
+    "original = ['a', 'b']\nalias = original\nalias.append('c')\nprint(f'Original modified: {original}')",
     "Verify how aliased references inadvertently alter shared containers.",
     "Shared Memory Blueprint",
-    "original = ['a', 'b']\nalias = original\nalias.append('c')\nprint('Original modified:', original)", "Original modified: ['a', 'b', 'c']", 28, 92, {
+    "original = ['a', 'b']\nalias = original\nalias.append('c')\nprint(f'Original modified: {original}')", "Original modified: ['a', 'b', 'c']", 28, 92, {
       analogyType: "box"
     }),
 
   makeLesson(7, "7.9", "code", "Shallow Copy with .copy()",
-    "orig = [1, 2]\nclone = orig.copy()\nclone.append(99)\nprint('Orig:', orig, 'Clone:', clone)",
+    "orig = [1, 2]\nclone = orig.copy()\nclone.append(99)\nprint(f'Orig: {orig} Clone: {clone}')",
     "Use .copy() to create an independent single-layer copy.",
     "Surface Duplicator",
-    "orig = [1, 2]\nclone = orig.copy()\nclone.append(99)\nprint('Orig:', orig, 'Clone:', clone)", "Orig: [1, 2] Clone: [1, 2, 99]", 28, 92, {
+    "orig = [1, 2]\nclone = orig.copy()\nclone.append(99)\nprint(f'Orig: {orig} Clone: {clone}')", "Orig: [1, 2] Clone: [1, 2, 99]", 28, 92, {
       analogyType: "box"
     }),
 
@@ -1553,15 +1553,15 @@ const s7Lessons = [
     "Shallow copy (.copy()) only copies the outer container. For nested lists or dicts, use copy.deepcopy() to duplicate all layers.",
     "Recursive deep copy vs shallow surface copy.",
     "Copying Nested Boxes",
-    "import copy\nmatrix = [[1], [2]]\ndeep = copy.deepcopy(matrix)\ndeep[0].append(9)\nprint('Original untouched:', matrix[0])", "Original untouched: [1]", 28, 90, {
+    "import copy\nmatrix = [[1], [2]]\ndeep = copy.deepcopy(matrix)\ndeep[0].append(9)\nprint(f'Original untouched: {matrix[0]}')", "Original untouched: [1]", 28, 90, {
       analogyType: "box"
     }),
 
   makeLesson(7, "7.9", "code", "Deep Matrix Duplication with copy.deepcopy",
-    "import copy\ngrid = [['X', 'O']]\nbackup = copy.deepcopy(grid)\nbackup[0][0] = ' '\nprint('Grid preserved:', grid[0][0])",
+    "import copy\ngrid = [['X', 'O']]\nbackup = copy.deepcopy(grid)\nbackup[0][0] = ' '\nprint(f'Grid preserved: {grid[0][0]}')",
     "Prevent nested matrix mutation bugs using copy.deepcopy().",
     "Matrix Backup Guard",
-    "import copy\ngrid = [['X', 'O']]\nbackup = copy.deepcopy(grid)\nbackup[0][0] = ' '\nprint('Grid preserved:', grid[0][0])", "Grid preserved: X", 28, 92, {
+    "import copy\ngrid = [['X', 'O']]\nbackup = copy.deepcopy(grid)\nbackup[0][0] = ' '\nprint(f'Grid preserved: {grid[0][0]}')", "Grid preserved: X", 28, 92, {
       analogyType: "box"
     }),
 
@@ -1574,26 +1574,26 @@ const s7Lessons = [
     }),
 
   makeLesson(7, "7.10", "code", "Filtered List Comprehensions with if",
-    "nums = [1, 2, 3, 4, 5, 6]\neven_squares = [n**2 for n in nums if n % 2 == 0]\nprint('Even squares:', even_squares)",
+    "nums = [1, 2, 3, 4, 5, 6]\neven_squares = [n**2 for n in nums if n % 2 == 0]\nprint(f'Even squares: {even_squares}')",
     "Combine mapping and filtering into a single Pythonic list comprehension.",
     "Even Squares Pipeline",
-    "nums = [1, 2, 3, 4, 5, 6]\neven_squares = [n**2 for n in nums if n % 2 == 0]\nprint('Even squares:', even_squares)", "Even squares: [4, 16, 36]", 30, 92, {
+    "nums = [1, 2, 3, 4, 5, 6]\neven_squares = [n**2 for n in nums if n % 2 == 0]\nprint(f'Even squares: {even_squares}')", "Even squares: [4, 16, 36]", 30, 92, {
       analogyType: "machine"
     }),
 
   makeLesson(7, "7.10", "code", "Dictionary Comprehensions {k: v}",
-    "codes = {'US': 1, 'UK': 44, 'IN': 91}\ninverted = {val: key for key, val in codes.items()}\nprint('Inverted map:', inverted)",
+    "codes = {'US': 1, 'UK': 44, 'IN': 91}\ninverted = {val: key for key, val in codes.items()}\nprint(f'Inverted map: {inverted}')",
     "Invert dictionary key-value associations with dict comprehensions.",
     "Inverted Index Generator",
-    "codes = {'US': 1, 'UK': 44, 'IN': 91}\ninverted = {val: key for key, val in codes.items()}\nprint('Inverted map:', inverted)", "Inverted map: {1: 'US', 44: 'UK', 91: 'IN'}", 30, 92, {
+    "codes = {'US': 1, 'UK': 44, 'IN': 91}\ninverted = {val: key for key, val in codes.items()}\nprint(f'Inverted map: {inverted}')", "Inverted map: {1: 'US', 44: 'UK', 91: 'IN'}", 30, 92, {
       analogyType: "machine"
     }),
 
   makeLesson(7, "7.10", "drill", "Student Honors Registry Aggregator Drill",
-    "students = [\n    {'name': 'Maya', 'grade': 95},\n    {'name': 'Liam', 'grade': 82}\n]\nhonors = [s['name'] for s in students if s['grade'] >= 90]\nprint('Honors:', honors)",
+    "students = [\n    {'name': 'Maya', 'grade': 95},\n    {'name': 'Liam', 'grade': 82}\n]\nhonors = [s['name'] for s in students if s['grade'] >= 90]\nprint(f'Honors: {honors}')",
     "Query and filter nested dictionaries inside list comprehensions.",
     "Registry Query Drill",
-    "students = [\n    {'name': 'Maya', 'grade': 95},\n    {'name': 'Liam', 'grade': 82}\n]\nhonors = [s['name'] for s in students if s['grade'] >= 90]\nprint('Honors:', honors)", "Honors: ['Maya']", 30, 92, {
+    "students = [\n    {'name': 'Maya', 'grade': 95},\n    {'name': 'Liam', 'grade': 82}\n]\nhonors = [s['name'] for s in students if s['grade'] >= 90]\nprint(f'Honors: {honors}')", "Honors: ['Maya']", 30, 92, {
       analogyType: "tray"
     }),
 
@@ -1628,26 +1628,26 @@ const s8Lessons = [
     }),
 
   makeLesson(8, "8.1", "code", "Reusable Calculation Machine",
-    "def calculate_wpm(chars, minutes):\n    return round((chars / 5) / minutes)\n\nspeed = calculate_wpm(250, 1.0)\nprint('WPM:', speed)",
+    "def calculate_wpm(chars, minutes):\n    return round((chars / 5) / minutes)\n\nspeed = calculate_wpm(250, 1.0)\nprint(f'WPM: {speed}')",
     "Define a calculation function with parameters and invoke it.",
     "WPM Engine Function",
-    "def calculate_wpm(chars, minutes):\n    return round((chars / 5) / minutes)\n\nspeed = calculate_wpm(250, 1.0)\nprint('WPM:', speed)", "WPM: 50", 28, 92, {
+    "def calculate_wpm(chars, minutes):\n    return round((chars / 5) / minutes)\n\nspeed = calculate_wpm(250, 1.0)\nprint(f'WPM: {speed}')", "WPM: 50", 28, 92, {
       analogyType: "machine"
     }),
 
   makeLesson(8, "8.2", "slide", "Returning Values vs print()",
-    "print() displays output to human eyes on the screen, returning None. return sends computational results back to the caller for further chaining.",
+    "print() displays output to human eyes on the screen, returning None. return sends computational results back to caller code.",
     "Functions produce values via return; side effects output via print.",
     "Data Pipe vs Screen Ink",
-    "def add(a, b):\n    return a + b\n\nresult = add(10, 20)\nprint('Result:', result)", "Result: 30", 26, 90, {
+    "def add(a, b):\n    return a + b\n\nresult = add(10, 20)\nprint(f'Result: {result}')", "Result: 30", 26, 90, {
       analogyType: "machine"
     }),
 
   makeLesson(8, "8.2", "code", "Computational Return Chaining",
-    "def square(n):\n    return n * n\n\ndef sum_squares(a, b):\n    return square(a) + square(b)\n\nprint('Sum of squares:', sum_squares(3, 4))",
+    "def square(n):\n    return n * n\n\ndef sum_squares(a, b):\n    return square(a) + square(b)\n\nprint(f'Sum of squares: {sum_squares(3, 4)}')",
     "Chain multiple returning functions together in mathematical pipelines.",
     "Nested Function Pipeline",
-    "def square(n):\n    return n * n\n\ndef sum_squares(a, b):\n    return square(a) + square(b)\n\nprint('Sum of squares:', sum_squares(3, 4))", "Sum of squares: 25", 28, 92, {
+    "def square(n):\n    return n * n\n\ndef sum_squares(a, b):\n    return square(a) + square(b)\n\nprint(f'Sum of squares: {sum_squares(3, 4)}')", "Sum of squares: 25", 28, 92, {
       analogyType: "machine"
     }),
 
@@ -1676,10 +1676,10 @@ const s8Lessons = [
     }),
 
   makeLesson(8, "8.3", "code", "Default Parameter Values",
-    "def power(base, exp=2):\n    return base ** exp\n\nprint('Default power:', power(4))\nprint('Custom power:', power(4, 3))",
+    "def power(base, exp=2):\n    return base ** exp\n\nprint(f'Default power: {power(4)}')\nprint(f'Custom power: {power(4, 3)}')",
     "Provide sensible fallback default values for function arguments.",
     "Fallback Setting Valve",
-    "def power(base, exp=2):\n    return base ** exp\n\nprint('Default power:', power(4))\nprint('Custom power:', power(4, 3))", "Default power: 16\nCustom power: 64", 28, 92, {
+    "def power(base, exp=2):\n    return base ** exp\n\nprint(f'Default power: {power(4)}')\nprint(f'Custom power: {power(4, 3)}')", "Default power: 16\nCustom power: 64", 28, 92, {
       analogyType: "machine"
     }),
 
@@ -1708,10 +1708,10 @@ const s8Lessons = [
     }),
 
   makeLesson(8, "8.5", "code", "Summing Arbitrary Numbers with *args",
-    "def average(*grades):\n    return round(sum(grades) / len(grades), 1)\n\nprint('Average:', average(85, 90, 95))",
+    "def average(*grades):\n    return round(sum(grades) / len(grades), 1)\n\nprint(f'Average: {average(85, 90, 95)}')",
     "Calculate statistics over arbitrary argument lists with *args.",
     "Variable Accumulator",
-    "def average(*grades):\n    return round(sum(grades) / len(grades), 1)\n\nprint('Average:', average(85, 90, 95))", "Average: 90.0", 28, 92, {
+    "def average(*grades):\n    return round(sum(grades) / len(grades), 1)\n\nprint(f'Average: {average(85, 90, 95)}')", "Average: 90.0", 28, 92, {
       analogyType: "machine"
     }),
 
@@ -1732,18 +1732,18 @@ const s8Lessons = [
     }),
 
   makeLesson(8, "8.6", "code", "Local Frame Shadowing Demonstration",
-    "x = 'GLOBAL'\ndef worker():\n    x = 'LOCAL'\n    return x\n\nprint('Worker:', worker())\nprint('Outer:', x)",
+    "x = 'GLOBAL'\ndef worker():\n    x = 'LOCAL'\n    return x\n\nprint(f'Worker: {worker()}')\nprint(f'Outer: {x}')",
     "Demonstrate variable shadowing between local stack frames and global scope.",
     "Shadowing Inspector",
-    "x = 'GLOBAL'\ndef worker():\n    x = 'LOCAL'\n    return x\n\nprint('Worker:', worker())\nprint('Outer:', x)", "Worker: LOCAL\nOuter: GLOBAL", 28, 92, {
+    "x = 'GLOBAL'\ndef worker():\n    x = 'LOCAL'\n    return x\n\nprint(f'Worker: {worker()}')\nprint(f'Outer: {x}')", "Worker: LOCAL\nOuter: GLOBAL", 28, 92, {
       analogyType: "box"
     }),
 
   makeLesson(8, "8.6", "code", "Modifying Global State with global",
-    "counter = 0\ndef bump():\n    global counter\n    counter += 1\n\nbump()\nbump()\nprint('Counter:', counter)",
+    "counter = 0\ndef bump():\n    global counter\n    counter += 1\n\nbump()\nbump()\nprint(f'Counter: {counter}')",
     "Use the global keyword to declare that an inner assignment targets module-level state.",
     "Global State Valve",
-    "counter = 0\ndef bump():\n    global counter\n    counter += 1\n\nbump()\nbump()\nprint('Counter:', counter)", "Counter: 2", 28, 92, {
+    "counter = 0\ndef bump():\n    global counter\n    counter += 1\n\nbump()\nbump()\nprint(f'Counter: {counter}')", "Counter: 2", 28, 92, {
       analogyType: "box"
     }),
 
@@ -1756,10 +1756,10 @@ const s8Lessons = [
     }),
 
   makeLesson(8, "8.7", "code", "Lambda as Sorting Key",
-    "words = ['banana', 'pie', 'apple']\nsorted_words = sorted(words, key=lambda w: len(w))\nprint('Sorted by length:', sorted_words)",
+    "words = ['banana', 'pie', 'apple']\nsorted_words = sorted(words, key=lambda w: len(w))\nprint(f'Sorted by length: {sorted_words}')",
     "Pass inline lambda functions as custom sorting criteria.",
     "Custom Sort Compass",
-    "words = ['banana', 'pie', 'apple']\nsorted_words = sorted(words, key=lambda w: len(w))\nprint('Sorted by length:', sorted_words)", "Sorted by length: ['pie', 'apple', 'banana']", 28, 92, {
+    "words = ['banana', 'pie', 'apple']\nsorted_words = sorted(words, key=lambda w: len(w))\nprint(f'Sorted by length: {sorted_words}')", "Sorted by length: ['pie', 'apple', 'banana']", 28, 92, {
       analogyType: "machine"
     }),
 
@@ -1780,18 +1780,18 @@ const s8Lessons = [
     }),
 
   makeLesson(8, "8.8", "code", "Archetype 1: Pure Validator Function",
-    "def is_valid_email(email: str) -> bool:\n    return '@' in email and email.endswith('.com')\n\nprint('Valid:', is_valid_email('dev@retro.com'))",
+    "def is_valid_email(email: str) -> bool:\n    return '@' in email and email.endswith('.com')\n\nprint(f'Valid: {is_valid_email(\"dev@retro.com\")}')",
     "Pure functions take inputs and return booleans with zero side effects.",
     "The Verification Filter",
-    "def is_valid_email(email: str) -> bool:\n    return '@' in email and email.endswith('.com')\n\nprint('Valid:', is_valid_email('dev@retro.com'))", "Valid: True", 30, 92, {
+    "def is_valid_email(email: str) -> bool:\n    return '@' in email and email.endswith('.com')\n\nprint(f'Valid: {is_valid_email(\"dev@retro.com\")}')", "Valid: True", 30, 92, {
       analogyType: "fork"
     }),
 
   makeLesson(8, "8.8", "code", "Archetype 2: Business Transformer Function",
-    "def normalize_username(raw: str) -> str:\n    return raw.strip().lower().replace(' ', '_')\n\nprint('Clean:', normalize_username('  Alex Dev  '))",
+    "def normalize_username(raw: str) -> str:\n    return raw.strip().lower().replace(' ', '_')\n\nprint(f'Clean: {normalize_username(\"  Alex Dev  \")}')",
     "Transform raw inputs into clean standardized outputs deterministically.",
     "Data Transformer Lathe",
-    "def normalize_username(raw: str) -> str:\n    return raw.strip().lower().replace(' ', '_')\n\nprint('Clean:', normalize_username('  Alex Dev  '))", "Clean: alex_dev", 30, 92, {
+    "def normalize_username(raw: str) -> str:\n    return raw.strip().lower().replace(' ', '_')\n\nprint(f'Clean: {normalize_username(\"  Alex Dev  \")}')", "Clean: alex_dev", 30, 92, {
       analogyType: "machine"
     }),
 
@@ -1826,10 +1826,10 @@ stages.push({
 // ==========================================
 const s9Lessons = [
   makeLesson(9, "9.1", "code", "Project 1: Command-Line Arithmetic Calculator",
-    "def calculate(a: float, b: float, op: str) -> float:\n    if op == '+': return a + b\n    elif op == '-': return a - b\n    elif op == '*': return a * b\n    elif op == '/': return a / b if b != 0 else 0.0\n    return 0.0\n\nprint('Result:', calculate(10, 2, '*'))",
+    "def calculate(a: float, b: float, op: str) -> float:\n    if op == '+': return a + b\n    elif op == '-': return a - b\n    elif op == '*': return a * b\n    elif op == '/': return a / b if b != 0 else 0.0\n    return 0.0\n\nresult = calculate(10, 2, '*')\nprint(f'Result: {result}')",
     "Build a complete 4-operation mathematical calculation engine.",
     "The Integrated Calculator",
-    "def calculate(a: float, b: float, op: str) -> float:\n    if op == '+': return a + b\n    elif op == '-': return a - b\n    elif op == '*': return a * b\n    elif op == '/': return a / b if b != 0 else 0.0\n    return 0.0\n\nprint('Result:', calculate(10, 2, '*'))", "Result: 20.0", 30, 92, {
+    "def calculate(a: float, b: float, op: str) -> float:\n    if op == '+': return a + b\n    elif op == '-': return a - b\n    elif op == '*': return a * b\n    elif op == '/': return a / b if b != 0 else 0.0\n    return 0.0\n\nresult = calculate(10, 2, '*')\nprint(f'Result: {result}')", "Result: 20.0", 30, 92, {
       analogyType: "arithmetic"
     }),
 
@@ -1850,10 +1850,10 @@ const s9Lessons = [
     }),
 
   makeLesson(9, "9.2", "code", "Project 4: Password Strength Auditor",
-    "def check_password(pwd: str) -> bool:\n    has_len = len(pwd) >= 8\n    has_num = any(ch.isdigit() for ch in pwd)\n    has_upper = any(ch.isupper() for ch in pwd)\n    return has_len and has_num and has_upper\n\nprint('Strong password:', check_password('RetroSpeed2026'))",
+    "def check_password(pwd: str) -> bool:\n    has_len = len(pwd) >= 8\n    has_num = any(ch.isdigit() for ch in pwd)\n    has_upper = any(ch.isupper() for ch in pwd)\n    return has_len and has_num and has_upper\n\nvalid = check_password('RetroSpeed2026')\nprint(f'Strong password: {valid}')",
     "Audit passwords against length, numeric, and uppercase criteria.",
     "Security Shield Guard",
-    "def check_password(pwd: str) -> bool:\n    has_len = len(pwd) >= 8\n    has_num = any(ch.isdigit() for ch in pwd)\n    has_upper = any(ch.isupper() for ch in pwd)\n    return has_len and has_num and has_upper\n\nprint('Strong password:', check_password('RetroSpeed2026'))", "Strong password: True", 32, 92, {
+    "def check_password(pwd: str) -> bool:\n    has_len = len(pwd) >= 8\n    has_num = any(ch.isdigit() for ch in pwd)\n    has_upper = any(ch.isupper() for ch in pwd)\n    return has_len and has_num and has_upper\n\nvalid = check_password('RetroSpeed2026')\nprint(f'Strong password: {valid}')", "Strong password: True", 32, 92, {
       analogyType: "fork"
     }),
 
@@ -1882,10 +1882,10 @@ const s9Lessons = [
     }),
 
   makeLesson(9, "9.4", "code", "Project 8: Terminal Task & To-Do Manager",
-    "todo = []\ndef add_task(t): todo.append(t)\ndef complete_task(): return todo.pop(0) if todo else 'Empty'\n\nadd_task('Write tests')\nadd_task('Ship build')\nprint('Completed:', complete_task())\nprint('Remaining:', todo)",
+    "todo = []\ndef add_task(t): todo.append(t)\ndef complete_task(): return todo.pop(0) if todo else 'Empty'\n\nadd_task('Write tests')\nadd_task('Ship build')\ndone = complete_task()\nprint(f'Completed: {done}')\nprint(f'Remaining: {todo}')",
     "Implement task queues with append and FIFO pop.",
     "Task Dispatch Board",
-    "todo = []\ndef add_task(t): todo.append(t)\ndef complete_task(): return todo.pop(0) if todo else 'Empty'\n\nadd_task('Write tests')\nadd_task('Ship build')\nprint('Completed:', complete_task())\nprint('Remaining:', todo)", "Completed: Write tests\nRemaining: ['Ship build']", 30, 92, {
+    "todo = []\ndef add_task(t): todo.append(t)\ndef complete_task(): return todo.pop(0) if todo else 'Empty'\n\nadd_task('Write tests')\nadd_task('Ship build')\ndone = complete_task()\nprint(f'Completed: {done}')\nprint(f'Remaining: {todo}')", "Completed: Write tests\nRemaining: ['Ship build']", 30, 92, {
       analogyType: "tray"
     }),
 
@@ -1906,10 +1906,10 @@ const s9Lessons = [
     }),
 
   makeLesson(9, "9.6", "code", "Project 11: Caesar Cipher Text Encryptor",
-    "def encrypt(text: str, shift: int) -> str:\n    out = []\n    for ch in text:\n        if ch.isalpha():\n            base = ord('a') if ch.islower() else ord('A')\n            out.append(chr((ord(ch) - base + shift) % 26 + base))\n        else:\n            out.append(ch)\n    return ''.join(out)\n\nprint('Encrypted:', encrypt('Hello', 3))",
+    "def encrypt(text: str, shift: int) -> str:\n    out = []\n    for ch in text:\n        if ch.isalpha():\n            base = ord('a') if ch.islower() else ord('A')\n            out.append(chr((ord(ch) - base + shift) % 26 + base))\n        else:\n            out.append(ch)\n    return ''.join(out)\n\nenc = encrypt('Hello', 3)\nprint(f'Encrypted: {enc}')",
     "Encrypt messages using character ordinals and modulo wrap math.",
     "The Cryptographic Wheel",
-    "def encrypt(text: str, shift: int) -> str:\n    out = []\n    for ch in text:\n        if ch.isalpha():\n            base = ord('a') if ch.islower() else ord('A')\n            out.append(chr((ord(ch) - base + shift) % 26 + base))\n        else:\n            out.append(ch)\n    return ''.join(out)\n\nprint('Encrypted:', encrypt('Hello', 3))", "Encrypted: Khoor", 32, 92, {
+    "def encrypt(text: str, shift: int) -> str:\n    out = []\n    for ch in text:\n        if ch.isalpha():\n            base = ord('a') if ch.islower() else ord('A')\n            out.append(chr((ord(ch) - base + shift) % 26 + base))\n        else:\n            out.append(ch)\n    return ''.join(out)\n\nenc = encrypt('Hello', 3)\nprint(f'Encrypted: {enc}')", "Encrypted: Khoor", 32, 92, {
       analogyType: "train"
     }),
 
@@ -1938,34 +1938,34 @@ const s9Lessons = [
     }),
 
   makeLesson(9, "9.8", "code", "Project 15: Engineering Unit Converter",
-    "def convert(val: float, unit_from: str, unit_to: str) -> float:\n    ratios = {'m_to_km': 0.001, 'km_to_m': 1000.0, 'kg_to_lb': 2.20462}\n    key = f'{unit_from}_to_{unit_to}'\n    return round(val * ratios[key], 2)\n\nprint('5000m in km:', convert(5000, 'm', 'km'))",
+    "def convert(val: float, unit_from: str, unit_to: str) -> float:\n    ratios = {'m_to_km': 0.001, 'km_to_m': 1000.0, 'kg_to_lb': 2.20462}\n    key = f'{unit_from}_to_{unit_to}'\n    return round(val * ratios[key], 2)\n\nkm = convert(5000, 'm', 'km')\nprint(f'5000m in km: {km}')",
     "Implement ratio lookup tables for metric-imperial conversions.",
     "Universal Measurement Converter",
-    "def convert(val: float, unit_from: str, unit_to: str) -> float:\n    ratios = {'m_to_km': 0.001, 'km_to_m': 1000.0, 'kg_to_lb': 2.20462}\n    key = f'{unit_from}_to_{unit_to}'\n    return round(val * ratios[key], 2)\n\nprint('5000m in km:', convert(5000, 'm', 'km'))", "5000m in km: 5.0", 30, 92, {
+    "def convert(val: float, unit_from: str, unit_to: str) -> float:\n    ratios = {'m_to_km': 0.001, 'km_to_m': 1000.0, 'kg_to_lb': 2.20462}\n    key = f'{unit_from}_to_{unit_to}'\n    return round(val * ratios[key], 2)\n\nkm = convert(5000, 'm', 'km')\nprint(f'5000m in km: {km}')", "5000m in km: 5.0", 30, 92, {
       analogyType: "machine"
     }),
 
   makeLesson(9, "9.8", "code", "Project 16: Morse Code Signal Encoder",
-    "morse_map = {'S': '...', 'O': '---'}\ndef to_morse(msg: str) -> str:\n    return ' '.join(morse_map.get(c, '') for c in msg.upper() if c in morse_map)\n\nprint('SOS Signal:', to_morse('SOS'))",
+    "morse_map = {'S': '...', 'O': '---'}\ndef to_morse(msg: str) -> str:\n    return ' '.join(morse_map.get(c, '') for c in msg.upper() if c in morse_map)\n\nsig = to_morse('SOS')\nprint(f'SOS Signal: {sig}')",
     "Map text sequences to audio/telegraph codes using hash maps.",
     "Telegraph Wire Translator",
-    "morse_map = {'S': '...', 'O': '---'}\ndef to_morse(msg: str) -> str:\n    return ' '.join(morse_map.get(c, '') for c in msg.upper() if c in morse_map)\n\nprint('SOS Signal:', to_morse('SOS'))", "SOS Signal: ... --- ...", 30, 92, {
+    "morse_map = {'S': '...', 'O': '---'}\ndef to_morse(msg: str) -> str:\n    return ' '.join(morse_map.get(c, '') for c in msg.upper() if c in morse_map)\n\nsig = to_morse('SOS')\nprint(f'SOS Signal: {sig}')", "SOS Signal: ... --- ...", 30, 92, {
       analogyType: "train"
     }),
 
   makeLesson(9, "9.9", "code", "Project 17: Prime Factorization Engine",
-    "def prime_factors(n: int):\n    factors = []\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors.append(d)\n            n //= d\n        d += 1\n    if n > 1: factors.append(n)\n    return factors\n\nprint('Factors of 60:', prime_factors(60))",
+    "def prime_factors(n: int):\n    factors = []\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors.append(d)\n            n //= d\n        d += 1\n    if n > 1: factors.append(n)\n    return factors\n\nfactors = prime_factors(60)\nprint(f'Factors of 60: {factors}')",
     "Deconstruct composite integers into prime component factors.",
     "Factorization Sieve",
-    "def prime_factors(n: int):\n    factors = []\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors.append(d)\n            n //= d\n        d += 1\n    if n > 1: factors.append(n)\n    return factors\n\nprint('Factors of 60:', prime_factors(60))", "Factors of 60: [2, 2, 3, 5]", 32, 92, {
+    "def prime_factors(n: int):\n    factors = []\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors.append(d)\n            n //= d\n        d += 1\n    if n > 1: factors.append(n)\n    return factors\n\nfactors = prime_factors(60)\nprint(f'Factors of 60: {factors}')", "Factors of 60: [2, 2, 3, 5]", 32, 92, {
       analogyType: "arithmetic"
     }),
 
   makeLesson(9, "9.9", "code", "Project 18: Monthly Expense Category Tracker",
-    "expenses = [\n    {'cat': 'food', 'amt': 45.0},\n    {'cat': 'rent', 'amt': 800.0},\n    {'cat': 'food', 'amt': 30.0}\n]\ntotals = {}\nfor e in expenses:\n    totals[e['cat']] = totals.get(e['cat'], 0.0) + e['amt']\nprint('Totals:', totals)",
+    "expenses = [\n    {'cat': 'food', 'amt': 45.0},\n    {'cat': 'rent', 'amt': 800.0},\n    {'cat': 'food', 'amt': 30.0}\n]\ntotals = {}\nfor e in expenses:\n    totals[e['cat']] = totals.get(e['cat'], 0.0) + e['amt']\nprint(f'Totals: {totals}')",
     "Aggregate structured transaction records by category grouping.",
     "Ledger Budget Analyzer",
-    "expenses = [\n    {'cat': 'food', 'amt': 45.0},\n    {'cat': 'rent', 'amt': 800.0},\n    {'cat': 'food', 'amt': 30.0}\n]\ntotals = {}\nfor e in expenses:\n    totals[e['cat']] = totals.get(e['cat'], 0.0) + e['amt']\nprint('Totals:', totals)", "Totals: {'food': 75.0, 'rent': 800.0}", 32, 92, {
+    "expenses = [\n    {'cat': 'food', 'amt': 45.0},\n    {'cat': 'rent', 'amt': 800.0},\n    {'cat': 'food', 'amt': 30.0}\n]\ntotals = {}\nfor e in expenses:\n    totals[e['cat']] = totals.get(e['cat'], 0.0) + e['amt']\nprint(f'Totals: {totals}')", "Totals: {'food': 75.0, 'rent': 800.0}", 32, 92, {
       analogyType: "tray"
     }),
 
