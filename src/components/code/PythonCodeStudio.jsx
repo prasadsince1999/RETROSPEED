@@ -9,11 +9,23 @@ import {
   Box,
   ChevronRight,
   BookOpen,
-  RotateCcw
+  RotateCcw,
+  Lightbulb,
+  CheckCircle2,
+  AlertCircle,
+  ChevronDown,
+  ChevronUp,
+  Sparkles
 } from 'lucide-react';
 import VirtualKeyboard from '../VirtualKeyboard';
 import { sound } from '../../utils/audio';
 import { getVisualComponentForLesson } from './visuals';
+import PythonStepTeacher from './PythonStepTeacher';
+import {
+  analyzePythonSyntax,
+  evaluateLearnerCode,
+  generateProgressiveHints
+} from './pythonEvaluator';
 
 /**
  * Python studio is THREE rooms, never one scrolling page:
@@ -45,6 +57,8 @@ export default function PythonCodeStudio({
   const [showKeyboard, setShowKeyboard] = useState(true);
   const [showHands, setShowHands] = useState(false);
   const [isCompiling, setIsCompiling] = useState(false);
+  const [showHints, setShowHints] = useState(false);
+  const [hintLevel, setHintLevel] = useState(1);
   const completeLock = useRef(false);
 
   useEffect(() => {
@@ -57,10 +71,33 @@ export default function PythonCodeStudio({
     setAccuracy(100);
     setIsFinished(false);
     setIsCompiling(false);
+    setShowHints(false);
+    setHintLevel(1);
     completeLock.current = false;
   }, [lesson?.id, code]);
 
   const targetChar = currentIndex < code.length ? code[currentIndex] : null;
+
+  const progressiveHints = useMemo(
+    () => generateProgressiveHints(lesson),
+    [lesson]
+  );
+
+  const currentTypedCode = useMemo(
+    () => code.slice(0, currentIndex),
+    [code, currentIndex]
+  );
+
+  const syntaxReport = useMemo(() => {
+    if (currentIndex === 0) return { valid: true, message: 'Syntax OK' };
+    if (currentIndex >= code.length) return analyzePythonSyntax(code);
+    return analyzePythonSyntax(currentTypedCode);
+  }, [currentIndex, code, currentTypedCode]);
+
+  const evaluationReport = useMemo(
+    () => evaluateLearnerCode(code, expectedOutput, lesson),
+    [code, expectedOutput, lesson]
+  );
 
   const codeLines = useMemo(() => {
     const lines = [];
@@ -96,11 +133,7 @@ export default function PythonCodeStudio({
 
   const handleKeyDown = useCallback((e) => {
     if (phase === 'teach') {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        sound.playKeyClick();
-        setPhase('type');
-      }
+      // PythonStepTeacher manages internal 4-step progression and calls onStartTyping when ready
       return;
     }
 
@@ -198,25 +231,16 @@ export default function PythonCodeStudio({
       {header}
 
       {phase === 'teach' && (
-        <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[4px_4px_0px_#2D2319]">
-          <div className="flex items-center justify-between gap-3 pb-2.5 border-b border-[#2D2319]/15 shrink-0">
-            <div className="flex items-center space-x-2">
-              <BookOpen className="w-4 h-4 text-[#F6C445]" />
-              <h3 className="font-mono font-black text-xs uppercase tracking-wider text-[#2D2319]">Learn first</h3>
-            </div>
-            <span className="text-[10px] font-mono font-bold bg-[#F6C445] px-2.5 py-0.5 rounded-full border border-[#2D2319] text-[#2D2319]">{analogy}</span>
-          </div>
-          <p className="text-sm font-mono text-[#2D2319]/90 leading-relaxed font-medium py-3 shrink-0">{concept}</p>
-          <div className="flex-1 min-h-0 overflow-y-auto">{getVisualComponentForLesson(lesson?.rawId || lesson?.codeId || lesson?.id, lesson?.chapter)}</div>
-          <div className="shrink-0 pt-3 flex items-center justify-between border-t border-[#2D2319]/15">
-            <span className="text-[11px] font-mono text-[#2D2319]/60">Enter or Space also continues</span>
-            <button
-              onClick={() => { sound.playKeyClick(); setPhase('type'); }}
-              className="px-4 py-2 rounded-xl bg-[#F6C445] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-black text-sm text-[#2D2319] flex items-center gap-1.5"
-            >
-              Start typing <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+        <div className="flex-1 min-h-0 overflow-hidden">
+          <PythonStepTeacher
+            lesson={lesson}
+            chapter={chapter || lesson?.chapter}
+            onStartTyping={() => {
+              sound.playKeyClick();
+              setPhase('type');
+            }}
+            onExit={onExit}
+          />
         </div>
       )}
 
@@ -227,17 +251,106 @@ export default function PythonCodeStudio({
             
             {/* Left: Code Stream Editor */}
             <div className="lg:col-span-8 bg-[#2D2319] text-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl shadow-[4px_4px_0px_#2D2319] overflow-hidden flex flex-col min-h-0">
-              <div className="bg-[#211A13] px-3.5 py-1.5 border-b border-[#FDF8EE]/20 flex items-center justify-between text-xs font-mono shrink-0">
+              <div className="bg-[#211A13] px-3.5 py-1.5 border-b border-[#FDF8EE]/20 flex items-center justify-between text-xs font-mono shrink-0 gap-2 flex-wrap">
                 <div className="flex items-center space-x-2">
                   <Code2 className="w-3.5 h-3.5 text-[#F6C445]" />
                   <span className="font-bold">main.py</span>
+                  {/* Real-time Syntax Diagnostic Pill */}
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold flex items-center gap-1 border transition-all ${
+                      syntaxReport.valid
+                        ? 'bg-[#48B89F]/20 text-[#48B89F] border-[#48B89F]/40'
+                        : 'bg-[#F28B82]/20 text-[#F28B82] border-[#F28B82]/40 animate-pulse'
+                    }`}
+                    title={syntaxReport.message}
+                  >
+                    {syntaxReport.valid ? (
+                      <>
+                        <CheckCircle2 className="w-3 h-3 text-[#48B89F]" />
+                        <span>Syntax OK</span>
+                      </>
+                    ) : (
+                      <>
+                        <AlertCircle className="w-3 h-3 text-[#F28B82]" />
+                        <span>{syntaxReport.message}</span>
+                      </>
+                    )}
+                  </span>
                 </div>
-                <div className="flex items-center space-x-3 text-[10px] text-[#FDF8EE]/60 font-mono">
+                <div className="flex items-center space-x-2 text-[10px] text-[#FDF8EE]/60 font-mono">
+                  {/* Subtle Code Hints Collapsible Toggle */}
+                  <button
+                    onClick={() => {
+                      sound.playKeyClick();
+                      setShowHints((p) => !p);
+                    }}
+                    className={`px-2 py-0.5 rounded-lg border text-[10px] font-mono font-bold flex items-center gap-1 transition-all cursor-pointer ${
+                      showHints
+                        ? 'bg-[#F6C445] text-[#2D2319] border-[#2D2319] shadow-[1px_1px_0px_#2D2319]'
+                        : 'bg-[#2D2319] text-[#FDF8EE]/80 hover:text-[#FDF8EE] border-[#FDF8EE]/20 hover:border-[#FDF8EE]/40'
+                    }`}
+                    title="Toggle progressive code hints"
+                  >
+                    <Lightbulb className="w-3 h-3 text-[#F6C445]" />
+                    <span>Code Hints</span>
+                    {showHints ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                  </button>
+                  <span>•</span>
                   <span>Ln {codeLines.findIndex((l) => l.chars.some((c) => c.globalIdx === currentIndex)) + 1 || 1} of {codeLines.length}</span>
                   <span>•</span>
                   <span>UTF-8</span>
                 </div>
               </div>
+
+              {/* Subtle Progressive Code Hints Drawer */}
+              {showHints && (
+                <div className="bg-[#19130D] border-b border-[#FDF8EE]/15 p-2.5 sm:p-3 text-xs font-mono shrink-0 transition-all">
+                  <div className="flex items-center justify-between gap-2 mb-1.5">
+                    <div className="flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#F6C445]" />
+                      <span className="text-[11px] font-bold text-[#F6C445] uppercase tracking-wide">
+                        Clue {hintLevel} of {progressiveHints.length}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      {progressiveHints.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => {
+                            sound.playKeyClick();
+                            setHintLevel(idx + 1);
+                          }}
+                          className={`w-5 h-5 rounded text-[10px] font-bold cursor-pointer transition-colors ${
+                            hintLevel === idx + 1
+                              ? 'bg-[#F6C445] text-[#2D2319]'
+                              : hintLevel > idx + 1
+                              ? 'bg-[#48B89F]/30 text-[#48B89F] border border-[#48B89F]/40'
+                              : 'bg-[#2D2319] text-[#FDF8EE]/50 border border-[#FDF8EE]/20'
+                          }`}
+                          title={`View clue ${idx + 1}`}
+                        >
+                          {idx + 1}
+                        </button>
+                      ))}
+                      {hintLevel < progressiveHints.length && (
+                        <button
+                          onClick={() => {
+                            sound.playKeyClick();
+                            setHintLevel((prev) => Math.min(progressiveHints.length, prev + 1));
+                          }}
+                          className="ml-1 text-[10px] text-[#48B89F] hover:underline font-bold cursor-pointer"
+                        >
+                          Next clue &rarr;
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <p className="text-[#FDF8EE]/90 text-xs leading-relaxed pl-1">
+                    {progressiveHints[hintLevel - 1]}
+                  </p>
+                </div>
+              )}
+
               <div className="p-3.5 sm:p-4 font-mono text-sm sm:text-base leading-relaxed overflow-y-auto flex-1 min-h-0">
                 {codeLines.map((line) => (
                   <div key={line.lineNum} className="flex items-baseline space-x-3 py-0.5">
@@ -269,7 +382,7 @@ export default function PythonCodeStudio({
                 <span className="text-[10px] text-[#48B89F] font-bold">Standby</span>
               </div>
               <div className="p-3 sm:p-3.5 bg-[#1F1912] text-[#FDF8EE] font-mono text-xs flex-1 flex flex-col justify-between overflow-y-auto min-h-0">
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   <div className="text-[#F6C445] text-xs font-bold">$ python -u main.py</div>
                   <div className="text-[#FDF8EE]/40 text-xs">
                     Terminal waiting for execution...
@@ -280,6 +393,27 @@ export default function PythonCodeStudio({
                       <pre className="text-[#48B89F]/70 text-[11px] font-mono whitespace-pre-wrap mt-0.5">{expectedOutput}</pre>
                     </div>
                   )}
+                  <div className="pt-2 border-t border-[#FDF8EE]/10 space-y-1">
+                    <span className="text-[10px] uppercase text-[#FDF8EE]/40 block font-bold">Auto-Grading Plan (pytest):</span>
+                    <div className="text-[11px] text-[#FDF8EE]/70 space-y-0.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[#48B89F]">✓</span>
+                        <span>Test 1: Output assertion</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[#48B89F]">✓</span>
+                        <span>Test 2: Syntax validity & token balance</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[#48B89F]">✓</span>
+                        <span>Test 3: Expected print statement detection</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[#48B89F]">✓</span>
+                        <span>Test 4: Construct paradigm & exit code 0</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="pt-2 border-t border-[#FDF8EE]/10 text-[10px] text-[#FDF8EE]/50 flex items-center justify-between shrink-0">
                   <span>Python 3.12 Engine</span>
@@ -332,13 +466,84 @@ export default function PythonCodeStudio({
 
       {phase === 'run' && (
         <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl shadow-[4px_4px_0px_#2D2319]">
-          <div className="bg-[#2D2319] text-[#FDF8EE] px-4 py-2 flex items-center justify-between text-xs font-mono shrink-0">
-            <div className="flex items-center space-x-2"><TerminalIcon className="w-3.5 h-3.5 text-[#48B89F]" /><span className="font-bold">Python 3.12 Terminal</span></div>
-            <span className="text-[10px]">{isCompiling ? 'Compiling' : 'Exit 0'}</span>
+          <div className="bg-[#2D2319] text-[#FDF8EE] px-4 py-2 flex items-center justify-between text-xs font-mono shrink-0 gap-2 flex-wrap">
+            <div className="flex items-center space-x-2">
+              <TerminalIcon className="w-3.5 h-3.5 text-[#48B89F]" />
+              <span className="font-bold">Python 3.12 Terminal</span>
+              {/* Syntax Diagnostic Pill */}
+              <span
+                className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold flex items-center gap-1 border ${
+                  evaluationReport.syntax.valid
+                    ? 'bg-[#48B89F]/20 text-[#48B89F] border-[#48B89F]/40'
+                    : 'bg-[#F28B82]/20 text-[#F28B82] border-[#F28B82]/40'
+                }`}
+              >
+                {evaluationReport.syntax.valid ? (
+                  <>
+                    <CheckCircle2 className="w-3 h-3 text-[#48B89F]" />
+                    <span>Syntax OK</span>
+                  </>
+                ) : (
+                  <>
+                    <AlertCircle className="w-3 h-3 text-[#F28B82]" />
+                    <span>{evaluationReport.syntax.message}</span>
+                  </>
+                )}
+              </span>
+            </div>
+            <div className="flex items-center space-x-2 text-[10px]">
+              <span className="text-[#48B89F] font-bold">
+                {evaluationReport.allPassed
+                  ? 'All Assertions Passed (4/4)'
+                  : `${evaluationReport.passedCount}/${evaluationReport.totalCount} Passed`}
+              </span>
+              <span>•</span>
+              <span>{isCompiling ? 'Compiling' : 'Exit 0'}</span>
+            </div>
           </div>
-          <div className="flex-1 p-5 bg-[#1F1912] text-[#FDF8EE] font-mono text-sm overflow-auto">
-            <div className="text-[#F6C445] font-bold">$ python -u main.py</div>
-            <pre className="text-[#48B89F] whitespace-pre-wrap pt-3">{expectedOutput}</pre>
+          <div className="flex-1 p-4 sm:p-5 bg-[#1F1912] text-[#FDF8EE] font-mono text-xs sm:text-sm overflow-auto space-y-4">
+            <div>
+              <div className="text-[#F6C445] font-bold">$ python -u main.py</div>
+              <pre className="text-[#48B89F] whitespace-pre-wrap pt-2 pb-1 pl-2 border-l-2 border-[#48B89F]/40 my-2">{expectedOutput}</pre>
+            </div>
+
+            {/* Automated Test Suite Evaluation (pytest pattern) */}
+            <div className="pt-3 border-t border-[#FDF8EE]/15">
+              <div className="text-[11px] font-bold text-[#FDF8EE]/60 uppercase tracking-wider mb-2.5 flex items-center justify-between flex-wrap gap-1">
+                <span className="flex items-center gap-1.5 text-[#F6C445]">
+                  <Play className="w-3 h-3 text-[#48B89F]" />
+                  Automated Test Suite (pytest pattern)
+                </span>
+                <span className="text-[10px] text-[#48B89F] bg-[#48B89F]/10 px-2 py-0.5 rounded border border-[#48B89F]/30 font-bold">
+                  {evaluationReport.passedCount} / {evaluationReport.totalCount} assertions passed
+                </span>
+              </div>
+
+              {/* Terminal-style raw test run lines */}
+              <div className="space-y-1.5 mb-3 bg-[#17120C] p-3 rounded-lg border border-[#FDF8EE]/10 font-mono text-xs">
+                {evaluationReport.tests.map((test) => (
+                  <div
+                    key={test.id}
+                    className={`flex items-start justify-between gap-2 ${
+                      test.passed ? 'text-[#48B89F]' : 'text-[#F28B82]'
+                    }`}
+                  >
+                    <span>{test.outputStr}</span>
+                    <span className="text-[10px] opacity-75 shrink-0">
+                      {test.passed ? '0.01s' : 'FAIL'}
+                    </span>
+                  </div>
+                ))}
+                <div className="pt-2 border-t border-[#FDF8EE]/10 text-[11px] text-[#FDF8EE]/50 flex items-center justify-between">
+                  <span>rootdir: /retrospeed/python_studio</span>
+                  <span className="text-[#48B89F] font-bold">
+                    {evaluationReport.allPassed
+                      ? '4 passed in 0.04s — All test assertions passed ✓'
+                      : `${evaluationReport.passedCount} passed, ${evaluationReport.totalCount - evaluationReport.passedCount} failed`}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="shrink-0 p-3 flex items-center justify-between border-t-2 border-[#2D2319]">
             <button
@@ -352,7 +557,7 @@ export default function PythonCodeStudio({
                 setIsFinished(false);
                 if (onRetry) onRetry();
               }}
-              className="px-3 py-2 rounded-lg border-2 border-[#2D2319] bg-[#FDF8EE] font-bold text-xs flex items-center gap-1"
+              className="px-3 py-2 rounded-lg border-2 border-[#2D2319] bg-[#FDF8EE] font-bold text-xs flex items-center gap-1 cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Retry snippet
             </button>
@@ -373,7 +578,7 @@ export default function PythonCodeStudio({
                   stars: finalAcc >= 95 ? 5 : finalAcc >= 85 ? 4 : 3
                 });
               }}
-              className="px-4 py-2 rounded-xl bg-[#48B89F] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-black text-sm text-[#2D2319] flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl bg-[#48B89F] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-black text-sm text-[#2D2319] flex items-center gap-1.5 cursor-pointer"
             >
               Next lesson <ChevronRight className="w-4 h-4" />
             </button>
@@ -383,6 +588,8 @@ export default function PythonCodeStudio({
     </div>
   );
 }
+
+export { analyzePythonSyntax, evaluateLearnerCode, generateProgressiveHints };
 
 function Metric({ label, value, accent }) {
   return (

@@ -17,11 +17,9 @@ import {
   FlameKindling,
   Car,
   Terminal,
-  ArrowRight,
-  Lock
+  ArrowRight
 } from 'lucide-react';
 import { sound } from '../utils/audio';
-import { isGameUnlocked } from '../utils/license';
 
 const SKILL_TRIALS = [
   {
@@ -146,10 +144,6 @@ export default function ChallengeHub({
 }) {
   const handleLaunch = (gameId) => {
     sound.playKeyClick();
-    if (!isGameUnlocked(gameId, userProgress)) {
-      if (onOpenUnlockModal) onOpenUnlockModal();
-      return;
-    }
     if (onLaunchGame) {
       onLaunchGame(gameId);
     }
@@ -291,27 +285,14 @@ export default function ChallengeHub({
                 {/* Footer Controls */}
                 <div className="mt-4 pt-3 border-t border-[#2D2319]/15 flex items-center justify-between">
                   <span className="text-[10px] font-mono font-bold text-[#2D2319]/70">
-                    {isGameUnlocked(game.id, userProgress) ? 'Full Edition' : 'Requires Unlock'}
+                    {game.focus ? `Focus: ${game.focus}` : 'Arcade Mode'}
                   </span>
                   <button
                     onClick={() => handleLaunch(game.id)}
-                    className={`px-3.5 py-1.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-bold active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1 cursor-pointer ${
-                      isGameUnlocked(game.id, userProgress)
-                        ? 'bg-[#F6C445] hover:bg-[#48B89F] text-[#2D2319]'
-                        : 'bg-[var(--rs-paper-alt)] hover:bg-[#F28B82] text-[#2D2319]/80'
-                    }`}
+                    className="px-3.5 py-1.5 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-mono text-xs font-bold active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1 cursor-pointer bg-[#F6C445] hover:bg-[#48B89F] text-[#2D2319]"
                   >
-                    {isGameUnlocked(game.id, userProgress) ? (
-                      <>
-                        <Play className="w-3.5 h-3.5 fill-[#2D2319]" />
-                        <span>Play Now</span>
-                      </>
-                    ) : (
-                      <>
-                        <Lock className="w-3.5 h-3.5" />
-                        <span>Unlock</span>
-                      </>
-                    )}
+                    <Play className="w-3.5 h-3.5 fill-[#2D2319]" />
+                    <span>Play Now</span>
                   </button>
                 </div>
               </div>

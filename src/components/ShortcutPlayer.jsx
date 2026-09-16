@@ -164,11 +164,6 @@ export default function ShortcutPlayer({ lesson = null, onExit, onComplete, user
           setStepIndex(prev => prev + 1);
         } else if (drillIndex + 1 < SHORTCUT_DRILLS.length) {
           const nextIndex = drillIndex + 1;
-          if (nextIndex >= 2 && !license.isUnlocked) {
-            // Reached boundary of free shortcut drills
-            if (onOpenUnlockModal) onOpenUnlockModal();
-            return;
-          }
           setDrillIndex(nextIndex);
           setStepIndex(0);
         } else {

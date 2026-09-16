@@ -250,4 +250,8 @@ npm run package:store
 ---
 
 ## 📄 License
-MIT License. Created with ❤️ by Prasad at **KSM × Tech Studio**.
+MIT License.
+
+---
+
+Created with ❤️ by Prasad at KSM × Tech Studio.

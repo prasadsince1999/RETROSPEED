@@ -17,7 +17,6 @@ export default function DeskCoachStage({
   const allKeys = useMemo(() => getKeysForLayout(layout), [layout]);
 
   const highlightMode = currentBeat?.highlight || 'none';
-  const coachState = currentBeat?.coach || 'open';
   const bannerText = currentBeat?.banner;
 
   // Check which keys are highlighted for the current beat
@@ -99,84 +98,19 @@ export default function DeskCoachStage({
         }}
       />
 
-      {/* TOP BAR: CIRCULAR COACH STAMP & DYNAMIC RUBBER-STAMP BANNER */}
-      <div className="w-full flex items-center justify-between z-10 gap-4 mb-2">
-        
-        {/* Left / Center: Dynamic Stamp Banner */}
-        <div className="flex-1 flex items-center">
-          {bannerText ? (
-            <div className={`px-4 sm:px-6 py-2 rounded-xl font-display font-black text-sm sm:text-xl md:text-2xl border-2 sm:border-3 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] transition-all duration-200 animate-in zoom-in-95 ${
-              bannerText === 'TYPE LIKE A PRO' ? 'bg-[#F6C445] text-[#2D2319] -rotate-1' :
-              bannerText === 'EYES ON THE PAGE' ? 'bg-[#EF4444] text-white -rotate-2 animate-pulse' :
-              bannerText === 'LET\'S GET STARTED' ? 'bg-[#10B981] text-white rotate-1' :
-              bannerText === 'REACH AND RETURN' ? 'bg-[#F28B82] text-[#2D2319] rotate-1' :
-              'bg-[#4BA3E3] text-white -rotate-1'
-            }`}>
-              ★ {bannerText}
-            </div>
-          ) : (
-            <div className="text-xs font-mono font-bold text-[#2D2319]/40 tracking-wider">
-              RETROSPEED COACHING DESK
-            </div>
-          )}
-        </div>
-
-        {/* Right: Circular Coach Stamp Portrait */}
-        <div className="relative group shrink-0">
-          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-3 border-[#2D2319] bg-white shadow-[3px_3px_0px_#2D2319] flex flex-col items-center justify-center p-1 relative overflow-hidden transition-transform duration-200 group-hover:scale-105">
-            {/* Stamp Ring Text */}
-            <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#2D2319]/30 pointer-events-none" />
-            
-            {/* Coach Facial Expressions */}
-            {coachState === 'closed' ? (
-              // Closed Eyes on Beat 3 ("Close your eyes... Don't peek")
-              <div className="flex flex-col items-center justify-center space-y-1 text-[#2D2319]">
-                <div className="flex space-x-2 text-base sm:text-lg font-black leading-none">
-                  <span>⌒</span>
-                  <span>⌒</span>
-                </div>
-                <div className="text-[10px] font-mono font-bold tracking-tighter text-amber-600">
-                  NO PEEKING
-                </div>
-              </div>
-            ) : coachState === 'focused' ? (
-              // Focused Eyes on Beat 7 ("One rule: never look down")
-              <div className="flex flex-col items-center justify-center space-y-0.5 text-[#2D2319]">
-                <div className="flex space-x-1.5 text-sm sm:text-base font-black">
-                  <span className="text-rose-600">▲</span>
-                  <span className="text-rose-600">▲</span>
-                </div>
-                <div className="w-4 h-0.5 bg-[#2D2319] rounded-full" />
-                <div className="text-[8px] font-mono font-black text-rose-600 tracking-tighter">
-                  EYES UP
-                </div>
-              </div>
-            ) : coachState === 'celebrate' ? (
-              // Celebration on Beat 10
-              <div className="flex flex-col items-center justify-center space-y-0.5 text-[#2D2319]">
-                <div className="flex space-x-1.5 text-amber-500 text-xs sm:text-sm font-black">
-                  <span>★</span>
-                  <span>★</span>
-                </div>
-                <div className="text-sm font-black text-[#2D2319]">⌣</div>
-              </div>
-            ) : (
-              // Default Open / Attentive Eyes
-              <div className="flex flex-col items-center justify-center space-y-1 text-[#2D2319]">
-                <div className="flex space-x-2 text-xs sm:text-sm font-black">
-                  <span>◉</span>
-                  <span>◉</span>
-                </div>
-                <div className="w-3 h-0.5 bg-[#2D2319] rounded-full" />
-              </div>
-            )}
+      {/* TOP BAR: DYNAMIC RUBBER-STAMP BANNER */}
+      <div className="w-full flex items-center justify-center z-10 mb-2 min-h-[44px]">
+        {bannerText && (
+          <div className={`px-4 sm:px-6 py-2 rounded-xl font-display font-black text-sm sm:text-xl md:text-2xl border-2 sm:border-3 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] transition-all duration-200 animate-in zoom-in-95 ${
+            bannerText === 'TYPE LIKE A PRO' ? 'bg-[#F6C445] text-[#2D2319] -rotate-1' :
+            bannerText === 'EYES ON THE PAGE' ? 'bg-[#EF4444] text-white -rotate-2 animate-pulse' :
+            bannerText === 'LET\'S GET STARTED' ? 'bg-[#10B981] text-white rotate-1' :
+            bannerText === 'REACH AND RETURN' ? 'bg-[#F28B82] text-[#2D2319] rotate-1' :
+            'bg-[#4BA3E3] text-white -rotate-1'
+          }`}>
+            ★ {bannerText}
           </div>
-          
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#2D2319] text-white text-[8px] font-mono font-black px-1.5 py-0.2 rounded-full border border-white whitespace-nowrap">
-            COACH
-          </div>
-        </div>
-
+        )}
       </div>
 
       {/* CENTER: KINETIC PAPER KEYBOARD */}

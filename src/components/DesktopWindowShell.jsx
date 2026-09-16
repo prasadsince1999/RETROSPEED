@@ -354,20 +354,10 @@ export default function DesktopWindowShell({
                         >
                           Studio & About RETROSPEED
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setActiveMenuDropdown(null);
-                            setUnlockModalOpen(true);
-                          }}
-                          className="w-full text-left px-3 py-1.5 hover:bg-[#48B89F] text-[#2D2319] font-mono font-bold text-[11px] cursor-pointer"
-                        >
-                          License Status & Pricing
-                        </button>
                       </div>
 
                       <div className="px-3 py-1.5 text-[9px] font-mono text-[#2D2319]/60">
-                        Version 2.0 • Microsoft Store Edition
+                        Version 2.0 • 100% Free Edition
                       </div>
                     </div>
                   </>
@@ -479,27 +469,22 @@ export default function DesktopWindowShell({
                 </div>
               </div>
 
-              {/* License Status Badge */}
+              {/* Free Edition Status Badge */}
               <button
                 type="button"
                 onClick={() => {
                   sound.playKeyClick();
-                  setUnlockModalOpen(true);
+                  setAboutModalOpen(true);
                 }}
-                className={`w-full mt-2.5 p-2 rounded-xl border-2 border-[#2D2319] flex items-center justify-between text-xs font-mono font-bold shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer transition-all ${
-                  license.isUnlocked
-                    ? 'bg-[#C7E8CA] text-[#2D2319]'
-                    : 'bg-[#F6C445] hover:bg-[#F28B82] text-[#2D2319]'
-                }`}
-                title={license.isUnlocked ? 'Lifetime License Active' : 'Click to Unlock full edition'}
+                className="w-full mt-2.5 p-2 rounded-xl border-2 border-[#2D2319] flex items-center justify-between text-xs font-mono font-bold shadow-[2px_2px_0px_#2D2319] bg-[#C7E8CA] text-[#2D2319] hover:bg-[#b8e0bc] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer transition-all"
+                title="100% Free & Open Edition — Click to view studio details"
               >
                 <div className="flex items-center space-x-1.5 min-w-0">
                   <Shield className="w-3.5 h-3.5 shrink-0 text-[#2D2319]" />
-                  <span className="truncate text-[10px] font-black">{license.badgeText}</span>
+                  <span className="truncate text-[10px] font-black">100% Free</span>
                 </div>
                 <div className="flex items-center space-x-1 shrink-0 px-2 py-0.5 bg-[#FDF8EE] rounded border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] text-[10px] font-black uppercase text-[#2D2319]">
-                  {!license.isUnlocked && <span className="text-[#2D2319] text-[11px] leading-none">✦</span>}
-                  <span>{license.isUnlocked ? 'ACTIVE' : 'UNLOCK'}</span>
+                  <span>ACTIVE</span>
                 </div>
               </button>
 

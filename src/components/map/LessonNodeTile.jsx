@@ -1,6 +1,7 @@
 import React from 'react';
 import { Lock, Play } from 'lucide-react';
 import { JourneyAvatar } from './JourneyAvatar';
+import { getTargetKeyDisplay } from '../../utils/lessonFormat';
 
 export function LessonNodeTile({
   lesson,
@@ -111,16 +112,16 @@ export function LessonNodeTile({
       );
     }
 
-    const targetKeyText = Array.isArray(lesson.targetKeys) && lesson.targetKeys.length > 0
-      ? lesson.targetKeys.slice(0, 4).join(' ')
-      : (lesson.newKeys ? lesson.newKeys.slice(0, 4) : '⌨');
+    const keyDisplay = getTargetKeyDisplay(lesson);
 
     return (
       <div className="relative flex items-center justify-center">
-        <div className={`w-12 h-9 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center font-mono font-black text-xs ${
-          isCompleted ? 'bg-[#C7E8CA] text-[#2D2319]' : 'bg-white text-[#2D2319]'
-        }`}>
-          {targetKeyText}
+        <div 
+          className={`min-w-[3rem] px-2 sm:px-2.5 h-9 rounded-xl border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center font-mono font-black ${keyDisplay.fontSize} whitespace-nowrap leading-none text-center select-none ${
+            isCompleted ? 'bg-[#C7E8CA] text-[#2D2319]' : 'bg-white text-[#2D2319]'
+          }`}
+        >
+          {keyDisplay.text}
         </div>
       </div>
     );

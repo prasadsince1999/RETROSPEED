@@ -34,8 +34,8 @@ export function getDefaultProgress() {
       avatarBg: '#F28B82'
     },
     license: {
-      status: 'free',
-      isUnlocked: false
+      status: 'full',
+      isUnlocked: true
     },
     arcadeStats: {
       pressRoom: 0,

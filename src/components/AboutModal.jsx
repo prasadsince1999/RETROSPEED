@@ -53,7 +53,7 @@ export default function AboutModal({
   const TABS = [
     { id: 'studio', label: 'Studio & Apps', icon: Sparkles, count: '4 Apps' },
     { id: 'roadmap', label: "Releases & Roadmap", icon: Clock, count: 'v2.0' },
-    { id: 'license', label: 'License & System', icon: ShieldCheck, count: license.badgeText }
+    { id: 'license', label: 'Edition & Info', icon: ShieldCheck, count: '100% Free' }
   ];
 
   return (
@@ -471,32 +471,17 @@ export default function AboutModal({
               {/* License Status Hero Card */}
               <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-5 shadow-[4px_4px_0px_#2D2319] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <div className="text-[10px] font-mono font-bold text-[#2D2319]/70 uppercase">License Status</div>
+                  <div className="text-[10px] font-mono font-bold text-[#2D2319]/70 uppercase">Edition & Access</div>
                   <div className="text-base sm:text-lg font-black font-display text-[#2D2319] flex items-center space-x-2">
-                    <span>{license.badgeText}</span>
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold border border-[#2D2319] ${
-                      license.isUnlocked ? 'bg-[#48B89F] text-[#2D2319]' : 'bg-[#F6C445] text-[#2D2319]'
-                    }`}>
-                      {license.isUnlocked ? 'LIFETIME ACTIVE' : 'FREE EDITION'}
+                    <span>100% Free Edition</span>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold border border-[#2D2319] bg-[#48B89F] text-[#2D2319]">
+                      ALL UNLOCKED
                     </span>
                   </div>
                   <p className="text-xs font-mono text-[#2D2319]/75">
-                    {license.isUnlocked 
-                      ? 'All 13 curriculum tracks, 8 arcade games, and shortcut lab unlocked permanently.'
-                      : 'Free always on Parts 1-2, Press Room, Paper Planes, local stats, and shortcut basics.'}
+                    All 13 curriculum tracks, 8 arcade games, and shortcut lab are completely free and unlocked. No purchases, no subscriptions, zero ads.
                   </p>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    sound.playKeyClick();
-                    if (onOpenUnlockModal) onOpenUnlockModal();
-                  }}
-                  className="px-4 py-2.5 bg-[#48B89F] hover:bg-[#3ea089] border-2 border-[#2D2319] rounded-xl font-display font-black text-xs sm:text-sm shadow-[3px_3px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer shrink-0 text-[#2D2319]"
-                >
-                  {license.isUnlocked ? 'View License Details' : '✦ Unlock full edition'}
-                </button>
               </div>
 
               {/* Support & Tip Card */}

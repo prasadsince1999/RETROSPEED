@@ -14,7 +14,8 @@
     "package:win": "vite build && electron-builder --win portable --x64",
     "package:store": "vite build && electron-builder --win appx --x64",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "deploy:website": "npm run build && node scripts/deploy_to_website.cjs"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",

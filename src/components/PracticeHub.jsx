@@ -49,10 +49,6 @@ export default function PracticeHub({
 
   const handleLaunchSpineLesson = (part, lesson) => {
     sound.playKeyClick();
-    if (!isLessonUnlocked(lesson, userProgress)) {
-      if (onOpenUnlockModal) onOpenUnlockModal();
-      return;
-    }
     if (onStartSpineLesson) {
       onStartSpineLesson(part, lesson);
     }

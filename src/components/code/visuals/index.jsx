@@ -1,8 +1,6 @@
 import React from 'react';
-import Chapter1_LevelsOfLanguages from './Chapter1_LevelsOfLanguages';
+import DynamicVisualStage, { detectAnalogyType } from './DynamicVisualStage';
 import Chapter1_InterpreterPipeline from './Chapter1_InterpreterPipeline';
-import Chapter1_VariablesMemoryBox from './Chapter1_VariablesMemoryBox';
-import Chapter1_MegaphoneAndFunctions from './Chapter1_MegaphoneAndFunctions';
 import Chapter1_DataTypesRoadmap from './Chapter1_DataTypesRoadmap';
 import Chapter2_StringTrainAndRuler from './Chapter2_StringTrainAndRuler';
 import Chapter5_DecisionFork from './Chapter5_DecisionFork';
@@ -10,45 +8,97 @@ import Chapter6_ConveyorLoops from './Chapter6_ConveyorLoops';
 import Chapter7_DataStructures from './Chapter7_DataStructures';
 import Chapter8_FunctionMachine from './Chapter8_FunctionMachine';
 
-export function getVisualComponentForLesson(lessonId, chapter = 1) {
+export { DynamicVisualStage, detectAnalogyType };
+
+/**
+ * Route lesson to its accurate animated visual stage component.
+ * Removes the old static 5+5 cartoon fallbacks and ensures every lesson
+ * has a dynamic, animated physical mental model.
+ */
+export function getVisualComponentForLesson(lessonOrId, chapter = 1, maybeLesson = null) {
+  const lesson = (typeof lessonOrId === 'object' && lessonOrId !== null)
+    ? lessonOrId
+    : (maybeLesson || { id: lessonOrId, rawId: lessonOrId, codeId: lessonOrId, chapter });
+
+  const lessonId = String(lesson?.codeId || lesson?.rawId || lesson?.id || (typeof lessonOrId === 'string' ? lessonOrId : ''));
+  const effectiveChapter = Number(lesson?.chapter || chapter || 1);
+
+  // 1. Explicit analogyType on lesson metadata takes highest precedence
+  if (lesson?.analogyType) {
+    return <DynamicVisualStage analogyType={lesson.analogyType} lesson={lesson} />;
+  }
+
+  // 2. Specific curated multi-frame storyboard overrides if applicable
   switch (lessonId) {
-    case 'py-101':
-      return <Chapter1_LevelsOfLanguages />;
     case 'py-102':
       return <Chapter1_InterpreterPipeline />;
-    case 'py-104':
-    case 'py-105':
-      return <Chapter1_MegaphoneAndFunctions />;
-    case 'py-106':
-    case 'py-107':
-      return <Chapter1_VariablesMemoryBox />;
     case 'py-109':
     case 'py-110':
       return <Chapter1_DataTypesRoadmap />;
+    case 'py-101':
+    case 'py-104':
+    case 'py-105':
+      return <DynamicVisualStage analogyType="megaphone" lesson={lesson} />;
+    case 'py-106':
+    case 'py-107':
+    case 'py-108':
+      return <DynamicVisualStage analogyType="box" lesson={lesson} />;
     case 'py-201':
     case 'py-203':
     case 'py-204':
-      return <Chapter2_StringTrainAndRuler />;
+      return <DynamicVisualStage analogyType="train" lesson={lesson} />;
+    case 'py-301':
+    case 'py-302':
+      return <DynamicVisualStage analogyType="microphone" lesson={lesson} />;
+    case 'py-401':
+    case 'py-402':
+      return <DynamicVisualStage analogyType="arithmetic" lesson={lesson} />;
     case 'py-501':
     case 'py-502':
-      return <Chapter5_DecisionFork />;
+      return <DynamicVisualStage analogyType="fork" lesson={lesson} />;
     case 'py-601':
     case 'py-602':
-      return <Chapter6_ConveyorLoops />;
+      return <DynamicVisualStage analogyType="conveyor" lesson={lesson} />;
     case 'py-701':
     case 'py-702':
     case 'py-703':
-      return <Chapter7_DataStructures />;
+      return <DynamicVisualStage analogyType="tray" lesson={lesson} />;
     case 'py-801':
     case 'py-802':
-      return <Chapter8_FunctionMachine />;
+      return <DynamicVisualStage analogyType="machine" lesson={lesson} />;
     default:
-      if (chapter === 1) return <Chapter1_LevelsOfLanguages />;
-      if (chapter === 2) return <Chapter2_StringTrainAndRuler />;
-      if (chapter === 5) return <Chapter5_DecisionFork />;
-      if (chapter === 6) return <Chapter6_ConveyorLoops />;
-      if (chapter === 7) return <Chapter7_DataStructures />;
-      if (chapter === 8) return <Chapter8_FunctionMachine />;
-      return <Chapter1_LevelsOfLanguages />;
+      break;
+  }
+
+  // 3. Dynamic content-aware routing by scanning lesson text, code, and keywords
+  const detected = detectAnalogyType(lesson);
+  if (detected && detected !== 'box') {
+    return <DynamicVisualStage analogyType={detected} lesson={lesson} />;
+  }
+
+  // 4. Chapter-based topic routing
+  switch (effectiveChapter) {
+    case 1:
+      // In chapter 1, determine if print or variable or arithmetic
+      if (lesson?.code?.includes('print(')) {
+        return <DynamicVisualStage analogyType="megaphone" lesson={lesson} />;
+      }
+      return <DynamicVisualStage analogyType="box" lesson={lesson} />;
+    case 2:
+      return <DynamicVisualStage analogyType="train" lesson={lesson} />;
+    case 3:
+      return <DynamicVisualStage analogyType="microphone" lesson={lesson} />;
+    case 4:
+      return <DynamicVisualStage analogyType="arithmetic" lesson={lesson} />;
+    case 5:
+      return <DynamicVisualStage analogyType="fork" lesson={lesson} />;
+    case 6:
+      return <DynamicVisualStage analogyType="conveyor" lesson={lesson} />;
+    case 7:
+      return <DynamicVisualStage analogyType="tray" lesson={lesson} />;
+    case 8:
+      return <DynamicVisualStage analogyType="machine" lesson={lesson} />;
+    default:
+      return <DynamicVisualStage analogyType={detected || 'box'} lesson={lesson} />;
   }
 }

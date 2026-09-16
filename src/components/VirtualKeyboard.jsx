@@ -68,6 +68,7 @@ export default function VirtualKeyboard({
   theme = 'bone',
   showHands = true,
   handFilter = 'both', // 'both' | 'left' | 'right' | 'off'
+  keycapStyle = 'standard',
   frameless = false,
   className = ''
 }) {
@@ -197,6 +198,7 @@ export default function VirtualKeyboard({
                 fill={keyDefaultFill}
                 stroke={keyDefaultStroke}
                 textFill={textDefaultFill}
+                keycapStyle={keycapStyle}
               />
             ))}
           </g>

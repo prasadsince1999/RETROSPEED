@@ -25,11 +25,6 @@ export function useLessonSession({
   const [unlockModalOpen, setUnlockModalOpen] = useState(false);
 
   const launchLesson = (lesson, origin = 'learn') => {
-    if (!isLessonUnlocked(lesson, userProgress)) {
-      setUnlockModalOpen(true);
-      return;
-    }
-
     setActiveLesson(lesson);
     setScoreModalStats(null);
     setJumpWarningLesson(null);
@@ -80,10 +75,6 @@ export function useLessonSession({
   };
 
   const launchPlayArcadeGame = (gameViewId) => {
-    if (!isGameUnlocked(gameViewId, userProgress)) {
-      setUnlockModalOpen(true);
-      return;
-    }
     setGameLaunchOrigin('play');
     setCurrentView(gameViewId);
   };

@@ -9,77 +9,50 @@ import {
   PRICING
 } from './license';
 
-describe('Licensing Engine & Honest Monetization Rules', () => {
-  it('defaults to Free Tier with free games and Parts 1-2 open', () => {
+describe('Licensing Engine & 100% Free Edition Rules', () => {
+  it('defaults to fully unlocked 100% free edition for all users', () => {
     const progress = {};
     const status = getLicenseStatus(progress);
 
-    expect(status.status).toBe('free');
+    expect(status.status).toBe('full');
     expect(status.isFree).toBe(true);
-    expect(status.isUnlocked).toBe(false);
+    expect(status.isUnlocked).toBe(true);
+    expect(status.badgeText).toBe('100% Free Edition');
 
-    // Free games
+    // All arcade games are unconditionally unlocked
     expect(isGameUnlocked('press-room', progress)).toBe(true);
     expect(isGameUnlocked('paper-planes', progress)).toBe(true);
-    // Locked games on free tier
-    expect(isGameUnlocked('local-line', progress)).toBe(false);
-    expect(isGameUnlocked('pit-lane', progress)).toBe(false);
+    expect(isGameUnlocked('local-line', progress)).toBe(true);
+    expect(isGameUnlocked('night-market', progress)).toBe(true);
+    expect(isGameUnlocked('drop-chits', progress)).toBe(true);
+    expect(isGameUnlocked('fuse-desk', progress)).toBe(true);
+    expect(isGameUnlocked('pit-lane', progress)).toBe(true);
+    expect(isGameUnlocked('patch-terminal', progress)).toBe(true);
 
-    // Free lessons (Parts 1-2 or <= 30)
+    // All lessons across all parts are unlocked
     expect(isLessonUnlocked({ lessonNumber: 15, stageIndex: 0 }, progress)).toBe(true);
-    expect(isLessonUnlocked({ lessonNumber: 45, stageIndex: 3 }, progress)).toBe(false);
+    expect(isLessonUnlocked({ lessonNumber: 45, stageIndex: 3 }, progress)).toBe(true);
+    expect(isLessonUnlocked({ lessonNumber: 150, stageIndex: 7 }, progress)).toBe(true);
 
-    // Shortcuts
+    // All shortcuts are unlocked
     expect(isShortcutUnlocked('clipboard', progress)).toBe(true);
-    expect(isShortcutUnlocked('ide-navigation', progress)).toBe(false);
+    expect(isShortcutUnlocked('ide-navigation', progress)).toBe(true);
+    expect(isShortcutUnlocked('window-management', progress)).toBe(true);
   });
 
-  it('manages 30-day trial countdown and gracefully expires back to free tier', () => {
-    const now = 1700000000000;
-    const progressWithTrial = startTrial({}, 30, now);
-
-    // Day 1 of trial
-    const day1Status = getLicenseStatus(progressWithTrial, now + 1000);
-    expect(day1Status.status).toBe('trial');
-    expect(day1Status.isTrial).toBe(true);
-    expect(day1Status.isUnlocked).toBe(true);
-    expect(day1Status.trialDaysRemaining).toBe(30);
-
-    // All games and lessons unlocked during trial
-    expect(isGameUnlocked('local-line', progressWithTrial, now + 1000)).toBe(true);
-    expect(isLessonUnlocked({ lessonNumber: 50, stageIndex: 4 }, progressWithTrial, now + 1000)).toBe(true);
-
-    // Day 15 of trial
-    const day15Time = now + (15 * 24 * 60 * 60 * 1000);
-    const day15Status = getLicenseStatus(progressWithTrial, day15Time);
-    expect(day15Status.status).toBe('trial');
-    expect(day15Status.trialDaysRemaining).toBe(15);
-
-    // Day 31 (expired trial)
-    const day31Time = now + (31 * 24 * 60 * 60 * 1000);
-    const expiredStatus = getLicenseStatus(progressWithTrial, day31Time);
-    expect(expiredStatus.status).toBe('free');
-    expect(expiredStatus.isUnlocked).toBe(false);
+  it('guarantees zero-cost pricing structure', () => {
+    expect(PRICING.india.listPrice).toBe(0);
+    expect(PRICING.india.salePrice).toBe(0);
+    expect(PRICING.international.listPrice).toBe(0);
   });
 
-  it('permanently unlocks full workshop on one-time IAP', () => {
+  it('preserves full unlock through activation calls', () => {
     const unlockedProgress = activateFullUnlock({});
     const status = getLicenseStatus(unlockedProgress);
 
     expect(status.status).toBe('full');
     expect(status.isUnlocked).toBe(true);
-    expect(status.isTrial).toBe(false);
-    expect(status.badgeText).toBe('Full Edition Unlocked');
-
     expect(isGameUnlocked('pit-lane', unlockedProgress)).toBe(true);
     expect(isLessonUnlocked({ lessonNumber: 150, stageIndex: 7 }, unlockedProgress)).toBe(true);
-    expect(isShortcutUnlocked('window-management', unlockedProgress)).toBe(true);
-  });
-
-  it('provides honest price anchoring for India and International', () => {
-    expect(PRICING.india.listPrice).toBe(899);
-    expect(PRICING.india.salePrice).toBe(499);
-    expect(PRICING.international.listPrice).toBe(9.99);
-    expect(PRICING.durableAddonId).toBe('retrospeed_unlock');
   });
 });
