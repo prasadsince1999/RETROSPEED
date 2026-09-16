@@ -55,25 +55,25 @@ function deriveInstructorExplanation(title, concept, analogy, stageNum) {
   const prefix = "Hey friends! ";
   switch (stageNum) {
     case 1:
-      return `${prefix}In this lesson on ${title}, we look at how Python communicates directly with computer memory. Think of ${analogy}: every piece of data has a clear type and location. Once you master this foundation, everything else in Python clicks into place.`;
+      return `${prefix}In this lesson on ${title}, we take our first fun steps with Python! Think of ${analogy}: giving your computer clear instructions is just like writing down a friendly to-do list. Every variable is like a labeled storage jar where you keep your favorite things.`;
     case 2:
-      return `${prefix}Here we explore ${title} and text manipulation. Behind the scenes, Python views strings not as a single solid wall of text, but like ${analogy}. You can inspect characters, slice segments, and format console output with surgical accuracy.`;
+      return `${prefix}Welcome to strings! In ${title}, we see how Python plays with text. Think of ${analogy}: letters in a word are like beads on a necklace. You can grab the first bead, cut out a small slice, or easily build sentences using clean f-strings with {curly braces}.`;
     case 3:
-      return `${prefix}Now we dive into ${title} and mathematical calculations. Python acts like ${analogy}, processing numeric operations with strict operator precedence. Understanding integer vs float division and modulo is essential for real-world algorithms.`;
+      return `${prefix}Math time! In ${title}, Python acts like a super-smart pocket calculator. Think of ${analogy}: it solves calculations step-by-step from left to right, following simple school math rules. You can add, multiply, or find remainders with zero sweat.`;
     case 4:
-      return `${prefix}In this lesson on ${title}, we explore boolean decisions and truthiness. Think of ${analogy}: conditions evaluate down to either True or False. These boolean gates form the logical backbone of every program.`;
+      return `${prefix}In this lesson on ${title}, we look at making simple Yes-or-No choices. Think of ${analogy}: Python checks if something is True or False, just like checking a traffic light. If it is green, go; if it is red, wait!`;
     case 5:
-      return `${prefix}Welcome to control flow and ${title}. Picture ${analogy}: your program arrives at a checkpoint and chooses which track to take based on the condition. Indented code blocks make Python's execution path clean and readable.`;
+      return `${prefix}Welcome to decision making! In ${title}, your code chooses which path to take. Think of ${analogy}: like following road signs, if, elif, and else guide your program down the right path. The neat indented spaces show Python which actions belong together.`;
     case 6:
-      return `${prefix}In this lesson on ${title}, we harness the power of automated repetition. Like ${analogy}, loops process sequences item by item until the work order is completed. You control exactly when to continue or break out early.`;
+      return `${prefix}Ready for a superpower? In ${title}, you learn how to make the computer do repetitive tasks for you! Think of ${analogy}: like items rolling on a grocery checkout belt, a loop handles each item one by one so you never have to repeat code by hand.`;
     case 7:
-      return `${prefix}Data structures are where Python truly shines, and ${title} is key. Think of ${analogy}: organizing collections into lists, dictionaries, tuples, and sets allows you to access and mutate data in O(1) or O(N) time. Choose the right container for the right job.`;
+      return `${prefix}Let's get organized! In ${title}, we look at easy ways to hold lots of data. Think of ${analogy}: lists are like your shopping lists, and dictionaries are like phone contacts where you look up a name to find a number. Super intuitive and tidy!`;
     case 8:
-      return `${prefix}Functions are what separate beginner scripts from professional production architecture. In ${title}, we treat functions like ${analogy}: taking inputs, performing encapsulated work, and returning clean output. This keeps your code modular, tested, and DRY.`;
+      return `${prefix}In ${title}, you become a recipe master! Think of ${analogy}: instead of typing the same steps again and again, you create a named recipe with def, give it ingredients, and get a neat result back with return. This makes your code clean, tidy, and fun to build.`;
     case 9:
-      return `${prefix}Now we bring everything together in ${title}! This project integrates inputs, math, control flow, loops, data structures, and functions into a complete working system. Watch how all the individual pieces you practiced unite seamlessly.`;
+      return `${prefix}You made it to the project zone! In ${title}, all your skills come together. Think of ${analogy}: you are snapping together the tools you learned like colorful Lego bricks to build a complete, working mini-app. Enjoy seeing your code come to life!`;
     default:
-      return `${prefix}In this lesson, we study ${title}. Grounded in ${analogy}, this concept empowers you to write clean, Pythonic code that executes reliably.`;
+      return `${prefix}In this lesson on ${title}, we explore ${analogy}. Follow along step by step, and you will see how simple and natural Python feels to write.`;
   }
 }
 
@@ -95,68 +95,68 @@ function deriveCodeBreakdown(code, title) {
   for (const line of lines) {
     const trimmed = line.trim();
     if (trimmed.startsWith('#')) {
-      add('# ...', 'Comment', 'Developer annotation ignored during Python bytecode execution.');
+      add('# ...', 'Comment', 'Friendly note for humans that Python ignores when running.');
       break;
     }
   }
 
-  if (code.includes('def ')) add('def', 'Keyword', 'Defines a new reusable function signature.');
-  if (code.includes('return')) add('return', 'Keyword', 'Passes the computed evaluation value back to the caller.');
-  if (code.includes('if ')) add('if', 'Keyword', 'Evaluates conditional expression; executes indented block if True.');
-  if (code.includes('elif ')) add('elif', 'Keyword', 'Else-if branch evaluated if preceding conditions were False.');
-  if (code.includes('else:')) add('else:', 'Keyword', 'Fallback branch executed when no preceding conditions matched.');
-  if (code.includes('for ')) add('for ... in', 'Keyword', 'Iterates sequentially through items in an iterable collection.');
-  if (code.includes('while ')) add('while', 'Keyword', 'Repeatedly executes loop body as long as condition evaluates True.');
-  if (code.includes('break')) add('break', 'Control Statement', 'Immediately terminates and exits the enclosing loop.');
-  if (code.includes('continue')) add('continue', 'Control Statement', 'Skips the remainder of the current pass and advances to next iteration.');
-  if (code.includes('match ')) add('match ... case', 'Pattern Matcher', 'Structural pattern matching (PEP 634) routing values to cases.');
-  if (code.includes('lambda ')) add('lambda', 'Keyword', 'Constructs an anonymous inline single-expression function.');
-  if (code.includes('global ')) add('global', 'Keyword', 'Declares variable inside function belongs to global namespace.');
+  if (code.includes('def ')) add('def', 'Define Recipe', 'Creates a reusable function recipe you can run anytime.');
+  if (code.includes('return')) add('return', 'Return', 'Sends the final answer back from your function.');
+  if (code.includes('if ')) add('if', 'If Choice', 'Checks if a condition is True before running the indented steps.');
+  if (code.includes('elif ')) add('elif', 'Else If', 'Checks a backup condition if the earlier choices were False.');
+  if (code.includes('else:')) add('else:', 'Otherwise', 'Runs automatically when none of the choices above were True.');
+  if (code.includes('for ')) add('for ... in', 'For Loop', 'Steps through items in a list or sequence one by one.');
+  if (code.includes('while ')) add('while', 'While Loop', 'Keeps repeating as long as your condition stays True.');
+  if (code.includes('break')) add('break', 'Stop Loop', 'Immediately stops the loop and jumps right out.');
+  if (code.includes('continue')) add('continue', 'Skip Step', 'Skips the rest of this turn and jumps to the next item.');
+  if (code.includes('match ')) add('match ... case', 'Pattern Matcher', 'Routes a value to matching patterns cleanly.');
+  if (code.includes('lambda ')) add('lambda', 'Short Function', 'Creates a tiny quick one-line helper function.');
+  if (code.includes('global ')) add('global', 'Global', 'Tells Python to update the variable outside this function.');
 
-  if (code.includes('print(')) add('print(...)', 'Built-in Function', 'Outputs string representations of arguments to stdout.');
-  if (code.includes('input(')) add('input(...)', 'Built-in Function', 'Prompts user and returns their console input as a string.');
-  if (code.includes('len(')) add('len(...)', 'Built-in Function', 'Returns the total item count of a sequence or container.');
-  if (code.includes('range(')) add('range(...)', 'Built-in Sequence', 'Generates an immutable arithmetic sequence of integers on-demand.');
-  if (code.includes('enumerate(')) add('enumerate(...)', 'Built-in Iterator', 'Pairs collection items with auto-incrementing index counters.');
-  if (code.includes('zip(')) add('zip(...)', 'Built-in Iterator', 'Aggregates corresponding elements across multiple iterables in parallel.');
-  if (code.includes('int(')) add('int(...)', 'Type Constructor', 'Casts strings or floating numbers into integer whole values.');
-  if (code.includes('float(')) add('float(...)', 'Type Constructor', 'Casts strings or integers into double-precision decimal numbers.');
-  if (code.includes('str(')) add('str(...)', 'Type Constructor', 'Converts values into their human-readable string representation.');
-  if (code.includes('bool(')) add('bool(...)', 'Type Constructor', 'Evaluates the truthiness state of an object down to True or False.');
-  if (code.includes('type(')) add('type(...)', 'Introspection', 'Returns the runtime class/type descriptor of the passed object.');
-  if (code.includes('round(')) add('round(...)', 'Math Built-in', 'Rounds floating point numbers to specified decimal places.');
-  if (code.includes('abs(')) add('abs(...)', 'Math Built-in', 'Returns the non-negative absolute magnitude of a number.');
-  if (code.includes('min(') || code.includes('max(')) add('min/max(...)', 'Math Built-in', 'Extracts lowest or highest values from items or collections.');
-  if (code.includes('sum(')) add('sum(...)', 'Math Built-in', 'Sums numerical elements in an iterable collection.');
+  if (code.includes('print(')) add('print(...)', 'Print', 'Shows words or numbers on your terminal screen.');
+  if (code.includes('input(')) add('input(...)', 'Ask User', 'Asks the user to type something and waits for them.');
+  if (code.includes('len(')) add('len(...)', 'Count Items', 'Tells you how many letters or items are inside.');
+  if (code.includes('range(')) add('range(...)', 'Number Sequence', 'Generates numbers in order, like 0, 1, 2, 3, 4.');
+  if (code.includes('enumerate(')) add('enumerate(...)', 'Count & Item', 'Pairs each item with its number index (0, 1, 2...).');
+  if (code.includes('zip(')) add('zip(...)', 'Zip Together', 'Pairs up items from two lists side by side.');
+  if (code.includes('int(')) add('int(...)', 'Whole Number', 'Turns text into a whole number so you can do math.');
+  if (code.includes('float(')) add('float(...)', 'Decimal Number', 'Turns text or numbers into decimals like 3.14.');
+  if (code.includes('str(')) add('str(...)', 'Text String', 'Turns numbers or data into readable text.');
+  if (code.includes('bool(')) add('bool(...)', 'True or False', 'Checks if a value counts as True or False.');
+  if (code.includes('type(')) add('type(...)', 'Check Type', 'Tells you what kind of data is stored inside.');
+  if (code.includes('round(')) add('round(...)', 'Round Number', 'Rounds a decimal number to neat decimal places.');
+  if (code.includes('abs(')) add('abs(...)', 'Positive Value', 'Gives the positive distance of a number, ignoring minus signs.');
+  if (code.includes('min(') || code.includes('max(')) add('min/max(...)', 'Lowest / Highest', 'Picks the smallest or largest value easily.');
+  if (code.includes('sum(')) add('sum(...)', 'Add All Up', 'Adds together all numbers in a list.');
 
-  if (code.includes('.append(')) add('.append(...)', 'List Method', 'Adds an item to the end of the list in O(1) amortized time.');
-  if (code.includes('.insert(')) add('.insert(...)', 'List Method', 'Inserts an item at a specified index, shifting trailing elements.');
-  if (code.includes('.pop(')) add('.pop(...)', 'List Method', 'Removes and returns element at index (defaults to tail item).');
-  if (code.includes('.remove(')) add('.remove(...)', 'List Method', 'Deletes the first occurrence of a matching value from the list.');
-  if (code.includes('.get(')) add('.get(...)', 'Dict Method', 'Safely retrieves dictionary key value with optional default fallback.');
-  if (code.includes('.items()')) add('.items()', 'Dict Method', 'Yields iterable (key, value) tuple pairs from dictionary.');
-  if (code.includes('.split(')) add('.split(...)', 'String Method', 'Splits string by delimiter into a list of substrings.');
-  if (code.includes('.join(')) add('.join(...)', 'String Method', 'Concatenates an iterable of strings using caller string as glue.');
-  if (code.includes('.strip()')) add('.strip()', 'String Method', 'Trims leading and trailing whitespace characters.');
-  if (code.includes('.upper()') || code.includes('.lower()')) add('.upper() / .lower()', 'String Method', 'Transforms character casing and returns a new string.');
+  if (code.includes('.append(')) add('.append(...)', 'Add to End', 'Tucks a new item onto the very end of your list.');
+  if (code.includes('.insert(')) add('.insert(...)', 'Insert at Slot', 'Puts an item into a specific slot in your list.');
+  if (code.includes('.pop(')) add('.pop(...)', 'Remove Item', 'Pops an item out of your list and gives it to you.');
+  if (code.includes('.remove(')) add('.remove(...)', 'Delete Value', 'Finds and removes a specific item from your list.');
+  if (code.includes('.get(')) add('.get(...)', 'Safe Lookup', 'Safely looks up a dictionary key without crashing.');
+  if (code.includes('.items()')) add('.items()', 'Key & Value', 'Gives both the name and value for each dictionary entry.');
+  if (code.includes('.split(')) add('.split(...)', 'Split Text', 'Chops a sentence into a list of words.');
+  if (code.includes('.join(')) add('.join(...)', 'Glue Words', 'Glues a list of words together into one sentence.');
+  if (code.includes('.strip()')) add('.strip()', 'Trim Spaces', 'Trims extra spaces off the front and back.');
+  if (code.includes('.upper()') || code.includes('.lower()')) add('.upper() / .lower()', 'Change Casing', 'Turns text into ALL CAPS or all lowercase.');
 
-  if (code.includes("f'") || code.includes('f"')) add('f"..."', 'f-String', 'Formatted string literal evaluating expressions inside {curly braces}.');
-  if (code.includes('//')) add('//', 'Operator', 'Floor division operator calculating integer quotient.');
-  else if (code.includes('/')) add('/', 'Operator', 'Float division operator always returning a floating point value.');
-  if (code.includes('%')) add('%', 'Operator', 'Modulo operator calculating division remainder.');
-  if (code.includes('**')) add('**', 'Operator', 'Exponentiation operator raising left operand to right power.');
-  if (code.includes('==')) add('==', 'Comparison', 'Evaluates value equality between two expressions.');
-  if (code.includes('!=')) add('!=', 'Comparison', 'Evaluates inequality between two expressions.');
-  if (code.includes(' and ')) add('and', 'Logical Operator', 'Short-circuit AND: returns True only if both conditions are True.');
-  if (code.includes(' or ')) add('or', 'Logical Operator', 'Short-circuit OR: returns True if at least one condition is True.');
-  if (code.includes('not ')) add('not', 'Logical Operator', 'Inverts the truthiness of the following boolean expression.');
-  if (code.includes(' in ')) add('in', 'Membership', 'Checks whether an item exists inside a container sequence.');
-  if (code.includes(' is ')) add('is', 'Identity', 'Verifies whether two references point to the exact same memory address.');
-  if (code.includes('[') && code.includes(']')) add('[...]', 'Sequence Bracket', 'Defines lists or indexes/slices sequence offsets.');
-  if (code.includes('{') && code.includes('}')) add('{...}', 'Brace Mapping', 'Defines dictionaries (key: value) or sets (unique elements).');
+  if (code.includes("f'") || code.includes('f"')) add('f"..."', 'f-String', 'Modern, easy way to insert variables into text using {curly braces}.');
+  if (code.includes('//')) add('//', 'Floor Division', 'Divides and rounds down to a whole number.');
+  else if (code.includes('/')) add('/', 'Division', 'Divides numbers and gives a decimal result.');
+  if (code.includes('%')) add('%', 'Remainder (Modulo)', 'Gives what is left over after dividing.');
+  if (code.includes('**')) add('**', 'Power (Exponent)', 'Multiplies a number by itself, like 2 ** 3 = 8.');
+  if (code.includes('==')) add('==', 'Is Equal?', 'Checks if both sides have the exact same value.');
+  if (code.includes('!=')) add('!=', 'Not Equal?', 'Checks if both sides are different.');
+  if (code.includes(' and ')) add('and', 'Both True', 'Only True if BOTH conditions are True.');
+  if (code.includes(' or ')) add('or', 'Either True', 'True if AT LEAST ONE condition is True.');
+  if (code.includes('not ')) add('not', 'Flip True/False', 'Flips True to False, or False to True.');
+  if (code.includes(' in ')) add('in', 'Inside List?', 'Checks if an item exists inside a sequence or list.');
+  if (code.includes(' is ')) add('is', 'Exact Same Item', 'Checks if two names point to the exact same object in memory.');
+  if (code.includes('[') && code.includes(']')) add('[...]', 'List / Index', 'Creates a list or accesses an item at a numbered slot.');
+  if (code.includes('{') && code.includes('}')) add('{...}', 'Dictionary / Set', 'Stores key-value pairs or a collection of unique items.');
 
   if (tokens.length === 0) {
-    add(title, 'Expression', 'Evaluates the Python expression and resolves results in memory.');
+    add(title, 'Expression', 'Evaluates the Python expression step by step.');
   }
 
   return tokens.slice(0, 5);
@@ -171,8 +171,8 @@ function deriveExecutionSteps(code, expectedOutput, stageNum, title) {
 
   steps.push({
     step: 1,
-    title: "Bytecode Compilation",
-    description: "CPython compiles source statements into bytecode instructions for the Python Virtual Machine."
+    title: "Read & Understand",
+    description: "Python reads your code line by line and prepares the instruction in memory."
   });
 
   // Check for variable assignments
@@ -182,8 +182,8 @@ function deriveExecutionSteps(code, expectedOutput, stageNum, title) {
     const rawVal = varMatch[2].split('\n')[0].replace(/['"]/g, '').trim();
     steps.push({
       step: 2,
-      title: "Memory Allocation & Binding",
-      description: `Evaluates expression and binds label '${varName}' to object in memory heap.`,
+      title: "Store in Memory",
+      description: `Python saves '${rawVal}' inside the box labeled '${varName}' so it can use it anytime.`,
       memoryState: { [varName]: rawVal }
     });
   } else if (code && code.includes('def ')) {
@@ -191,30 +191,30 @@ function deriveExecutionSteps(code, expectedOutput, stageNum, title) {
     const fnName = fnMatch ? fnMatch[1] : 'func';
     steps.push({
       step: 2,
-      title: "Function Registration",
-      description: `Allocates function object and binds '${fnName}' in current module scope.`,
+      title: "Create Recipe",
+      description: `Python saves the reusable function recipe named '${fnName}' ready to be called.`,
       memoryState: { [fnName]: '<function>' }
     });
   } else {
     steps.push({
       step: 2,
-      title: "Evaluation & Stack Frame",
-      description: "Python pushes call frame onto evaluation stack and processes operations."
+      title: "Process & Calculate",
+      description: "Python evaluates the expressions and values step by step."
     });
   }
 
   if (expectedOutput) {
     steps.push({
       step: 3,
-      title: "Execution & Stdout Output",
-      description: `Completes execution, flushes buffers, and writes expected result to stdout.`,
+      title: "Show Result on Screen",
+      description: `Python prints the final result on your screen: ${cleanExp}`,
       stdout: cleanExp
     });
   } else {
     steps.push({
       step: 3,
-      title: "Clean Exit Code 0",
-      description: "Code executes cleanly without uncaught exceptions, exiting with code 0."
+      title: "Finished Smoothly",
+      description: "Your code ran completely and finished with zero errors!"
     });
   }
 
@@ -375,7 +375,7 @@ const s1Lessons = [
     "input() pauses execution and reads user input from the console. It always returns a string object.",
     "input() captures user keystrokes as a text string (str type).",
     "The Stage Microphone",
-    "name = input('Name: ')\nprint('Welcome', name)", "Welcome Alex", 22, 90, {
+    "name = input('Name: ')\nprint(f'Welcome {name}!')", "Welcome Alex!", 22, 90, {
       analogyType: "microphone",
       instructorExplanation: "If print() is the megaphone broadcasting outward, input() is the microphone listening inward. It halts Python until the user presses Enter, capturing whatever they typed as text."
     }),
@@ -416,29 +416,29 @@ const s1Lessons = [
       instructorExplanation: "Every advanced program is built from these four atomic primitives: integers, floats, strings, and booleans. Master these four boxes first."
     }),
 
-  makeLesson(1, "1.7", "code", "Safe Printing with Commas",
-    "player = 'Alex'\nscore = 100\nprint('Player:', player, 'Score:', score)",
-    "Commas in print() automatically convert non-strings and insert spaces.",
-    "The Safe Output Assembler",
-    "player = 'Alex'\nscore = 100\nprint('Player:', player, 'Score:', score)", "Player: Alex Score: 100", 24, 92, {
+  makeLesson(1, "1.7", "code", "Modern f-Strings: Fast & Clean Formatting",
+    "name = 'Alex'\ncountry = 'Canada'\nprint(f'Hello my name is {name}. I am from {country}!')",
+    "Instead of commas, modern Python uses f-strings: write f'...' and put variables inside {curly braces}.",
+    "The Magic Template String",
+    "name = 'Alex'\ncountry = 'Canada'\nprint(f'Hello my name is {name}. I am from {country}!')", "Hello my name is Alex. I am from Canada!", 24, 92, {
       analogyType: "megaphone",
-      instructorExplanation: "Separating arguments with commas is the safest way to print mixed types. Python automatically converts numbers into readable text and adds spaces between them."
+      instructorExplanation: "Instead of dealing with awkward commas or messy plus signs, modern Python gives us f-strings! Just put an 'f' in front of your quotes and write variable names inside {curly braces}. Python automatically replaces {name} with its value!"
     }),
 
-  makeLesson(1, "1.7", "drill", "Interactive Greeting Drill",
-    "# interactive greeting program\nuser = input('Enter username: ')\nprint('Access granted for', user)",
-    "Combine input prompt capture with formatted console greeting output.",
-    "The Terminal Greeting Kiosk",
-    "# interactive greeting program\nuser = input('Enter username: ')\nprint('Access granted for', user)", "Access granted for Alex", 25, 92, {
+  makeLesson(1, "1.7", "drill", "Interactive Greeting with f-Strings",
+    "# friendly interactive greeting\nname = input('Enter name: ')\ncountry = input('Enter country: ')\nprint(f'Hello my name is {name}. I am from {country}!')",
+    "Combine input capture and clean f-string formatting into an easy-to-read greeting.",
+    "The Greeting Kiosk",
+    "# friendly interactive greeting\nname = input('Enter name: ')\ncountry = input('Enter country: ')\nprint(f'Hello my name is {name}. I am from {country}!')", "Hello my name is Alex. I am from Canada!", 25, 92, {
       analogyType: "microphone",
-      instructorExplanation: "Now let's synthesize input capture and output broadcasting into a clean interactive login script."
+      instructorExplanation: "Look how easy this is to read! When you capture user input, you drop variables directly into your message with {name} and {country}. It reads like natural English with zero punctuation clutter."
     }),
 
   makeLesson(1, "1.8", "checkpoint", "Stage 1 Foundations Checkpoint",
-    "# stage 1 mastery\napp = 'RETROSPEED'\nver = 3\nprint(app, 'Python Engine', ver)\nprint('STAGE 1 FOUNDATIONS PASSED')",
+    "# stage 1 mastery\napp = 'RETROSPEED'\nver = 3\nprint(f'{app} Python Engine {ver}')\nprint('STAGE 1 FOUNDATIONS PASSED')",
     "Stage 1 review verifying variables, data types, comments, and console printing.",
     "Stage 1 Milestone Arch",
-    "# stage 1 mastery\napp = 'RETROSPEED'\nver = 3\nprint(app, 'Python Engine', ver)\nprint('STAGE 1 FOUNDATIONS PASSED')", "RETROSPEED Python Engine 3\nSTAGE 1 FOUNDATIONS PASSED", 25, 94, {
+    "# stage 1 mastery\napp = 'RETROSPEED'\nver = 3\nprint(f'{app} Python Engine {ver}')\nprint('STAGE 1 FOUNDATIONS PASSED')", "RETROSPEED Python Engine 3\nSTAGE 1 FOUNDATIONS PASSED", 25, 94, {
       analogyType: "box",
       instructorExplanation: "Congratulations on completing Stage 1! This checkpoint locks in your understanding of variables, comments, and runtime output before we dive into strings."
     }),
@@ -519,7 +519,7 @@ const s2Lessons = [
     "Strings are ordered sequences of characters. The len() function returns the exact total count of characters, including spaces and symbols.",
     "String characters are indexed sequentially from 0 to len(s) - 1.",
     "The Character Chain",
-    "text = 'RETROSPEED'\nprint('Length:', len(text))", "Length: 10", 24, 90, {
+    "text = 'RETROSPEED'\nprint(f'Length: {len(text)}')", "Length: 10", 24, 90, {
       analogyType: "train"
     }),
 
@@ -527,15 +527,15 @@ const s2Lessons = [
     "Access any character by its 0-based offset: s[0] is the head. Negative indices count backwards from the end: s[-1] is the last character.",
     "Zero-based indexing represents the distance from the start of the memory buffer.",
     "The Ruler Offset",
-    "word = 'Python'\nprint(word[0], word[-1])", "P n", 24, 90, {
+    "word = 'Python'\nprint(f'{word[0]} {word[-1]}')", "P n", 24, 90, {
       analogyType: "train"
     }),
 
   makeLesson(2, "2.4", "code", "Head & Tail Character Extraction",
-    "filename = 'dataset.csv'\nfirst = filename[0]\nlast = filename[-1]\nprint('First:', first, 'Last:', last)",
+    "filename = 'dataset.csv'\nfirst = filename[0]\nlast = filename[-1]\nprint(f'First: {first} Last: {last}')",
     "Extract first and last characters from filenames and paths.",
     "Boundary Inspection",
-    "filename = 'dataset.csv'\nfirst = filename[0]\nlast = filename[-1]\nprint('First:', first, 'Last:', last)", "First: d Last: v", 26, 92, {
+    "filename = 'dataset.csv'\nfirst = filename[0]\nlast = filename[-1]\nprint(f'First: {first} Last: {last}')", "First: d Last: v", 26, 92, {
       analogyType: "train"
     }),
 
@@ -556,10 +556,10 @@ const s2Lessons = [
     }),
 
   makeLesson(2, "2.5", "code", "Domain & Username Slicer",
-    "email = 'dev@retro.io'\nuser = email[:3]\ndomain = email[4:]\nprint('User:', user, 'Domain:', domain)",
+    "email = 'dev@retro.io'\nuser = email[:3]\ndomain = email[4:]\nprint(f'User: {user} Domain: {domain}')",
     "Omit start to slice from the beginning, or omit stop to slice to the end.",
     "Email Partitioning",
-    "email = 'dev@retro.io'\nuser = email[:3]\ndomain = email[4:]\nprint('User:', user, 'Domain:', domain)", "User: dev Domain: retro.io", 26, 92, {
+    "email = 'dev@retro.io'\nuser = email[:3]\ndomain = email[4:]\nprint(f'User: {user} Domain: {domain}')", "User: dev Domain: retro.io", 26, 92, {
       analogyType: "train"
     }),
 
@@ -572,10 +572,10 @@ const s2Lessons = [
     }),
 
   makeLesson(2, "2.5", "code", "Palindrome Checker Slicer",
-    "token = 'level'\nis_palindrome = token == token[::-1]\nprint(token, 'is palindrome:', is_palindrome)",
+    "token = 'level'\nis_palindrome = token == token[::-1]\nprint(f'{token} is palindrome: {is_palindrome}')",
     "Reverse strings with [::-1] to check symmetry.",
     "Palindrome Verifier",
-    "token = 'level'\nis_palindrome = token == token[::-1]\nprint(token, 'is palindrome:', is_palindrome)", "level is palindrome: True", 26, 92, {
+    "token = 'level'\nis_palindrome = token == token[::-1]\nprint(f'{token} is palindrome: {is_palindrome}')", "level is palindrome: True", 26, 92, {
       analogyType: "train"
     }),
 
@@ -588,10 +588,10 @@ const s2Lessons = [
     }),
 
   makeLesson(2, "2.6", "code", "Sanitizing User Queries",
-    "query = '  FIND DATA  '\nnormalized = query.strip().lower()\nprint('Search key:', normalized)",
+    "query = '  FIND DATA  '\nnormalized = query.strip().lower()\nprint(f'Search key: {normalized}')",
     "Sanitize search queries with method chaining .strip().lower().",
     "Query Normalizer",
-    "query = '  FIND DATA  '\nnormalized = query.strip().lower()\nprint('Search key:', normalized)", "Search key: find data", 26, 92, {
+    "query = '  FIND DATA  '\nnormalized = query.strip().lower()\nprint(f'Search key: {normalized}')", "Search key: find data", 26, 92, {
       analogyType: "machine"
     }),
 
@@ -682,10 +682,10 @@ const s3Lessons = [
     }),
 
   makeLesson(3, "3.1", "code", "Even Number Divisibility & Powers",
-    "num = 14\nis_even = (num % 2 == 0)\nbyte_combos = 2 ** 8\nprint('Even:', is_even, 'Byte combos:', byte_combos)",
+    "num = 14\nis_even = (num % 2 == 0)\nbyte_combos = 2 ** 8\nprint(f'Even: {is_even} Byte combos: {byte_combos}')",
     "Test divisibility using num % 2 and compute 8-bit powers.",
     "Bit Combinatorics",
-    "num = 14\nis_even = (num % 2 == 0)\nbyte_combos = 2 ** 8\nprint('Even:', is_even, 'Byte combos:', byte_combos)", "Even: True Byte combos: 256", 26, 92, {
+    "num = 14\nis_even = (num % 2 == 0)\nbyte_combos = 2 ** 8\nprint(f'Even: {is_even} Byte combos: {byte_combos}')", "Even: True Byte combos: 256", 26, 92, {
       analogyType: "arithmetic"
     }),
 
@@ -706,10 +706,10 @@ const s3Lessons = [
     }),
 
   makeLesson(3, "3.2", "code", "Score Multiplier Accumulator",
-    "score = 500\nscore += 150\nscore *= 2\nprint('Final score:', score)",
+    "score = 500\nscore += 150\nscore *= 2\nprint(f'Final score: {score}')",
     "Accumulate game points and apply streak multipliers using augmented operators.",
     "Scoreboard Accumulator",
-    "score = 500\nscore += 150\nscore *= 2\nprint('Final score:', score)", "Final score: 1300", 26, 92, {
+    "score = 500\nscore += 150\nscore *= 2\nprint(f'Final score: {score}')", "Final score: 1300", 26, 92, {
       analogyType: "arithmetic"
     }),
 
@@ -738,18 +738,18 @@ const s3Lessons = [
     }),
 
   makeLesson(3, "3.4", "code", "Square Roots & Floor Functions",
-    "import math\nval = 15.8\nprint('Sqrt:', math.sqrt(16))\nprint('Floor:', math.floor(val))\nprint('Ceil:', math.ceil(val))",
+    "import math\nval = 15.8\nprint(f'Sqrt: {math.sqrt(16)}')\nprint(f'Floor: {math.floor(val)}')\nprint(f'Ceil: {math.ceil(val)}')",
     "Execute square roots and integer rounding boundaries with the math module.",
     "Geometric Calculator",
-    "import math\nval = 15.8\nprint('Sqrt:', math.sqrt(16))\nprint('Floor:', math.floor(val))\nprint('Ceil:', math.ceil(val))", "Sqrt: 4.0\nFloor: 15\nCeil: 16", 26, 92, {
+    "import math\nval = 15.8\nprint(f'Sqrt: {math.sqrt(16)}')\nprint(f'Floor: {math.floor(val)}')\nprint(f'Ceil: {math.ceil(val)}')", "Sqrt: 4.0\nFloor: 15\nCeil: 16", 26, 92, {
       analogyType: "arithmetic"
     }),
 
   makeLesson(3, "3.5", "code", "Random Number Generation with random",
-    "import random\nroll = random.randint(1, 6)\nchoice = random.choice(['heads', 'tails'])\nprint('Dice:', roll, 'Coin:', choice)",
+    "import random\nroll = random.randint(1, 6)\nchoice = random.choice(['heads', 'tails'])\nprint(f'Dice: {roll} Coin: {choice}')",
     "Generate pseudo-random integers and select elements from collections.",
     "The Dice Shaker",
-    "import random\nroll = random.randint(1, 6)\nchoice = random.choice(['heads', 'tails'])\nprint('Dice:', roll, 'Coin:', choice)", "Dice: 6 Coin: heads", 26, 92, {
+    "import random\nroll = random.randint(1, 6)\nchoice = random.choice(['heads', 'tails'])\nprint(f'Dice: {roll} Coin: {choice}')", "Dice: 6 Coin: heads", 26, 92, {
       analogyType: "arithmetic"
     }),
 
@@ -834,10 +834,10 @@ const s4Lessons = [
     }),
 
   makeLesson(4, "4.2", "code", "Security Gate with Dual Conditions",
-    "user_role = 'editor'\nis_logged_in = True\nhas_write_access = (is_logged_in and user_role == 'editor')\nprint('Write access:', has_write_access)",
+    "user_role = 'editor'\nis_logged_in = True\nhas_write_access = (is_logged_in and user_role == 'editor')\nprint(f'Write access: {has_write_access}')",
     "Verify multiple authorization rules simultaneously with and.",
     "Access Control Guard",
-    "user_role = 'editor'\nis_logged_in = True\nhas_write_access = (is_logged_in and user_role == 'editor')\nprint('Write access:', has_write_access)", "Write access: True", 26, 92, {
+    "user_role = 'editor'\nis_logged_in = True\nhas_write_access = (is_logged_in and user_role == 'editor')\nprint(f'Write access: {has_write_access}')", "Write access: True", 26, 92, {
       analogyType: "fork"
     }),
 
@@ -850,10 +850,10 @@ const s4Lessons = [
     }),
 
   makeLesson(4, "4.3", "code", "Discount Eligibility with or Chains",
-    "is_student = False\nis_senior = True\nhas_coupon = False\neligible = (is_student or is_senior or has_coupon)\nprint('Discount eligible:', eligible)",
+    "is_student = False\nis_senior = True\nhas_coupon = False\neligible = (is_student or is_senior or has_coupon)\nprint(f'Discount eligible: {eligible}')",
     "Combine multiple fallback qualifying flags using or chains.",
     "Promotional Discount Filter",
-    "is_student = False\nis_senior = True\nhas_coupon = False\neligible = (is_student or is_senior or has_coupon)\nprint('Discount eligible:', eligible)", "Discount eligible: True", 26, 92, {
+    "is_student = False\nis_senior = True\nhas_coupon = False\neligible = (is_student or is_senior or has_coupon)\nprint(f'Discount eligible: {eligible}')", "Discount eligible: True", 26, 92, {
       analogyType: "fork"
     }),
 
@@ -861,7 +861,7 @@ const s4Lessons = [
     "The not operator inverts a boolean value: not True -> False, and not False -> True. Use it to check empty or uninitialized states.",
     "Logical NOT flips truthiness states.",
     "The Boolean Inverter",
-    "is_locked = False\ncan_open = not is_locked\nprint('Can open:', can_open)", "Can open: True", 24, 90, {
+    "is_locked = False\ncan_open = not is_locked\nprint(f'Can open: {can_open}')", "Can open: True", 24, 90, {
       analogyType: "fork"
     }),
 
@@ -885,7 +885,7 @@ const s4Lessons = [
     "In a and b, if a is False, Python never evaluates b. In a or b, if a is True, Python stops immediately. This prevents crashes.",
     "Short-circuiting ensures safe attribute lookups without throwing NoneType errors.",
     "The Early Exit Circuit",
-    "name = None\nis_valid = (name is not None and len(name) > 0)\nprint('Valid:', is_valid)", "Valid: False", 22, 90, {
+    "name = None\nis_valid = (name is not None and len(name) > 0)\nprint(f'Valid: {is_valid}')", "Valid: False", 22, 90, {
       analogyType: "fork"
     }),
 
@@ -914,18 +914,18 @@ const s4Lessons = [
     }),
 
   makeLesson(4, "4.8", "drill", "Complex Role Permission Gate Drill",
-    "# user permission evaluator\nis_auth = True\nis_verified = True\nis_banned = False\nrole = 'moderator'\ncan_publish = (is_auth and is_verified and not is_banned and role in ['admin', 'moderator'])\nprint('Can publish:', can_publish)",
+    "# user permission evaluator\nis_auth = True\nis_verified = True\nis_banned = False\nrole = 'moderator'\ncan_publish = (is_auth and is_verified and not is_banned and role in ['admin', 'moderator'])\nprint(f'Can publish: {can_publish}')",
     "Combine authentication, verification, ban status, and role checking into a single boolean decision.",
     "Role Permission Evaluator",
-    "# user permission evaluator\nis_auth = True\nis_verified = True\nis_banned = False\nrole = 'moderator'\ncan_publish = (is_auth and is_verified and not is_banned and role in ['admin', 'moderator'])\nprint('Can publish:', can_publish)", "Can publish: True", 28, 92, {
+    "# user permission evaluator\nis_auth = True\nis_verified = True\nis_banned = False\nrole = 'moderator'\ncan_publish = (is_auth and is_verified and not is_banned and role in ['admin', 'moderator'])\nprint(f'Can publish: {can_publish}')", "Can publish: True", 28, 92, {
       analogyType: "fork"
     }),
 
   makeLesson(4, "4.8", "checkpoint", "Stage 4 Logic Checkpoint",
-    "flag_a = True\nflag_b = False\nres = (flag_a or flag_b) and not (flag_a and flag_b)\nprint('XOR Result:', res)\nprint('STAGE 4 LOGIC MASTERED')",
+    "flag_a = True\nflag_b = False\nres = (flag_a or flag_b) and not (flag_a and flag_b)\nprint(f'XOR Result: {res}')\nprint('STAGE 4 LOGIC MASTERED')",
     "Stage 4 milestone verifying boolean algebra and XOR emulation.",
     "Stage 4 Milestone Gate",
-    "flag_a = True\nflag_b = False\nres = (flag_a or flag_b) and not (flag_a and flag_b)\nprint('XOR Result:', res)\nprint('STAGE 4 LOGIC MASTERED')", "XOR Result: True\nSTAGE 4 LOGIC MASTERED", 28, 94, {
+    "flag_a = True\nflag_b = False\nres = (flag_a or flag_b) and not (flag_a and flag_b)\nprint(f'XOR Result: {res}')\nprint('STAGE 4 LOGIC MASTERED')", "XOR Result: True\nSTAGE 4 LOGIC MASTERED", 28, 94, {
       analogyType: "fork"
     })
 ];
@@ -984,10 +984,10 @@ const s5Lessons = [
     }),
 
   makeLesson(5, "5.3", "code", "Letter Grade Dispatcher with elif",
-    "marks = 88\nif marks >= 90:\n    grade = 'A'\nelif marks >= 80:\n    grade = 'B'\nelif marks >= 70:\n    grade = 'C'\nelse:\n    grade = 'F'\nprint('Grade:', grade)",
+    "marks = 88\nif marks >= 90:\n    grade = 'A'\nelif marks >= 80:\n    grade = 'B'\nelif marks >= 70:\n    grade = 'C'\nelse:\n    grade = 'F'\nprint(f'Grade: {grade}')",
     "Map percentage marks to academic letter grades with an elif ladder.",
     "Grading Ladder Dispatcher",
-    "marks = 88\nif marks >= 90:\n    grade = 'A'\nelif marks >= 80:\n    grade = 'B'\nelif marks >= 70:\n    grade = 'C'\nelse:\n    grade = 'F'\nprint('Grade:', grade)", "Grade: B", 26, 92, {
+    "marks = 88\nif marks >= 90:\n    grade = 'A'\nelif marks >= 80:\n    grade = 'B'\nelif marks >= 70:\n    grade = 'C'\nelse:\n    grade = 'F'\nprint(f'Grade: {grade}')", "Grade: B", 26, 92, {
       analogyType: "fork"
     }),
 

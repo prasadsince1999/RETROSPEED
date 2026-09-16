@@ -17,7 +17,9 @@ import {
   Zap,
   Tag,
   Lightbulb,
-  Keyboard
+  Keyboard,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import DynamicVisualStage from './visuals/DynamicVisualStage';
 import { sound } from '../../utils/audio';
@@ -211,13 +213,17 @@ function generateFallbackBreakdown(tokens = [], lesson) {
 /**
  * Animated Professor Byte Mascot in Teaching Pose
  */
-function ProfessorByteMascot({ message, analogy }) {
+function ProfessorByteMascot({ message, analogy, isSpeaking, onToggleVoice }) {
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 p-3 bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl shadow-[3px_3px_0px_#2D2319]">
       {/* Mascot Graphic */}
       <div className="relative shrink-0 flex flex-col items-center">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#C3A6E8] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-3xl sm:text-4xl animate-bounce">
-          🎓
+        <div
+          className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#C3A6E8] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-3xl sm:text-4xl transition-all ${
+            isSpeaking ? 'animate-pulse scale-105 ring-4 ring-[#F6C445]' : 'animate-bounce'
+          }`}
+        >
+          {isSpeaking ? '🗣️' : '🎓'}
         </div>
         <span className="text-[10px] font-mono font-black text-[#2D2319] bg-[#F6C445] px-2 py-0.5 rounded border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] -mt-2 uppercase tracking-wide">
           Coach Byte
@@ -227,16 +233,42 @@ function ProfessorByteMascot({ message, analogy }) {
       {/* Speech Bubble */}
       <div className="flex-1 relative w-full">
         <div className="bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl p-3.5 shadow-[2px_2px_0px_#2D2319] relative">
-          <div className="flex items-center justify-between pb-1 mb-1.5 border-b border-[#2D2319]/15">
+          <div className="flex items-center justify-between pb-1 mb-1.5 border-b border-[#2D2319]/15 flex-wrap gap-2">
             <span className="text-[11px] font-mono font-black text-[#2D2319] flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-[#F6C445]" />
               MENTOR INSIGHT
             </span>
-            {analogy && (
-              <span className="text-[10px] font-mono font-bold bg-[#FAF3E0] text-[#2D2319] px-2 py-0.5 rounded border border-[#2D2319]/40">
-                💡 {analogy}
-              </span>
-            )}
+            <div className="flex items-center gap-1.5">
+              {analogy && (
+                <span className="text-[10px] font-mono font-bold bg-[#FAF3E0] text-[#2D2319] px-2 py-0.5 rounded border border-[#2D2319]/40">
+                  💡 {analogy}
+                </span>
+              )}
+              {onToggleVoice && (
+                <button
+                  type="button"
+                  onClick={onToggleVoice}
+                  className={`px-2 py-0.5 rounded-lg border border-[#2D2319] text-[10px] font-mono font-black flex items-center gap-1 cursor-pointer transition-all shadow-[1px_1px_0px_#2D2319] ${
+                    isSpeaking
+                      ? 'bg-[#F28B82] text-white animate-pulse'
+                      : 'bg-[#F6C445] hover:bg-[#fcd673] text-[#2D2319]'
+                  }`}
+                  title={isSpeaking ? "Stop Voice Narration (or press V)" : "Listen to Coach Byte's Voice (or press V)"}
+                >
+                  {isSpeaking ? (
+                    <>
+                      <VolumeX className="w-3 h-3" />
+                      <span>Stop Voice</span>
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 className="w-3 h-3" />
+                      <span>Listen (Voice)</span>
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
           </div>
           <p className="text-xs sm:text-sm font-sans font-medium text-[#2D2319] leading-relaxed">
             {message}
@@ -265,6 +297,15 @@ export default function PythonStepTeacher({
   const [simState, setSimState] = useState(1); // 1: Read, 2: Memory, 3: Output
   const [isSimPlaying, setIsSimPlaying] = useState(true);
 
+  // Voice narration state (Web Speech API)
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('retrospeed_py_voice') === 'true';
+    }
+    return false;
+  });
+
   const code = lesson?.code || "print('Hello, Python!')";
   const expectedOutput = lesson?.expectedOutput || 'Hello, Python!';
   const explanation = lesson?.instructorExplanation || lesson?.concept || lesson?.text || "Let's explore how Python executes this step by step.";
@@ -272,6 +313,72 @@ export default function PythonStepTeacher({
 
   const tokenizedLines = useMemo(() => tokenizePythonCode(code), [code]);
   const breakdownCards = useMemo(() => generateFallbackBreakdown(tokenizedLines, lesson), [tokenizedLines, lesson]);
+
+  const stopSpeaking = useCallback(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsSpeaking(false);
+  }, []);
+
+  const speakText = useCallback((text) => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    try {
+      window.speechSynthesis.cancel();
+      if (!text) {
+        setIsSpeaking(false);
+        return;
+      }
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.95;
+      utterance.pitch = 1.05;
+      utterance.onstart = () => setIsSpeaking(true);
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      setIsSpeaking(false);
+    }
+  }, []);
+
+  const toggleVoice = useCallback(() => {
+    sound?.playKeyClick?.();
+    if (isSpeaking) {
+      stopSpeaking();
+    } else {
+      let textToRead = '';
+      if (currentStep === 1) {
+        textToRead = `${explanation}`;
+      } else if (currentStep === 2) {
+        textToRead = selectedToken
+          ? `${selectedToken.text}. ${selectedToken.description}`
+          : `Code anatomy for ${lesson?.title || 'this lesson'}.`;
+      } else if (currentStep === 3) {
+        textToRead = `Execution simulation: step 1 parses the code, step 2 updates memory in RAM, step 3 prints output: ${expectedOutput}.`;
+      } else if (currentStep === 4) {
+        textToRead = `You understand the mental model! Now type this code to commit the syntax directly into muscle memory.`;
+      }
+      speakText(textToRead);
+    }
+  }, [isSpeaking, stopSpeaking, currentStep, explanation, selectedToken, lesson, expectedOutput, speakText]);
+
+  // Clean up speech on unmount
+  useEffect(() => {
+    return () => {
+      stopSpeaking();
+    };
+  }, [stopSpeaking]);
+
+  // If auto-voice is enabled, automatically speak explanation when entering Step 1
+  useEffect(() => {
+    if (voiceEnabled) {
+      if (currentStep === 1 && explanation) {
+        speakText(explanation);
+      }
+    } else {
+      stopSpeaking();
+    }
+  }, [currentStep, voiceEnabled, explanation, speakText, stopSpeaking]);
 
   // Default active token for step 2
   useEffect(() => {
@@ -300,24 +407,27 @@ export default function PythonStepTeacher({
 
   const goToStep = useCallback((step) => {
     sound?.playKeyClick?.();
+    stopSpeaking();
     setCurrentStep(step);
     setMaxVisitedStep(prev => Math.max(prev, step));
-  }, []);
+  }, [stopSpeaking]);
 
   const handleNext = useCallback(() => {
+    stopSpeaking();
     if (currentStep < 4) {
       goToStep(currentStep + 1);
     } else if (onStartTyping) {
       sound?.playKeyClick?.();
       onStartTyping();
     }
-  }, [currentStep, goToStep, onStartTyping]);
+  }, [currentStep, goToStep, onStartTyping, stopSpeaking]);
 
   const handleBack = useCallback(() => {
+    stopSpeaking();
     if (currentStep > 1) {
       goToStep(currentStep - 1);
     }
-  }, [currentStep, goToStep]);
+  }, [currentStep, goToStep, stopSpeaking]);
 
   // Global Keyboard Navigation
   useEffect(() => {
@@ -331,15 +441,19 @@ export default function PythonStepTeacher({
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
         handleBack();
+      } else if (e.key === 'v' || e.key === 'V') {
+        e.preventDefault();
+        toggleVoice();
       } else if (e.key === 'Escape' && onExit) {
         e.preventDefault();
+        stopSpeaking();
         onExit();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleNext, handleBack, onExit]);
+  }, [handleNext, handleBack, onExit, toggleVoice, stopSpeaking]);
 
   const stepsMeta = [
     { num: 1, label: 'Mental Model', icon: <BookOpen className="w-3.5 h-3.5" /> },
@@ -382,12 +496,41 @@ export default function PythonStepTeacher({
           })}
         </div>
 
-        {/* Fast Action: Skip to Typing */}
+        {/* Top Controls: Voice Toggle & Skip to Typing */}
         <div className="flex items-center space-x-2 shrink-0">
           <button
             type="button"
             onClick={() => {
               sound?.playKeyClick?.();
+              setVoiceEnabled(prev => {
+                const next = !prev;
+                if (typeof window !== 'undefined') {
+                  localStorage.setItem('retrospeed_py_voice', String(next));
+                }
+                if (!next) {
+                  stopSpeaking();
+                } else if (currentStep === 1) {
+                  speakText(explanation);
+                }
+                return next;
+              });
+            }}
+            className={`px-2.5 py-1 rounded-xl border border-[#2D2319] text-[11px] font-mono font-bold flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319] cursor-pointer transition-all ${
+              voiceEnabled
+                ? 'bg-[#48B89F] text-white'
+                : 'bg-[#FAF3E0] hover:bg-[#FDF8EE] text-[#2D2319]'
+            }`}
+            title={voiceEnabled ? "Auto-Voice Enabled: Coach Byte speaks explanations automatically" : "Auto-Voice Disabled: Silent visual reading"}
+          >
+            {voiceEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+            <span>Voice: {voiceEnabled ? 'ON' : 'OFF'}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              sound?.playKeyClick?.();
+              stopSpeaking();
               if (onStartTyping) onStartTyping();
             }}
             className="px-2.5 py-1 rounded-xl bg-[#FAF3E0] hover:bg-[#FDF8EE] border border-[#2D2319] text-[#2D2319] text-[11px] font-bold flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319] cursor-pointer"
@@ -407,8 +550,13 @@ export default function PythonStepTeacher({
             {/* Animated Physical Mental Model */}
             <DynamicVisualStage analogyType={lesson?.analogyType} lesson={lesson} />
 
-            {/* Coach Byte / Professor Byte Teaching Pose & Speech Bubble */}
-            <ProfessorByteMascot message={explanation} analogy={analogy} />
+            {/* Coach Byte / Professor Byte Teaching Pose & Speech Bubble with Voice */}
+            <ProfessorByteMascot
+              message={explanation}
+              analogy={analogy}
+              isSpeaking={isSpeaking}
+              onToggleVoice={toggleVoice}
+            />
           </div>
         )}
 
