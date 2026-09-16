@@ -1,0 +1,462 @@
+[
+  {
+    "partNumber": 1,
+    "padNum": "01",
+    "videoId": "GRNI9T9R8gQ",
+    "rawTitle": "What is Python (Visually Explained) | How It Works and How to Learn It | #Python Course 1",
+    "title": "What is Python (Visually Explained) | How It Works and How to Learn It",
+    "url": "https://www.youtube.com/watch?v=GRNI9T9R8gQ&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_01_what_is_python_visually_explained_how_it_works_and_how_to_learn_it.md",
+    "slug": "what_is_python_visually_explained_how_it_works_and_how_to_learn_it"
+  },
+  {
+    "partNumber": 2,
+    "padNum": "02",
+    "videoId": "uge4A1LHsNk",
+    "rawTitle": "How to Install Python and VS Code + BONUS Roadmap! (Step-by-Step) | #Python Course 2",
+    "title": "How to Install Python and VS Code + BONUS Roadmap! (Step-by-Step)",
+    "url": "https://www.youtube.com/watch?v=uge4A1LHsNk&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_02_how_to_install_python_and_vs_code_bonus_roadmap_step_by_step.md",
+    "slug": "how_to_install_python_and_vs_code_bonus_roadmap_step_by_step"
+  },
+  {
+    "partNumber": 3,
+    "padNum": "03",
+    "videoId": "GEOnKhm940k",
+    "rawTitle": "Python Comments: Visually Explained | #Python Course 3",
+    "title": "Python Comments: Visually Explained",
+    "url": "https://www.youtube.com/watch?v=GEOnKhm940k&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_03_python_comments_visually_explained.md",
+    "slug": "python_comments_visually_explained"
+  },
+  {
+    "partNumber": 4,
+    "padNum": "04",
+    "videoId": "IdXTxbBfDbc",
+    "rawTitle": "Python Print Function: Visually Explained | #Python Course 4",
+    "title": "Python Print Function: Visually Explained",
+    "url": "https://www.youtube.com/watch?v=IdXTxbBfDbc&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_04_python_print_function_visually_explained.md",
+    "slug": "python_print_function_visually_explained"
+  },
+  {
+    "partNumber": 5,
+    "padNum": "05",
+    "videoId": "YHgkADDCWJg",
+    "rawTitle": "Python Variables: Visually Explained | #Python Course 5",
+    "title": "Python Variables: Visually Explained",
+    "url": "https://www.youtube.com/watch?v=YHgkADDCWJg&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_05_python_variables_visually_explained.md",
+    "slug": "python_variables_visually_explained"
+  },
+  {
+    "partNumber": 6,
+    "padNum": "06",
+    "videoId": "we54H-T1AL0",
+    "rawTitle": "Python Input Function: Visually Explained | #Python Course 6",
+    "title": "Python Input Function: Visually Explained",
+    "url": "https://www.youtube.com/watch?v=we54H-T1AL0&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_06_python_input_function_visually_explained.md",
+    "slug": "python_input_function_visually_explained"
+  },
+  {
+    "partNumber": 7,
+    "padNum": "07",
+    "videoId": "0uY2qNAsAWs",
+    "rawTitle": "Python Data Types: Visually Explained | #Python Course 7",
+    "title": "Python Data Types: Visually Explained",
+    "url": "https://www.youtube.com/watch?v=0uY2qNAsAWs&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_07_python_data_types_visually_explained.md",
+    "slug": "python_data_types_visually_explained"
+  },
+  {
+    "partNumber": 8,
+    "padNum": "08",
+    "videoId": "Yveo5hCrGLE",
+    "rawTitle": "Python String Functions Explained | Text Manipulation & Cleaning | #Python Course 8",
+    "title": "Python String Functions Explained | Text Manipulation & Cleaning",
+    "url": "https://www.youtube.com/watch?v=Yveo5hCrGLE&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_08_python_string_functions_explained_text_manipulation_cleaning.md",
+    "slug": "python_string_functions_explained_text_manipulation_cleaning"
+  },
+  {
+    "partNumber": 9,
+    "padNum": "09",
+    "videoId": "5ZOxqAGWy70",
+    "rawTitle": "Python Numbers Mastery | Math Functions, Round & Random | #Python Course 9",
+    "title": "Python Numbers Mastery | Math Functions, Round & Random",
+    "url": "https://www.youtube.com/watch?v=5ZOxqAGWy70&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_09_python_numbers_mastery_math_functions_round_random.md",
+    "slug": "python_numbers_mastery_math_functions_round_random"
+  },
+  {
+    "partNumber": 10,
+    "padNum": "10",
+    "videoId": "9XbeXpKMR_E",
+    "rawTitle": "Python Control Flow: Visually Explained | #Python Course 10",
+    "title": "Python Control Flow: Visually Explained",
+    "url": "https://www.youtube.com/watch?v=9XbeXpKMR_E&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_10_python_control_flow_visually_explained.md",
+    "slug": "python_control_flow_visually_explained"
+  },
+  {
+    "partNumber": 11,
+    "padNum": "11",
+    "videoId": "v8tuWg_rvjE",
+    "rawTitle": "Python Boolean Functions | bool, all, any, isinstance | #Python Course 11",
+    "title": "Python Boolean Functions | bool, all, any, isinstance",
+    "url": "https://www.youtube.com/watch?v=v8tuWg_rvjE&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_11_python_boolean_functions_bool_all_any_isinstance.md",
+    "slug": "python_boolean_functions_bool_all_any_isinstance"
+  },
+  {
+    "partNumber": 12,
+    "padNum": "12",
+    "videoId": "OZ7AinsDYVo",
+    "rawTitle": "Python Comparison Operators (Visually Explained) | #Python Course 12",
+    "title": "Python Comparison Operators (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=OZ7AinsDYVo&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_12_python_comparison_operators_visually_explained.md",
+    "slug": "python_comparison_operators_visually_explained"
+  },
+  {
+    "partNumber": 13,
+    "padNum": "13",
+    "videoId": "yFaYylK1yCE",
+    "rawTitle": "Python Logical Operators (Visually Explained) | and, or, not, Execution Order | #Python Course 13",
+    "title": "Python Logical Operators (Visually Explained) | and, or, not, Execution Order",
+    "url": "https://www.youtube.com/watch?v=yFaYylK1yCE&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_13_python_logical_operators_visually_explained_and_or_not_execution_order.md",
+    "slug": "python_logical_operators_visually_explained_and_or_not_execution_order"
+  },
+  {
+    "partNumber": 14,
+    "padNum": "14",
+    "videoId": "qtTs03rI7W0",
+    "rawTitle": "Python Membership & Identity Operators (Visually Explained) | IN & IS | #Python Course 14",
+    "title": "Python Membership & Identity Operators (Visually Explained) | IN & IS",
+    "url": "https://www.youtube.com/watch?v=qtTs03rI7W0&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_14_python_membership_identity_operators_visually_explained_in_is.md",
+    "slug": "python_membership_identity_operators_visually_explained_in_is"
+  },
+  {
+    "partNumber": 15,
+    "padNum": "15",
+    "videoId": "7s-zyoaaBOY",
+    "rawTitle": "Python If Elif Else Statements (Visually Explained) | #Python Course 15",
+    "title": "Python If Elif Else Statements (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=7s-zyoaaBOY&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_15_python_if_elif_else_statements_visually_explained.md",
+    "slug": "python_if_elif_else_statements_visually_explained"
+  },
+  {
+    "partNumber": 16,
+    "padNum": "16",
+    "videoId": "wP18POH-uM0",
+    "rawTitle": "Python If-Else One Line and Match-Case (Visually Explained) | #Python Course 16",
+    "title": "Python If-Else One Line and Match-Case (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=wP18POH-uM0&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_16_python_if_else_one_line_and_match_case_visually_explained.md",
+    "slug": "python_if_else_one_line_and_match_case_visually_explained"
+  },
+  {
+    "partNumber": 17,
+    "padNum": "17",
+    "videoId": "HWaQttu8_O0",
+    "rawTitle": "Python For Loops (Visually Explained) | #Python Course 17",
+    "title": "Python For Loops (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=HWaQttu8_O0&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_17_python_for_loops_visually_explained.md",
+    "slug": "python_for_loops_visually_explained"
+  },
+  {
+    "partNumber": 18,
+    "padNum": "18",
+    "videoId": "fx8MJxW8wb4",
+    "rawTitle": "Python Break vs Continue vs Pass (Visually Explained) | Control Statements | #Python Course 18",
+    "title": "Python Break vs Continue vs Pass (Visually Explained) | Control Statements",
+    "url": "https://www.youtube.com/watch?v=fx8MJxW8wb4&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_18_python_break_vs_continue_vs_pass_visually_explained_control_statements.md",
+    "slug": "python_break_vs_continue_vs_pass_visually_explained_control_statements"
+  },
+  {
+    "partNumber": 19,
+    "padNum": "19",
+    "videoId": "KlVXZu8V1VM",
+    "rawTitle": "Python For-Else Loop (Visually Explained) | Hidden Control Flow Trick | #Python Course 19",
+    "title": "Python For-Else Loop (Visually Explained) | Hidden Control Flow Trick",
+    "url": "https://www.youtube.com/watch?v=KlVXZu8V1VM&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_19_python_for_else_loop_visually_explained_hidden_control_flow_trick.md",
+    "slug": "python_for_else_loop_visually_explained_hidden_control_flow_trick"
+  },
+  {
+    "partNumber": 20,
+    "padNum": "20",
+    "videoId": "ck1AzCDs0ss",
+    "rawTitle": "Python Nested Loops are Easy | A Must-Have Skill for Data Engineers | #Python Course 20",
+    "title": "Python Nested Loops are Easy | A Must-Have Skill for Data Engineers",
+    "url": "https://www.youtube.com/watch?v=ck1AzCDs0ss&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_20_python_nested_loops_are_easy_a_must_have_skill_for_data_engineers.md",
+    "slug": "python_nested_loops_are_easy_a_must_have_skill_for_data_engineers"
+  },
+  {
+    "partNumber": 21,
+    "padNum": "21",
+    "videoId": "gD8ePxAhjUM",
+    "rawTitle": "Python While Loops (Visually Explained) | For vs While Loops | #Python Course 21",
+    "title": "Python While Loops (Visually Explained) | For vs While Loops",
+    "url": "https://www.youtube.com/watch?v=gD8ePxAhjUM&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_21_python_while_loops_visually_explained_for_vs_while_loops.md",
+    "slug": "python_while_loops_visually_explained_for_vs_while_loops"
+  },
+  {
+    "partNumber": 22,
+    "padNum": "22",
+    "videoId": "SVjXp22ddFQ",
+    "rawTitle": "Introduction to Data Structures in Python (Visually Explained) | #Python Course 22",
+    "title": "Introduction to Data Structures in Python (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=SVjXp22ddFQ&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_22_introduction_to_data_structures_in_python_visually_explained.md",
+    "slug": "introduction_to_data_structures_in_python_visually_explained"
+  },
+  {
+    "partNumber": 23,
+    "padNum": "23",
+    "videoId": "LWeS6R9IPf4",
+    "rawTitle": "How to Create a List in Python (Visually Explained) | #Python Course 23",
+    "title": "How to Create a List in Python (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=LWeS6R9IPf4&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_23_how_to_create_a_list_in_python_visually_explained.md",
+    "slug": "how_to_create_a_list_in_python_visually_explained"
+  },
+  {
+    "partNumber": 24,
+    "padNum": "24",
+    "videoId": "oPZ5xoKZ6Og",
+    "rawTitle": "How to Access Lists in Python (Indexing & Slicing Explained) | #Python Course 24",
+    "title": "How to Access Lists in Python (Indexing & Slicing Explained)",
+    "url": "https://www.youtube.com/watch?v=oPZ5xoKZ6Og&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_24_how_to_access_lists_in_python_indexing_slicing_explained.md",
+    "slug": "how_to_access_lists_in_python_indexing_slicing_explained"
+  },
+  {
+    "partNumber": 25,
+    "padNum": "25",
+    "videoId": "mSUBfY-Geuc",
+    "rawTitle": "Python Unpacking (Visually Explained) | Asterisk * and Underscore _ | #Python Course 25",
+    "title": "Python Unpacking (Visually Explained) | Asterisk * and Underscore _",
+    "url": "https://www.youtube.com/watch?v=mSUBfY-Geuc&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_25_python_unpacking_visually_explained_asterisk_and_underscore.md",
+    "slug": "python_unpacking_visually_explained_asterisk_and_underscore"
+  },
+  {
+    "partNumber": 26,
+    "padNum": "26",
+    "videoId": "zVt7oaBUsHk",
+    "rawTitle": "How to Explore & Analyze Lists in Python | #Python Course 26",
+    "title": "How to Explore & Analyze Lists in Python",
+    "url": "https://www.youtube.com/watch?v=zVt7oaBUsHk&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_26_how_to_explore_analyze_lists_in_python.md",
+    "slug": "how_to_explore_analyze_lists_in_python"
+  },
+  {
+    "partNumber": 27,
+    "padNum": "27",
+    "videoId": "qtANRuRxiEo",
+    "rawTitle": "How to Add, Remove, and Update Lists in Python (Visually Explained) | #Python Course 27",
+    "title": "How to Add, Remove, and Update Lists in Python (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=qtANRuRxiEo&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_27_how_to_add_remove_and_update_lists_in_python_visually_explained.md",
+    "slug": "how_to_add_remove_and_update_lists_in_python_visually_explained"
+  },
+  {
+    "partNumber": 28,
+    "padNum": "28",
+    "videoId": "BUsmwsk8Des",
+    "rawTitle": "How to Order Lists in Python (Visually Explained) | sort(), sorted(), reverse() | #Python Course 28",
+    "title": "How to Order Lists in Python (Visually Explained) | sort(), sorted(), reverse()",
+    "url": "https://www.youtube.com/watch?v=BUsmwsk8Des&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_28_how_to_order_lists_in_python_visually_explained_sort_sorted_reverse.md",
+    "slug": "how_to_order_lists_in_python_visually_explained_sort_sorted_reverse"
+  },
+  {
+    "partNumber": 29,
+    "padNum": "29",
+    "videoId": "zBEwm_IBVxI",
+    "rawTitle": "How to Copy Python Lists Safely (Visually Explained) | Shallow Copy vs Deepcopy | #Python Course 29",
+    "title": "How to Copy Python Lists Safely (Visually Explained) | Shallow Copy vs Deepcopy",
+    "url": "https://www.youtube.com/watch?v=zBEwm_IBVxI&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_29_how_to_copy_python_lists_safely_visually_explained_shallow_copy_vs_deepcopy.md",
+    "slug": "how_to_copy_python_lists_safely_visually_explained_shallow_copy_vs_deepcopy"
+  },
+  {
+    "partNumber": 30,
+    "padNum": "30",
+    "videoId": "9BZu1jgs2Dk",
+    "rawTitle": "How to Combine Lists in Python | 4 Simple Ways and ZIP Visually Explained | #Python Course 30",
+    "title": "How to Combine Lists in Python | 4 Simple Ways and ZIP Visually Explained",
+    "url": "https://www.youtube.com/watch?v=9BZu1jgs2Dk&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_30_how_to_combine_lists_in_python_4_simple_ways_and_zip_visually_explained.md",
+    "slug": "how_to_combine_lists_in_python_4_simple_ways_and_zip_visually_explained"
+  },
+  {
+    "partNumber": 31,
+    "padNum": "31",
+    "videoId": "hgQD2znCc_I",
+    "rawTitle": "Python Iterator vs Iterable (Visually Explained) | enumerate, map, filter | #Python Course 31",
+    "title": "Python Iterator vs Iterable (Visually Explained) | enumerate, map, filter",
+    "url": "https://www.youtube.com/watch?v=hgQD2znCc_I&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_31_python_iterator_vs_iterable_visually_explained_enumerate_map_filter.md",
+    "slug": "python_iterator_vs_iterable_visually_explained_enumerate_map_filter"
+  },
+  {
+    "partNumber": 32,
+    "padNum": "32",
+    "videoId": "LmTOAMpNYFA",
+    "rawTitle": "Python Lambda Functions (Visually Explained) | #Python Course 32",
+    "title": "Python Lambda Functions (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=LmTOAMpNYFA&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_32_python_lambda_functions_visually_explained.md",
+    "slug": "python_lambda_functions_visually_explained"
+  },
+  {
+    "partNumber": 33,
+    "padNum": "33",
+    "videoId": "6bHDQtVfsCM",
+    "rawTitle": "Python List Comprehension (Visually Explained) | The Cleanest Way to Code | #Python Course 33",
+    "title": "Python List Comprehension (Visually Explained) | The Cleanest Way to Code",
+    "url": "https://www.youtube.com/watch?v=6bHDQtVfsCM&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_33_python_list_comprehension_visually_explained_the_cleanest_way_to_code.md",
+    "slug": "python_list_comprehension_visually_explained_the_cleanest_way_to_code"
+  },
+  {
+    "partNumber": 34,
+    "padNum": "34",
+    "videoId": "c3FRTlncSWM",
+    "rawTitle": "30 Python List Operations in 5 Minutes | #Python Course 34",
+    "title": "30 Python List Operations in 5 Minutes",
+    "url": "https://www.youtube.com/watch?v=c3FRTlncSWM&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_34_30_python_list_operations_in_5_minutes.md",
+    "slug": "30_python_list_operations_in_5_minutes"
+  },
+  {
+    "partNumber": 35,
+    "padNum": "35",
+    "videoId": "TTkifjHCPWo",
+    "rawTitle": "Python Tuples (Visually Explained) | #Python Course 35",
+    "title": "Python Tuples (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=TTkifjHCPWo&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_35_python_tuples_visually_explained.md",
+    "slug": "python_tuples_visually_explained"
+  },
+  {
+    "partNumber": 36,
+    "padNum": "36",
+    "videoId": "D5R9Iq3KaPI",
+    "rawTitle": "Python Sets (Visually Explained) | #Python Course 36",
+    "title": "Python Sets (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=D5R9Iq3KaPI&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_36_python_sets_visually_explained.md",
+    "slug": "python_sets_visually_explained"
+  },
+  {
+    "partNumber": 37,
+    "padNum": "37",
+    "videoId": "rpsYzPv1HiQ",
+    "rawTitle": "Python Dictionaries (Visually Explained) | #Python Course 37",
+    "title": "Python Dictionaries (Visually Explained)",
+    "url": "https://www.youtube.com/watch?v=rpsYzPv1HiQ&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_37_python_dictionaries_visually_explained.md",
+    "slug": "python_dictionaries_visually_explained"
+  },
+  {
+    "partNumber": 38,
+    "padNum": "38",
+    "videoId": "h-zcj4DmqHk",
+    "rawTitle": "Python Data Structures: When to Use List, Tuple, Set, Dict | #Python Course 38",
+    "title": "Python Data Structures: When to Use List, Tuple, Set, Dict",
+    "url": "https://www.youtube.com/watch?v=h-zcj4DmqHk&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_38_python_data_structures_when_to_use_list_tuple_set_dict.md",
+    "slug": "python_data_structures_when_to_use_list_tuple_set_dict"
+  },
+  {
+    "partNumber": 39,
+    "padNum": "39",
+    "videoId": "FSYoWPXfJxc",
+    "rawTitle": "Python Functions Made Simple (Visual Explanation) | #Python Course 39",
+    "title": "Python Functions Made Simple (Visual Explanation)",
+    "url": "https://www.youtube.com/watch?v=FSYoWPXfJxc&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_39_python_functions_made_simple_visual_explanation.md",
+    "slug": "python_functions_made_simple_visual_explanation"
+  },
+  {
+    "partNumber": 40,
+    "padNum": "40",
+    "videoId": "ysoVpKxefzM",
+    "rawTitle": "Python Parameters vs Arguments (Explained Visually) | #Python Course 40",
+    "title": "Python Parameters vs Arguments (Explained Visually)",
+    "url": "https://www.youtube.com/watch?v=ysoVpKxefzM&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_40_python_parameters_vs_arguments_explained_visually.md",
+    "slug": "python_parameters_vs_arguments_explained_visually"
+  },
+  {
+    "partNumber": 41,
+    "padNum": "41",
+    "videoId": "3TxcPKu9ec4",
+    "rawTitle": "Python Parameters vs Global vs Local Variables (Visual Explanation) | #Python Course 41",
+    "title": "Python Parameters vs Global vs Local Variables (Visual Explanation)",
+    "url": "https://www.youtube.com/watch?v=3TxcPKu9ec4&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_41_python_parameters_vs_global_vs_local_variables_visual_explanation.md",
+    "slug": "python_parameters_vs_global_vs_local_variables_visual_explanation"
+  },
+  {
+    "partNumber": 42,
+    "padNum": "42",
+    "videoId": "fuqCGh06hRw",
+    "rawTitle": "Python Positional vs Keyword Arguments Explained | Default Parameters | #Python Course 42",
+    "title": "Python Positional vs Keyword Arguments Explained | Default Parameters",
+    "url": "https://www.youtube.com/watch?v=fuqCGh06hRw&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_42_python_positional_vs_keyword_arguments_explained_default_parameters.md",
+    "slug": "python_positional_vs_keyword_arguments_explained_default_parameters"
+  },
+  {
+    "partNumber": 43,
+    "padNum": "43",
+    "videoId": "A9j2V2SPq3g",
+    "rawTitle": "Python *Args and **Kwargs Finally Make Sense | #Python Course 43",
+    "title": "Python *Args and **Kwargs Finally Make Sense",
+    "url": "https://www.youtube.com/watch?v=A9j2V2SPq3g&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_43_python_args_and_kwargs_finally_make_sense.md",
+    "slug": "python_args_and_kwargs_finally_make_sense"
+  },
+  {
+    "partNumber": 44,
+    "padNum": "44",
+    "videoId": "DZ2yBGzvlXk",
+    "rawTitle": "Python Return Vs Print() (Visual Explanation) | #Python Course 44",
+    "title": "Python Return Vs Print() (Visual Explanation)",
+    "url": "https://www.youtube.com/watch?v=DZ2yBGzvlXk&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_44_python_return_vs_print_visual_explanation.md",
+    "slug": "python_return_vs_print_visual_explanation"
+  },
+  {
+    "partNumber": 45,
+    "padNum": "45",
+    "videoId": "aXjwdOaPrMg",
+    "rawTitle": "Python Functions Types You Must Know (Action, Transform, Validate, Orchestrate) | #Python Course 45",
+    "title": "Python Functions Types You Must Know (Action, Transform, Validate, Orchestrate)",
+    "url": "https://www.youtube.com/watch?v=aXjwdOaPrMg&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_45_python_functions_types_you_must_know_action_transform_validate_orchestrate.md",
+    "slug": "python_functions_types_you_must_know_action_transform_validate_orchestrate"
+  },
+  {
+    "partNumber": 46,
+    "padNum": "46",
+    "videoId": "QipWozUPnOU",
+    "rawTitle": "8 Python Function Habits That Make Your Code Clean and Professional | #Python Course 46",
+    "title": "8 Python Function Habits That Make Your Code Clean and Professional",
+    "url": "https://www.youtube.com/watch?v=QipWozUPnOU&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
+    "filename": "part_46_8_python_function_habits_that_make_your_code_clean_and_professional.md",
+    "slug": "8_python_function_habits_that_make_your_code_clean_and_professional"
+  }
+]
