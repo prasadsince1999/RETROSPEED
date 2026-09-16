@@ -7,7 +7,9 @@
     "title": "What is Python (Visually Explained) | How It Works and How to Learn It",
     "url": "https://www.youtube.com/watch?v=GRNI9T9R8gQ&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_01_what_is_python_visually_explained_how_it_works_and_how_to_learn_it.md",
-    "slug": "what_is_python_visually_explained_how_it_works_and_how_to_learn_it"
+    "slug": "what_is_python_visually_explained_how_it_works_and_how_to_learn_it",
+    "duration": "10:47",
+    "seconds": 647
   },
   {
     "partNumber": 2,
@@ -17,7 +19,9 @@
     "title": "How to Install Python and VS Code + BONUS Roadmap! (Step-by-Step)",
     "url": "https://www.youtube.com/watch?v=uge4A1LHsNk&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_02_how_to_install_python_and_vs_code_bonus_roadmap_step_by_step.md",
-    "slug": "how_to_install_python_and_vs_code_bonus_roadmap_step_by_step"
+    "slug": "how_to_install_python_and_vs_code_bonus_roadmap_step_by_step",
+    "duration": "14:11",
+    "seconds": 851
   },
   {
     "partNumber": 3,
@@ -27,7 +31,9 @@
     "title": "Python Comments: Visually Explained",
     "url": "https://www.youtube.com/watch?v=GEOnKhm940k&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_03_python_comments_visually_explained.md",
-    "slug": "python_comments_visually_explained"
+    "slug": "python_comments_visually_explained",
+    "duration": "5:20",
+    "seconds": 320
   },
   {
     "partNumber": 4,
@@ -37,7 +43,9 @@
     "title": "Python Print Function: Visually Explained",
     "url": "https://www.youtube.com/watch?v=IdXTxbBfDbc&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_04_python_print_function_visually_explained.md",
-    "slug": "python_print_function_visually_explained"
+    "slug": "python_print_function_visually_explained",
+    "duration": "21:29",
+    "seconds": 1289
   },
   {
     "partNumber": 5,
@@ -47,7 +55,9 @@
     "title": "Python Variables: Visually Explained",
     "url": "https://www.youtube.com/watch?v=YHgkADDCWJg&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_05_python_variables_visually_explained.md",
-    "slug": "python_variables_visually_explained"
+    "slug": "python_variables_visually_explained",
+    "duration": "13:39",
+    "seconds": 819
   },
   {
     "partNumber": 6,
@@ -57,7 +67,9 @@
     "title": "Python Input Function: Visually Explained",
     "url": "https://www.youtube.com/watch?v=we54H-T1AL0&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_06_python_input_function_visually_explained.md",
-    "slug": "python_input_function_visually_explained"
+    "slug": "python_input_function_visually_explained",
+    "duration": "9:16",
+    "seconds": 556
   },
   {
     "partNumber": 7,
@@ -67,7 +79,9 @@
     "title": "Python Data Types: Visually Explained",
     "url": "https://www.youtube.com/watch?v=0uY2qNAsAWs&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_07_python_data_types_visually_explained.md",
-    "slug": "python_data_types_visually_explained"
+    "slug": "python_data_types_visually_explained",
+    "duration": "30:23",
+    "seconds": 1823
   },
   {
     "partNumber": 8,
@@ -77,7 +91,9 @@
     "title": "Python String Functions Explained | Text Manipulation & Cleaning",
     "url": "https://www.youtube.com/watch?v=Yveo5hCrGLE&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_08_python_string_functions_explained_text_manipulation_cleaning.md",
-    "slug": "python_string_functions_explained_text_manipulation_cleaning"
+    "slug": "python_string_functions_explained_text_manipulation_cleaning",
+    "duration": "1:14:37",
+    "seconds": 4477
   },
   {
     "partNumber": 9,
@@ -87,7 +103,9 @@
     "title": "Python Numbers Mastery | Math Functions, Round & Random",
     "url": "https://www.youtube.com/watch?v=5ZOxqAGWy70&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_09_python_numbers_mastery_math_functions_round_random.md",
-    "slug": "python_numbers_mastery_math_functions_round_random"
+    "slug": "python_numbers_mastery_math_functions_round_random",
+    "duration": "28:51",
+    "seconds": 1731
   },
   {
     "partNumber": 10,
@@ -97,7 +115,9 @@
     "title": "Python Control Flow: Visually Explained",
     "url": "https://www.youtube.com/watch?v=9XbeXpKMR_E&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_10_python_control_flow_visually_explained.md",
-    "slug": "python_control_flow_visually_explained"
+    "slug": "python_control_flow_visually_explained",
+    "duration": "7:00",
+    "seconds": 420
   },
   {
     "partNumber": 11,
@@ -107,7 +127,9 @@
     "title": "Python Boolean Functions | bool, all, any, isinstance",
     "url": "https://www.youtube.com/watch?v=v8tuWg_rvjE&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_11_python_boolean_functions_bool_all_any_isinstance.md",
-    "slug": "python_boolean_functions_bool_all_any_isinstance"
+    "slug": "python_boolean_functions_bool_all_any_isinstance",
+    "duration": "8:40",
+    "seconds": 520
   },
   {
     "partNumber": 12,
@@ -117,7 +139,9 @@
     "title": "Python Comparison Operators (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=OZ7AinsDYVo&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_12_python_comparison_operators_visually_explained.md",
-    "slug": "python_comparison_operators_visually_explained"
+    "slug": "python_comparison_operators_visually_explained",
+    "duration": "7:08",
+    "seconds": 428
   },
   {
     "partNumber": 13,
@@ -127,7 +151,9 @@
     "title": "Python Logical Operators (Visually Explained) | and, or, not, Execution Order",
     "url": "https://www.youtube.com/watch?v=yFaYylK1yCE&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_13_python_logical_operators_visually_explained_and_or_not_execution_order.md",
-    "slug": "python_logical_operators_visually_explained_and_or_not_execution_order"
+    "slug": "python_logical_operators_visually_explained_and_or_not_execution_order",
+    "duration": "17:55",
+    "seconds": 1075
   },
   {
     "partNumber": 14,
@@ -137,7 +163,9 @@
     "title": "Python Membership & Identity Operators (Visually Explained) | IN & IS",
     "url": "https://www.youtube.com/watch?v=qtTs03rI7W0&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_14_python_membership_identity_operators_visually_explained_in_is.md",
-    "slug": "python_membership_identity_operators_visually_explained_in_is"
+    "slug": "python_membership_identity_operators_visually_explained_in_is",
+    "duration": "12:32",
+    "seconds": 752
   },
   {
     "partNumber": 15,
@@ -147,7 +175,9 @@
     "title": "Python If Elif Else Statements (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=7s-zyoaaBOY&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_15_python_if_elif_else_statements_visually_explained.md",
-    "slug": "python_if_elif_else_statements_visually_explained"
+    "slug": "python_if_elif_else_statements_visually_explained",
+    "duration": "51:47",
+    "seconds": 3107
   },
   {
     "partNumber": 16,
@@ -157,7 +187,9 @@
     "title": "Python If-Else One Line and Match-Case (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=wP18POH-uM0&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_16_python_if_else_one_line_and_match_case_visually_explained.md",
-    "slug": "python_if_else_one_line_and_match_case_visually_explained"
+    "slug": "python_if_else_one_line_and_match_case_visually_explained",
+    "duration": "14:11",
+    "seconds": 851
   },
   {
     "partNumber": 17,
@@ -167,7 +199,9 @@
     "title": "Python For Loops (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=HWaQttu8_O0&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_17_python_for_loops_visually_explained.md",
-    "slug": "python_for_loops_visually_explained"
+    "slug": "python_for_loops_visually_explained",
+    "duration": "23:53",
+    "seconds": 1433
   },
   {
     "partNumber": 18,
@@ -177,7 +211,9 @@
     "title": "Python Break vs Continue vs Pass (Visually Explained) | Control Statements",
     "url": "https://www.youtube.com/watch?v=fx8MJxW8wb4&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_18_python_break_vs_continue_vs_pass_visually_explained_control_statements.md",
-    "slug": "python_break_vs_continue_vs_pass_visually_explained_control_statements"
+    "slug": "python_break_vs_continue_vs_pass_visually_explained_control_statements",
+    "duration": "20:44",
+    "seconds": 1244
   },
   {
     "partNumber": 19,
@@ -187,7 +223,9 @@
     "title": "Python For-Else Loop (Visually Explained) | Hidden Control Flow Trick",
     "url": "https://www.youtube.com/watch?v=KlVXZu8V1VM&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_19_python_for_else_loop_visually_explained_hidden_control_flow_trick.md",
-    "slug": "python_for_else_loop_visually_explained_hidden_control_flow_trick"
+    "slug": "python_for_else_loop_visually_explained_hidden_control_flow_trick",
+    "duration": "17:09",
+    "seconds": 1029
   },
   {
     "partNumber": 20,
@@ -197,7 +235,9 @@
     "title": "Python Nested Loops are Easy | A Must-Have Skill for Data Engineers",
     "url": "https://www.youtube.com/watch?v=ck1AzCDs0ss&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_20_python_nested_loops_are_easy_a_must_have_skill_for_data_engineers.md",
-    "slug": "python_nested_loops_are_easy_a_must_have_skill_for_data_engineers"
+    "slug": "python_nested_loops_are_easy_a_must_have_skill_for_data_engineers",
+    "duration": "16:43",
+    "seconds": 1003
   },
   {
     "partNumber": 21,
@@ -207,7 +247,9 @@
     "title": "Python While Loops (Visually Explained) | For vs While Loops",
     "url": "https://www.youtube.com/watch?v=gD8ePxAhjUM&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_21_python_while_loops_visually_explained_for_vs_while_loops.md",
-    "slug": "python_while_loops_visually_explained_for_vs_while_loops"
+    "slug": "python_while_loops_visually_explained_for_vs_while_loops",
+    "duration": "28:36",
+    "seconds": 1716
   },
   {
     "partNumber": 22,
@@ -217,7 +259,9 @@
     "title": "Introduction to Data Structures in Python (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=SVjXp22ddFQ&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_22_introduction_to_data_structures_in_python_visually_explained.md",
-    "slug": "introduction_to_data_structures_in_python_visually_explained"
+    "slug": "introduction_to_data_structures_in_python_visually_explained",
+    "duration": "10:11",
+    "seconds": 611
   },
   {
     "partNumber": 23,
@@ -227,7 +271,9 @@
     "title": "How to Create a List in Python (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=LWeS6R9IPf4&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_23_how_to_create_a_list_in_python_visually_explained.md",
-    "slug": "how_to_create_a_list_in_python_visually_explained"
+    "slug": "how_to_create_a_list_in_python_visually_explained",
+    "duration": "12:06",
+    "seconds": 726
   },
   {
     "partNumber": 24,
@@ -237,7 +283,9 @@
     "title": "How to Access Lists in Python (Indexing & Slicing Explained)",
     "url": "https://www.youtube.com/watch?v=oPZ5xoKZ6Og&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_24_how_to_access_lists_in_python_indexing_slicing_explained.md",
-    "slug": "how_to_access_lists_in_python_indexing_slicing_explained"
+    "slug": "how_to_access_lists_in_python_indexing_slicing_explained",
+    "duration": "16:51",
+    "seconds": 1011
   },
   {
     "partNumber": 25,
@@ -247,7 +295,9 @@
     "title": "Python Unpacking (Visually Explained) | Asterisk * and Underscore _",
     "url": "https://www.youtube.com/watch?v=mSUBfY-Geuc&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_25_python_unpacking_visually_explained_asterisk_and_underscore.md",
-    "slug": "python_unpacking_visually_explained_asterisk_and_underscore"
+    "slug": "python_unpacking_visually_explained_asterisk_and_underscore",
+    "duration": "17:59",
+    "seconds": 1079
   },
   {
     "partNumber": 26,
@@ -257,7 +307,9 @@
     "title": "How to Explore & Analyze Lists in Python",
     "url": "https://www.youtube.com/watch?v=zVt7oaBUsHk&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_26_how_to_explore_analyze_lists_in_python.md",
-    "slug": "how_to_explore_analyze_lists_in_python"
+    "slug": "how_to_explore_analyze_lists_in_python",
+    "duration": "14:03",
+    "seconds": 843
   },
   {
     "partNumber": 27,
@@ -267,7 +319,9 @@
     "title": "How to Add, Remove, and Update Lists in Python (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=qtANRuRxiEo&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_27_how_to_add_remove_and_update_lists_in_python_visually_explained.md",
-    "slug": "how_to_add_remove_and_update_lists_in_python_visually_explained"
+    "slug": "how_to_add_remove_and_update_lists_in_python_visually_explained",
+    "duration": "23:18",
+    "seconds": 1398
   },
   {
     "partNumber": 28,
@@ -277,7 +331,9 @@
     "title": "How to Order Lists in Python (Visually Explained) | sort(), sorted(), reverse()",
     "url": "https://www.youtube.com/watch?v=BUsmwsk8Des&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_28_how_to_order_lists_in_python_visually_explained_sort_sorted_reverse.md",
-    "slug": "how_to_order_lists_in_python_visually_explained_sort_sorted_reverse"
+    "slug": "how_to_order_lists_in_python_visually_explained_sort_sorted_reverse",
+    "duration": "10:06",
+    "seconds": 606
   },
   {
     "partNumber": 29,
@@ -287,7 +343,9 @@
     "title": "How to Copy Python Lists Safely (Visually Explained) | Shallow Copy vs Deepcopy",
     "url": "https://www.youtube.com/watch?v=zBEwm_IBVxI&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_29_how_to_copy_python_lists_safely_visually_explained_shallow_copy_vs_deepcopy.md",
-    "slug": "how_to_copy_python_lists_safely_visually_explained_shallow_copy_vs_deepcopy"
+    "slug": "how_to_copy_python_lists_safely_visually_explained_shallow_copy_vs_deepcopy",
+    "duration": "17:04",
+    "seconds": 1024
   },
   {
     "partNumber": 30,
@@ -297,7 +355,9 @@
     "title": "How to Combine Lists in Python | 4 Simple Ways and ZIP Visually Explained",
     "url": "https://www.youtube.com/watch?v=9BZu1jgs2Dk&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_30_how_to_combine_lists_in_python_4_simple_ways_and_zip_visually_explained.md",
-    "slug": "how_to_combine_lists_in_python_4_simple_ways_and_zip_visually_explained"
+    "slug": "how_to_combine_lists_in_python_4_simple_ways_and_zip_visually_explained",
+    "duration": "10:08",
+    "seconds": 608
   },
   {
     "partNumber": 31,
@@ -307,7 +367,9 @@
     "title": "Python Iterator vs Iterable (Visually Explained) | enumerate, map, filter",
     "url": "https://www.youtube.com/watch?v=hgQD2znCc_I&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_31_python_iterator_vs_iterable_visually_explained_enumerate_map_filter.md",
-    "slug": "python_iterator_vs_iterable_visually_explained_enumerate_map_filter"
+    "slug": "python_iterator_vs_iterable_visually_explained_enumerate_map_filter",
+    "duration": "23:27",
+    "seconds": 1407
   },
   {
     "partNumber": 32,
@@ -317,7 +379,9 @@
     "title": "Python Lambda Functions (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=LmTOAMpNYFA&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_32_python_lambda_functions_visually_explained.md",
-    "slug": "python_lambda_functions_visually_explained"
+    "slug": "python_lambda_functions_visually_explained",
+    "duration": "15:51",
+    "seconds": 951
   },
   {
     "partNumber": 33,
@@ -327,7 +391,9 @@
     "title": "Python List Comprehension (Visually Explained) | The Cleanest Way to Code",
     "url": "https://www.youtube.com/watch?v=6bHDQtVfsCM&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_33_python_list_comprehension_visually_explained_the_cleanest_way_to_code.md",
-    "slug": "python_list_comprehension_visually_explained_the_cleanest_way_to_code"
+    "slug": "python_list_comprehension_visually_explained_the_cleanest_way_to_code",
+    "duration": "9:44",
+    "seconds": 584
   },
   {
     "partNumber": 34,
@@ -337,7 +403,9 @@
     "title": "30 Python List Operations in 5 Minutes",
     "url": "https://www.youtube.com/watch?v=c3FRTlncSWM&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_34_30_python_list_operations_in_5_minutes.md",
-    "slug": "30_python_list_operations_in_5_minutes"
+    "slug": "30_python_list_operations_in_5_minutes",
+    "duration": "6:01",
+    "seconds": 361
   },
   {
     "partNumber": 35,
@@ -347,7 +415,9 @@
     "title": "Python Tuples (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=TTkifjHCPWo&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_35_python_tuples_visually_explained.md",
-    "slug": "python_tuples_visually_explained"
+    "slug": "python_tuples_visually_explained",
+    "duration": "8:15",
+    "seconds": 495
   },
   {
     "partNumber": 36,
@@ -357,7 +427,9 @@
     "title": "Python Sets (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=D5R9Iq3KaPI&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_36_python_sets_visually_explained.md",
-    "slug": "python_sets_visually_explained"
+    "slug": "python_sets_visually_explained",
+    "duration": "18:29",
+    "seconds": 1109
   },
   {
     "partNumber": 37,
@@ -367,7 +439,9 @@
     "title": "Python Dictionaries (Visually Explained)",
     "url": "https://www.youtube.com/watch?v=rpsYzPv1HiQ&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_37_python_dictionaries_visually_explained.md",
-    "slug": "python_dictionaries_visually_explained"
+    "slug": "python_dictionaries_visually_explained",
+    "duration": "27:24",
+    "seconds": 1644
   },
   {
     "partNumber": 38,
@@ -377,7 +451,9 @@
     "title": "Python Data Structures: When to Use List, Tuple, Set, Dict",
     "url": "https://www.youtube.com/watch?v=h-zcj4DmqHk&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_38_python_data_structures_when_to_use_list_tuple_set_dict.md",
-    "slug": "python_data_structures_when_to_use_list_tuple_set_dict"
+    "slug": "python_data_structures_when_to_use_list_tuple_set_dict",
+    "duration": "3:54",
+    "seconds": 234
   },
   {
     "partNumber": 39,
@@ -387,7 +463,9 @@
     "title": "Python Functions Made Simple (Visual Explanation)",
     "url": "https://www.youtube.com/watch?v=FSYoWPXfJxc&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_39_python_functions_made_simple_visual_explanation.md",
-    "slug": "python_functions_made_simple_visual_explanation"
+    "slug": "python_functions_made_simple_visual_explanation",
+    "duration": "18:12",
+    "seconds": 1092
   },
   {
     "partNumber": 40,
@@ -397,7 +475,9 @@
     "title": "Python Parameters vs Arguments (Explained Visually)",
     "url": "https://www.youtube.com/watch?v=ysoVpKxefzM&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_40_python_parameters_vs_arguments_explained_visually.md",
-    "slug": "python_parameters_vs_arguments_explained_visually"
+    "slug": "python_parameters_vs_arguments_explained_visually",
+    "duration": "10:50",
+    "seconds": 650
   },
   {
     "partNumber": 41,
@@ -407,7 +487,9 @@
     "title": "Python Parameters vs Global vs Local Variables (Visual Explanation)",
     "url": "https://www.youtube.com/watch?v=3TxcPKu9ec4&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_41_python_parameters_vs_global_vs_local_variables_visual_explanation.md",
-    "slug": "python_parameters_vs_global_vs_local_variables_visual_explanation"
+    "slug": "python_parameters_vs_global_vs_local_variables_visual_explanation",
+    "duration": "10:47",
+    "seconds": 647
   },
   {
     "partNumber": 42,
@@ -417,7 +499,9 @@
     "title": "Python Positional vs Keyword Arguments Explained | Default Parameters",
     "url": "https://www.youtube.com/watch?v=fuqCGh06hRw&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_42_python_positional_vs_keyword_arguments_explained_default_parameters.md",
-    "slug": "python_positional_vs_keyword_arguments_explained_default_parameters"
+    "slug": "python_positional_vs_keyword_arguments_explained_default_parameters",
+    "duration": "12:15",
+    "seconds": 735
   },
   {
     "partNumber": 43,
@@ -427,7 +511,9 @@
     "title": "Python *Args and **Kwargs Finally Make Sense",
     "url": "https://www.youtube.com/watch?v=A9j2V2SPq3g&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_43_python_args_and_kwargs_finally_make_sense.md",
-    "slug": "python_args_and_kwargs_finally_make_sense"
+    "slug": "python_args_and_kwargs_finally_make_sense",
+    "duration": "8:12",
+    "seconds": 492
   },
   {
     "partNumber": 44,
@@ -437,7 +523,9 @@
     "title": "Python Return Vs Print() (Visual Explanation)",
     "url": "https://www.youtube.com/watch?v=DZ2yBGzvlXk&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_44_python_return_vs_print_visual_explanation.md",
-    "slug": "python_return_vs_print_visual_explanation"
+    "slug": "python_return_vs_print_visual_explanation",
+    "duration": "11:49",
+    "seconds": 709
   },
   {
     "partNumber": 45,
@@ -447,7 +535,9 @@
     "title": "Python Functions Types You Must Know (Action, Transform, Validate, Orchestrate)",
     "url": "https://www.youtube.com/watch?v=aXjwdOaPrMg&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_45_python_functions_types_you_must_know_action_transform_validate_orchestrate.md",
-    "slug": "python_functions_types_you_must_know_action_transform_validate_orchestrate"
+    "slug": "python_functions_types_you_must_know_action_transform_validate_orchestrate",
+    "duration": "26:07",
+    "seconds": 1567
   },
   {
     "partNumber": 46,
@@ -457,6 +547,8 @@
     "title": "8 Python Function Habits That Make Your Code Clean and Professional",
     "url": "https://www.youtube.com/watch?v=QipWozUPnOU&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn",
     "filename": "part_46_8_python_function_habits_that_make_your_code_clean_and_professional.md",
-    "slug": "8_python_function_habits_that_make_your_code_clean_and_professional"
+    "slug": "8_python_function_habits_that_make_your_code_clean_and_professional",
+    "duration": "14:51",
+    "seconds": 891
   }
 ]
