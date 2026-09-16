@@ -10,7 +10,8 @@ import {
   Sparkles,
   Flame,
   Shield,
-  Edit3
+  Edit3,
+  Cloud
 } from 'lucide-react';
 import { PLAYER_AVATARS, LEVEL_TIERS, getPlayerProfile, updatePlayerProfile } from '../utils/storage';
 import { sound } from '../utils/audio';
@@ -20,7 +21,8 @@ export default function PlayerProfileModal({
   onClose,
   userProgress = {},
   onProfileUpdated,
-  onOpenResetModal
+  onOpenResetModal,
+  onOpenCloudSync
 }) {
   const currentProfile = getPlayerProfile(userProgress);
 
@@ -275,6 +277,20 @@ export default function PlayerProfileModal({
         {/* Modal Action Footer */}
         <div className="bg-[#FAF3E0] px-4 py-3 border-t-2 border-[#2D2319] flex items-center justify-between">
           <div className="flex items-center space-x-2">
+            {onOpenCloudSync && (
+              <button
+                type="button"
+                onClick={() => {
+                  sound.playKeyClick();
+                  onOpenCloudSync();
+                }}
+                className="px-3 py-1.5 bg-[#C3A6E8] hover:bg-[#b897e2] border-2 border-[#2D2319] rounded-xl text-xs font-mono font-bold text-[#2D2319] shadow-[1px_1px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer flex items-center space-x-1.5"
+                title="Backup or restore progress via Cloudflare Edge Sync"
+              >
+                <Cloud className="w-3.5 h-3.5 text-[#2D2319]" />
+                <span>Cloud Sync...</span>
+              </button>
+            )}
             {onOpenResetModal && (
               <button
                 type="button"

@@ -22,7 +22,8 @@ import {
   Layers,
   RotateCcw,
   Check,
-  Palette
+  Palette,
+  Cloud
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { getPlayerProfile } from '../utils/storage';
@@ -33,6 +34,7 @@ import PlayerProfileModal from './PlayerProfileModal';
 import AboutModal from './AboutModal';
 import UnlockModal from './UnlockModal';
 import ResetDataModal from './ResetDataModal';
+import CloudSyncModal from './CloudSyncModal';
 
 export default function DesktopWindowShell({
   children,
@@ -55,6 +57,7 @@ export default function DesktopWindowShell({
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const [unlockModalOpen, setUnlockModalOpen] = useState(false);
   const [resetModalOpen, setResetModalOpen] = useState(false);
+  const [cloudSyncModalOpen, setCloudSyncModalOpen] = useState(false);
 
   const profile = getPlayerProfile(userProgress);
   const license = getLicenseStatus(userProgress);
@@ -294,6 +297,20 @@ export default function DesktopWindowShell({
                         type="button"
                         onClick={() => {
                           setActiveMenuDropdown(null);
+                          setCloudSyncModalOpen(true);
+                        }}
+                        className="w-full text-left px-3 py-2 hover:bg-[#FAF3E0] text-[#2D2319] flex items-center justify-between font-bold cursor-pointer transition-colors border-b border-[#2D2319]/10"
+                      >
+                        <div className="flex items-center space-x-2">
+                          <Cloud className="w-3.5 h-3.5 text-[#48B89F]" />
+                          <span>Cloud Backup & Sync...</span>
+                        </div>
+                        <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 bg-[#FAF3E0] border border-[#2D2319] rounded">RS-SYNC</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveMenuDropdown(null);
                           setResetModalOpen(true);
                         }}
                         className="w-full text-left px-3 py-2 hover:bg-[#F28B82] text-[#F28B82] hover:text-[#2D2319] flex items-center justify-between font-bold cursor-pointer transition-colors"
@@ -305,6 +322,21 @@ export default function DesktopWindowShell({
                   </>
                 )}
               </div>
+
+              {/* Cloud Sync Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  sound.playKeyClick();
+                  setActiveMenuDropdown(null);
+                  setCloudSyncModalOpen(true);
+                }}
+                className="hover:underline flex items-center space-x-1 focus:outline-none text-[#2D2319] cursor-pointer"
+                title="Backup or restore progress across devices"
+              >
+                <Cloud className="w-3.5 h-3.5 text-[#48B89F]" />
+                <span>Cloud Sync</span>
+              </button>
 
               {/* About Button */}
               <button
@@ -469,6 +501,25 @@ export default function DesktopWindowShell({
                 </div>
               </div>
 
+              {/* Cloud Sync Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  sound.playKeyClick();
+                  setCloudSyncModalOpen(true);
+                }}
+                className="w-full mt-2.5 p-2 rounded-xl border-2 border-[#2D2319] flex items-center justify-between text-xs font-mono font-bold shadow-[2px_2px_0px_#2D2319] bg-[#FAF3E0] hover:bg-white active:translate-x-0.5 active:translate-y-0.5 cursor-pointer transition-all text-[#2D2319]"
+                title="Backup or restore typing progress to Cloudflare Edge"
+              >
+                <div className="flex items-center space-x-1.5 min-w-0">
+                  <Cloud className="w-3.5 h-3.5 shrink-0 text-[#48B89F]" />
+                  <span className="truncate text-[10px] font-black">Cloud Sync</span>
+                </div>
+                <div className="flex items-center space-x-1 shrink-0 px-1.5 py-0.2 bg-[#FDF8EE] rounded border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] text-[9px] font-mono font-black text-[#2D2319]">
+                  <span>RS-SYNC</span>
+                </div>
+              </button>
+
               {/* Free Edition Status Badge */}
               <button
                 type="button"
@@ -476,7 +527,7 @@ export default function DesktopWindowShell({
                   sound.playKeyClick();
                   setAboutModalOpen(true);
                 }}
-                className="w-full mt-2.5 p-2 rounded-xl border-2 border-[#2D2319] flex items-center justify-between text-xs font-mono font-bold shadow-[2px_2px_0px_#2D2319] bg-[#C7E8CA] text-[#2D2319] hover:bg-[#b8e0bc] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer transition-all"
+                className="w-full mt-2 p-2 rounded-xl border-2 border-[#2D2319] flex items-center justify-between text-xs font-mono font-bold shadow-[2px_2px_0px_#2D2319] bg-[#C7E8CA] text-[#2D2319] hover:bg-[#b8e0bc] active:translate-x-0.5 active:translate-y-0.5 cursor-pointer transition-all"
                 title="100% Free & Open Edition — Click to view studio details"
               >
                 <div className="flex items-center space-x-1.5 min-w-0">
@@ -510,6 +561,10 @@ export default function DesktopWindowShell({
           setProfileModalOpen(false);
           setResetModalOpen(true);
         }}
+        onOpenCloudSync={() => {
+          setProfileModalOpen(false);
+          setCloudSyncModalOpen(true);
+        }}
       />
 
       {/* About Modal */}
@@ -524,6 +579,10 @@ export default function DesktopWindowShell({
         onOpenResetModal={() => {
           setAboutModalOpen(false);
           setResetModalOpen(true);
+        }}
+        onOpenCloudSync={() => {
+          setAboutModalOpen(false);
+          setCloudSyncModalOpen(true);
         }}
       />
 
@@ -543,6 +602,16 @@ export default function DesktopWindowShell({
         onClose={() => setResetModalOpen(false)}
         onConfirmReset={() => {
           if (onResetAllData) onResetAllData();
+        }}
+      />
+
+      {/* Cloudflare Edge Cloud Sync Modal */}
+      <CloudSyncModal
+        isOpen={cloudSyncModalOpen}
+        onClose={() => setCloudSyncModalOpen(false)}
+        userProgress={userProgress}
+        onSyncRestored={(restored) => {
+          if (onProfileUpdated) onProfileUpdated(restored);
         }}
       />
 

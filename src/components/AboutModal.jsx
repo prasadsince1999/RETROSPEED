@@ -26,7 +26,8 @@ import {
   Zap,
   Award,
   CheckCircle2,
-  HardDrive
+  HardDrive,
+  Cloud
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { getLicenseStatus, PRICING } from '../utils/license';
@@ -36,7 +37,8 @@ export default function AboutModal({
   onClose,
   userProgress = {},
   onOpenUnlockModal,
-  onOpenResetModal
+  onOpenResetModal,
+  onOpenCloudSync
 }) {
   const [activeTab, setActiveTab] = useState('studio'); // 'studio' | 'roadmap' | 'license'
   const license = getLicenseStatus(userProgress);
@@ -506,6 +508,33 @@ export default function AboutModal({
                 </div>
               </div>
 
+              {/* Cloudflare Edge Sync Section */}
+              {onOpenCloudSync && (
+                <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-5 shadow-[3px_3px_0px_#2D2319] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="space-y-0.5">
+                    <div className="text-xs sm:text-sm font-black font-display text-[#2D2319] flex items-center space-x-1.5">
+                      <Cloud className="w-4 h-4 text-[#48B89F]" />
+                      <span>Cloudflare Edge Sync</span>
+                    </div>
+                    <div className="text-[11px] font-mono text-[#2D2319]/70">
+                      Backup and restore your typing level, XP, and badges across devices with an anonymous 6-character code.
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      sound.playKeyClick();
+                      onOpenCloudSync();
+                    }}
+                    className="px-3.5 py-2 bg-[#C3A6E8] hover:bg-[#b897e2] border-2 border-[#2D2319] rounded-xl text-xs font-mono font-bold text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center space-x-1.5 cursor-pointer shrink-0"
+                  >
+                    <Cloud className="w-3.5 h-3.5" />
+                    <span>Cloud Sync...</span>
+                  </button>
+                </div>
+              )}
+
               {/* Factory Reset Data Section */}
               {onOpenResetModal && (
                 <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl p-5 shadow-[3px_3px_0px_#2D2319] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -543,7 +572,7 @@ export default function AboutModal({
           <div className="text-[11px] font-mono font-bold text-[#2D2319]/70 flex items-center space-x-1.5">
             <span>RETROSPEED OS v2.0</span>
             <span>·</span>
-            <span>100% Offline Desk</span>
+            <span>Instant Local Speed & Edge Cloud Sync</span>
           </div>
 
           <button
