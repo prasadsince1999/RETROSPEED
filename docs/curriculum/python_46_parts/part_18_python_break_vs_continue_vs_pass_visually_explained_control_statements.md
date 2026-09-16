@@ -1,65 +1,121 @@
-# Part 18: Python Break vs Continue vs Pass (Visually Explained) | Control Statements
-**Video URL**: [https://www.youtube.com/watch?v=fx8MJxW8wb4&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn](https://www.youtube.com/watch?v=fx8MJxW8wb4&list=PLNcg_FV9n7qZGfFl2ANI_zISzNp257Lwn)
+# Part 18: Python Break vs Continue vs Pass (Visually Explained)
+**Video URL**: https://www.youtube.com/watch?v=fx8MJxW8wb4
 **Video ID**: `fx8MJxW8wb4`
-**Curriculum Stage**: Stage 4 // Iteration & Repetition Engines
-**Concept Domain**: Loop Flow Control & Bailouts
+**Curriculum Stage**: Stage 4 // Iteration & Sequential Processing
+**Concept Domain**: Advanced Loop Control, Flow Interruption & Defensive Data Processing
 **Target Skill Tier**: Code Pilot
-**Visual Analogy**: The Emergency Brake Lever & Conveyor Skip Hopper (`conveyor`)
+**Estimated Duration**: 20:44
 
 ---
 
 ## 1. Executive Summary & Pedagogical Goals
-- **The Core Problem**: Beginners often struggle with python break vs continue vs pass (visually explained) | control statements, treating code as arbitrary syntax to memorize rather than understanding how Python's runtime engine evaluates state.
-- **The Visual Solution**: Grounded in **The Emergency Brake Lever & Conveyor Skip Hopper**, the learner visualizes data flow and state changes before typing a single character.
-- **3 Concrete Learning Outcomes**:
-  1. Mentally trace the execution path and memory states of python break vs continue vs pass (visually explained) | control statements.
-  2. Implement clean, idiomatic Python syntax with zero reliance on trial-and-error debugging.
-  3. Master tactile muscle-memory speed and write automated assertions to verify correctness.
+
+### The Core Problem
+Standard loops execute blindly across an entire sequence from start to finish. In real-world data engineering and system security, this rigid execution model creates severe vulnerabilities:
+1. **Security Vulnerability Exposure**: Ingesting contaminated batches (e.g., SQL injection payloads or corrupt disk sectors) without an immediate hard stop can compromise or corrupt downstream production databases.
+2. **Resource Inefficiency & Dirty Data Contamination**: Processing invalid rows (such as missing values or non-business days) wastes CPU cycles and pollutes metrics unless individual iterations can be dynamically skipped.
+3. **Syntax Stubbing Paralysis**: Python requires an indented block following any colon (`:`). Developers designing architectures or planning future features often face fatal `IndentationError` exceptions when attempting to leave placeholder blocks.
+
+### The Visual Solution
+Baraa contrasts three control flow mechanisms through interactive flowchart diagrams:
+- **`break` (The Emergency Exit)**: When a critical condition is met, `break` immediately destroys the iterator, halts execution, and exits the loop scope entirely, jumping straight to subsequent instructions.
+- **`continue` (The Cycle Bypass)**: When a non-critical defect is detected, `continue` aborts only the active iteration and routes control back to the top of the loop to fetch the next item.
+- **`pass` (The Ghost Placeholder)**: An executable no-op (`NOP`). It satisfies Python's block syntax requirements without altering execution flow, allowing code to continue running while serving as a structural placeholder.
+
+```
+       ┌─────────────────────────────────────────────────────────┐
+       │                 THE LOOP CONTROL TRIAD                  │
+       └─────────────────────────────────────────────────────────┘
+
+        [ break ]                  [ continue ]                  [ pass ]
+   (Critical Threat)             (Dirty Record)               (Placeholder)
+           │                            │                           │
+           ▼                            ▼                           ▼
+  ┌─────────────────┐          ┌─────────────────┐         ┌─────────────────┐
+  │ Emergency Stop! │          │  Skip to Next!  │         │   Do Nothing!   │
+  │ Terminate Loop  │          │  Jump to Top    │         │  Keep Executing │
+  └────────┬────────┘          └────────┬────────┘         └────────┬────────┘
+           │                            │                           │
+           ▼                            ▼                           ▼
+  [ Exit to End ]             [ Next Iteration ]           [ Continue Body ]
+```
+
+### 3 Concrete Learning Outcomes
+1. **Differentiate Flow Alteration Mechanics**: Distinguish between loop-level termination (`break`), iteration-level skipping (`continue`), and syntactic no-ops (`pass`).
+2. **Implement Risk-Calibrated Error Handling**: Apply `break` to critical security and system-failure events (e.g., SQL injections) while reserving `continue` for low-severity data hygiene filters (e.g., empty strings, weekends).
+3. **Write Idiomatic Stub & Filter Logic**: Construct clean, readable loop filters by decoupling criteria lists outside loop statements and employing `pass` as a syntactically valid placeholder for modular implementation.
 
 ---
 
 ## 2. Visual Mental Model & Analogy (For DynamicVisualStage.jsx)
-- **analogyType**: `conveyor`
-- **Analogy Name**: "The Emergency Brake Lever & Conveyor Skip Hopper"
-- **Physical Metaphor**:
-  In this visual module, the learner is introduced to The Emergency Brake Lever & Conveyor Skip Hopper. As Python executes each line, the visual contraption dynamically illustrates data flowing through components, demonstrating how the computer hardware and interpreter process operations behind the scenes.
-- **Visual Scene Breakdown**:
-  - **Component A (Input / Ingestion)**: Receives raw parameters or instructions into the visual stage.
-  - **Component B (Evaluation / Processing)**: Animated mechanism (conveyor) dynamically recalculates state.
-  - **Component C (Output / Persistence)**: Visual feedback delivers output to terminal or stores into memory address.
-- **State Machine Transitions**:
-  - `idle`: Rhythmic breathing animation with ambient retro neon backlight.
-  - `active / executing`: Mechanical gears churn, values slide along tracks, and phosphor display updates.
-  - `success`: Star particles burst, celebratory ding audio triggers, and state lock confirmation glows green.
-  - `error`: Gentle red signal lamp pulses with supportive Coach Byte speech bubble showing the exact fix.
-- **ASCII Wireframe Architecture**:
-```text
-+-----------------------------------------------------------+
-|  [INPUT STREAM]  -->  (CONVEYOR: The Emergency Brake Lever & Conveyor Skip Hopper)  -->  [OUTPUT STREAM]  |
-|                                                           |
-|  State: [IDLE] -> [PROCESSING DATA] -> [VERIFIED IN RAM]   |
-+-----------------------------------------------------------+
+
+- **analogyType**: `train`
+- **Analogy Name**: "The Orbital Rail Switch & Emergency Decoupler"
+- **Physical Metaphor**: Imagine a high-speed freight train navigating a closed-loop railyard track. Each freight car represents an incoming data record:
+  - **The Emergency Decoupler (`break`)**: Triggered by a catastrophic track hazard (e.g., malicious payload detected). An explosive decoupler severs the locomotive, locks the emergency brakes, and redirects the train off the main loop into the terminal siding. No further cars are inspected.
+  - **The Elevated Bypass Rail (`continue`)**: Triggered by a dirty or non-essential freight car (e.g., an empty cargo container). The track switch shunts the flawed car up an overhead bypass chute, skipping the cargo offloader entirely, and rejoins the loop just in time for the next car.
+  - **The Phantom Sensor Arch (`pass`)**: A diagnostic scanner archway that inspects the car, flashes an informational status ping, and lets the train glide through the cargo offloader completely uninterrupted.
+
 ```
+===================== ORBITAL RAIL SWITCHBOARD =====================
+
+                     [ INCOMING FREIGHT TRAIN ]
+                 [Car 1] ───► [Car 2] ───► [Car 3]
+                                │
+                                ▼
+                    ┌───────────────────────┐
+                    │ INSPECTION CHECKPOINT │
+                    └───────────┬───────────┘
+                                │
+         ┌──────────────────────┼──────────────────────┐
+         │ [CRITICAL HAZARD]    │ [DIRTY CAR]          │ [PLACEHOLDER]
+         ▼                      ▼                      ▼
+   ┌───────────┐          ┌───────────┐          ┌───────────┐
+   │   break   │          │ continue  │          │   pass    │
+   └─────┬─────┘          └─────┬─────┘          └─────┬─────┘
+         │                      │                      │
+         ▼                      ▼                      ▼
+  [ DERAIL / EXIT ]     [ BYPASS SHUNT ]      [ PASS THROUGH ]
+  Terminates loop       Loops back to top     Continues to offloader
+  immediately           skipping offloader    without alteration
+====================================================================
+```
+
+### Visual Scene Breakdown
+- **Component A (The Inspection Checkpoint Gate)**: A laser scanner arch that reads the payload of the arriving carriage and evaluates the conditional expression (e.g., `";" in email` or `day in weekends`).
+- **Component B (The Multi-Track Switchboard)**: A dynamic railway junction with three output routes: the Main Processing Line (offloader), the Shunt Loop (`continue`), and the Emergency Siding (`break`).
+- **Component C (The Unloading Station)**: The indented code block suite where data transformation, database writes, or `print()` executions occur.
+
+### State Machine Transitions
+- `idle`: Train idling at railyard perimeter; track switches aligned to Main Processing Line; scanner glow amber.
+- `active / executing`: Carriage rolls under scanner; boolean predicate evaluated; switches mechanically align to the chosen route.
+- `success`: 
+  - Standard path: Carriage rolls through unloader; green confirmation flash.
+  - `continue` path: Carriage takes high-speed bypass; yellow streak returns to loop head.
+  - `pass` path: Blue pulse emits; car proceeds straight through unloader.
+- `error / break`: Red emergency beacons flash; sirens sound; decoupler fires; train halts on the terminal exit track.
 
 ---
 
 ## 3. Gamification Mechanics & Puzzle Design (For Game Loops & Challenges)
-- **Level Objective**:
-  Complete the tactile typing drill, resolve the code puzzle, and pass all automated unit tests with > 95% accuracy.
+
+- **Level Objective**: Protect the RETROSPEED Ingestion Hub. Triage 100 incoming telemetry packets: allow clean packets to reach the database, use `continue` to discard corrupt packets without stalling throughput, and fire `break` if an unauthorized penetration payload is detected.
 - **Interactive Puzzle Mechanics**:
-  - Real-time variable inspection table updates with each keystroke.
-  - Interactive syntax pills allow typists to click tokens to inspect their bytecode role.
-  - Immediate terminal feedback reflects output without page refreshes.
+  - Code control flow gates inside the packet ingestion loop.
+  - Players must accurately choose between `break`, `continue`, and `pass` based on threat severity.
+  - A real-time Threat Meter tracks incoming packets: missing a malicious packet triggers database corruption; incorrectly halting on a dirty packet drops network throughput.
 - **Hazards & Anti-Patterns (The "Potholes")**:
-  - Placing 'break' outside of a loop or missing a necessary loop termination state.
+  - *The Naked Break Trap*: Placing `break` directly inside the `for` body without an enclosing `if` condition causes the loop to terminate on iteration 0.
+  - *The Overreaction Bug*: Using `break` on minor data flaws (e.g., an empty string), stranding valid downstream records.
+  - *The Leaky Security Filter*: Printing or writing records to storage *before* evaluating the security condition, allowing malicious payloads to slip past validation.
 - **Streak & Velocity Multipliers**:
-  - **10x Streak**: 🔥 "Rhythm Locked" — 1.5x XP Boost + Keycap bounce animation.
-  - **25x Streak**: ⚡ "Velocity Surge" — 2.0x XP Boost + Spark particle trail on active cursor.
-  - **50x Streak**: 🏆 "Home-Row Master" — 3.0x XP Boost + Retro synth victory chime.
+  - **10x Streak**: Track switches click faster; typing speed bonus +15%; neon cyan rail glow.
+  - **25x Streak**: CRT bloom pulses with rhythmic synth-drums; gold particle exhaust vents on successful shunts.
+  - **50x Streak**: "CYBER DEFENSE CONDUCTOR" unlocked; 3x score multiplier; high-voltage electro-chime alerts.
 - **Badge / Achievement Unlock**:
-  - **Badge ID**: `badge_part_18`
-  - **Badge Name**: "Loop Pilot"
-  - **Criteria**: Complete all 3 typing drill tiers and achieve 100% test pass rate in Code Studio.
+  - **Badge ID**: `badge_loop_sentinel`
+  - **Badge Name**: Sentinel of the Loops
+  - **Criteria**: Complete 3 high-speed triage runs with zero data leaks, zero premature loop terminations, and sustained $\ge 50$ WPM.
 
 ---
 
@@ -67,137 +123,300 @@
 
 ### Canonical Code Snippet
 ```python
-# Canonical code for Part 18
-data = [10, 20, 30]
-result = [x * 2 for x in data]
-print("Result:", result)
+# Multi-tier loop control pipeline demonstrated in video
+emails = [
+    "data@gmail.com",
+    "or@outlook.de",
+    "drop table users;",
+    "maria@gmail.com"
+]
+
+for email in emails:
+    if email == "":
+        continue
+    if ";" in email:
+        print("SECURITY ALERT: SQL Injection detected! Aborting ingestion.")
+        break
+    print(f"Processing verified email: {email}")
 ```
 
 ### Token-by-Token Dissection Table
+
 | Token | Syntax Category | Hex Color | Deep Explanation |
 | :--- | :--- | :--- | :--- |
-| `def / var` | Keyword | `#C3A6E8` | Instructs the compiler or runtime to allocate and name the structure. |
-| `identifier` | Identifier | `#48B89F` | Named reference pointer pointing to an object residing in memory. |
-| `=` | Operator | `#F6C445` | Assignment operator binding an evaluated right-hand expression to the left-hand name. |
-| `value / literal` | Literal | `#F28B82` | The concrete immutable or mutable data object created in Python's heap memory. |
+| `for` | Keyword (Iteration) | `#C3A6E8` | Requests an iterator from the `emails` list and manages iteration state. |
+| `email` | Identifier (Loop Var) | `#48B89F` | Memory pointer rebound to the current element on each iteration. |
+| `in` | Keyword (Membership) | `#C3A6E8` | Connects the target identifier to the source collection. |
+| `if` | Keyword (Branching) | `#C3A6E8` | Evaluates a boolean predicate inside the loop to determine whether to divert execution. |
+| `continue` | Keyword (Loop Control) | `#F6C445` | Immediately terminates the current iteration, ignores trailing code in the loop body, and advances to the next item. |
+| `";"` | Literal (String) | `#F28B82` | Target SQL terminator substring indicating a potential code injection attempt. |
+| `break` | Keyword (Loop Control) | `#F28B82` | Terminates the loop instantly, discards the iterator, and transfers control to the first statement outside the loop. |
+| `pass` | Keyword (Syntactic Stub)| `#80868B` | A bytecode no-op (`NOP`) that satisfies Python's block requirements without executing an action. |
+| `    ` | Whitespace (Indent L1) | `#80868B` | 4 spaces scoping statements to the enclosing `for` loop. |
+| `        ` | Whitespace (Indent L2) | `#80868B` | 8 spaces scoping control actions (`continue`/`break`) directly inside the `if` decision block. |
 
 ### Coach Byte's Conversational Guide
-- **Opening Hook**: *"Hey friends! Welcome to Python Break vs Continue vs Pass (Visually Explained) | Control Statements. Today we look under the hood to see how Python really runs this code!"*
-- **The Secret Insight**: *"Python executes top-down, line-by-line. Variables in Python are not fixed hardware boxes, but dynamic reference name-tags attached to objects in heap memory!"*
-- **Pro Tip**: *"Always adhere to PEP 8 style standards: use snake_case for functions and variables, and keep line lengths under 79 characters for maximum terminal readability."*
+- **Opening Hook**: *"Hey friends! Standard loops run like trains without brakes—they keep going until the track ends! But what if a bridge is out or an intruder jumps on board? Today we install the emergency brake (`break`), the bypass switch (`continue`), and the placeholder pass (`pass`)!"*
+- **The Secret Insight**: *"Always calibrate your control statement to the severity of the situation! Use `continue` for low/medium risk issues—like empty strings or weekends—so you only skip the bad apple without throwing away the whole harvest. Use `break` strictly for high-critical events like SQL injections or fatal hardware errors where running another step could corrupt your entire system!"*
+- **Pro Tip**: *"Keep your loop bodies readable by extracting filter criteria into external variables! Instead of writing `if day in ['Saturday', 'Sunday']:` inside the loop, define `weekends = ['Saturday', 'Sunday']` beforehand. Your code reads like English: `if day in weekends: continue`!"*
 
 ---
 
 ## 5. Execution Simulation Trace (Step-by-Step State Machine)
 
+Given `emails = ["data@gmail.com", "", "drop table users;", "maria@gmail.com"]`:
+
 | Step | Line # | Interpreter Action | Memory / RAM State (`vars`) | Terminal `stdout` | Visual Particle FX |
 | :---: | :---: | :--- | :--- | :--- | :--- |
-| 1 | L1 | Evaluate right-hand expression | `{}` | `""` | Memory Allocation |
-| 2 | L2 | Bind object reference to variable | `{'state': 'active'}` | `""` | Tag Attachment |
-| 3 | L3 | Execute print standard output | `{'state': 'active'}` | `"Success"` | Phosphor CRT Flash |
+| 1 | L2 | Allocate list with 4 string objects | `{'emails': [...]}` | `""` | 4 train cars couple on track |
+| 2 | L9 | Iterator yields car 0; bind `email` | `{'email': 'data@gmail.com'}` | `""` | Car 0 rolls under scanner |
+| 3 | L10 | Evaluate `'data@gmail.com' == ""` $\rightarrow$ `False` | `...` | `""` | Green light at Gate 1 |
+| 4 | L12 | Evaluate `";" in 'data@gmail.com'` $\rightarrow$ `False` | `...` | `""` | Green light at Gate 2 |
+| 5 | L15 | Print verified email line | `...` | `"Processing: data@...\n"` | Unloader cycles; green burst |
+| 6 | L9 | Iterator yields car 1; bind `email` | `{'email': ''}` | `...` | Car 1 enters scanner |
+| 7 | L10 | Evaluate `"" == ""` $\rightarrow$ `True` | `...` | `...` | Yellow flasher activates! |
+| 8 | L11 | Execute `continue` $\rightarrow$ abort iteration | `...` | `...` | Shunt switch flips; car bypasses unloader |
+| 9 | L9 | Iterator yields car 2; bind `email` | `{'email': 'drop table...'}` | `...` | Car 2 enters scanner |
+| 10 | L12 | Evaluate `";" in 'drop table...'` $\rightarrow$ `True` | `...` | `...` | RED ALERT sirens sound! |
+| 11 | L13 | Print emergency security alert | `...` | `"SECURITY ALERT...\n"` | Terminal flushes red text |
+| 12 | L14 | Execute `break` $\rightarrow$ destroy iterator | `...` | `...` | Emergency decoupler fires; train halts |
+| 13 | Exit | Loop terminated; car 3 (`maria@...`) skipped | `...` | `...` | Loop scope collapses; pipeline locks |
 
 ---
 
 ## 6. Muscle-Memory Typing Drills (For RETROSPEED Typing Stage)
 
 ### Level 1: Syntax & Operator Micro-Drill
-- `=`
-- `==`
-- `!=`
-- `[]`
-- `{}`
-- `()`
-- `:`
-- `->`
-- `_`
+*Focus on control keywords, block nesting, and string membership predicates.*
+- Drill 1: `if item == "": continue`
+- Drill 2: `if ";" in payload: break`
+- Drill 3: `if not ready: pass`
+- Drill 4: `for day in days: if day in weekends: continue`
+- Drill 5: `if error_detected: print("HALT"); break`
 
-### Level 2: Line Construction Drill (< 65 characters/line)
-- `status = 'READY'`
-- `score = score + 10`
-- `result = process_data(items)`
+### Level 2: Line Construction Drill (Home-Row & Rhythm calibrated, < 65 chars/line)
+- Line 1: `for record in ingestion_batch:`
+- Line 2: `    if record.is_empty():`
+- Line 3: `        continue`
+- Line 4: `    if record.has_threat():`
+- Line 5: `        logger.critical("Threat found! Aborting.")`
+- Line 6: `        break`
+- Line 7: `    process_payload(record)`
 
-### Level 3: Velocity Sprint (Target: 45+ WPM, 96%+ Accuracy)
+### Level 3: Velocity Sprint (Full runnable mini-block)
 ```python
-def run_drill():
-    items = [1, 2, 3]
-    return sum(items)
+# Target WPM: 45+ | Target Accuracy: 96%+
+cleaned_data = []
+for entry in raw_entries:
+    if entry is None:
+        continue
+    if "MALFORMED_HEADER" in entry:
+        break
+    cleaned_data.append(entry.strip())
+print(f"Ingested {len(cleaned_data)} valid records")
 ```
 
 ---
 
 ## 7. Python Code Studio Challenge & Auto-Grading (For PythonCodeStudio.jsx)
 
-- **Challenge Name**: "Part 18 Challenge"
-- **Scenario**: Build a production-grade validator and processor that transforms raw data stream inputs into verified records.
-- **Starter Code (Learner Canvas)**:
+### Challenge Name: The Perimeter Defense Ingestion Firewall
+
+### Scenario
+You are engineering an intake proxy for an enterprise security gateway. The incoming stream delivers mixed network packets: valid payloads, blank heartbeat packets, temporary test flags, and critical exploit signatures. You must implement a packet scrubber that iterates through the batch, applies granular control flow, and returns a verified security dossier.
+
+### Specification & Rules
+Implement `filter_traffic_stream(packets: list) -> dict`:
+1. **Per-Packet Triage Logic**:
+   - Iterate through `packets`.
+   - **Filter 1 (Medium Risk - Skip with `continue`)**:
+     - If the packet is an empty string `""` or contains only whitespace after stripping, skip it immediately.
+     - If the packet matches `"HEARTBEAT"`, skip it immediately.
+   - **Filter 2 (Structural Placeholder - `pass`)**:
+     - If the packet begins with `"EXPERIMENTAL:"`, execute a `pass` placeholder (allowing it to continue to normal processing for now).
+   - **Filter 3 (High Critical Risk - Terminate with `break`)**:
+     - If the packet contains a semicolon `";"` OR contains the substring `"DROP TABLE"` (case-insensitive), log an emergency violation and immediately terminate the loop. No subsequent packets may be inspected.
+   - **Normal Processing**:
+     - If the packet passes all checks, strip whitespace and append it to `accepted_packets`.
+2. **Return Schema**:
+   Return a dictionary:
+   ```python
+   {
+       "status": "COMPLETED" or "HALTED_BY_THREAT",
+       "accepted_packets": list,
+       "threat_detected": str or None,
+       "processed_count": int  # number of packets inspected up to completion/break
+   }
+   ```
+
+### Starter Code (Learner Canvas)
 ```python
-def process_records(data):
-    # TODO: Implement your transformation logic here
+def filter_traffic_stream(packets: list) -> dict:
+    # TODO: Implement multi-tier packet filtering using continue, break, and pass
     pass
 ```
-- **Target Solution Code**:
+
+### Target Solution Code
 ```python
-def process_records(data):
-    if not data:
-        return []
-    return [item for item in data if item is not None]
+def filter_traffic_stream(packets: list) -> dict:
+    accepted_packets = []
+    threat_detected = None
+    status = "COMPLETED"
+    processed_count = 0
+    
+    for packet in packets:
+        processed_count += 1
+        
+        # 1. Critical Threat Check (break)
+        upper_pkt = packet.upper()
+        if ";" in packet or "DROP TABLE" in upper_pkt:
+            threat_detected = packet
+            status = "HALTED_BY_THREAT"
+            break
+
+        # 2. Medium Risk / Noise Check (continue)
+        clean_pkt = packet.strip()
+        if clean_pkt == "" or clean_pkt == "HEARTBEAT":
+            continue
+
+        # 3. Prototype Placeholder Check (pass)
+        if clean_pkt.startswith("EXPERIMENTAL:"):
+            pass  # Future handling placeholder; allow pass-through
+
+        # 4. Standard Intake
+        accepted_packets.append(clean_pkt)
+
+    return {
+        "status": status,
+        "accepted_packets": accepted_packets,
+        "threat_detected": threat_detected,
+        "processed_count": processed_count
+    }
 ```
-- **Real-Time AST & Diagnostic Checks (Static Lints)**:
-  - **Check 1**: Ensure function signature exactly matches 'process_records(data)'
-  - **Check 2**: Verify proper 4-space indentation and colon usage
-  - **Check 3**: Forbid using eval() or dangerous reflection
-- **Automated Test Cases (Using python-testing-patterns)**:
-  - **Test Case 1 (Standard Input)**:
-    - Input: `[10, 20, 30]`
-    - Expected Output: `[10, 20, 30]`
-    - Assertion: `assert process_records([10, 20, 30]) == [10, 20, 30]`
-    - Failure Feedback: "Failed on standard array input"
-  - **Test Case 2 (Empty Input)**:
-    - Input: `[]`
-    - Expected Output: `[]`
-    - Assertion: `assert process_records([]) == []`
-    - Failure Feedback: "Failed on empty array boundary"
-  - **Test Case 3 (None Filtering)**:
-    - Input: `[1, None, 3]`
-    - Expected Output: `[1, 3]`
-    - Assertion: `assert process_records([1, None, 3]) == [1, 3]`
-    - Failure Feedback: "Failed to filter None values correctly"
-- **Progressive Hint Ladder**:
-  - **Hint 1 (Mental Model Clue)**: Think about the physical container holding elements and how empty items drop out.
-  - **Hint 2 (Structural Pseudocode)**: Use a list comprehension or generator to filter items where item is not None.
-  - **Hint 3 (Syntax Unlock)**: Return [x for x in data if x is not None]
+
+### Real-Time AST & Diagnostic Checks (Static Lints)
+- **Check 1 (Control Keyword Verification)**: Parse the submitted code AST; verify that the function body includes at least one `ast.Break`, one `ast.Continue`, and one `ast.Pass` node.
+- **Check 2 (Break Order Verification)**: Verify that the critical threat evaluation (`break`) precedes `accepted_packets.append()` to prevent security leakage.
+- **Check 3 (No Hardcoded Exits)**: Ensure loop statements are wrapped in conditional `ast.If` blocks to avoid unconditional loop termination.
+
+### Automated Test Cases
+
+#### Test Case 1 (Clean Stream with Heartbeat Skips)
+- **Input**: `filter_traffic_stream(["  valid_token_1  ", "", "HEARTBEAT", "valid_token_2"])`
+- **Expected Output**:
+  ```python
+  {
+      "status": "COMPLETED",
+      "accepted_packets": ["valid_token_1", "valid_token_2"],
+      "threat_detected": None,
+      "processed_count": 4
+  }
+  ```
+- **Assertion**: `assert result["status"] == "COMPLETED" and len(result["accepted_packets"]) == 2 and result["processed_count"] == 4`
+- **Failure Feedback**: *"Noise packets were not skipped with 'continue' or processed count was calculated incorrectly."*
+
+#### Test Case 2 (Emergency Decoupler on SQL Injection)
+- **Input**: `filter_traffic_stream(["auth_ok", "admin; drop table users", "safe_packet_after"])`
+- **Expected Output**:
+  ```python
+  {
+      "status": "HALTED_BY_THREAT",
+      "accepted_packets": ["auth_ok"],
+      "threat_detected": "admin; drop table users",
+      "processed_count": 2
+  }
+  ```
+- **Assertion**: `assert result["status"] == "HALTED_BY_THREAT" and result["processed_count"] == 2 and "safe_packet_after" not in result["accepted_packets"]`
+- **Failure Feedback**: *"The loop failed to break immediately upon detecting an SQL injection attempt, processing packets past the exploit."*
+
+#### Test Case 3 (Experimental Pass-Through Verification)
+- **Input**: `filter_traffic_stream(["EXPERIMENTAL:v2_mesh", "standard_payload"])`
+- **Expected Output**:
+  ```python
+  {
+      "status": "COMPLETED",
+      "accepted_packets": ["EXPERIMENTAL:v2_mesh", "standard_payload"],
+      "threat_detected": None,
+      "processed_count": 2
+  }
+  ```
+- **Assertion**: `assert "EXPERIMENTAL:v2_mesh" in result["accepted_packets"]`
+- **Failure Feedback**: *"The pass statement was misconfigured as a continue or break, preventing experimental packets from passing through."*
+
+### Progressive Hint Ladder
+- **Hint 1 (Mental Model Clue)**: Remember the rail track switchboard. Check for the catastrophic hazard (`break`) first so malicious payloads never reach storage. Use `continue` to shunt noisy or empty packets away, and use `pass` to let experimental packets proceed without modification.
+- **Hint 2 (Structural Pseudocode)**:
+  ```python
+  for packet in packets:
+      processed_count += 1
+      if is_threat(packet):
+          # set threat and break!
+      if is_noise(packet):
+          continue
+      if is_experimental(packet):
+          pass
+      accepted.append(packet.strip())
+  ```
+- **Hint 3 (Syntax Unlock)**: To check case-insensitively for SQL commands, normalize a copy first: `if "DROP TABLE" in packet.upper() or ";" in packet:`.
 
 ---
 
 ## 8. Conceptual Mastery Quiz (3 High-Yield Questions)
 
-### Question 1: How does Python execute source code behind the scenes?
-- A) It compiles directly to machine assembly code before running.
-- B) It compiles source code into Bytecode (.pyc) which is interpreted by the Python Virtual Machine (PVM).
-- C) It runs through a browser engine without any intermediate step.
-- D) It executes line by line through an analog punch-card reader.
-- **Correct Answer**: **B**
-- **Deep Explanation**: Python is an interpreted language that first compiles human-readable code into intermediate Bytecode, which the Python Virtual Machine (PVM) executes instructions on.
+### Question 1: Execution Destination of `continue`
+When the Python interpreter encounters a `continue` statement within a nested `if` inside a `for` loop, what happens next?
+- A) The enclosing function returns `None`.
+- B) Python skips the remaining statements in the current iteration and jumps back to the loop header to fetch the next item.
+- C) The loop breaks completely and jumps to the line following the loop.
+- D) Python resets the loop sequence to index 0 and restarts from the beginning.
 
-### Question 2: What happens when you assign 'x = 10' in Python?
-- A) A 4-byte box named 'x' is permanently fixed in RAM with binary 10.
-- B) Python creates an integer object 10 on the heap and binds the label 'x' as a pointer to it.
-- C) Python registers 'x' as a global constant that can never be reassigned.
-- D) Python stores 10 in the GPU registers.
-- **Correct Answer**: **B**
-- **Deep Explanation**: In Python, variables are names/labels referencing objects. 'x = 10' creates an integer object with value 10 and binds 'x' to point to that object.
-
-### Question 3: Output Prediction Challenge
-```python
-val = 5
-val += 5
-print(val)
-```
-- A) 5
-- B) 10
-- C) '55'
-- D) None
-- **Correct Answer**: **B**
-- **Deep Explanation**: 'val += 5' adds 5 to the existing value 5, resulting in 10.
+**Correct Answer**: **B**
+**Deep Explanation**:
+`continue` aborts only the current iteration cycle. It does not reset the iterator or restart the loop from the beginning, nor does it terminate the loop entirely. Control immediately yields back to the `for` statement header, which advances the iterator to retrieve the subsequent item.
 
 ---
+
+### Question 2: The Naked Break Antipattern
+What will be the exact terminal output of the following script?
+```python
+numbers = [10, 20, 30, 40]
+
+for n in numbers:
+    print(n)
+    break
+```
+- A) `10`, `20`, `30`, `40` (each on a new line)
+- B) `40`
+- C) `10`
+- D) `None`
+
+**Correct Answer**: **C**
+**Deep Explanation**:
+`break` terminates the loop immediately upon execution. Because `break` is placed directly at the loop's top indentation level without being enclosed within a conditional `if` guard, it executes during the very first iteration. Python prints `10`, encounters `break`, terminates the loop, and halts. Placing an unconditional `break` inside a loop is an antipattern that prevents any subsequent iterations.
+
+---
+
+### Question 3: Functional Impact of the `pass` Statement
+Consider the following two code snippets:
+```python
+# Snippet Alpha
+for x in [1, 2, 3]:
+    if x == 2:
+        pass
+    print(x)
+
+# Snippet Beta
+for x in [1, 2, 3]:
+    if x == 2:
+        continue
+    print(x)
+```
+How do the outputs of Snippet Alpha and Snippet Beta differ?
+- A) Snippet Alpha prints `1, 3`; Snippet Beta prints `1, 2, 3`.
+- B) Snippet Alpha prints `1, 2, 3`; Snippet Beta prints `1, 3`.
+- C) Both snippets produce identical output: `1, 3`.
+- D) Snippet Alpha raises an `IndentationError`; Snippet Beta prints `1, 3`.
+
+**Correct Answer**: **B**
+**Deep Explanation**:
+In Snippet Alpha, `pass` is an executable no-op that performs no action. When `x == 2`, `pass` executes and control falls straight through to the subsequent `print(x)` line, printing all numbers: `1, 2, 3`. In Snippet Beta, `continue` aborts the current iteration when `x == 2`, skipping the `print()` call and advancing straight to `3`. Hence, Snippet Beta outputs only `1, 3`.
