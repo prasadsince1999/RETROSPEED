@@ -118,8 +118,12 @@ export function AppRouter({
             userProgress={userProgress}
             activeCourseId={activeCourseId}
             onSelectCourse={courseId => {
-              setActiveCourseId(courseId);
-              setIsViewingMap(true);
+              if (handleSelectCourse) {
+                handleSelectCourse(courseId);
+              } else {
+                setActiveCourseId(courseId);
+                setIsViewingMap(true);
+              }
             }}
             onUnenrollCourse={handleUnenrollCourse}
             onNavigate={view => {

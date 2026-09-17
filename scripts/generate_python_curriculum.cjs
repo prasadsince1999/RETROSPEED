@@ -5,8 +5,13 @@ const path = require('path');
 
 const VALID_ANALOGY_TYPES = [
   'box',
+  'box_reassign',
   'megaphone',
+  'megaphone_sticky',
   'microphone',
+  'language_ladder',
+  'cpython_pipeline',
+  'type_transformer',
   'train',
   'fork',
   'conveyor',
@@ -23,6 +28,11 @@ const stageLessonCounters = {};
  */
 function deriveAnalogyType(analogy, stageNum) {
   const a = (analogy || '').toLowerCase();
+  if (a.includes('ladder') || a.includes('tower') || a.includes('level') || a.includes('tier') || a.includes('translator')) return 'language_ladder';
+  if (a.includes('cpython') || a.includes('bytecode') || a.includes('compiler') || a.includes('pvm') || a.includes('curtain') || a.includes('pipeline')) return 'cpython_pipeline';
+  if (a.includes('sticky') || a.includes('comment') || a.includes('greeting') || a.includes('megaphone vs sticky')) return 'megaphone_sticky';
+  if (a.includes('reassign') || a.includes('updating box') || a.includes('storage box') || a.includes('swap') || a.includes('labeled storage') || a.includes('quartet')) return 'box_reassign';
+  if (a.includes('transformer') || a.includes('cast') || a.includes('string glue') || a.includes('converter') || a.includes('object scanner')) return 'type_transformer';
   if (a.includes('box') || a.includes('storage') || a.includes('variable') || a.includes('pointer') || a.includes('capsule') || a.includes('label') || a.includes('scope')) return 'box';
   if (a.includes('megaphone') || a.includes('broadcast') || a.includes('print') || a.includes('delimiter') || a.includes('ticket') || a.includes('stream') || a.includes('ink')) return 'megaphone';
   if (a.includes('microphone') || a.includes('input') || a.includes('kiosk') || a.includes('voice') || a.includes('keystroke')) return 'microphone';
@@ -31,11 +41,11 @@ function deriveAnalogyType(analogy, stageNum) {
   if (a.includes('conveyor') || a.includes('loop') || a.includes('belt') || a.includes('motor') || a.includes('lap') || a.includes('stride') || a.includes('generator') || a.includes('timer') || a.includes('accumulator')) return 'conveyor';
   if (a.includes('tray') || a.includes('shelf') || a.includes('compartment') || a.includes('locker') || a.includes('cart') || a.includes('stack') || a.includes('list') || a.includes('dict') || a.includes('set') || a.includes('tuple') || a.includes('registry') || a.includes('ledger') || a.includes('board') || a.includes('album')) return 'tray';
   if (a.includes('arithmetic') || a.includes('math') || a.includes('calc') || a.includes('engine') || a.includes('modulo') || a.includes('power') || a.includes('division') || a.includes('factor') || a.includes('vector') || a.includes('scale')) return 'arithmetic';
-  if (a.includes('machine') || a.includes('function') || a.includes('gear') || a.includes('factory') || a.includes('tool') || a.includes('blueprint') || a.includes('transformer') || a.includes('pipeline') || a.includes('lathe')) return 'machine';
+  if (a.includes('machine') || a.includes('function') || a.includes('gear') || a.includes('factory') || a.includes('tool') || a.includes('blueprint') || a.includes('lathe')) return 'machine';
 
   // Fallback by stage
   switch (stageNum) {
-    case 1: return 'megaphone';
+    case 1: return 'language_ladder';
     case 2: return 'train';
     case 3: return 'arithmetic';
     case 4: return 'fork';
@@ -275,28 +285,28 @@ const s1Lessons = [
   makeLesson(1, "1.1", "slide", "Why Computers Need Python",
     "A program is a list of instructions a machine can run. Human speech is too loose. Python is a high-level language: closer to English than to ones and zeros.",
     "Python bridges human intent and raw hardware architecture as a readable high-level language.",
-    "The Universal Translator",
+    "The 4-Tier Language Tower",
     "print('Hello, Python Developer!')", "Hello, Python Developer!", 20, 90, {
-      analogyType: "megaphone",
-      instructorExplanation: "Hey friends! Welcome to Python. Computers only speak binary zeros and ones, which is nearly impossible for humans to write efficiently. Python acts as our universal translator, letting us write clean English-like statements that turn into machine actions."
+      analogyType: "language_ladder",
+      instructorExplanation: "Hey friends! Welcome to Python. Computers only speak binary zeros and ones, which is nearly impossible for humans to write. Think of a 4-floor tower: Human Speech on top, Python on floor 3, Assembly on floor 2, and raw 0s and 1s at the foundation. Python acts as our elevator bridge!"
     }),
 
   makeLesson(1, "1.1", "quiz", "Quiz: High-level or Machine Language?",
     "high-level",
     "Is Python classified as a high-level human-readable language or raw machine code?",
-    "Language Tier Recall",
+    "The 4-Tier Language Tower",
     "high-level", "Correct! Python is high-level.", 20, 95, {
-      analogyType: "box",
-      instructorExplanation: "Let's check our recall right away: Python is high-level because it abstracts away CPU registers and memory addresses into human-readable words."
+      analogyType: "language_ladder",
+      instructorExplanation: "Python sits high up on our Language Tower. It abstracts away CPU registers and raw transistors into clear words like print, if, and for."
     }),
 
   makeLesson(1, "1.2", "slide", "The CPython Pipeline & Bytecode",
     "CPython compiles your .py source file to bytecode instructions, then the Python virtual machine runs that bytecode on your CPU.",
     "Source code (.py) is compiled to intermediate bytecode (.pyc) before execution by the Python Virtual Machine (PVM).",
-    "The Bytecode Compiler",
+    "The 3-Stage Pipeline",
     "# CPython compiles source to bytecode\nprint('Bytecode execution ready!')", "Bytecode execution ready!", 20, 90, {
-      analogyType: "machine",
-      instructorExplanation: "Behind the scenes, Python doesn't execute English text directly. CPython first compiles your code into optimized bytecode instructions, then the virtual machine feeds that bytecode directly to the CPU."
+      analogyType: "cpython_pipeline",
+      instructorExplanation: "Behind the scenes, Python doesn't feed English text to your CPU. Think of a 3-step factory conveyor: your app.py goes into the Compiler, gets transformed into app.pyc Bytecode, and the Python Virtual Machine (PVM) feeds instructions to the processor!"
     }),
 
   makeLesson(1, "1.2", "code", "First Math Execution",
@@ -305,70 +315,70 @@ const s1Lessons = [
     "The Arithmetic Engine",
     "print(5 + 5)", "10", 22, 92, {
       analogyType: "arithmetic",
-      instructorExplanation: "Notice how Python calculates before printing. The interpreter sees 5 + 5 inside the parentheses, computes 10 in memory, and passes that final result to print()."
+      instructorExplanation: "Notice how Python calculates before printing. The engine sees 5 + 5 inside the parentheses, solves it to 10 in memory, and then passes the answer to the print megaphone."
     }),
 
   makeLesson(1, "1.2", "explain", "Why Python Feels Seamless",
     "You never type bytecode yourself. The interpreter compiles, links libraries, and executes in memory in one command.",
     "The interpreter handles compilation and memory management automatically without manual link steps.",
-    "Behind the Curtain",
+    "The 3-Stage Pipeline",
     "print('Compiled and executed in memory!')", "Compiled and executed in memory!", 20, 90, {
-      analogyType: "machine",
-      instructorExplanation: "Unlike C or C++ where you must manually run compilers and linkers, Python does everything in memory in a single step. That is why Python feels as immediate as typing in a notebook."
+      analogyType: "cpython_pipeline",
+      instructorExplanation: "Unlike older languages like C where you have to manually run compile and link steps, Python runs the whole 3-stage conveyor automatically in memory in a fraction of a second."
     }),
 
   makeLesson(1, "1.2", "quiz", "Quiz: Python File Extension",
     ".py",
     "What is the standard file extension for Python source files?",
-    "File Extension Check",
+    "The 3-Stage Pipeline",
     ".py", "Correct! Python files end with .py", 20, 95, {
-      analogyType: "box",
-      instructorExplanation: "Every Python script ends with the .py extension so operating systems and editors know to use the Python runtime environment."
+      analogyType: "cpython_pipeline",
+      instructorExplanation: "Every Python script ends with the .py extension so operating systems and the CPython pipeline know to start the compiler."
     }),
 
   makeLesson(1, "1.3", "slide", "The Megaphone & The Sticky Note",
     "print writes text to your screen. A hash symbol (#) marks a comment that Python completely ignores during execution.",
     "print() broadcasts text; comments (#) provide non-executable documentation for humans.",
-    "Megaphone vs Sticky Note",
+    "Megaphone & Sticky Note",
     "# greet the terminal\nprint('hello, terminal')", "hello, terminal", 22, 92, {
-      analogyType: "megaphone",
-      instructorExplanation: "Think of print() like a megaphone broadcasting words out to the terminal screen. In contrast, the hash symbol # is like a sticky note left for other developers that Python completely ignores."
+      analogyType: "megaphone_sticky",
+      instructorExplanation: "Think of print() like a vintage megaphone broadcasting words out onto the screen. Meanwhile, the # hash symbol is a yellow sticky note left for human readers that Python's scanner completely skips!"
     }),
 
   makeLesson(1, "1.3", "code", "Comments and Greeting",
     "# greet the desk\nprint('hello, desk')",
     "Write comments above code to explain the intent of the following statement.",
-    "Documenting Instructions",
+    "Megaphone & Sticky Note",
     "# greet the desk\nprint('hello, desk')", "hello, desk", 22, 92, {
-      analogyType: "megaphone",
-      instructorExplanation: "Good developers write comments to explain 'why' a block exists. Practice typing both the comment symbol and the print statement with precision."
+      analogyType: "megaphone_sticky",
+      instructorExplanation: "Good developers write sticky notes with # so teammates know what the code is doing. Practice typing both the comment and the print statement."
     }),
 
   makeLesson(1, "1.4", "slide", "Variables: Labeled Boxes in Memory",
     "A variable is a name bound to a value in memory. score = 10 allocates RAM for integer 10 and points the label score to it.",
     "Variables store values in computer memory with identifiable labels.",
-    "Labeled Storage Boxes",
+    "Storage Box & Value Swap",
     "score = 10\nprint(score)", "10", 22, 90, {
-      analogyType: "box",
-      instructorExplanation: "Imagine memory like a shelf of boxes. Writing score = 10 puts the number 10 inside a box and sticks a label on the front that says 'score'."
+      analogyType: "box_reassign",
+      instructorExplanation: "Think of a variable as a sturdy cardboard box with a name tag. Writing score = 10 drops the number 10 into the box labeled 'score' so you can retrieve it whenever you need it."
     }),
 
   makeLesson(1, "1.4", "code", "Reassigning Variables",
     "score = 10\nscore = score + 2\nprint(score)",
     "Variables can be updated by evaluating the right-hand side and binding the new result.",
-    "Updating Box Contents",
+    "Storage Box & Value Swap",
     "score = 10\nscore = score + 2\nprint(score)", "12", 24, 92, {
-      analogyType: "box",
-      instructorExplanation: "Python evaluates the right side first: 10 + 2 equals 12. Then it re-attaches the label 'score' to the newly computed value 12."
+      analogyType: "box_reassign",
+      instructorExplanation: "Watch the value swap in action: Python first computes 10 + 2 = 12 on the right, lifts the old 10 out of the box, and drops the new 12 inside!"
     }),
 
   makeLesson(1, "1.4", "quiz", "Quiz: Value After Arithmetic Update",
     "12",
     "What does score = 10 followed by score = score + 2 print?",
-    "Mental Math Check",
+    "Storage Box & Value Swap",
     "12", "Correct! 10 + 2 = 12.", 20, 95, {
-      analogyType: "arithmetic",
-      instructorExplanation: "Always trace variables step-by-step: 10 plus 2 produces 12, which replaces the previous value."
+      analogyType: "box_reassign",
+      instructorExplanation: "The box holds one value at a time. The new value 12 replaces the old 10."
     }),
 
   makeLesson(1, "1.5", "slide", "The Microphone: input()",
@@ -377,43 +387,43 @@ const s1Lessons = [
     "The Stage Microphone",
     "name = input('Name: ')\nprint(f'Welcome {name}!')", "Welcome Alex!", 22, 90, {
       analogyType: "microphone",
-      instructorExplanation: "If print() is the megaphone broadcasting outward, input() is the microphone listening inward. It halts Python until the user presses Enter, capturing whatever they typed as text."
+      instructorExplanation: "If print() is the megaphone shouting outward, input() is the microphone listening inward. It pauses Python and waits for the user to type something and press Enter."
     }),
 
   makeLesson(1, "1.5", "code", "Input and Numeric Conversion",
     "raw = input('n: ')\nn = int(raw)\nprint(n * 2)",
     "Cast string input with int() before doing numerical multiplication.",
-    "Type Transformer",
+    "The Type Converter Chamber",
     "raw = input('n: ')\nn = int(raw)\nprint(n * 2)", "10", 24, 92, {
-      analogyType: "machine",
-      instructorExplanation: "Here is a classic gotcha: input() always returns strings! If a user types 5, Python reads it as '5'. You must pass it through int() before performing arithmetic."
+      analogyType: "type_transformer",
+      instructorExplanation: "Here is the biggest trap for freshers: input() always hears plain text! If a user types 5, Python receives '5' with quotes. You must send it through int() to strip the quotes before doing math."
     }),
 
   makeLesson(1, "1.5", "explain", "Why Casting Matters",
     "Without int(), the string '5' * 2 produces '55' instead of 10. Data types decide how operators behave.",
     "Operators are overloaded based on data type: '+' concatenates strings and adds numbers.",
-    "String Glue vs Math Addition",
+    "The Type Converter Chamber",
     "print('5' + '5')\nprint(int('5') + int('5'))", "55\n10", 22, 90, {
-      analogyType: "machine",
-      instructorExplanation: "Notice the huge contrast: adding two strings glues them together into '55', whereas converting them to integers produces real mathematical addition 10."
+      analogyType: "type_transformer",
+      instructorExplanation: "Look at this difference: adding two strings glues them together like words ('5' + '5' = '55'). But converting them with int() does real math addition (5 + 5 = 10)!"
     }),
 
   makeLesson(1, "1.6", "slide", "Inspecting Types with type()",
     "The built-in type() function inspects any object at runtime and returns its class: type(42) returns <class 'int'>.",
     "Python is dynamically typed: variable types are checked and resolved at runtime.",
-    "The Object Scanner",
+    "The Type Converter Chamber",
     "print(type(42))\nprint(type('hello'))", "<class 'int'>\n<class 'str'>", 22, 90, {
-      analogyType: "box",
-      instructorExplanation: "Whenever you are unsure what kind of data is living inside a variable box, use type(). It reveals whether Python considers it an int, float, str, or something else."
+      analogyType: "type_transformer",
+      instructorExplanation: "Whenever you are not sure what kind of data is living in your box, use type(). It inspects whether Python sees text, whole numbers, or decimals."
     }),
 
   makeLesson(1, "1.6", "code", "Declaring the Primitive Quartet",
     "age = 25\nrate = 3.14\nuser = 'Dev'\nis_active = True\nprint(age, rate, user, is_active)",
     "Declare integer, floating point, string, and boolean variables in sequence.",
-    "The 4 Fundamental Elements",
+    "Storage Box & Value Swap",
     "age = 25\nrate = 3.14\nuser = 'Dev'\nis_active = True\nprint(age, rate, user, is_active)", "25 3.14 Dev True", 24, 92, {
-      analogyType: "box",
-      instructorExplanation: "Every advanced program is built from these four atomic primitives: integers, floats, strings, and booleans. Master these four boxes first."
+      analogyType: "box_reassign",
+      instructorExplanation: "These are the 4 fundamental storage boxes of Python: whole numbers (int), decimals (float), text strings (str), and Yes/No flags (bool)."
     }),
 
   makeLesson(1, "1.7", "code", "Modern f-Strings: Fast & Clean Formatting",

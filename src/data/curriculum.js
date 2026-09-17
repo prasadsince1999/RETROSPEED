@@ -47,6 +47,7 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
           : (isMotion ? 'motion' : (isIntro ? 'intro' : (l.type || (isPythonCourse ? 'code' : 'practice'))));
 
         playableLessons.push({
+          ...l,
           id: lessonNumber,
           rawId: l.rawId || l.id || `l-${lessonNumber}`,
           codeId: l.codeId || l.rawId || `l-${lessonNumber}`,
@@ -63,6 +64,10 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
           expectedOutput: l.expectedOutput || '',
           concept: l.concept || '',
           analogy: l.analogy || '',
+          analogyType: l.analogyType || '',
+          instructorExplanation: l.instructorExplanation || '',
+          codeBreakdown: l.codeBreakdown || null,
+          executionSteps: l.executionSteps || null,
           variables: l.variables || {},
           goalWpm: l.goalWpm || stage.targetWpm || 20,
           minAccuracy: l.minAccuracy || 80,
@@ -105,6 +110,7 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
       chapter.lessons.forEach((l, lIdx) => {
         const lessonNumber = globalIndex;
         playableLessons.push({
+          ...l,
           id: lessonNumber,
           rawId: l.id || `py-${lessonNumber}`,
           codeId: l.id || `py-${lessonNumber}`,
@@ -117,6 +123,11 @@ export function getCurriculumForCourse(courseId = 'retrospeed-odyssey') {
           chapterTitle: cleanString(chapter.title),
           stageId: `chapter-${chapter.chapterNumber}`,
           concept: l.concept || '',
+          analogy: l.analogy || '',
+          analogyType: l.analogyType || '',
+          instructorExplanation: l.instructorExplanation || '',
+          codeBreakdown: l.codeBreakdown || null,
+          executionSteps: l.executionSteps || null,
           visualTopic: l.visualTopic || '',
           code: l.code || '',
           text: l.code || '',

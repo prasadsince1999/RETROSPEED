@@ -30,19 +30,19 @@ export function getVisualComponentForLesson(lessonOrId, chapter = 1, maybeLesson
 
   // 2. Specific curated multi-frame storyboard overrides if applicable
   switch (lessonId) {
-    case 'py-102':
-      return <Chapter1_InterpreterPipeline />;
-    case 'py-109':
-    case 'py-110':
-      return <Chapter1_DataTypesRoadmap />;
     case 'py-101':
+      return <DynamicVisualStage analogyType="language_ladder" lesson={lesson} />;
+    case 'py-102':
+    case 'py-103':
+      return <DynamicVisualStage analogyType="cpython_pipeline" lesson={lesson} />;
     case 'py-104':
+      return <DynamicVisualStage analogyType="arithmetic" lesson={lesson} />;
     case 'py-105':
-      return <DynamicVisualStage analogyType="megaphone" lesson={lesson} />;
+      return <DynamicVisualStage analogyType="cpython_pipeline" lesson={lesson} />;
     case 'py-106':
     case 'py-107':
     case 'py-108':
-      return <DynamicVisualStage analogyType="box" lesson={lesson} />;
+      return <DynamicVisualStage analogyType="box_reassign" lesson={lesson} />;
     case 'py-201':
     case 'py-203':
     case 'py-204':

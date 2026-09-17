@@ -42,6 +42,22 @@ export function detectAnalogyType(lesson) {
     .join(' ')
     .toLowerCase();
 
+  if (textToScan.includes('ladder') || textToScan.includes('tower') || textToScan.includes('language_ladder') || textToScan.includes('translator')) {
+    return 'language_ladder';
+  }
+  if (textToScan.includes('cpython') || textToScan.includes('bytecode') || textToScan.includes('cpython_pipeline') || textToScan.includes('pipeline') || textToScan.includes('pvm')) {
+    return 'cpython_pipeline';
+  }
+  if (textToScan.includes('sticky') || textToScan.includes('megaphone_sticky') || textToScan.includes('comment')) {
+    return 'megaphone_sticky';
+  }
+  if (textToScan.includes('box_reassign') || textToScan.includes('reassign') || textToScan.includes('updating box') || textToScan.includes('swap')) {
+    return 'box_reassign';
+  }
+  if (textToScan.includes('type_transformer') || textToScan.includes('transformer') || textToScan.includes('type converter') || textToScan.includes('string glue')) {
+    return 'type_transformer';
+  }
+
   if (textToScan.includes('input(') || textToScan.includes('user input') || textToScan.includes('prompt')) {
     return 'microphone';
   }
@@ -1001,6 +1017,536 @@ function ArithmeticVisual({ lesson, animKey }) {
 }
 
 // ============================================================================
+// 10. LANGUAGE LADDER TOWER (Levels of Languages: Human -> Python -> Assembly -> Binary)
+// ============================================================================
+function LanguageLadderVisual({ lesson, animKey }) {
+  const [activeFloor, setActiveFloor] = useState(3); // 4=Human, 3=Python, 2=Assembly, 1=Binary
+  const [isTranslating, setIsTranslating] = useState(false);
+
+  const floors = [
+    {
+      id: 4,
+      title: "Human Speech",
+      codeSnippet: '"Calculate 5 + 5 for me"',
+      desc: "Natural human languages (English, Hindi, Spanish) are too vague for computers to execute directly.",
+      badge: "Floor 4: Human Intent"
+    },
+    {
+      id: 3,
+      title: "Python (High-Level)",
+      codeSnippet: "print(5 + 5)",
+      desc: "Clean, readable English-like syntax. Python acts as your universal translation bridge!",
+      badge: "Floor 3: You Code Here! 🐍"
+    },
+    {
+      id: 2,
+      title: "Assembly (Low-Level)",
+      codeSnippet: "MOV EAX, 5 \nADD EAX, 5",
+      desc: "Hardware-specific CPU register instructions. Hard to write and bound to one chip architecture.",
+      badge: "Floor 2: CPU Registers"
+    },
+    {
+      id: 1,
+      title: "Machine Binary",
+      codeSnippet: "01001000 01100101",
+      desc: "Raw electronic voltage states (On/Off) moving through physical silicon transistors.",
+      badge: "Floor 1: Physical Hardware ⚡"
+    }
+  ];
+
+  const handleTranslate = (targetFloor) => {
+    sound?.playKeyClick?.();
+    setIsTranslating(true);
+    setActiveFloor(targetFloor);
+    setTimeout(() => setIsTranslating(false), 400);
+  };
+
+  useEffect(() => {
+    setActiveFloor(3);
+  }, [animKey, lesson]);
+
+  return (
+    <div className="w-full max-w-xl flex flex-col items-center">
+      {/* Elevator Tower Grid */}
+      <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+        {floors.map((floor) => {
+          const isActive = activeFloor === floor.id;
+          return (
+            <button
+              key={floor.id}
+              onClick={() => handleTranslate(floor.id)}
+              className={`p-2.5 rounded-xl border-2 text-left cursor-pointer transition-all duration-200 relative ${
+                isActive
+                  ? 'bg-white border-[#2D2319] shadow-[3px_3px_0px_#2D2319] scale-[1.02] ring-2 ring-[#F6C445]'
+                  : 'bg-[#FAF3E0]/70 border-[#2D2319]/40 hover:border-[#2D2319] hover:bg-white'
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-[#FAF3E0] border border-[#2D2319]/30">
+                  {floor.badge}
+                </span>
+                {isActive && <span className="text-xs">📍</span>}
+              </div>
+              <div className="font-bold text-xs text-[#2D2319] leading-tight mb-1">{floor.title}</div>
+              <div className="font-mono text-[9px] bg-stone-900 text-emerald-400 p-1 rounded border border-[#2D2319] truncate">
+                {floor.codeSnippet.split('\n')[0]}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Interactive Explanation Box */}
+      <div className="w-full bg-white border-2 border-[#2D2319] rounded-xl p-3 shadow-[3px_3px_0px_#2D2319] flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex-1">
+          <div className="flex items-center space-x-2 mb-1">
+            <span className="px-2 py-0.5 bg-[#48B89F] text-[#2D2319] font-mono text-[10px] font-black rounded border border-[#2D2319]">
+              Tier {activeFloor} of 4
+            </span>
+            <span className="text-xs font-bold text-[#2D2319]">
+              {floors.find(f => f.id === activeFloor)?.title}
+            </span>
+          </div>
+          <p className="text-xs text-[#2D2319]/80 font-sans leading-relaxed">
+            {floors.find(f => f.id === activeFloor)?.desc}
+          </p>
+        </div>
+
+        <div className="shrink-0 flex items-center space-x-2">
+          <button
+            onClick={() => handleTranslate(3)}
+            className="px-3 py-1.5 bg-[#F6C445] hover:bg-amber-400 border-2 border-[#2D2319] rounded-lg font-mono text-xs font-bold text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer"
+          >
+            Focus Python 🐍
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-2 text-[11px] font-mono text-[#2D2319]/70 text-center">
+        💡 Python lets you write at Floor 3 and automatically translates everything down to Floor 1!
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
+// 11. CPYTHON 3-STAGE PIPELINE (app.py -> Compiler -> app.pyc Bytecode -> PVM)
+// ============================================================================
+function CPythonPipelineVisual({ lesson, animKey }) {
+  const [pipelineStage, setPipelineStage] = useState(0); // 0=app.py, 1=Compiler, 2=Bytecode, 3=PVM/CPU
+  const [isRunning, setIsRunning] = useState(false);
+
+  const runPipeline = () => {
+    sound?.playKeyClick?.();
+    setIsRunning(true);
+    setPipelineStage(1);
+    setTimeout(() => setPipelineStage(2), 600);
+    setTimeout(() => {
+      setPipelineStage(3);
+      setIsRunning(false);
+    }, 1200);
+  };
+
+  useEffect(() => {
+    setPipelineStage(0);
+    setIsRunning(false);
+  }, [animKey, lesson]);
+
+  return (
+    <div className="w-full max-w-xl flex flex-col items-center">
+      {/* 4 Pipeline Stages */}
+      <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+        {/* Step 1: Source */}
+        <div className={`p-2.5 rounded-xl border-2 transition-all duration-300 ${pipelineStage >= 0 ? 'bg-white border-[#2D2319] shadow-[2px_2px_0px_#2D2319]' : 'opacity-60 bg-stone-100'}`}>
+          <div className="flex items-center space-x-1 text-[10px] font-mono font-bold text-[#2D2319] mb-1">
+            <span>📄</span>
+            <span>1. app.py</span>
+          </div>
+          <div className="bg-stone-900 text-amber-300 font-mono text-[9px] p-1.5 rounded border border-[#2D2319] truncate">
+            print(5 + 5)
+          </div>
+          <div className="text-[9px] text-[#2D2319]/70 mt-1 font-mono">Your source code</div>
+        </div>
+
+        {/* Step 2: Compiler */}
+        <div className={`p-2.5 rounded-xl border-2 transition-all duration-300 ${pipelineStage >= 1 ? 'bg-[#F6C445]/40 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]' : 'opacity-60 bg-stone-100'}`}>
+          <div className="flex items-center space-x-1 text-[10px] font-mono font-bold text-[#2D2319] mb-1">
+            <span className={pipelineStage === 1 ? 'animate-spin' : ''}>⚙️</span>
+            <span>2. Compiler</span>
+          </div>
+          <div className="bg-[#FAF3E0] text-[#2D2319] font-mono text-[9px] p-1.5 rounded border border-[#2D2319] text-center font-bold">
+            CPython Engine
+          </div>
+          <div className="text-[9px] text-[#2D2319]/70 mt-1 font-mono">Checks syntax</div>
+        </div>
+
+        {/* Step 3: Bytecode */}
+        <div className={`p-2.5 rounded-xl border-2 transition-all duration-300 ${pipelineStage >= 2 ? 'bg-[#C3A6E8]/40 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]' : 'opacity-60 bg-stone-100'}`}>
+          <div className="flex items-center space-x-1 text-[10px] font-mono font-bold text-[#2D2319] mb-1">
+            <span>💾</span>
+            <span>3. app.pyc</span>
+          </div>
+          <div className="bg-stone-900 text-sky-300 font-mono text-[9px] p-1.5 rounded border border-[#2D2319] truncate">
+            LOAD_CONST 10
+          </div>
+          <div className="text-[9px] text-[#2D2319]/70 mt-1 font-mono">Intermediate bytecode</div>
+        </div>
+
+        {/* Step 4: PVM */}
+        <div className={`p-2.5 rounded-xl border-2 transition-all duration-300 ${pipelineStage >= 3 ? 'bg-[#48B89F]/40 border-[#2D2319] shadow-[2px_2px_0px_#2D2319]' : 'opacity-60 bg-stone-100'}`}>
+          <div className="flex items-center space-x-1 text-[10px] font-mono font-bold text-[#2D2319] mb-1">
+            <span className={pipelineStage === 3 ? 'animate-pulse' : ''}>⚡</span>
+            <span>4. PVM Virtual Machine</span>
+          </div>
+          <div className="bg-black text-emerald-400 font-mono text-[9px] p-1.5 rounded border border-[#2D2319] text-center font-bold">
+            &gt; 10
+          </div>
+          <div className="text-[9px] text-[#2D2319]/70 mt-1 font-mono">CPU Execution</div>
+        </div>
+      </div>
+
+      {/* Pipeline Controller */}
+      <div className="w-full bg-white border-2 border-[#2D2319] rounded-xl p-3 shadow-[3px_3px_0px_#2D2319] flex items-center justify-between gap-3">
+        <p className="text-xs text-[#2D2319]/80 font-sans">
+          {pipelineStage === 0 && "Your human-written .py file is ready to compile."}
+          {pipelineStage === 1 && "CPython compiler parses your code and generates bytecode."}
+          {pipelineStage === 2 && "Bytecode (.pyc) is stored in memory so it can execute instantly."}
+          {pipelineStage === 3 && "The Python Virtual Machine (PVM) feeds instructions straight to your CPU!"}
+        </p>
+
+        <button
+          onClick={runPipeline}
+          disabled={isRunning}
+          className="px-3 py-1.5 bg-[#F6C445] hover:bg-amber-400 border-2 border-[#2D2319] rounded-lg font-mono text-xs font-bold text-[#2D2319] shadow-[2px_2px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer shrink-0"
+        >
+          {isRunning ? "Running..." : "▶ Run Pipeline"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
+// 12. MEGAPHONE & STICKY NOTE (print vs # comments)
+// ============================================================================
+function MegaphoneStickyVisual({ lesson, animKey }) {
+  const [shouting, setShouting] = useState(false);
+  const [stickyPeeling, setStickyPeeling] = useState(false);
+
+  const message = useMemo(() => {
+    const code = lesson?.code || "print('hello, terminal')";
+    const match = code.match(/print\(\s*['"](.+?)['"]\s*\)/);
+    return match ? match[1] : "hello, terminal";
+  }, [lesson]);
+
+  const comment = useMemo(() => {
+    const code = lesson?.code || "# greet the terminal";
+    const match = code.match(/#\s*(.+)/);
+    return match ? match[1] : "greet the terminal";
+  }, [lesson]);
+
+  const triggerShout = () => {
+    sound?.playKeyClick?.();
+    setShouting(true);
+    setTimeout(() => setShouting(false), 800);
+  };
+
+  const toggleSticky = () => {
+    sound?.playKeyClick?.();
+    setStickyPeeling(prev => !prev);
+  };
+
+  useEffect(() => {
+    setShouting(false);
+    setStickyPeeling(false);
+  }, [animKey, lesson]);
+
+  return (
+    <div className="w-full max-w-xl flex flex-col md:flex-row items-center justify-between gap-3">
+      {/* Megaphone & Screen Side */}
+      <div className="flex-1 w-full flex flex-col items-center bg-white border-2 border-[#2D2319] rounded-xl p-3 shadow-[3px_3px_0px_#2D2319]">
+        <div className="flex items-center space-x-2 mb-2 w-full justify-between">
+          <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-[#FAF3E0] rounded border border-[#2D2319]">
+            The Megaphone: print()
+          </span>
+          <button
+            onClick={triggerShout}
+            className="px-2.5 py-1 bg-[#F6C445] hover:bg-amber-400 border-2 border-[#2D2319] rounded font-mono text-[11px] font-bold text-[#2D2319] shadow-[1px_1px_0px_#2D2319] cursor-pointer"
+          >
+            📢 Broadcast
+          </button>
+        </div>
+
+        {/* Megaphone Graphic */}
+        <div className="flex items-center space-x-3 my-1">
+          <div className={`text-4xl transition-transform duration-300 ${shouting ? 'scale-125 -rotate-12' : ''}`}>
+            📣
+          </div>
+          <div className="flex flex-col space-y-1">
+            <span className={`text-xs font-mono font-bold text-amber-600 transition-opacity ${shouting ? 'opacity-100 animate-ping' : 'opacity-20'}`}>
+              )))
+            </span>
+          </div>
+        </div>
+
+        {/* Green CRT Screen */}
+        <div className="w-full bg-stone-900 border-2 border-[#2D2319] rounded-lg p-2 text-emerald-400 font-mono text-xs shadow-inner mt-1">
+          <div className="text-[8px] text-emerald-600 mb-1 border-b border-emerald-900/50 pb-0.5 flex justify-between">
+            <span>TERMINAL DISPLAY</span>
+            <span>STDOUT</span>
+          </div>
+          <div className="flex items-center space-x-1">
+            <span className="text-emerald-500 font-bold">&gt;</span>
+            <span className={shouting ? 'font-bold text-white transition-colors' : ''}>
+              {message}
+            </span>
+            <span className="w-2 h-3 bg-emerald-400 inline-block animate-pulse ml-1" />
+          </div>
+        </div>
+      </div>
+
+      {/* Sticky Note Side (# comments) */}
+      <div className="w-full md:w-52 shrink-0 relative">
+        <div
+          onClick={toggleSticky}
+          className={`cursor-pointer bg-yellow-200 border-2 border-yellow-500 p-3 rounded-lg shadow-[3px_3px_0px_#2D2319] transition-all duration-300 relative ${
+            stickyPeeling ? 'rotate-6 translate-y-1 opacity-75' : '-rotate-2'
+          }`}
+        >
+          {/* Tape / Pushpin */}
+          <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-3 bg-amber-300/80 border border-amber-500/50 rounded-sm" />
+
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-[9px] font-mono font-bold text-amber-900 uppercase">
+              # Sticky Note
+            </span>
+            <span className="text-[10px]">📌</span>
+          </div>
+
+          <p className="font-handwriting text-xs text-amber-950 italic mb-2">
+            "{comment}"
+          </p>
+
+          <div className="bg-yellow-300/80 border border-yellow-600/50 rounded p-1 text-[9px] font-mono text-amber-900">
+            {stickyPeeling ? "⚠️ Ignored by Python!" : "👀 Read by humans only"}
+          </div>
+        </div>
+
+        <div className="text-[10px] font-mono text-center text-[#2D2319]/70 mt-2">
+          Click note to peel or stick!
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
+// 13. BOX REASSIGN VISUAL (Variable Storage & Value Swapping)
+// ============================================================================
+function BoxReassignVisual({ lesson, animKey }) {
+  const [val, setVal] = useState(10);
+  const [isSwapping, setIsSwapping] = useState(false);
+  const [oldVal, setOldVal] = useState(null);
+
+  const varName = useMemo(() => {
+    const code = lesson?.code || 'score = 10';
+    const match = code.match(/([a-zA-Z_]\w*)\s*=/);
+    return match ? match[1] : 'score';
+  }, [lesson]);
+
+  const handleUpdate = (newVal) => {
+    if (newVal === val) return;
+    sound?.playKeyClick?.();
+    setOldVal(val);
+    setIsSwapping(true);
+    setVal(newVal);
+    setTimeout(() => {
+      setIsSwapping(false);
+      setOldVal(null);
+    }, 600);
+  };
+
+  useEffect(() => {
+    setVal(10);
+    setIsSwapping(false);
+    setOldVal(null);
+  }, [animKey, lesson]);
+
+  return (
+    <div className="w-full max-w-md flex flex-col items-center">
+      {/* The Storage Box */}
+      <div className="relative w-44 h-32 bg-[#E8DCC4] border-3 border-[#2D2319] rounded-2xl shadow-[4px_4px_0px_#2D2319] flex flex-col items-center justify-center p-3 my-1">
+        {/* Box Lid & Swing Tag */}
+        <div className="absolute -top-3 left-3 px-2.5 py-0.5 bg-[#F6C445] border-2 border-[#2D2319] rounded-md font-mono text-xs font-black shadow-[1px_1px_0px_#2D2319] flex items-center space-x-1">
+          <span>🏷️</span>
+          <span>{varName}</span>
+        </div>
+
+        {/* Ejected old value floating out */}
+        {isSwapping && oldVal !== null && (
+          <div className="absolute -top-7 animate-out fade-out slide-out-to-top-4 duration-500 px-2.5 py-0.5 bg-rose-100 border-2 border-rose-500 rounded-lg font-mono text-xs font-bold text-rose-700 line-through">
+            {oldVal}
+          </div>
+        )}
+
+        {/* Inside the box: Current value badge */}
+        <div className={`px-4 py-1.5 bg-white border-2 border-[#2D2319] rounded-xl font-mono text-2xl font-black text-[#2D2319] shadow-[2px_2px_0px_#2D2319] transition-transform duration-300 ${
+          isSwapping ? 'scale-125 bg-emerald-100 border-emerald-600 text-emerald-800' : ''
+        }`}>
+          {val}
+        </div>
+
+        <div className="text-[10px] font-mono text-[#2D2319]/70 mt-1">
+          RAM Memory Box
+        </div>
+      </div>
+
+      {/* Interactive Value Assignment Controls */}
+      <div className="w-full flex items-center justify-center space-x-2 mt-2">
+        <button
+          onClick={() => handleUpdate(10)}
+          className={`px-3 py-1.5 rounded-lg border-2 border-[#2D2319] font-mono text-xs font-bold cursor-pointer transition-all ${
+            val === 10
+              ? 'bg-[#F6C445] shadow-[2px_2px_0px_#2D2319] scale-105'
+              : 'bg-white hover:bg-stone-50 shadow-[1px_1px_0px_#2D2319]'
+          }`}
+        >
+          {varName} = 10
+        </button>
+
+        <button
+          onClick={() => handleUpdate(20)}
+          className={`px-3 py-1.5 rounded-lg border-2 border-[#2D2319] font-mono text-xs font-bold cursor-pointer transition-all ${
+            val === 20
+              ? 'bg-[#F6C445] shadow-[2px_2px_0px_#2D2319] scale-105'
+              : 'bg-white hover:bg-stone-50 shadow-[1px_1px_0px_#2D2319]'
+          }`}
+        >
+          {varName} = 20
+        </button>
+
+        <button
+          onClick={() => handleUpdate(val + 2)}
+          className="px-3 py-1.5 rounded-lg border-2 border-[#2D2319] bg-emerald-100 hover:bg-emerald-200 text-emerald-900 font-mono text-xs font-bold cursor-pointer shadow-[1px_1px_0px_#2D2319] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+        >
+          + 2 (Reassign)
+        </button>
+      </div>
+
+      <p className="text-[11px] font-mono text-[#2D2319]/70 mt-2 text-center">
+        Reassigning replaces the old value inside the labeled box.
+      </p>
+    </div>
+  );
+}
+
+// ============================================================================
+// 14. TYPE TRANSFORMER CHAMBER ("5" + "5" = "55" vs int("5") + int("5") = 10)
+// ============================================================================
+function TypeTransformerVisual({ lesson, animKey }) {
+  const [isCast, setIsCast] = useState(false);
+
+  const toggleCast = () => {
+    sound?.playKeyClick?.();
+    setIsCast(prev => !prev);
+  };
+
+  useEffect(() => {
+    setIsCast(false);
+  }, [animKey, lesson]);
+
+  return (
+    <div className="w-full max-w-lg flex flex-col items-center">
+      {/* Comparison Split Buttons */}
+      <div className="w-full flex items-center justify-between mb-2 bg-[#FAF3E0] border-2 border-[#2D2319] p-1 rounded-xl shadow-[2px_2px_0px_#2D2319]">
+        <button
+          onClick={() => setIsCast(false)}
+          className={`flex-1 py-1 rounded-lg font-mono text-xs font-bold cursor-pointer transition-all text-center ${
+            !isCast
+              ? 'bg-rose-200 border-2 border-[#2D2319] text-rose-950 shadow-[1px_1px_0px_#2D2319]'
+              : 'text-[#2D2319]/60 hover:text-[#2D2319]'
+          }`}
+        >
+          1. String Trap ("5" + "5")
+        </button>
+        <button
+          onClick={() => setIsCast(true)}
+          className={`flex-1 py-1 rounded-lg font-mono text-xs font-bold cursor-pointer transition-all text-center ${
+            isCast
+              ? 'bg-[#48B89F] border-2 border-[#2D2319] text-[#2D2319] shadow-[1px_1px_0px_#2D2319]'
+              : 'text-[#2D2319]/60 hover:text-[#2D2319]'
+          }`}
+        >
+          2. int() Transformer (5 + 5)
+        </button>
+      </div>
+
+      {/* Main Visual Chamber */}
+      <div className="w-full bg-white border-2 border-[#2D2319] rounded-xl p-3 shadow-[3px_3px_0px_#2D2319] flex flex-col items-center">
+        {!isCast ? (
+          // String Concatenation Mode
+          <div className="w-full flex flex-col items-center">
+            <div className="text-[11px] font-mono font-bold text-rose-800 bg-rose-50 border border-rose-300 px-2 py-0.5 rounded-md mb-2">
+              Without int(): Strings Glue Together!
+            </div>
+
+            <div className="flex items-center space-x-2 my-1">
+              <div className="px-3 py-1.5 bg-amber-100 border-2 border-[#2D2319] rounded-xl font-mono text-base font-black text-amber-900 shadow-[2px_2px_0px_#2D2319]">
+                "5"
+              </div>
+              <span className="font-mono text-lg font-black text-rose-600">+</span>
+              <div className="px-3 py-1.5 bg-amber-100 border-2 border-[#2D2319] rounded-xl font-mono text-base font-black text-amber-900 shadow-[2px_2px_0px_#2D2319]">
+                "5"
+              </div>
+              <span className="font-mono text-lg font-black text-[#2D2319]">=</span>
+              <div className="px-3.5 py-1.5 bg-rose-100 border-2 border-[#2D2319] rounded-xl font-mono text-lg font-black text-rose-900 shadow-[2px_2px_0px_#2D2319]">
+                "55"
+              </div>
+            </div>
+
+            <p className="text-xs text-[#2D2319]/80 text-center mt-2 font-sans">
+              Quotes tell Python these are text letters, so <code className="bg-stone-100 px-1 rounded font-bold">+</code> glues them together like words.
+            </p>
+          </div>
+        ) : (
+          // Integer Math Mode
+          <div className="w-full flex flex-col items-center">
+            <div className="text-[11px] font-mono font-bold text-emerald-900 bg-emerald-50 border border-emerald-300 px-2 py-0.5 rounded-md mb-2">
+              With int(): Quotes Stripped &rarr; Real Math!
+            </div>
+
+            <div className="flex items-center space-x-2 my-1">
+              <div className="px-3 py-1.5 bg-[#48B89F]/30 border-2 border-[#2D2319] rounded-xl font-mono text-base font-black text-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
+                5
+              </div>
+              <span className="font-mono text-lg font-black text-emerald-600">+</span>
+              <div className="px-3 py-1.5 bg-[#48B89F]/30 border-2 border-[#2D2319] rounded-xl font-mono text-base font-black text-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
+                5
+              </div>
+              <span className="font-mono text-lg font-black text-[#2D2319]">=</span>
+              <div className="px-3.5 py-1.5 bg-[#F6C445] border-2 border-[#2D2319] rounded-xl font-mono text-lg font-black text-[#2D2319] shadow-[2px_2px_0px_#2D2319]">
+                10
+              </div>
+            </div>
+
+            <p className="text-xs text-[#2D2319]/80 text-center mt-2 font-sans">
+              <code className="bg-stone-100 px-1 rounded font-bold">int()</code> converts text into numbers so math addition equals <strong>10</strong>!
+            </p>
+          </div>
+        )}
+
+        <button
+          onClick={toggleCast}
+          className="mt-2 px-3 py-1 bg-[#FAF3E0] hover:bg-amber-100 border-2 border-[#2D2319] rounded-lg font-mono text-xs font-bold text-[#2D2319] shadow-[2px_2px_0px_#2D2319] cursor-pointer active:translate-x-0.5 active:translate-y-0.5 transition-all"
+        >
+          {isCast ? "⬅️ See String Trap" : "⚡ Apply int() Transformer ➡️"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
 // MAIN DYNAMIC VISUAL STAGE
 // ============================================================================
 export default function DynamicVisualStage({
@@ -1023,6 +1569,16 @@ export default function DynamicVisualStage({
 
   const stageMeta = useMemo(() => {
     switch (effectiveType) {
+      case 'language_ladder':
+        return { title: '4-Tier Language Tower', icon: <TrayIcon className="w-3.5 h-3.5" />, badge: 'Abstraction' };
+      case 'cpython_pipeline':
+        return { title: 'CPython 3-Stage Pipeline', icon: <Cpu className="w-3.5 h-3.5" />, badge: 'Execution' };
+      case 'megaphone_sticky':
+        return { title: 'Megaphone & Sticky Note', icon: <MegaphoneIcon className="w-3.5 h-3.5" />, badge: 'Syntax' };
+      case 'box_reassign':
+        return { title: 'Storage Box & Value Swap', icon: <BoxIcon className="w-3.5 h-3.5" />, badge: 'Variables' };
+      case 'type_transformer':
+        return { title: 'Type Converter Chamber', icon: <Zap className="w-3.5 h-3.5" />, badge: 'Data Types' };
       case 'box':
         return { title: 'RAM Memory Box', icon: <BoxIcon className="w-3.5 h-3.5" />, badge: 'Variables' };
       case 'megaphone':
@@ -1047,6 +1603,16 @@ export default function DynamicVisualStage({
 
   const renderVisualContent = () => {
     switch (effectiveType) {
+      case 'language_ladder':
+        return <LanguageLadderVisual lesson={lesson} animKey={animKey} />;
+      case 'cpython_pipeline':
+        return <CPythonPipelineVisual lesson={lesson} animKey={animKey} />;
+      case 'megaphone_sticky':
+        return <MegaphoneStickyVisual lesson={lesson} animKey={animKey} />;
+      case 'box_reassign':
+        return <BoxReassignVisual lesson={lesson} animKey={animKey} />;
+      case 'type_transformer':
+        return <TypeTransformerVisual lesson={lesson} animKey={animKey} />;
       case 'box':
         return <BoxVisual lesson={lesson} animKey={animKey} />;
       case 'megaphone':

@@ -62,12 +62,12 @@ describe('Python Step Teacher & Dynamic Visual Stage', () => {
     it('renders accurate DynamicVisualStage by analogyType without static 5+5 fallback', () => {
       const visual1 = getVisualComponentForLesson({
         id: 'py-101',
-        title: 'Print Output',
+        title: 'Why Computers Need Python',
         code: 'print("Hello")',
         chapter: 1
       });
       expect(React.isValidElement(visual1)).toBe(true);
-      expect(visual1.props.analogyType).toBe('megaphone');
+      expect(visual1.props.analogyType).toBe('language_ladder');
 
       const visualVar = getVisualComponentForLesson({
         id: 'py-106',
@@ -75,7 +75,7 @@ describe('Python Step Teacher & Dynamic Visual Stage', () => {
         chapter: 1
       });
       expect(React.isValidElement(visualVar)).toBe(true);
-      expect(visualVar.props.analogyType).toBe('box');
+      expect(visualVar.props.analogyType).toBe('box_reassign');
     });
 
     it('routes chapter-based lessons accurately', () => {

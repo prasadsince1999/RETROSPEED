@@ -143,11 +143,16 @@ function tokenizePythonCode(code = '') {
         type: 'operator',
         text: char,
         description:
-          char === '=' ? 'Assignment operator: Stores the right-hand value into the left-hand variable.' :
-          char === ':' ? 'Colon: Signals the start of an indented block of instructions.' :
-          char === '(' || char === ')' ? 'Parentheses: Enclose function arguments or grouped expressions.' :
-          char === '[' || char === ']' ? 'Square brackets: Used for lists, collections, and index lookups.' :
-          `Symbol '${char}': Python operator or syntax delimiter.`
+          char === '=' ? 'Stores the right-hand value into the left-hand variable box.' :
+          char === ':' ? 'Header colon: Tells Python the next indented lines belong together.' :
+          char === '(' || char === ')' ? 'The mouth of the function. Whatever message you put inside gets processed!' :
+          char === '[' || char === ']' ? 'Numbered slots for items in a list or characters in a string.' :
+          char === '{' || char === '}' ? 'Placeholder braces: Python replaces variables inside with actual values.' :
+          char === '+' ? 'Plus: Adds numbers, or glues text together.' :
+          char === '-' ? 'Minus: Subtracts numbers.' :
+          char === '*' ? 'Multiply: Multiplies numbers.' :
+          char === '/' ? 'Divide: Divides numbers.' :
+          `Symbol '${char}': Python operator or syntax mark.`
       });
     }
 
@@ -161,40 +166,67 @@ function tokenizePythonCode(code = '') {
  * Generate fallback code breakdown cards if not present in lesson
  */
 function generateFallbackBreakdown(tokens = [], lesson) {
-  if (lesson?.codeBreakdown && Array.isArray(lesson.codeBreakdown)) {
+  if (lesson?.codeBreakdown && Array.isArray(lesson.codeBreakdown) && lesson.codeBreakdown.length > 0) {
     return lesson.codeBreakdown;
   }
 
-  // Deduplicate meaningful tokens
+  // Deduplicate meaningful tokens and eliminate beginner confusion
   const seen = new Set();
   const cards = [];
 
   for (const line of tokens) {
     for (const tok of line) {
-      if (tok.type === 'whitespace' || seen.has(tok.text)) continue;
-      seen.add(tok.text);
+      if (tok.type === 'whitespace') continue;
 
+      let key = tok.text;
       let title = tok.text;
       let badge = tok.type;
       let explanation = tok.description;
 
-      if (tok.type === 'builtin') {
+      if (tok.text === '(' || tok.text === ')') {
+        key = 'parens';
+        title = '( ... )';
+        badge = 'Message Container';
+        explanation = 'The mouth of the function. Whatever message or numbers you place inside get shouted onto the screen!';
+      } else if (tok.text === '[' || tok.text === ']') {
+        key = 'brackets';
+        title = '[ ... ]';
+        badge = 'Item Slots';
+        explanation = 'Numbered slots for items in a list or characters in a string.';
+      } else if (tok.text === '{' || tok.text === '}') {
+        key = 'braces';
+        title = '{ ... }';
+        badge = 'f-String Variable';
+        explanation = 'In an f-string, Python replaces whatever variable is inside with its actual value!';
+      } else if (tok.type === 'builtin') {
         title = `${tok.text}()`;
-        badge = 'Built-in Function';
-        explanation = `Broadcasting or reading data using Python's standard library.`;
+        badge = 'Built-in Tool';
+        explanation = tok.text === 'print'
+          ? 'The megaphone: shows your message or calculation onto the terminal screen.'
+          : tok.text === 'input'
+          ? 'The microphone: waits for the user to type something and press Enter.'
+          : tok.text === 'int'
+          ? 'The number transformer: turns text strings into real numbers for math.'
+          : `Python's built-in helper tool ready for you to use.`;
       } else if (tok.type === 'keyword') {
-        badge = 'Keyword';
-        explanation = `Reserved core syntax keyword telling the interpreter how to route code.`;
+        badge = 'Python Command';
+        explanation = `Core Python keyword telling the computer what action to take.`;
       } else if (tok.type === 'variable') {
-        badge = 'Variable Name';
-        explanation = `Labeled slot in computer memory where values are preserved.`;
+        badge = 'Storage Box';
+        explanation = `Labeled storage box in memory where values are safely kept.`;
       } else if (tok.type === 'string') {
-        badge = 'Text String';
-        explanation = `Literal text sequence bounded by quote marks.`;
+        badge = 'Text Message';
+        explanation = `The quote marks tell Python: "These are words to display, not commands to run!"`;
       } else if (tok.type === 'number') {
-        badge = 'Numeric Literal';
-        explanation = `Calculated raw numeric quantity stored in RAM.`;
+        badge = 'Whole Number';
+        explanation = `A real number that Python can calculate with.`;
+      } else if (tok.type === 'comment') {
+        badge = 'Sticky Note';
+        explanation = `A friendly note left for humans. Python ignores this completely.`;
       }
+
+      if (seen.has(key)) continue;
+      seen.add(key);
 
       cards.push({
         token: title,
@@ -221,37 +253,37 @@ function generateEducationalNotes(code = '', lesson) {
   if (trimmed.includes('f"') || trimmed.includes("f'")) {
     notes.push({
       noteNumber: 1,
-      title: 'Modern F-String Formatting',
-      tag: 'PEP 498',
-      explanation: 'f"..." evaluates expressions inside {curly braces} directly at runtime, preventing tedious type conversions and comma concatenation.'
+      title: 'Modern f-String Formatting',
+      tag: 'Modern Python',
+      explanation: 'Just put an f in front of quotes and write variables inside {curly braces}. Python automatically fills in the values!'
     });
   } else if (trimmed.includes('=')) {
     notes.push({
       noteNumber: 1,
-      title: 'Memory Label Binding',
-      tag: 'Semantics',
-      explanation: 'In Python, = is an assignment statement, not an equation. It attaches a friendly variable label to a value stored in RAM.'
+      title: 'Labeled Storage Box',
+      tag: 'Variables',
+      explanation: 'In Python, = drops an item into a box and sticks a friendly name label on the outside.'
     });
   } else if (trimmed.startsWith('print(')) {
     notes.push({
       noteNumber: 1,
-      title: 'Standard Output Stream',
-      tag: 'I/O Stream',
-      explanation: 'print() converts objects into human-readable text and flushes them to sys.stdout (your terminal screen).'
+      title: 'Screen Megaphone',
+      tag: 'Output',
+      explanation: 'print() takes whatever message or calculation is inside the parentheses and shouts it onto your screen.'
     });
   } else if (trimmed.startsWith('def ')) {
     notes.push({
       noteNumber: 1,
-      title: 'Function Definition & Scope',
-      tag: 'Modularity',
-      explanation: 'def creates a named, reusable sub-routine with its own isolated local scope and parameter bindings.'
+      title: 'Creating Reusable Recipes',
+      tag: 'Functions',
+      explanation: 'def creates a reusable recipe that you can call anytime without re-writing the same code.'
     });
   } else {
     notes.push({
       noteNumber: 1,
-      title: 'Direct Instruction',
-      tag: 'Execution',
-      explanation: 'Python reads and evaluates each statement sequentially from top to bottom.'
+      title: 'Step-by-Step Instructions',
+      tag: 'Flow',
+      explanation: 'Python reads and runs each line in order from top to bottom, like following a cooking recipe.'
     });
   }
 
@@ -259,30 +291,30 @@ function generateEducationalNotes(code = '', lesson) {
   if (trimmed.includes('input(')) {
     notes.push({
       noteNumber: 2,
-      title: 'String Return Trap',
-      tag: 'Type Safety',
-      explanation: 'input() always returns text (str). Wrap with int() or float() before performing mathematical calculations.'
+      title: 'The Input Text Trap',
+      tag: 'Beginner Tip',
+      explanation: 'input() always receives text strings! If the user types 5, send it through int() before doing math.'
     });
   } else if (trimmed.endsWith(':')) {
     notes.push({
       noteNumber: 2,
-      title: 'Header Colon & Indentation',
+      title: 'The Header Colon',
       tag: 'Syntax Rule',
-      explanation: 'The colon announces an indented code block. Python uses 4 spaces instead of curly braces to define scope.'
+      explanation: 'The colon announces: "The indented lines below belong to this block!" Python uses 4 clean spaces.'
     });
   } else if (trimmed.includes('[') && trimmed.includes(']')) {
     notes.push({
       noteNumber: 2,
-      title: 'Zero-Indexed Collections',
-      tag: 'Memory Offset',
-      explanation: 'Python indexing starts at 0, representing the distance (offset) from the memory beginning of the sequence.'
+      title: 'Zero-Based Indexing',
+      tag: 'Counting Rule',
+      explanation: 'Python starts counting items from 0: [0] is the 1st item, [1] is the 2nd item.'
     });
   } else {
     notes.push({
       noteNumber: 2,
       title: 'Clean Readability',
       tag: 'Zen of Python',
-      explanation: 'Readable code is better than complex code. Keep variable names descriptive and intuitive.'
+      explanation: 'Clear, readable code is always best. Keep your variable names friendly and descriptive.'
     });
   }
 
@@ -299,8 +331,8 @@ function parseMemoryAllocation(code = '', lesson) {
       return entries.map(([name, val], idx) => ({
         name,
         val: String(val),
-        address: `0x7FFE${(idx * 16).toString(16).toUpperCase().padStart(2, '0')}`,
-        type: String(val).startsWith('"') || String(val).startsWith("'") ? 'str' : !isNaN(Number(val)) ? 'int' : 'obj'
+        address: `Box #${idx + 1}`,
+        type: String(val).startsWith('"') || String(val).startsWith("'") ? 'text (str)' : !isNaN(Number(val)) ? 'number (int)' : 'data'
       }));
     }
   }
@@ -310,26 +342,26 @@ function parseMemoryAllocation(code = '', lesson) {
   if (assignMatch) {
     const name = assignMatch[1];
     const rawVal = assignMatch[2].trim();
-    let type = 'obj';
-    if (/^f?["'].*["']$/.test(rawVal)) type = 'str';
-    else if (/^-?\d+\.\d+$/.test(rawVal)) type = 'float';
-    else if (/^-?\d+$/.test(rawVal)) type = 'int';
+    let type = 'data';
+    if (/^f?["'].*["']$/.test(rawVal)) type = 'text (str)';
+    else if (/^-?\d+\.\d+$/.test(rawVal)) type = 'decimal (float)';
+    else if (/^-?\d+$/.test(rawVal)) type = 'number (int)';
     else if (/^\[.*\]$/.test(rawVal)) type = 'list';
     else if (/^\{.*\}$/.test(rawVal)) type = 'dict';
 
     return [{
       name,
       val: rawVal,
-      address: '0x7FFE20',
+      address: 'Box #1',
       type
     }];
   }
 
   return [{
-    name: 'Call Stack',
+    name: 'Current Line',
     val: code.length > 24 ? code.slice(0, 22) + '...' : code,
-    address: '0x7FFE10',
-    type: 'frame'
+    address: 'Processor',
+    type: 'code'
   }];
 }
 
@@ -601,10 +633,10 @@ export default function PythonStepTeacher({
   }, [handleNext, handleBack, onExit, toggleVoice, stopSpeaking]);
 
   const stepsMeta = [
-    { num: 1, label: 'Mental Model', icon: <BookOpen className="w-3.5 h-3.5" /> },
-    { num: 2, label: 'Code Anatomy', icon: <Code2 className="w-3.5 h-3.5" /> },
-    { num: 3, label: 'How It Runs', icon: <Cpu className="w-3.5 h-3.5" /> },
-    { num: 4, label: 'Ready to Code', icon: <Keyboard className="w-3.5 h-3.5" /> }
+    { num: 1, label: 'Visual Story 💡', icon: <BookOpen className="w-3.5 h-3.5" /> },
+    { num: 2, label: 'How to Read Code 🔍', icon: <Code2 className="w-3.5 h-3.5" /> },
+    { num: 3, label: 'Live Simulation ⚡', icon: <Cpu className="w-3.5 h-3.5" /> },
+    { num: 4, label: 'Type It Out ⌨️', icon: <Keyboard className="w-3.5 h-3.5" /> }
   ];
 
   return (
@@ -897,9 +929,9 @@ export default function PythonStepTeacher({
               {/* 3-Step Simulation Scrubber Bar */}
               <div className="grid grid-cols-3 gap-2 mb-4">
                 {[
-                  { step: 1, label: '1. Read Line', desc: 'Lexer & AST Parser' },
-                  { step: 2, label: '2. Update Memory', desc: 'RAM Allocation' },
-                  { step: 3, label: '3. Emit Output', desc: 'CRT Terminal Spark' }
+                  { step: 1, label: '1. Reads Your Code', desc: 'Checks from left to right' },
+                  { step: 2, label: '2. Values in Memory', desc: 'Saves items in labeled boxes' },
+                  { step: 3, label: '3. Screen Output', desc: 'Lights up terminal with result' }
                 ].map(s => (
                   <button
                     key={s.step}
@@ -931,8 +963,8 @@ export default function PythonStepTeacher({
                   }`}
                 >
                   <div className="flex items-center justify-between text-[10px] font-bold text-[#2D2319]/70 mb-1">
-                    <span>1. INTERPRETER PIPELINE</span>
-                    {simState === 1 && <span className="text-[#48B89F] font-black animate-pulse">PARSING ACTIVE</span>}
+                    <span>1. PYTHON READS YOUR WORDS</span>
+                    {simState === 1 && <span className="text-[#48B89F] font-black animate-pulse">READING ACTIVE</span>}
                   </div>
                   <div className="bg-[#2D2319] text-[#48B89F] p-2 rounded-lg flex items-center space-x-2">
                     <span className="text-white/40">&gt;</span>
@@ -940,7 +972,7 @@ export default function PythonStepTeacher({
                   </div>
                 </div>
 
-                {/* Stage 2: Memory & CPU Updated (Enhanced with data-visualization skill) */}
+                {/* Stage 2: Memory & CPU Updated */}
                 <div
                   className={`p-3 rounded-xl border-2 border-[#2D2319] transition-all font-mono text-xs ${
                     simState === 2
@@ -951,12 +983,12 @@ export default function PythonStepTeacher({
                   <div className="flex items-center justify-between text-[10px] font-bold text-[#2D2319]/70 mb-2">
                     <span className="flex items-center gap-1.5">
                       <Cpu className="w-3.5 h-3.5 text-[#4BA3E3]" />
-                      2. RAM ALLOCATION &amp; VARIABLE BINDING
+                      2. LABELED STORAGE BOXES IN MEMORY
                     </span>
                     {simState === 2 && (
                       <span className="text-[#4BA3E3] font-black animate-pulse flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#4BA3E3] animate-ping" />
-                        SLOT ALLOCATED
+                        SAVED IN BOX
                       </span>
                     )}
                   </div>
