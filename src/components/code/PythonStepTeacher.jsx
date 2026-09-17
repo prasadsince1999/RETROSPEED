@@ -215,32 +215,52 @@ function generateFallbackBreakdown(tokens = [], lesson) {
  */
 function ProfessorByteMascot({ message, analogy, isSpeaking, onToggleVoice }) {
   return (
-    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 p-3 bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl shadow-[3px_3px_0px_#2D2319]">
+    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 p-3.5 bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl shadow-[4px_4px_0px_#2D2319] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">
       {/* Mascot Graphic */}
       <div className="relative shrink-0 flex flex-col items-center">
         <div
-          className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#C3A6E8] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-3xl sm:text-4xl transition-all ${
-            isSpeaking ? 'animate-pulse scale-105 ring-4 ring-[#F6C445]' : 'animate-bounce'
+          className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#C3A6E8] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] flex items-center justify-center text-3xl sm:text-4xl transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isSpeaking ? 'scale-105 ring-4 ring-[#F6C445] bg-[#d3bbf3]' : 'hover:scale-105'
           }`}
         >
           {isSpeaking ? '🗣️' : '🎓'}
         </div>
-        <span className="text-[10px] font-mono font-black text-[#2D2319] bg-[#F6C445] px-2 py-0.5 rounded border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] -mt-2 uppercase tracking-wide">
+        <span className="text-[10px] font-mono font-black text-[#2D2319] bg-[#F6C445] px-2.5 py-0.5 rounded-full border border-[#2D2319] shadow-[1px_1px_0px_#2D2319] -mt-2.5 uppercase tracking-wide">
           Coach Byte
+        </span>
+
+        {/* Dynamic Voice Status Pill */}
+        <span className="text-[9px] font-mono font-bold text-[#2D2319]/70 mt-1 flex items-center gap-1">
+          {isSpeaking ? (
+            <>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#48B89F] animate-ping" />
+              <span className="text-[#48B89F] font-black">Speaking</span>
+            </>
+          ) : (
+            <span>Voice Ready</span>
+          )}
         </span>
       </div>
 
       {/* Speech Bubble */}
       <div className="flex-1 relative w-full">
-        <div className="bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl p-3.5 shadow-[2px_2px_0px_#2D2319] relative">
-          <div className="flex items-center justify-between pb-1 mb-1.5 border-b border-[#2D2319]/15 flex-wrap gap-2">
+        <div className="bg-[#FDF8EE] border-2 border-[#2D2319] rounded-2xl p-4 shadow-[2px_2px_0px_#2D2319] relative">
+          <div className="flex items-center justify-between pb-1.5 mb-2 border-b border-[#2D2319]/15 flex-wrap gap-2">
             <span className="text-[11px] font-mono font-black text-[#2D2319] flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-[#F6C445]" />
               MENTOR INSIGHT
+              {isSpeaking && (
+                <span className="flex items-end gap-0.5 h-3 px-1.5 py-0.5 bg-[#2D2319]/5 rounded">
+                  <span className="w-1 bg-[#F6C445] rounded-full animate-pulse h-2" />
+                  <span className="w-1 bg-[#48B89F] rounded-full animate-bounce h-3" />
+                  <span className="w-1 bg-[#C3A6E8] rounded-full animate-pulse h-2.5" />
+                  <span className="w-1 bg-[#F6C445] rounded-full animate-bounce h-3" />
+                </span>
+              )}
             </span>
             <div className="flex items-center gap-1.5">
               {analogy && (
-                <span className="text-[10px] font-mono font-bold bg-[#FAF3E0] text-[#2D2319] px-2 py-0.5 rounded border border-[#2D2319]/40">
+                <span className="text-[10px] font-mono font-bold bg-[#FAF3E0] text-[#2D2319] px-2 py-0.5 rounded-md border border-[#2D2319]/30">
                   💡 {analogy}
                 </span>
               )}
@@ -248,7 +268,7 @@ function ProfessorByteMascot({ message, analogy, isSpeaking, onToggleVoice }) {
                 <button
                   type="button"
                   onClick={onToggleVoice}
-                  className={`px-2 py-0.5 rounded-lg border border-[#2D2319] text-[10px] font-mono font-black flex items-center gap-1 cursor-pointer transition-all shadow-[1px_1px_0px_#2D2319] ${
+                  className={`px-2.5 py-1 rounded-full border border-[#2D2319] text-[10px] font-mono font-black flex items-center gap-1.5 cursor-pointer active:scale-95 active:translate-y-0.5 transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[1px_1px_0px_#2D2319] hover:shadow-[2px_2px_0px_#2D2319] ${
                     isSpeaking
                       ? 'bg-[#F28B82] text-white animate-pulse'
                       : 'bg-[#F6C445] hover:bg-[#fcd673] text-[#2D2319]'
@@ -463,102 +483,114 @@ export default function PythonStepTeacher({
   ];
 
   return (
-    <div className="w-full h-full flex flex-col font-sans select-none bg-[#FAF3E0] border-2 border-[#2D2319] rounded-2xl shadow-[4px_4px_0px_#2D2319] overflow-hidden">
-      {/* 1. TOP HEADER & PROGRESS STEP PILLS */}
-      <div className="bg-[#C3A6E8] px-3.5 py-2.5 border-b-2 border-[#2D2319] flex flex-wrap items-center justify-between gap-2.5 shrink-0 text-xs font-mono font-bold text-[#2D2319]">
-        {/* Step Pills */}
-        <div className="flex items-center space-x-1.5 overflow-x-auto py-0.5">
-          {stepsMeta.map((s) => {
-            const isActive = currentStep === s.num;
-            const isDone = s.num < currentStep;
+    <div className="w-full h-full p-1.5 sm:p-2 bg-[#E0D7C5]/50 border-3 border-[#2D2319] rounded-[2rem] shadow-[6px_6px_0px_#2D2319] flex flex-col min-h-0">
+      <div className="w-full h-full flex flex-col font-sans select-none bg-[#FAF3E0] border-2 border-[#2D2319] rounded-[calc(2rem-0.5rem)] shadow-[inset_0_1px_2px_rgba(255,255,255,0.7)] overflow-hidden">
+        {/* 1. TOP HEADER & PROGRESS STEP PILLS */}
+        <div className="bg-[#C3A6E8] px-3.5 py-2.5 border-b-2 border-[#2D2319] flex flex-wrap items-center justify-between gap-2.5 shrink-0 text-xs font-mono font-bold text-[#2D2319]">
+          {/* Step Pills */}
+          <div className="flex items-center space-x-1.5 overflow-x-auto py-0.5">
+            {stepsMeta.map((s) => {
+              const isActive = currentStep === s.num;
+              const isDone = s.num < currentStep;
 
-            return (
-              <button
-                key={s.num}
-                type="button"
-                onClick={() => goToStep(s.num)}
-                className={`px-2.5 py-1 rounded-xl border-2 border-[#2D2319] flex items-center space-x-1.5 transition-all cursor-pointer ${
-                  isActive
-                    ? 'bg-[#F6C445] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] scale-105 font-black'
-                    : isDone
-                    ? 'bg-[#48B89F] text-white shadow-[1px_1px_0px_#2D2319]'
-                    : 'bg-[#FDF8EE] text-[#2D2319]/70 opacity-70 hover:opacity-100'
-                }`}
-              >
-                {isDone ? (
-                  <CheckCircle2 className="w-3.5 h-3.5 text-white" />
-                ) : (
-                  s.icon
-                )}
-                <span>{s.num}. {s.label}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Top Controls: Voice Toggle & Skip to Typing */}
-        <div className="flex items-center space-x-2 shrink-0">
-          <button
-            type="button"
-            onClick={() => {
-              sound?.playKeyClick?.();
-              setVoiceEnabled(prev => {
-                const next = !prev;
-                if (typeof window !== 'undefined') {
-                  localStorage.setItem('retrospeed_py_voice', String(next));
-                }
-                if (!next) {
-                  stopSpeaking();
-                } else if (currentStep === 1) {
-                  speakText(explanation);
-                }
-                return next;
-              });
-            }}
-            className={`px-2.5 py-1 rounded-xl border border-[#2D2319] text-[11px] font-mono font-bold flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319] cursor-pointer transition-all ${
-              voiceEnabled
-                ? 'bg-[#48B89F] text-white'
-                : 'bg-[#FAF3E0] hover:bg-[#FDF8EE] text-[#2D2319]'
-            }`}
-            title={voiceEnabled ? "Auto-Voice Enabled: Coach Byte speaks explanations automatically" : "Auto-Voice Disabled: Silent visual reading"}
-          >
-            {voiceEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
-            <span>Voice: {voiceEnabled ? 'ON' : 'OFF'}</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              sound?.playKeyClick?.();
-              stopSpeaking();
-              if (onStartTyping) onStartTyping();
-            }}
-            className="px-2.5 py-1 rounded-xl bg-[#FAF3E0] hover:bg-[#FDF8EE] border border-[#2D2319] text-[#2D2319] text-[11px] font-bold flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319] cursor-pointer"
-            title="Skip directly to code typing"
-          >
-            <span>Skip to Typing</span>
-            <FastForward className="w-3 h-3" />
-          </button>
-        </div>
-      </div>
-
-      {/* 2. MAIN STAGE CONTENT (STEPS 1 - 4) */}
-      <div className="flex-1 min-h-0 overflow-y-auto p-4 flex flex-col justify-between">
-        {/* STEP 1: THE MENTAL MODEL */}
-        {currentStep === 1 && (
-          <div className="space-y-4 max-w-2xl mx-auto w-full">
-            {/* Animated Physical Mental Model */}
-            <DynamicVisualStage analogyType={lesson?.analogyType} lesson={lesson} />
-
-            {/* Coach Byte / Professor Byte Teaching Pose & Speech Bubble with Voice */}
-            <ProfessorByteMascot
-              message={explanation}
-              analogy={analogy}
-              isSpeaking={isSpeaking}
-              onToggleVoice={toggleVoice}
-            />
+              return (
+                <button
+                  key={s.num}
+                  type="button"
+                  onClick={() => goToStep(s.num)}
+                  className={`px-2.5 py-1 rounded-xl border-2 border-[#2D2319] flex items-center space-x-1.5 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 cursor-pointer ${
+                    isActive
+                      ? 'bg-[#F6C445] text-[#2D2319] shadow-[2px_2px_0px_#2D2319] scale-105 font-black'
+                      : isDone
+                      ? 'bg-[#48B89F] text-white shadow-[1px_1px_0px_#2D2319]'
+                      : 'bg-[#FDF8EE] text-[#2D2319]/70 opacity-70 hover:opacity-100'
+                  }`}
+                >
+                  {isDone ? (
+                    <CheckCircle2 className="w-3.5 h-3.5 text-white" />
+                  ) : (
+                    s.icon
+                  )}
+                  <span>{s.num}. {s.label}</span>
+                </button>
+              );
+            })}
           </div>
-        )}
+
+          {/* Top Controls: Voice Toggle & Skip to Typing */}
+          <div className="flex items-center space-x-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                sound?.playKeyClick?.();
+                setVoiceEnabled(prev => {
+                  const next = !prev;
+                  if (typeof window !== 'undefined') {
+                    localStorage.setItem('retrospeed_py_voice', String(next));
+                  }
+                  if (!next) {
+                    stopSpeaking();
+                  } else if (currentStep === 1) {
+                    speakText(explanation);
+                  }
+                  return next;
+                });
+              }}
+              className={`px-3 py-1 rounded-full border border-[#2D2319] text-[11px] font-mono font-bold flex items-center space-x-1.5 shadow-[1px_1px_0px_#2D2319] hover:shadow-[2px_2px_0px_#2D2319] active:scale-95 active:translate-y-0.5 cursor-pointer transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                voiceEnabled
+                  ? 'bg-[#48B89F] text-white'
+                  : 'bg-[#FAF3E0] hover:bg-[#FDF8EE] text-[#2D2319]'
+              }`}
+              title={voiceEnabled ? "Auto-Voice Enabled: Coach Byte speaks explanations automatically. Press V to toggle." : "Auto-Voice Disabled: Silent visual reading. Press V to toggle."}
+            >
+              {voiceEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+              <span>Voice: {voiceEnabled ? 'ON' : 'OFF'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                sound?.playKeyClick?.();
+                stopSpeaking();
+                if (onStartTyping) onStartTyping();
+              }}
+              className="px-3 py-1 rounded-full bg-[#FAF3E0] hover:bg-[#FDF8EE] border border-[#2D2319] text-[#2D2319] text-[11px] font-bold flex items-center space-x-1 shadow-[1px_1px_0px_#2D2319] hover:shadow-[2px_2px_0px_#2D2319] active:scale-95 active:translate-y-0.5 transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer"
+              title="Skip directly to code typing"
+            >
+              <span>Skip to Typing</span>
+              <FastForward className="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+
+        {/* 2. MAIN STAGE CONTENT (STEPS 1 - 4) */}
+        <div className="flex-1 min-h-0 overflow-y-auto p-4 flex flex-col justify-between">
+          {/* STEP 1: THE MENTAL MODEL */}
+          {currentStep === 1 && (
+            <div className="space-y-4 max-w-2xl mx-auto w-full">
+              {/* Agency-Tier Eyebrow Badge & Voice Mode Status */}
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-mono font-black bg-[#F6C445] text-[#2D2319] border border-[#2D2319] shadow-[1.5px_1.5px_0px_#2D2319]">
+                  <Sparkles className="w-3 h-3 text-[#2D2319]" />
+                  STAGE {lesson?.stage || 1} · {analogy.toUpperCase()}
+                </div>
+                <span className="text-[10px] font-mono text-[#2D2319]/60 font-bold">
+                  {voiceEnabled ? '🔊 Auto-Voice Ready' : '🔇 Silent Reading Mode'}
+                </span>
+              </div>
+
+              {/* Animated Physical Mental Model */}
+              <DynamicVisualStage analogyType={lesson?.analogyType} lesson={lesson} />
+
+              {/* Coach Byte / Professor Byte Teaching Pose & Speech Bubble with Voice */}
+              <ProfessorByteMascot
+                message={explanation}
+                analogy={analogy}
+                isSpeaking={isSpeaking}
+                onToggleVoice={toggleVoice}
+              />
+            </div>
+          )}
 
         {/* STEP 2: CODE ANATOMY */}
         {currentStep === 2 && (
@@ -831,17 +863,19 @@ export default function PythonStepTeacher({
                 ))}
               </div>
 
-              {/* Prominent Action Button */}
+              {/* Prominent Action Button with Button-in-Button Trailing Icon */}
               <button
                 type="button"
                 onClick={() => {
                   sound?.playKeyClick?.();
                   if (onStartTyping) onStartTyping();
                 }}
-                className="w-full max-w-md mx-auto px-6 py-3.5 rounded-2xl bg-[#F6C445] hover:bg-[#fcd673] border-3 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] font-black text-sm sm:text-base text-[#2D2319] flex items-center justify-center space-x-2 cursor-pointer active:translate-x-1 active:translate-y-1 transition-all"
+                className="group w-full max-w-md mx-auto px-6 py-3.5 rounded-full bg-[#F6C445] hover:bg-[#fcd673] border-3 border-[#2D2319] shadow-[4px_4px_0px_#2D2319] hover:shadow-[5px_5px_0px_#2D2319] font-black text-sm sm:text-base text-[#2D2319] flex items-center justify-between cursor-pointer active:scale-[0.98] active:translate-y-0.5 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]"
               >
-                <span>Start Typing (Enter)</span>
-                <ArrowRight className="w-5 h-5" />
+                <span className="pl-3">Start Typing (Enter)</span>
+                <span className="w-9 h-9 rounded-full bg-[#2D2319]/10 border border-[#2D2319]/20 flex items-center justify-center shrink-0 group-hover:translate-x-1 group-hover:scale-105 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                  <ArrowRight className="w-5 h-5" />
+                </span>
               </button>
             </div>
           </div>
@@ -854,7 +888,7 @@ export default function PythonStepTeacher({
           type="button"
           onClick={handleBack}
           disabled={currentStep === 1}
-          className="px-3 py-1.5 rounded-xl bg-[#FDF8EE] hover:bg-[#FAF3E0] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-bold text-[#2D2319] disabled:opacity-30 disabled:pointer-events-none flex items-center space-x-1 cursor-pointer active:translate-x-0.5 active:translate-y-0.5"
+          className="px-4 py-1.5 rounded-full bg-[#FDF8EE] hover:bg-[#FAF3E0] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-bold text-[#2D2319] disabled:opacity-30 disabled:pointer-events-none flex items-center space-x-1.5 cursor-pointer active:scale-95 active:translate-y-0.5 transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)]"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back</span>
@@ -868,10 +902,12 @@ export default function PythonStepTeacher({
           <button
             type="button"
             onClick={handleNext}
-            className="px-4 py-1.5 rounded-xl bg-[#F6C445] hover:bg-[#fcd673] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-black text-[#2D2319] flex items-center space-x-1.5 cursor-pointer active:translate-x-0.5 active:translate-y-0.5"
+            className="group px-4 py-1.5 rounded-full bg-[#F6C445] hover:bg-[#fcd673] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] hover:shadow-[3px_3px_0px_#2D2319] font-black text-[#2D2319] flex items-center gap-2 cursor-pointer active:scale-[0.98] active:translate-y-0.5 transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)]"
           >
             <span>Next Step</span>
-            <ArrowRight className="w-4 h-4" />
+            <span className="w-5 h-5 rounded-full bg-[#2D2319]/10 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+              <ArrowRight className="w-3.5 h-3.5" />
+            </span>
           </button>
         ) : (
           <button
@@ -880,12 +916,16 @@ export default function PythonStepTeacher({
               sound?.playKeyClick?.();
               if (onStartTyping) onStartTyping();
             }}
-            className="px-4 py-1.5 rounded-xl bg-[#48B89F] hover:bg-[#3fa38b] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-black text-white flex items-center space-x-1.5 cursor-pointer active:translate-x-0.5 active:translate-y-0.5"
+            className="group px-4 py-1.5 rounded-full bg-[#48B89F] hover:bg-[#3fa38b] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] hover:shadow-[3px_3px_0px_#2D2319] font-black text-white flex items-center gap-2 cursor-pointer active:scale-[0.98] active:translate-y-0.5 transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)]"
           >
-            <span>Start Typing &rarr;</span>
+            <span>Start Typing</span>
+            <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+              <ArrowRight className="w-3.5 h-3.5 text-white" />
+            </span>
           </button>
         )}
       </div>
     </div>
+  </div>
   );
 }

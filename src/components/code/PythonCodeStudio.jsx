@@ -545,9 +545,10 @@ export default function PythonCodeStudio({
               </div>
             </div>
           </div>
-          <div className="shrink-0 p-3 flex items-center justify-between border-t-2 border-[#2D2319]">
+          <div className="shrink-0 p-3.5 flex items-center justify-between border-t-2 border-[#2D2319] bg-[#FAF3E0]">
             <button
               onClick={() => {
+                sound.playKeyClick();
                 completeLock.current = false;
                 setPhase('type');
                 setCurrentIndex(0);
@@ -557,12 +558,14 @@ export default function PythonCodeStudio({
                 setIsFinished(false);
                 if (onRetry) onRetry();
               }}
-              className="px-3 py-2 rounded-lg border-2 border-[#2D2319] bg-[#FDF8EE] font-bold text-xs flex items-center gap-1 cursor-pointer"
+              className="px-4 py-2 rounded-full border-2 border-[#2D2319] bg-[#FDF8EE] hover:bg-[#FAF3E0] shadow-[2px_2px_0px_#2D2319] font-bold text-xs flex items-center gap-1.5 cursor-pointer active:scale-95 active:translate-y-0.5 transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)]"
             >
-              <RotateCcw className="w-3.5 h-3.5" /> Retry snippet
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Retry snippet</span>
             </button>
             <button
               onClick={() => {
+                sound.playKeyClick();
                 const elapsed = Math.max(1, Math.round(((Date.now() - (startTime || Date.now())) || 8000) / 1000));
                 const finalWpm = Math.round((code.length / 5) / (elapsed / 60));
                 const finalAcc = Math.round((code.length / (code.length + errors)) * 100);
@@ -578,9 +581,12 @@ export default function PythonCodeStudio({
                   stars: finalAcc >= 95 ? 5 : finalAcc >= 85 ? 4 : 3
                 });
               }}
-              className="px-4 py-2 rounded-xl bg-[#48B89F] border-2 border-[#2D2319] shadow-[2px_2px_0px_#2D2319] font-black text-sm text-[#2D2319] flex items-center gap-1.5 cursor-pointer"
+              className="group px-5 py-2.5 rounded-full bg-[#48B89F] hover:bg-[#3fa38b] border-2 border-[#2D2319] shadow-[3px_3px_0px_#2D2319] hover:shadow-[4px_4px_0px_#2D2319] font-black text-sm text-[#2D2319] flex items-center gap-2 cursor-pointer active:scale-[0.98] active:translate-y-0.5 transition-all duration-150 ease-[cubic-bezier(0.16,1,0.3,1)]"
             >
-              Next lesson <ChevronRight className="w-4 h-4" />
+              <span>Next lesson</span>
+              <span className="w-6 h-6 rounded-full bg-[#2D2319]/10 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                <ChevronRight className="w-4 h-4 text-[#2D2319]" />
+              </span>
             </button>
           </div>
         </div>
