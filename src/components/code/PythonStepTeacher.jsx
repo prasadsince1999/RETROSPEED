@@ -211,6 +211,129 @@ function generateFallbackBreakdown(tokens = [], lesson) {
 }
 
 /**
+ * Generate educational notes explaining the "why" and design intent (add-educational-comments skill)
+ */
+function generateEducationalNotes(code = '', lesson) {
+  const notes = [];
+  const trimmed = code.trim();
+
+  // Note 1: Core purpose & why
+  if (trimmed.includes('f"') || trimmed.includes("f'")) {
+    notes.push({
+      noteNumber: 1,
+      title: 'Modern F-String Formatting',
+      tag: 'PEP 498',
+      explanation: 'f"..." evaluates expressions inside {curly braces} directly at runtime, preventing tedious type conversions and comma concatenation.'
+    });
+  } else if (trimmed.includes('=')) {
+    notes.push({
+      noteNumber: 1,
+      title: 'Memory Label Binding',
+      tag: 'Semantics',
+      explanation: 'In Python, = is an assignment statement, not an equation. It attaches a friendly variable label to a value stored in RAM.'
+    });
+  } else if (trimmed.startsWith('print(')) {
+    notes.push({
+      noteNumber: 1,
+      title: 'Standard Output Stream',
+      tag: 'I/O Stream',
+      explanation: 'print() converts objects into human-readable text and flushes them to sys.stdout (your terminal screen).'
+    });
+  } else if (trimmed.startsWith('def ')) {
+    notes.push({
+      noteNumber: 1,
+      title: 'Function Definition & Scope',
+      tag: 'Modularity',
+      explanation: 'def creates a named, reusable sub-routine with its own isolated local scope and parameter bindings.'
+    });
+  } else {
+    notes.push({
+      noteNumber: 1,
+      title: 'Direct Instruction',
+      tag: 'Execution',
+      explanation: 'Python reads and evaluates each statement sequentially from top to bottom.'
+    });
+  }
+
+  // Note 2: Best practice or pitfall avoidance
+  if (trimmed.includes('input(')) {
+    notes.push({
+      noteNumber: 2,
+      title: 'String Return Trap',
+      tag: 'Type Safety',
+      explanation: 'input() always returns text (str). Wrap with int() or float() before performing mathematical calculations.'
+    });
+  } else if (trimmed.endsWith(':')) {
+    notes.push({
+      noteNumber: 2,
+      title: 'Header Colon & Indentation',
+      tag: 'Syntax Rule',
+      explanation: 'The colon announces an indented code block. Python uses 4 spaces instead of curly braces to define scope.'
+    });
+  } else if (trimmed.includes('[') && trimmed.includes(']')) {
+    notes.push({
+      noteNumber: 2,
+      title: 'Zero-Indexed Collections',
+      tag: 'Memory Offset',
+      explanation: 'Python indexing starts at 0, representing the distance (offset) from the memory beginning of the sequence.'
+    });
+  } else {
+    notes.push({
+      noteNumber: 2,
+      title: 'Clean Readability',
+      tag: 'Zen of Python',
+      explanation: 'Readable code is better than complex code. Keep variable names descriptive and intuitive.'
+    });
+  }
+
+  return notes;
+}
+
+/**
+ * Extract memory allocation table & visual state (data-visualization skill)
+ */
+function parseMemoryAllocation(code = '', lesson) {
+  if (lesson?.executionSteps?.[1]?.memoryState) {
+    const entries = Object.entries(lesson.executionSteps[1].memoryState);
+    if (entries.length > 0) {
+      return entries.map(([name, val], idx) => ({
+        name,
+        val: String(val),
+        address: `0x7FFE${(idx * 16).toString(16).toUpperCase().padStart(2, '0')}`,
+        type: String(val).startsWith('"') || String(val).startsWith("'") ? 'str' : !isNaN(Number(val)) ? 'int' : 'obj'
+      }));
+    }
+  }
+
+  const trimmed = code.trim();
+  const assignMatch = trimmed.match(/^([a-zA-Z_]\w*)\s*=\s*(.+)$/);
+  if (assignMatch) {
+    const name = assignMatch[1];
+    const rawVal = assignMatch[2].trim();
+    let type = 'obj';
+    if (/^f?["'].*["']$/.test(rawVal)) type = 'str';
+    else if (/^-?\d+\.\d+$/.test(rawVal)) type = 'float';
+    else if (/^-?\d+$/.test(rawVal)) type = 'int';
+    else if (/^\[.*\]$/.test(rawVal)) type = 'list';
+    else if (/^\{.*\}$/.test(rawVal)) type = 'dict';
+
+    return [{
+      name,
+      val: rawVal,
+      address: '0x7FFE20',
+      type
+    }];
+  }
+
+  return [{
+    name: 'Call Stack',
+    val: code.length > 24 ? code.slice(0, 22) + '...' : code,
+    address: '0x7FFE10',
+    type: 'frame'
+  }];
+}
+
+/**
  * Animated Professor Byte Mascot in Teaching Pose
  */
 function ProfessorByteMascot({ message, analogy, isSpeaking, onToggleVoice }) {
@@ -333,6 +456,8 @@ export default function PythonStepTeacher({
 
   const tokenizedLines = useMemo(() => tokenizePythonCode(code), [code]);
   const breakdownCards = useMemo(() => generateFallbackBreakdown(tokenizedLines, lesson), [tokenizedLines, lesson]);
+  const educationalNotes = useMemo(() => generateEducationalNotes(code, lesson), [code, lesson]);
+  const memoryAllocations = useMemo(() => parseMemoryAllocation(code, lesson), [code, lesson]);
 
   const stopSpeaking = useCallback(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -695,6 +820,41 @@ export default function PythonStepTeacher({
                 ))}
               </div>
             )}
+
+            {/* Educational Pedagogical Notes (add-educational-comments skill) */}
+            {educationalNotes.length > 0 && (
+              <div className="bg-[#FAF3E0] border-2 border-[#2D2319] rounded-xl p-3 shadow-[2px_2px_0px_#2D2319] space-y-2">
+                <div className="flex items-center justify-between pb-1.5 border-b border-[#2D2319]/15 text-[10px] font-mono font-black text-[#2D2319]">
+                  <span className="flex items-center gap-1.5">
+                    <BookOpen className="w-3.5 h-3.5 text-[#C3A6E8]" />
+                    PEDAGOGICAL NOTES &amp; CONTEXT (THE "WHY")
+                  </span>
+                  <span className="text-[9px] bg-[#C3A6E8]/40 px-2 py-0.5 rounded-full border border-[#2D2319]/30 font-bold">
+                    Educational Guidance
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {educationalNotes.map((note) => (
+                    <div
+                      key={note.noteNumber}
+                      className="p-2 bg-[#FDF8EE] border border-[#2D2319] rounded-lg shadow-[1px_1px_0px_#2D2319]"
+                    >
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className="text-[10px] font-mono font-black text-[#2D2319]">
+                          Note {note.noteNumber}: {note.title}
+                        </span>
+                        <span className="text-[8px] font-mono font-bold bg-[#F6C445] text-[#2D2319] px-1.5 py-0.2 rounded border border-[#2D2319]/50">
+                          {note.tag}
+                        </span>
+                      </div>
+                      <p className="text-[10px] font-sans text-[#2D2319]/80 leading-relaxed">
+                        {note.explanation}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -780,7 +940,7 @@ export default function PythonStepTeacher({
                   </div>
                 </div>
 
-                {/* Stage 2: Memory & CPU Updated */}
+                {/* Stage 2: Memory & CPU Updated (Enhanced with data-visualization skill) */}
                 <div
                   className={`p-3 rounded-xl border-2 border-[#2D2319] transition-all font-mono text-xs ${
                     simState === 2
@@ -788,17 +948,52 @@ export default function PythonStepTeacher({
                       : 'bg-[#FAF3E0] opacity-40'
                   }`}
                 >
-                  <div className="flex items-center justify-between text-[10px] font-bold text-[#2D2319]/70 mb-1">
-                    <span>2. RAM & CPU ALLOCATION</span>
-                    {simState === 2 && <span className="text-[#4BA3E3] font-black animate-pulse">ALLOCATING</span>}
+                  <div className="flex items-center justify-between text-[10px] font-bold text-[#2D2319]/70 mb-2">
+                    <span className="flex items-center gap-1.5">
+                      <Cpu className="w-3.5 h-3.5 text-[#4BA3E3]" />
+                      2. RAM ALLOCATION &amp; VARIABLE BINDING
+                    </span>
+                    {simState === 2 && (
+                      <span className="text-[#4BA3E3] font-black animate-pulse flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#4BA3E3] animate-ping" />
+                        SLOT ALLOCATED
+                      </span>
+                    )}
                   </div>
-                  <div className="flex items-center gap-3 bg-[#FAF3E0] border border-[#2D2319] p-2 rounded-lg">
-                    <div className="flex items-center gap-1.5">
-                      <Cpu className="w-4 h-4 text-[#4BA3E3]" />
-                      <span className="font-bold">RAM Slot 0x7FFE</span>
-                    </div>
-                    <span className="text-xs text-[#48B89F] font-black">Ready for Bytecode</span>
+
+                  {/* Interactive Memory State Data Table */}
+                  <div className="space-y-1.5">
+                    {memoryAllocations.map((mem, mIdx) => (
+                      <div
+                        key={mIdx}
+                        className="flex items-center justify-between gap-2 p-2 bg-[#FAF3E0] border border-[#2D2319] rounded-lg shadow-[1px_1px_0px_#2D2319]"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono font-bold text-[#2D2319]/60">
+                            {mem.address}
+                          </span>
+                          <span className="px-2 py-0.5 rounded bg-[#F6C445] text-[#2D2319] font-mono text-[10px] font-black border border-[#2D2319] shadow-[1px_1px_0px_#2D2319]">
+                            {mem.name}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[10px] text-[#2D2319]/40 font-mono">&rarr;</span>
+                          <span className="font-mono text-xs font-black text-[#2D2319] bg-[#FDF8EE] px-2 py-0.5 rounded border border-[#2D2319]/40 truncate max-w-[140px]">
+                            {mem.val}
+                          </span>
+                          <span className="text-[9px] font-mono font-bold bg-[#C3A6E8] text-[#2D2319] px-1.5 py-0.5 rounded border border-[#2D2319]">
+                            {mem.type}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
+
+                  {lesson?.executionSteps?.[1]?.description && (
+                    <p className="text-[10px] font-sans text-[#2D2319]/70 mt-2 italic">
+                      {lesson.executionSteps[1].description}
+                    </p>
+                  )}
                 </div>
 
                 {/* Stage 3: Terminal Output with Particle Sparks! */}
