@@ -1,12 +1,19 @@
 # ⚡ RETROSPEED — Race Your Fingers
 
-> *The authentic retro arcade touch typing trainer and developer velocity studio.*
+> *The authentic retro arcade touch typing trainer and developer velocity studio.*  
+> **100% offline desktop touch typing trainer with sub-millisecond keystroke telemetry & Dynamic Difficulty Adjustment.**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![Platform: Electron Desktop](https://img.shields.io/badge/Platform-Windows_%7C_macOS_%7C_Linux-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/prasadsince1999/RETROSPEED)
+[![Stack](https://img.shields.io/badge/Stack-React_18_%7C_Vite_%7C_Tailwind_%7C_Electron-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://github.com/prasadsince1999/RETROSPEED)
+[![Architecture: Local First](https://img.shields.io/badge/Architecture-100%25_Offline_Local_First-green?style=for-the-badge)](https://github.com/prasadsince1999/RETROSPEED)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](https://github.com/prasadsince1999/RETROSPEED)
 
 **RETROSPEED** is a desktop touch typing and keyboard velocity studio that transforms typing practice into high-intensity retro arcade defense games and structured muscle memory drills. 
 
 Built with **React 18, Vite 6, Tailwind CSS, and Electron**, RETROSPEED operates on a **100% offline, local-first architecture** with sub-millisecond keystroke telemetry, Dynamic Difficulty Adjustment (DDA), and an authentic **Neo-Brutalist 90s OS window shell** with zero gradients.
 
-Built by [KSM × Tech](https://ksmxtech.com), a product studio.
+Built by [KSM × Tech](https://ksmxtech.com), an independent product studio in Bhubaneswar, India.
 
 ---
 
@@ -249,9 +256,12 @@ npm run package:store
 
 ---
 
-## 📄 License
-MIT License.
+## ⚖️ License
+
+Licensed under the [MIT License](LICENSE).  
+Copyright © 2026 KSM × Tech Studio (PrasaD).  
+Free for personal and educational use.
 
 ---
 
-Created with ❤️ by Prasad at KSM × Tech Studio.
+Created with ❤️ by Prasad at **KSM × Tech Studio** in Bhubaneswar, India.
