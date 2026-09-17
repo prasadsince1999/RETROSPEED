@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "RETROSPEED — Race Your Fingers | Retro Arcade Touch Typing & Velocity Studio",
+  "author": "KSM x Tech <contact@ksmxtech.com>",
   "type": "module",
   "main": "electron/main.cjs",
   "scripts": {
@@ -51,8 +52,7 @@
     "win": {
       "target": [
         "nsis",
-        "portable",
-        "appx"
+        "portable"
       ]
     },
     "nsis": {
@@ -63,7 +63,7 @@
       "identityName": "RETROSPEED",
       "publisher": "CN=RETROSPEED",
       "publisherDisplayName": "RETROSPEED Studio",
-      "applicationId": "RETROSPEED.App",
+      "applicationId": "RETROSPEEDApp",
       "displayName": "RETROSPEED - Race Your Fingers",
       "backgroundColor": "#B9D2E8",
       "languages": [

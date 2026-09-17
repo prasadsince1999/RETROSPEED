@@ -1,4 +1,4 @@
-name: Build & Release KeyCraft
+name: Build & Release RETROSPEED
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install Dependencies
@@ -39,10 +39,9 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: KeyCraft-Windows-Build
+          name: RETROSPEED-Windows-Build
           path: |
             dist-electron/*.exe
-            dist-electron/*.appx
             dist-electron/*.blockmap
             dist-electron/builder-effective-config.yaml
           if-no-files-found: warn
@@ -53,7 +52,7 @@ jobs:
         with:
           files: |
             dist-electron/*.exe
-            dist-electron/*.appx
+            dist-electron/*.blockmap
           draft: false
           prerelease: false
           generate_release_notes: true
